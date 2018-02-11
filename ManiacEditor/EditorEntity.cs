@@ -22,7 +22,7 @@ namespace ManiacEditor
 
         private RSDKv5.SceneEntity entity;
 
-        public static Dictionary<string, EditorAnimation> Aminations = new Dictionary<string, EditorAnimation>();
+        public static Dictionary<string, EditorAnimation> Animations = new Dictionary<string, EditorAnimation>();
         public static Dictionary<string, Bitmap> Sheets = new Dictionary<string, Bitmap>();
         public static string[] DataDirectoryList = null;
         public RSDKv5.Animation rsdkAnim;
@@ -64,8 +64,8 @@ namespace ManiacEditor
         public Bitmap CropImage(Bitmap source, Rectangle section, bool fliph, bool flipv)
         {
             Bitmap bmp2 = new Bitmap(section.Size.Width, section.Size.Height);
-            Graphics gg = Graphics.FromImage(bmp2);
-            gg.DrawImage(source, 0, 0, section, GraphicsUnit.Pixel);
+            using (Graphics gg = Graphics.FromImage(bmp2))
+                gg.DrawImage(source, 0, 0, section, GraphicsUnit.Pixel);
             if (fliph && flipv)
                 bmp2.RotateFlip(RotateFlipType.RotateNoneFlipXY);
             else if (fliph)
@@ -73,10 +73,8 @@ namespace ManiacEditor
             else if (flipv)
                 bmp2.RotateFlip(RotateFlipType.RotateNoneFlipY);
             Bitmap bmp = new Bitmap(1024, 1024);
-            Graphics g = Graphics.FromImage(bmp);
-            g.DrawImage(bmp2, 0, 0, new Rectangle(0, 0, bmp2.Width, bmp2.Height), GraphicsUnit.Pixel);
-            g.Dispose();
-            gg.Dispose();
+            using (Graphics g = Graphics.FromImage(bmp))
+                g.DrawImage(bmp2, 0, 0, new Rectangle(0, 0, bmp2.Width, bmp2.Height), GraphicsUnit.Pixel);
             return bmp;
         }
 
@@ -108,10 +106,10 @@ namespace ManiacEditor
         {
 
             string key = $"{name}-{AnimId}-{frameId}-{fliph}-{flipv}";
-            if (Aminations.ContainsKey(key))
+            if (Animations.ContainsKey(key))
             {
                 // Use the already loaded Amination
-                return Aminations[key];
+                return Animations[key];
             }
 
             if (DataDirectoryList == null)
@@ -192,7 +190,7 @@ namespace ManiacEditor
                     break;
             }
 
-            Aminations.Add(key, anim);
+            Animations.Add(key, anim);
             return anim;
 
         }
@@ -380,11 +378,11 @@ namespace ManiacEditor
                 pair.Value.Dispose();
             Sheets.Clear();
 
-            foreach (var pair in Aminations)
+            foreach (var pair in Animations)
                 foreach (var pair2 in pair.Value.Frames)
                     pair2.Texture.Dispose();
 
-            Aminations.Clear();
+            Animations.Clear();
 
         }
 
