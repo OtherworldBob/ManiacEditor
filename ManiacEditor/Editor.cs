@@ -1505,6 +1505,16 @@ Error: {ex.Message}");
                 ShowError($@"Failed to save the StageConfig to file '{StageConfigFileName}'
 Error: {ex.Message}");
             }
+
+            try
+            {
+                StageTiles?.Write();
+            }
+            catch (Exception ex)
+            {
+                ShowError($@"Failed to save the TileConfig to file.
+Error: {ex.Message}");
+            }
         }
 
         private void ShowError(string message, string title = "Error!")

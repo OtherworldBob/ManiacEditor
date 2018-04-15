@@ -78,6 +78,7 @@
     <Compile Include="Sprite.cs" />
     <Compile Include="StageConfig.cs" />
     <Compile Include="StageTiles.cs" />
+    <Compile Include="TileConfig.cs" />
     <Compile Include="TilesConfig.cs" />
     <Compile Include="WAVConfiguration.cs" />
     <Compile Include="Writer.cs" />

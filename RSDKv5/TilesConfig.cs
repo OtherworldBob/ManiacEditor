@@ -1,55 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+using System.Linq;
 
 namespace RSDKv5
 {
+    /// <summary>
+    /// The definition of all the Tiles in a stage of Sonic Mania
+    /// Multiple acts/scenes, may use the same stage of Tiles.
+    /// </summary>
     public class TilesConfig
     {
         public static readonly byte[] MAGIC = new byte[] { (byte)'T', (byte)'I', (byte)'L', (byte)'\0' };
 
         const int TILES_COUNT = 0x400;
 
-        TileConfig[] CollisionPath1 = new TileConfig[TILES_COUNT];
-        TileConfig[] CollisionPath2 = new TileConfig[TILES_COUNT];
+        TileConfig[] _collisionPath1 = new TileConfig[TILES_COUNT];
+        TileConfig[] _collisionPath2 = new TileConfig[TILES_COUNT];
 
-        public class TileConfig
-        {
-            // Collision position for each pixel
-            public byte[] Collision;
+        public TileConfig[] CollisionPath1 { get => _collisionPath1; set => _collisionPath1 = value; }
+        public TileConfig[] CollisionPath2 { get => _collisionPath2; set => _collisionPath2 = value; }
 
-            // If has collision
-            public bool[] HasCollision;
+        public TilesConfig(string filename) : this(new Reader(filename)) { }
 
-            // If is celing, the collision is from below
-            public bool IsCeiling;
-
-            // Unknow 5 bytes config
-            public byte[] Config;
-
-            public TileConfig(Stream stream) : this(new Reader(stream)) { }
-
-            internal TileConfig(Reader reader)
-            {
-                Collision = reader.ReadBytes(16);
-                HasCollision = reader.ReadBytes(16).Select(x => x != 0).ToArray();
-                IsCeiling = reader.ReadBoolean();
-                Config = reader.ReadBytes(5);
-            }
-        }
-
-        public TilesConfig(string filename) : this(new Reader(filename))
-        {
-
-        }
-
-        public TilesConfig(Stream stream) : this(new Reader(stream))
-        {
-
-        }
+        public TilesConfig(Stream stream) : this(new Reader(stream)) { }
 
         private TilesConfig(Reader reader)
         {
@@ -59,9 +32,37 @@ namespace RSDKv5
             using (Reader creader = reader.GetCompressedStream())
             {
                 for (int i = 0; i < TILES_COUNT; ++i)
-                    CollisionPath1[i] = new TileConfig(creader);
+                    _collisionPath1[i] = new TileConfig(creader);
                 for (int i = 0; i < TILES_COUNT; ++i)
-                    CollisionPath2[i] = new TileConfig(creader);
+                    _collisionPath2[i] = new TileConfig(creader);
+            }
+        }
+
+        public void Write(string fileName)
+        {
+            using (Writer writer = new Writer(fileName))
+                Write(writer);
+        }
+
+        internal void Write(Writer writer)
+        {
+            writer.Write(MAGIC);
+            using (MemoryStream ms = new MemoryStream())
+            using (BinaryWriter binaryWriter = new BinaryWriter(ms))
+            {
+                WriteAllTilesConfig(_collisionPath1, binaryWriter);
+                WriteAllTilesConfig(_collisionPath2, binaryWriter);
+
+                binaryWriter.Flush();
+                writer.WriteCompressed(ms.ToArray());
+            }
+        }
+
+        private void WriteAllTilesConfig(TileConfig[] setOfTilesConfig, BinaryWriter writer)
+        {
+            foreach (var tileConfig in setOfTilesConfig)
+            {
+                tileConfig.Write(writer);
             }
         }
     }

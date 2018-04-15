@@ -15,6 +15,8 @@ namespace ManiacEditor
     {
         public GIF TilesImage;
 
+        public TilesConfig TilesConfig;
+
         const int TILE_SIZE = 16;
 
         int _tileScale = 2;
@@ -38,7 +40,7 @@ namespace ManiacEditor
         {
             InitializeComponent();
             
-            graphicPanel.Init(this);
+            if(!this.DesignMode) graphicPanel.Init(this);
         }
 
         private void ResizeGraphicPanel(int width = 0, int height = 0)
@@ -172,12 +174,23 @@ namespace ManiacEditor
             if (x / tile_size / TileScale < tiles_per_line && tile_number >= 0 && tile_number < 0x400)
             {
                 SelectedTile = tile_number;
+                if (TilesConfig == null)
+                {
+                    tacNormal.Value = null;
+                    tacAlternate.Value = null;
+                }
+                else
+                {
+                    tacNormal.Value = TilesConfig.CollisionPath1[tile_number];
+                    tacAlternate.Value = TilesConfig.CollisionPath2[tile_number];
+                }
             }
             else
             {
                 SelectedTile = -1;
             }
             graphicPanel.Render();
+            
         }
 
         private void graphicPanel_MouseDown(object sender, MouseEventArgs e)

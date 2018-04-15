@@ -99,6 +99,7 @@ namespace ManiacEditor
 
             tilesList.TilesImage = tiles.Image.Clone();
             tilesList.TileScale = 1 << trackBar1.Value;
+            tilesList.TilesConfig = tiles.Config;
 
             UpdateShortcuts();
         }
