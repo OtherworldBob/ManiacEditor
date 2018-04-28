@@ -182,15 +182,14 @@ namespace ManiacEditor
             if (IsDataDirectoryValid(dataDirectory))
             {
                 UnloadScene();
-                AddRecentDataFolder(dataDirectory);
-                RefreshDataDirectories(dataDirectories);
                 DataDirectory = dataDirectory;
+                AddRecentDataFolder(dataDirectory);
                 SetGameConfig();
                 OpenScene();
             }
             else
             {
-                MessageBox.Show($"The specified data directory {dataDirectory} is not valid.",
+                MessageBox.Show($"The specified Data Directory {dataDirectory} is not valid.",
                                 "Invalid Data Directory!",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
@@ -1150,10 +1149,11 @@ namespace ManiacEditor
                         if (!folderBrowserDialog.ShowDialog())
                             return false;
 
-                        DataDirectory = folderBrowserDialog.FileName;
+                        if (IsDataDirectoryValid(folderBrowserDialog.FileName))
+                            DataDirectory = folderBrowserDialog.FileName;
                     }
                 }
-                while (!IsDataDirectoryValid());
+                while (null == DataDirectory);
 
                 SetGameConfig();
 
@@ -1218,6 +1218,9 @@ namespace ManiacEditor
                 mySettings.Save();
 
                 RefreshDataDirectories(dataDirectories);
+
+                _baseDataDirectoryLabel.Text = string.Format(_baseDataDirectoryLabel.Tag.ToString(), 
+                                                             dataDirectory);
             }
             catch (Exception ex)
             {

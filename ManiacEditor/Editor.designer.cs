@@ -38,6 +38,9 @@
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAspngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportEachLayerAspngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparatorRecentStart = new System.Windows.Forms.ToolStripSeparator();
+            this.recentDataDirectoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparatorRecentEnd = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,9 +65,11 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.GraphicPanel = new ManiacEditor.DevicePanel();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this._baseDataDirectoryLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.New = new System.Windows.Forms.ToolStripButton();
             this.Open = new System.Windows.Forms.ToolStripButton();
             this.Save = new System.Windows.Forms.ToolStripButton();
@@ -92,10 +97,6 @@
             this.selectTool = new System.Windows.Forms.ToolStripButton();
             this.placeTilesButton = new System.Windows.Forms.ToolStripButton();
             this.ShowAnimations = new System.Windows.Forms.ToolStripButton();
-            this.GraphicPanel = new ManiacEditor.DevicePanel();
-            this.toolStripSeparatorRecentStart = new System.Windows.Forms.ToolStripSeparator();
-            this.recentDataDirectoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparatorRecentEnd = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -193,6 +194,23 @@
             this.exportEachLayerAspngToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.exportEachLayerAspngToolStripMenuItem.Text = "Export Each Layer as .png";
             this.exportEachLayerAspngToolStripMenuItem.Click += new System.EventHandler(this.exportEachLayerAspngToolStripMenuItem_Click);
+            // 
+            // toolStripSeparatorRecentStart
+            // 
+            this.toolStripSeparatorRecentStart.Name = "toolStripSeparatorRecentStart";
+            this.toolStripSeparatorRecentStart.Size = new System.Drawing.Size(212, 6);
+            // 
+            // recentDataDirectoriesToolStripMenuItem
+            // 
+            this.recentDataDirectoriesToolStripMenuItem.Enabled = false;
+            this.recentDataDirectoriesToolStripMenuItem.Name = "recentDataDirectoriesToolStripMenuItem";
+            this.recentDataDirectoriesToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.recentDataDirectoriesToolStripMenuItem.Text = "No Recent Data Directories";
+            // 
+            // toolStripSeparatorRecentEnd
+            // 
+            this.toolStripSeparatorRecentEnd.Name = "toolStripSeparatorRecentEnd";
+            this.toolStripSeparatorRecentEnd.Size = new System.Drawing.Size(212, 6);
             // 
             // exitToolStripMenuItem
             // 
@@ -421,6 +439,30 @@
             this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
             this.vScrollBar1.ValueChanged += new System.EventHandler(this.vScrollBar1_ValueChanged);
             // 
+            // GraphicPanel
+            // 
+            this.GraphicPanel.AllowDrop = true;
+            this.GraphicPanel.DeviceBackColor = System.Drawing.Color.White;
+            this.GraphicPanel.Location = new System.Drawing.Point(0, 0);
+            this.GraphicPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.GraphicPanel.Name = "GraphicPanel";
+            this.GraphicPanel.Size = new System.Drawing.Size(882, 482);
+            this.GraphicPanel.TabIndex = 0;
+            this.GraphicPanel.OnRender += new ManiacEditor.RenderEventHandler(this.GraphicPanel_OnRender);
+            this.GraphicPanel.OnCreateDevice += new ManiacEditor.CreateDeviceEventHandler(this.OnResetDevice);
+            this.GraphicPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.GraphicPanel_DragDrop);
+            this.GraphicPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.GraphicPanel_DragEnter);
+            this.GraphicPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.GraphicPanel_DragOver);
+            this.GraphicPanel.DragLeave += new System.EventHandler(this.GraphicPanel_DragLeave);
+            this.GraphicPanel.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GraphicPanel_OnKeyDown);
+            this.GraphicPanel.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GraphicPanel_OnKeyUp);
+            this.GraphicPanel.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseDoubleClick);
+            this.GraphicPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseDown);
+            this.GraphicPanel.MouseEnter += new System.EventHandler(this.GraphicPanel_MouseEnter);
+            this.GraphicPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseMove);
+            this.GraphicPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseUp);
+            this.GraphicPanel.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_MouseWheel);
+            // 
             // mainPanel
             // 
             this.mainPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -435,14 +477,13 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(9, 737);
+            this.toolStripStatusLabel1,
+            this._baseDataDirectoryLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 737);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(17, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1184, 22);
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -450,6 +491,13 @@
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
+            // _baseDataDirectoryLabel
+            // 
+            this._baseDataDirectoryLabel.Name = "_baseDataDirectoryLabel";
+            this._baseDataDirectoryLabel.Size = new System.Drawing.Size(0, 17);
+            this._baseDataDirectoryLabel.Tag = "Data Directory: {0}";
+            this._baseDataDirectoryLabel.ToolTipText = "This is the base Data Directory";
             // 
             // New
             // 
@@ -743,47 +791,6 @@
             this.ShowAnimations.ToolTipText = "Hide Animations";
             this.ShowAnimations.Click += new System.EventHandler(this.ShowAnimations_Click);
             // 
-            // GraphicPanel
-            // 
-            this.GraphicPanel.AllowDrop = true;
-            this.GraphicPanel.DeviceBackColor = System.Drawing.Color.White;
-            this.GraphicPanel.Location = new System.Drawing.Point(0, 0);
-            this.GraphicPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.GraphicPanel.Name = "GraphicPanel";
-            this.GraphicPanel.Size = new System.Drawing.Size(882, 482);
-            this.GraphicPanel.TabIndex = 0;
-            this.GraphicPanel.OnRender += new ManiacEditor.RenderEventHandler(this.GraphicPanel_OnRender);
-            this.GraphicPanel.OnCreateDevice += new ManiacEditor.CreateDeviceEventHandler(this.OnResetDevice);
-            this.GraphicPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.GraphicPanel_DragDrop);
-            this.GraphicPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.GraphicPanel_DragEnter);
-            this.GraphicPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.GraphicPanel_DragOver);
-            this.GraphicPanel.DragLeave += new System.EventHandler(this.GraphicPanel_DragLeave);
-            this.GraphicPanel.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GraphicPanel_OnKeyDown);
-            this.GraphicPanel.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GraphicPanel_OnKeyUp);
-            this.GraphicPanel.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseDoubleClick);
-            this.GraphicPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseDown);
-            this.GraphicPanel.MouseEnter += new System.EventHandler(this.GraphicPanel_MouseEnter);
-            this.GraphicPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseMove);
-            this.GraphicPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseUp);
-            this.GraphicPanel.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_MouseWheel);
-            // 
-            // toolStripSeparatorRecentStart
-            // 
-            this.toolStripSeparatorRecentStart.Name = "toolStripSeparatorRecentStart";
-            this.toolStripSeparatorRecentStart.Size = new System.Drawing.Size(212, 6);
-            // 
-            // recentDataDirectoriesToolStripMenuItem
-            // 
-            this.recentDataDirectoriesToolStripMenuItem.Enabled = false;
-            this.recentDataDirectoriesToolStripMenuItem.Name = "recentDataDirectoriesToolStripMenuItem";
-            this.recentDataDirectoriesToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.recentDataDirectoriesToolStripMenuItem.Text = "No Recent Data Directories";
-            // 
-            // toolStripSeparatorRecentEnd
-            // 
-            this.toolStripSeparatorRecentEnd.Name = "toolStripSeparatorRecentEnd";
-            this.toolStripSeparatorRecentEnd.Size = new System.Drawing.Size(212, 6);
-            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -890,6 +897,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorRecentStart;
         private System.Windows.Forms.ToolStripMenuItem recentDataDirectoriesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorRecentEnd;
+        private System.Windows.Forms.ToolStripStatusLabel _baseDataDirectoryLabel;
     }
 }
 
