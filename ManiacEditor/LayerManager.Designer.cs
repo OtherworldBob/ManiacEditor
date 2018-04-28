@@ -429,11 +429,13 @@
             // lblVertical
             // 
             this.lblVertical.AutoSize = true;
-            this.lblVertical.Location = new System.Drawing.Point(1, 5);
+            this.lblVertical.Location = new System.Drawing.Point(1, 7);
             this.lblVertical.Name = "lblVertical";
-            this.lblVertical.Size = new System.Drawing.Size(88, 13);
+            this.lblVertical.Size = new System.Drawing.Size(58, 13);
             this.lblVertical.TabIndex = 0;
-            this.lblVertical.Text = "Vertical Scrolling:";
+            this.lblVertical.Text = "Behaviour:";
+            this.toolTipProvider.SetToolTip(this.lblVertical, "Triggers special behaviours. \r\n0 = None.\r\n1, 2 & 3 are other valid values...\r\nbut" +
+        " most will only work on certain stages.");
             // 
             // panel4
             // 
@@ -464,11 +466,13 @@
             // lblUnknownByte2
             // 
             this.lblUnknownByte2.AutoSize = true;
-            this.lblUnknownByte2.Location = new System.Drawing.Point(1, 5);
+            this.lblUnknownByte2.Location = new System.Drawing.Point(1, 7);
             this.lblUnknownByte2.Name = "lblUnknownByte2";
-            this.lblUnknownByte2.Size = new System.Drawing.Size(89, 13);
+            this.lblUnknownByte2.Size = new System.Drawing.Size(78, 13);
             this.lblUnknownByte2.TabIndex = 0;
-            this.lblUnknownByte2.Text = "Unknown Byte 2:";
+            this.lblUnknownByte2.Text = "Drawing Order:";
+            this.toolTipProvider.SetToolTip(this.lblUnknownByte2, "Order in which layers are drawn.\r\n0 = Backmost\r\nBGSwitch entities and Behaviour v" +
+        "alues\r\ndo special things, so take care.");
             // 
             // panel5
             // 
@@ -585,7 +589,8 @@
             this.btnUp.Size = new System.Drawing.Size(23, 23);
             this.btnUp.TabIndex = 0;
             this.btnUp.Text = "↑";
-            this.toolTipProvider.SetToolTip(this.btnUp, "Move layer further into background.");
+            this.toolTipProvider.SetToolTip(this.btnUp, "Move layer earlier in list.\r\nIn the event of a draw order tie, later\r\nlayers seem" +
+        " to get drawn on top.");
             this.btnUp.UseVisualStyleBackColor = true;
             this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
             // 
@@ -598,7 +603,8 @@
             this.btnDown.Size = new System.Drawing.Size(23, 23);
             this.btnDown.TabIndex = 1;
             this.btnDown.Text = "↓";
-            this.toolTipProvider.SetToolTip(this.btnDown, "Move layer further into foreground.");
+            this.toolTipProvider.SetToolTip(this.btnDown, "Move layer later in list.\r\nIn the event of a draw order tie, later\r\nlayers seem t" +
+        "o get drawn on top.");
             this.btnDown.UseVisualStyleBackColor = true;
             this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
             // 
@@ -648,11 +654,11 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1, 5);
+            this.label4.Location = new System.Drawing.Point(1, 10);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 26);
+            this.label4.Size = new System.Drawing.Size(58, 13);
             this.label4.TabIndex = 0;
-            this.label4.Text = "Unknown\r\nByte 1:";
+            this.label4.Text = "Behaviour:";
             this.toolTipProvider.SetToolTip(this.label4, "0 = None\r\n1 = Fuzzing (some Zones)\r\nOther values = Unknown");
             // 
             // label6
