@@ -97,6 +97,7 @@
             this.selectTool = new System.Windows.Forms.ToolStripButton();
             this.placeTilesButton = new System.Windows.Forms.ToolStripButton();
             this.ShowAnimations = new System.Windows.Forms.ToolStripButton();
+            this.openDataDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -126,6 +127,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
             this.openToolStripMenuItem,
+            this.openDataDirectoryToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.exportToolStripMenuItem,
@@ -142,7 +144,7 @@
             this.newToolStripMenuItem.Enabled = false;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.newToolStripMenuItem.Text = "New..";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
@@ -150,7 +152,7 @@
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.openToolStripMenuItem.Text = "Open..";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -158,7 +160,7 @@
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.sToolStripMenuItem_Click);
             // 
@@ -168,7 +170,7 @@
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.S)));
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.saveAsToolStripMenuItem.Text = "Save As...";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
@@ -178,7 +180,7 @@
             this.saveAspngToolStripMenuItem,
             this.exportEachLayerAspngToolStripMenuItem});
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // saveAspngToolStripMenuItem
@@ -198,24 +200,24 @@
             // toolStripSeparatorRecentStart
             // 
             this.toolStripSeparatorRecentStart.Name = "toolStripSeparatorRecentStart";
-            this.toolStripSeparatorRecentStart.Size = new System.Drawing.Size(212, 6);
+            this.toolStripSeparatorRecentStart.Size = new System.Drawing.Size(244, 6);
             // 
             // recentDataDirectoriesToolStripMenuItem
             // 
             this.recentDataDirectoriesToolStripMenuItem.Enabled = false;
             this.recentDataDirectoriesToolStripMenuItem.Name = "recentDataDirectoriesToolStripMenuItem";
-            this.recentDataDirectoriesToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.recentDataDirectoriesToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.recentDataDirectoriesToolStripMenuItem.Text = "No Recent Data Directories";
             // 
             // toolStripSeparatorRecentEnd
             // 
             this.toolStripSeparatorRecentEnd.Name = "toolStripSeparatorRecentEnd";
-            this.toolStripSeparatorRecentEnd.Size = new System.Drawing.Size(212, 6);
+            this.toolStripSeparatorRecentEnd.Size = new System.Drawing.Size(244, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -791,6 +793,15 @@
             this.ShowAnimations.ToolTipText = "Hide Animations";
             this.ShowAnimations.Click += new System.EventHandler(this.ShowAnimations_Click);
             // 
+            // openDataDirectoryToolStripMenuItem
+            // 
+            this.openDataDirectoryToolStripMenuItem.Name = "openDataDirectoryToolStripMenuItem";
+            this.openDataDirectoryToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.O)));
+            this.openDataDirectoryToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.openDataDirectoryToolStripMenuItem.Text = "Open Data Directory";
+            this.openDataDirectoryToolStripMenuItem.Click += new System.EventHandler(this.openDataDirectoryToolStripMenuItem_Click);
+            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -898,6 +909,7 @@
         private System.Windows.Forms.ToolStripMenuItem recentDataDirectoriesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorRecentEnd;
         private System.Windows.Forms.ToolStripStatusLabel _baseDataDirectoryLabel;
+        private System.Windows.Forms.ToolStripMenuItem openDataDirectoryToolStripMenuItem;
     }
 }
 

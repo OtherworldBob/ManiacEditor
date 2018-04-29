@@ -181,11 +181,7 @@ namespace ManiacEditor
             var dataDirectories = Properties.Settings.Default.DataDirectories;
             if (IsDataDirectoryValid(dataDirectory))
             {
-                UnloadScene();
-                DataDirectory = dataDirectory;
-                AddRecentDataFolder(dataDirectory);
-                SetGameConfig();
-                OpenScene();
+                ResetDataDirectoryToAndResetScene(dataDirectory);
             }
             else
             {
@@ -197,6 +193,15 @@ namespace ManiacEditor
                 RefreshDataDirectories(dataDirectories);
             }
             Properties.Settings.Default.Save();
+        }
+
+        private void ResetDataDirectoryToAndResetScene(string newDataDirectory)
+        {
+            UnloadScene();
+            DataDirectory = newDataDirectory;
+            AddRecentDataFolder(newDataDirectory);
+            SetGameConfig();
+            OpenScene();
         }
 
         private bool IsEditing()
@@ -499,7 +504,14 @@ namespace ManiacEditor
             }
             else if (e.Control && e.KeyCode == Keys.O)
             {
-                Open_Click(null, null);
+                if (e.Alt)
+                {
+                    openDataDirectoryToolStripMenuItem_Click(null, null);
+                }
+                else
+	            {
+                    Open_Click(null, null); 
+                }
             }
             else if (e.Control && e.KeyCode == Keys.N)
             {
@@ -507,7 +519,14 @@ namespace ManiacEditor
             }
             else if (e.Control && e.KeyCode == Keys.S)
             {
-                Save_Click(null, null);
+                if (e.Alt)
+                {
+                    saveAsToolStripMenuItem_Click(null, null);
+                }
+                else
+                {
+                    Save_Click(null, null);
+                }
             }
             else if (e.Control && (e.KeyCode == Keys.D0 || e.KeyCode == Keys.NumPad0))
             {
@@ -1141,17 +1160,10 @@ namespace ManiacEditor
                 do
                 {
                     MessageBox.Show("Please select the \"Data\" folder", "Message");
+                    string newDataDirectory = GetDataDirectory();
 
-                    using (var folderBrowserDialog = new FolderSelectDialog())
-                    {
-                        folderBrowserDialog.Title = "Select Data Folder";
-
-                        if (!folderBrowserDialog.ShowDialog())
-                            return false;
-
-                        if (IsDataDirectoryValid(folderBrowserDialog.FileName))
-                            DataDirectory = folderBrowserDialog.FileName;
-                    }
+                    if (IsDataDirectoryValid(newDataDirectory))
+                        DataDirectory = newDataDirectory;
                 }
                 while (null == DataDirectory);
 
@@ -1163,6 +1175,19 @@ namespace ManiacEditor
             // Clears all the Textures
             EditorEntity.ReleaseResources();
             return true;
+        }
+
+        private string GetDataDirectory()
+        {
+            using (var folderBrowserDialog = new FolderSelectDialog())
+            {
+                folderBrowserDialog.Title = "Select Data Folder";
+
+                if (!folderBrowserDialog.ShowDialog())
+                    return null;
+
+                return folderBrowserDialog.FileName;
+            }
         }
 
         private bool IsDataDirectoryValid()
@@ -1498,6 +1523,22 @@ namespace ManiacEditor
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Open_Click(sender, e);
+        }
+
+        private void openDataDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newDataDirectory = GetDataDirectory();
+            if (null == newDataDirectory) return;
+            if (newDataDirectory.Equals(DataDirectory)) return;
+
+            if (IsDataDirectoryValid(newDataDirectory))
+                ResetDataDirectoryToAndResetScene(newDataDirectory);
+            else
+                MessageBox.Show($@"{newDataDirectory} is not
+a valid Data Directory.",
+                                "Invalid Data Directory!",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
         }
 
         public void OnResetDevice(object sender, DeviceEventArgs e)
