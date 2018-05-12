@@ -243,6 +243,7 @@ namespace ManiacEditor
             ShowFGLow.Enabled = enabled && FGLow != null;
             ShowEntities.Enabled = enabled;
             ShowAnimations.Enabled = enabled;
+            ReloadToolStripButton.Enabled = enabled;
 
             Save.Enabled = enabled;
 
@@ -2261,6 +2262,16 @@ Error: {ex.Message}");
             }
         }
 
+        private void ReloadToolStripButton_Click(object sender, EventArgs e)
+        {
+            // release all our resources, and force a reload of the tiles
+            // Entities should take care of themselves
+            DisposeTextures();
+            EditorEntity.ReleaseResources();
+
+            StageTiles?.Image.Reload();
+        }
+
         private void MapEditor_KeyUp(object sender, KeyEventArgs e)
         {
             if (!GraphicPanel.Focused && e.Control)
@@ -2306,9 +2317,14 @@ Error: {ex.Message}");
 
         public void DisposeTextures()
         {
-            if (StageTiles != null) StageTiles.DisposeTextures();
+            // Make sure to dispose the textures of the extra layers too
+            StageTiles?.DisposeTextures();
             if (FGHigh != null) FGHigh.DisposeTextures();
             if (FGLow != null) FGLow.DisposeTextures();
+            foreach (var el in EditorScene.OtherLayers)
+            {
+                el.DisposeTextures();
+            }
         }
 
         public Rectangle GetScreen()
