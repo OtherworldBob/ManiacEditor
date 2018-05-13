@@ -2264,12 +2264,20 @@ Error: {ex.Message}");
 
         private void ReloadToolStripButton_Click(object sender, EventArgs e)
         {
-            // release all our resources, and force a reload of the tiles
-            // Entities should take care of themselves
-            DisposeTextures();
-            EditorEntity.ReleaseResources();
+            try
+            {
+                // release all our resources, and force a reload of the tiles
+                // Entities should take care of themselves
+                DisposeTextures();
+                EditorEntity.ReleaseResources();
 
-            StageTiles?.Image.Reload();
+                StageTiles?.Image.Reload();
+                TilesToolbar?.Reload();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void MapEditor_KeyUp(object sender, KeyEventArgs e)

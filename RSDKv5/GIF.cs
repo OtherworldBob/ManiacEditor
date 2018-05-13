@@ -31,7 +31,7 @@ namespace RSDKv5
             _bitmap.MakeTransparent(SystemColor.FromArgb(0xff00ff));
         }
 
-        public GIF(Bitmap bitmap)
+        private GIF(Bitmap bitmap)
         {
             this._bitmap = new Bitmap(bitmap);
         }
@@ -102,6 +102,11 @@ namespace RSDKv5
 
         public void Reload()
         {
+            if (!File.Exists(_bitmapFilename))
+            {
+                throw new FileNotFoundException(string.Format("Could not find the file {0}", _bitmapFilename), 
+                                                _bitmapFilename);
+            }
             ReleaseResources();
             _bitmap = new Bitmap(_bitmapFilename);
             _bitmap.MakeTransparent(SystemColor.FromArgb(0xff00ff));
@@ -118,7 +123,7 @@ namespace RSDKv5
 
         public GIF Clone()
         {
-            return new GIF(_bitmap);
+            return new GIF(_bitmapFilename);
         }
     }
 }
