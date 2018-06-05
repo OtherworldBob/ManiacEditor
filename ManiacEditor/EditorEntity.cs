@@ -299,14 +299,28 @@ namespace ManiacEditor
                 Bitmap map;
                 if (!Sheets.ContainsKey(rsdkAnim.SpriteSheets[frame.SpriteSheet]))
                 {
-                    map = new Bitmap(Path.Combine(Editor.DataDirectory, "sprites", rsdkAnim.SpriteSheets[frame.SpriteSheet].Replace('/', '\\')));
-                    Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet], map);
+                    string targetFile = Path.Combine(Editor.DataDirectory, "sprites", rsdkAnim.SpriteSheets[frame.SpriteSheet].Replace('/', '\\'));
+                    if (!File.Exists(targetFile))
+                    {
+                        map = null;
+                        // add a Null to our lookup, so we can avoid looking again in the future
+                        Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet], map);
+                    }
+                    else
+                    {
+                        map = new Bitmap(targetFile);
+                        Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet], map);
+                    }
                 }
                 else
                     map = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
 
                 if (frame.Width == 0 || frame.Height == 0)
                     continue;
+
+                // can't load the animation, it probably doesn't exist in the User's Sprites folder
+                if (map == null) return null;
+
                 // We are storing the first colour from the palette so we can use it to make sprites transparent
                 var colour = map.Palette.Entries[0];
                 // Slow
