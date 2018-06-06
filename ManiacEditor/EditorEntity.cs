@@ -985,6 +985,9 @@ namespace ManiacEditor
                     try
                     {
                         editorAnim = LoadAnimation("Platform", d, aminID, -1, false, false, false);
+
+                        if (editorAnim == null) return; // no animation, bail out
+
                         frameID += editorAnim.Frames.Count;
                         if (targetFrameID < frameID)
                         {
@@ -1019,7 +1022,7 @@ namespace ManiacEditor
             DataDirectoryList = null;
 
             foreach (var pair in Sheets)
-                pair.Value.Dispose();
+                pair.Value?.Dispose();
             Sheets.Clear();
 
             foreach (var pair in Animations)
