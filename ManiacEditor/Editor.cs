@@ -597,11 +597,15 @@ namespace ManiacEditor
                     {
                         if (IsTilesEdit())
                             flipVerticalToolStripMenuItem_Click(sender, e);
+                        else if (IsEntitiesEdit())
+                            entities.Flip(FlipDirection.Veritcal);
                     }
                     else if (e.KeyData == Keys.M)
                     {
                         if (IsTilesEdit())
                             flipHorizontalToolStripMenuItem_Click(sender, e);
+                        else if (IsEntitiesEdit())
+                            entities.Flip(FlipDirection.Horizontal);
                     }
                     if (e.Control)
                     {
