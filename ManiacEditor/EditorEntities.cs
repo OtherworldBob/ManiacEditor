@@ -320,6 +320,8 @@ namespace ManiacEditor
                     int newY = fromBottom < fromTop ? max - fromBottom : min + fromTop;
                     entity.Entity.Position.Y.High = (short)newY;
                 }
+
+                entity.Flip(direction);
             }
         }
     }
