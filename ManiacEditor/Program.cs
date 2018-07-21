@@ -51,8 +51,9 @@ Missing file: {fnfe.FileName}");
 
         private static string GetExecutingDirectoryName()
         {
-            var location = new Uri(Assembly.GetEntryAssembly().GetName().CodeBase);
-            return new FileInfo(location.AbsolutePath).Directory.FullName;
+            string exeLocationUrl = Assembly.GetEntryAssembly().GetName().CodeBase;
+            string exeLocation = new Uri(exeLocationUrl).LocalPath;
+            return new FileInfo(exeLocation).Directory.FullName;
         }
 
         private static FileStream GetObjectsIniResource()
