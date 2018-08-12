@@ -69,5 +69,91 @@ namespace ManiacEditor.Properties {
                 this["GamePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public bool forceCopyUnlock {
+            get {
+                return ((bool)(this["forceCopyUnlock"]));
+            }
+            set {
+                this["forceCopyUnlock"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public bool keepLayersVisible {
+            get {
+                return ((bool)(this["keepLayersVisible"]));
+            }
+            set {
+                this["keepLayersVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showManiaEntities {
+            get {
+                return ((bool)(this["showManiaEntities"]));
+            }
+            set {
+                this["showManiaEntities"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showEncoreEntities {
+            get {
+                return ((bool)(this["showEncoreEntities"]));
+            }
+            set {
+                this["showEncoreEntities"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showBothEntities {
+            get {
+                return ((bool)(this["showBothEntities"]));
+            }
+            set {
+                this["showBothEntities"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showOtherEntities {
+            get {
+                return ((bool)(this["showOtherEntities"]));
+            }
+            set {
+                this["showOtherEntities"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Mania (2)")]
+        public string DefaultFilter {
+            get {
+                return ((string)(this["DefaultFilter"]));
+            }
+            set {
+                this["DefaultFilter"] = value;
+            }
+        }
     }
 }

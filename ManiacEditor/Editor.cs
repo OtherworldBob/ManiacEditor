@@ -63,6 +63,9 @@ namespace ManiacEditor
 
         internal Dictionary<Point, ushort> TilesClipboard;
         private List<EditorEntity> entitiesClipboard;
+        internal int SelectedTilesCount;
+        internal int SelectedTileX;
+        internal int SelectedTileY;
 
         internal int SceneWidth => EditorScene.Layers.Max(sl => sl.Width) * 16;
         internal int SceneHeight => EditorScene.Layers.Max(sl => sl.Height) * 16;
@@ -309,7 +312,7 @@ namespace ManiacEditor
             selectTool.Enabled = enabled && IsTilesEdit();
             placeTilesButton.Enabled = enabled && IsTilesEdit();
 
-            if (enabled && IsTilesEdit() && TilesClipboard != null)
+            if (enabled && IsTilesEdit() && (TilesClipboard != null || Clipboard.ContainsData("ManiacTiles")))
                 pasteToolStripMenuItem.Enabled = true;
             else
                 pasteToolStripMenuItem.Enabled = false;
@@ -774,6 +777,10 @@ namespace ManiacEditor
             }
 
             toolStripStatusLabel1.Text = "X: " + (int)(e.X / Zoom) + " Y: " + (int)(e.Y / Zoom);
+            toolStripStatusLabel2.Text = "Selected Tile Position: (X: " + (int)SelectedTileX + ", Y: " + (int)SelectedTileY + ")";
+            toolStripStatusLabel3.Text = "Selection Count: " + (int)SelectedTilesCount;
+            toolStripStatusLabel4.Text = ""; //Reserved for More Useful Info
+            toolStripStatusLabel5.Text = ""; //Reserved for More Useful Info
 
             if (IsEditing())
             {
@@ -1283,8 +1290,12 @@ namespace ManiacEditor
 
             Background = null;
 
-            TilesClipboard = null;
-            entitiesClipboard = null;
+            if (!Properties.Settings.Default.forceCopyUnlock)
+            {
+                TilesClipboard = null;
+                entitiesClipboard = null;
+            }
+
 
             entities = null;
 
@@ -1423,8 +1434,11 @@ namespace ManiacEditor
             Deselect(false);
             if (tsb.Checked)
             {
-                ShowFGLow.Checked = false;
-                ShowFGHigh.Checked = false;
+                if (!Properties.Settings.Default.keepLayersVisible)
+                {
+                    ShowFGLow.Checked = false;
+                    ShowFGHigh.Checked = false;
+                }
                 EditFGLow.Checked = false;
                 EditFGHigh.Checked = false;
                 EditEntities.Checked = false;
@@ -1877,14 +1891,36 @@ Error: {ex.Message}");
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (IsTilesEdit())
-            {
-                TilesClipboard = EditLayer.CopyToClipboard();
-            }
+                CopyTilesToClipboard();
             else if (IsEntitiesEdit())
-            {
-                entitiesClipboard = entities.CopyToClipboard();
-            }
+                CopyEntitiesToClipboard();
+
             UpdateControls();
+        }
+
+        private void CopyTilesToClipboard()
+        {
+            Dictionary<Point, ushort> copyData = EditLayer.CopyToClipboard();
+
+            // Make a DataObject for the copied data and send it to the Windows clipboard for cross-instance copying
+            Clipboard.SetDataObject(new DataObject("ManiacTiles", copyData), true);
+
+            // Also copy to Maniac's clipboard in case it gets overwritten elsewhere
+            TilesClipboard = copyData;
+        }
+
+        private void CopyEntitiesToClipboard()
+        {
+            List<EditorEntity> copyData = entities.CopyToClipboard();
+
+            /*
+            // Make a DataObject for the copied data and send it to the Windows clipboard for cross-instance copying
+            Clipboard.SetDataObject(new DataObject("ManiacEntities", copyData), true);
+            Console.WriteLine("Copied entities to Windows clipboard...");
+            */
+
+            // Also copy to Maniac's clipboard in case it gets overwritten elsewhere
+            entitiesClipboard = copyData;
         }
 
         private void duplicateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1999,14 +2035,14 @@ Error: {ex.Message}");
         {
             if (IsTilesEdit())
             {
-                TilesClipboard = EditLayer.CopyToClipboard();
+                CopyTilesToClipboard();
                 DeleteSelected();
                 UpdateControls();
                 UpdateEditLayerActions();
             }
             else if (IsEntitiesEdit())
             {
-                entitiesClipboard = entities.CopyToClipboard();
+                CopyEntitiesToClipboard();
                 DeleteSelected();
                 UpdateControls();
             }
@@ -2014,17 +2050,52 @@ Error: {ex.Message}");
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (IsTilesEdit() && TilesClipboard != null)
+            if (IsTilesEdit())
             {
-                EditLayer.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), TilesClipboard);
-                UpdateEditLayerActions();
+                // check if there are tiles on the Windows clipboard; if so, use those
+                if (Clipboard.ContainsData("ManiacTiles"))
+                {
+                    EditLayer.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), (Dictionary<Point, ushort>)Clipboard.GetDataObject().GetData("ManiacTiles"));
+                    UpdateEditLayerActions();
+                }
+
+                // if there's none, use the internal clipboard
+                else if (TilesClipboard != null)
+                {
+                    EditLayer.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), TilesClipboard);
+                    UpdateEditLayerActions();
+                }
             }
             else if (IsEntitiesEdit())
             {
                 try
                 {
-                    entities.PasteFromClipboard(new Point((int)(lastX / Zoom), (int)(lastY / Zoom)), entitiesClipboard);
-                    UpdateLastEntityAction();
+                    /*
+                    // check if there are entities on the Windows clipboard; if so, use those
+                    if (Clipboard.ContainsData("ManiacEntities"))
+                    {
+                        Object tempClipboard = Clipboard.GetDataObject().GetData("ManiacEntities");
+                        // this always returns null for some reason...
+
+                        if (tempClipboard == null)
+                            Console.WriteLine("Tragically, tempClipboard is null");
+                        else
+                            Console.WriteLine("Pasted from Windows clipboard!!");
+
+                        entities.PasteFromClipboard(new Point((int)(lastX / Zoom), (int)(lastY / Zoom)), (List<EditorEntity>)tempClipboard);.
+
+                        UpdateLastEntityAction();
+                    }
+
+                    // if there's none, use the internal clipboard
+                    else*/ if (entitiesClipboard != null)
+                    {
+                        entities.PasteFromClipboard(new Point((int)(lastX / Zoom), (int)(lastY / Zoom)), entitiesClipboard);
+
+                        //Console.WriteLine("Pasted from Maniac clipboard!!");
+
+                        UpdateLastEntityAction();
+                    }
                 }
                 catch (EditorEntities.TooManyEntitiesException)
                 {
@@ -2353,6 +2424,16 @@ Error: {ex.Message}");
                 GameRunning = false;
                 Invoke(new Action(() => UpdateControls()));
             }).Start();
+
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void toolStripStatusLabel2_Click(object sender, EventArgs e)
+        {
 
         }
 
