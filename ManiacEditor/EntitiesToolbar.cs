@@ -407,10 +407,18 @@ namespace ManiacEditor
 
         private void btnSpawn_Click(object sender, EventArgs e)
         {
-            if (cbSpawn?.SelectedItem != null
-                && cbSpawn.SelectedItem is RSDKv5.SceneObject)
+            try
             {
-                Spawn?.Invoke(cbSpawn.SelectedItem as RSDKv5.SceneObject);
+                if (cbSpawn?.SelectedItem != null
+                        && cbSpawn.SelectedItem is RSDKv5.SceneObject)
+                {
+                    Spawn?.Invoke(cbSpawn.SelectedItem as RSDKv5.SceneObject);
+                }
+            }
+            catch (EditorEntities.TooManyEntitiesException)
+            {
+                MessageBox.Show("Too many entities! (limit: 2048)", "Error", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
