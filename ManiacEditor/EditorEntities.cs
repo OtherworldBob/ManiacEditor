@@ -114,13 +114,31 @@ namespace ManiacEditor
             }
         }
 
-        private void AddEntities(List<EditorEntity> entities)
+        /// <summary>
+        /// Adds an entity to the Scene, and consumes the specified ID Slot.
+        /// </summary>
+        /// <param name="entity">Entity to add to the scene.</param>
+        private void AddEntity(EditorEntity entity)
         {
+            entity.Entity.Object.Entities.Add(entity.Entity);
+            this.entities.Add(entity);
+            entitiesBySlot[entity.Entity.SlotID] = entity;
+        }
+
+        /// <summary>
+        /// Adds a set of entities to the Scene, and consumes the ID Slot specified for each.
+        /// </summary>
+        /// <param name="entities">Set of entities.</param>
+        private void AddEntities(IEnumerable<EditorEntity> entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
             foreach (var entity in entities)
             {
-                entity.Entity.Object.Entities.Add(entity.Entity);
-                this.entities.Add(entity);
-                entitiesBySlot[entity.Entity.SlotID] = entity;
+                AddEntity(entity);
             }
         }
 
@@ -138,11 +156,21 @@ namespace ManiacEditor
         private void DuplicateEntities(List<EditorEntity> entities)
         {
             if (null == entities || !entities.Any()) return;
-            
-            var new_entities = entities.Select(x => GenerateEditorEntity(new RSDKv5.SceneEntity(x.Entity, getFreeSlot(x.Entity)))).ToList();
+
+            // work out a slot for each entity, and add it in turn
+            // this should prevent generating the same ID for each member of the list
+            var new_entities = new List<EditorEntity>();
+            foreach (var entity in entities)
+            {
+                ushort slot = getFreeSlot(entity.Entity);
+                var sceneEntity = new SceneEntity(entity.Entity, slot);
+                var editorEntity = GenerateEditorEntity(sceneEntity);
+                AddEntity(editorEntity);
+                new_entities.Add(editorEntity);
+            }
+
             if (new_entities.Count > 0)
                 LastAction = new Actions.ActionAddDeleteEntities(new_entities.ToList(), true, x => AddEntities(x), x => DeleteEntities(x));
-            AddEntities(new_entities);
             Deselect();
             selectedEntities.AddRange(new_entities);
             foreach (var entity in new_entities)
