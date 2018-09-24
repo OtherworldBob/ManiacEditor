@@ -88,7 +88,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this._baseDataDirectoryLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
+            this.toolStrip3 = new System.Windows.Forms.StatusStrip();
             this.positionLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.selectionSizeLabel = new System.Windows.Forms.ToolStripLabel();
@@ -149,6 +149,8 @@
             this.x16ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x128ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GraphicPanel = new ManiacEditor.DevicePanel();
+            this.spacingLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -656,9 +658,9 @@
             // 
             // toolStrip3
             // 
-            this.toolStrip3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStrip3.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSeparator15,
             this.positionLabel,
             this.toolStripSeparator11,
             this.selectionSizeLabel,
@@ -666,56 +668,57 @@
             this.selectedPositionLabel,
             this.toolStripSeparator13,
             this.statusLabel,
+            this.spacingLabel,
             this.pixelModeButton,
-            this.scrollLockButton,
-            this.nudgeFasterButton});
-            this.toolStrip3.Location = new System.Drawing.Point(0, 712);
+            this.nudgeFasterButton,
+            this.scrollLockButton});
+            this.toolStrip3.Location = new System.Drawing.Point(0, 714);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(1184, 25);
+            this.toolStrip3.Size = new System.Drawing.Size(1184, 23);
             this.toolStrip3.TabIndex = 11;
             this.toolStrip3.Text = "toolStrip3";
             // 
             // positionLabel
             // 
             this.positionLabel.Name = "positionLabel";
-            this.positionLabel.Size = new System.Drawing.Size(0, 22);
+            this.positionLabel.Size = new System.Drawing.Size(0, 21);
             this.positionLabel.ToolTipText = "The position relative to your mouse (Pixels Only for Now)";
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
             this.toolStripSeparator11.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(6, 23);
             // 
             // selectionSizeLabel
             // 
             this.selectionSizeLabel.Name = "selectionSizeLabel";
             this.selectionSizeLabel.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.selectionSizeLabel.Size = new System.Drawing.Size(0, 22);
+            this.selectionSizeLabel.Size = new System.Drawing.Size(0, 21);
             this.selectionSizeLabel.ToolTipText = "The Size of the Selection";
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
             this.toolStripSeparator12.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(6, 23);
             // 
             // selectedPositionLabel
             // 
             this.selectedPositionLabel.Name = "selectedPositionLabel";
             this.selectedPositionLabel.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.selectedPositionLabel.Size = new System.Drawing.Size(0, 22);
+            this.selectedPositionLabel.Size = new System.Drawing.Size(0, 21);
             this.selectedPositionLabel.ToolTipText = "The Position of the Selected Tile";
             // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 23);
             // 
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(0, 22);
+            this.statusLabel.Size = new System.Drawing.Size(0, 21);
             // 
             // pixelModeButton
             // 
@@ -725,7 +728,7 @@
             this.pixelModeButton.Image = ((System.Drawing.Image)(resources.GetObject("pixelModeButton.Image")));
             this.pixelModeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.pixelModeButton.Name = "pixelModeButton";
-            this.pixelModeButton.Size = new System.Drawing.Size(69, 22);
+            this.pixelModeButton.Size = new System.Drawing.Size(69, 21);
             this.pixelModeButton.Text = "Pixel Mode";
             this.pixelModeButton.ToolTipText = "Change the Positional/Selection Values to Pixel or Tile Based Values";
             this.pixelModeButton.Click += new System.EventHandler(this.pixelModeButton_Click);
@@ -738,7 +741,7 @@
             this.scrollLockButton.Image = ((System.Drawing.Image)(resources.GetObject("scrollLockButton.Image")));
             this.scrollLockButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.scrollLockButton.Name = "scrollLockButton";
-            this.scrollLockButton.Size = new System.Drawing.Size(68, 22);
+            this.scrollLockButton.Size = new System.Drawing.Size(68, 21);
             this.scrollLockButton.Text = "Scroll Lock";
             this.scrollLockButton.ToolTipText = "Prevent the Mouse Wheel from Scrolling with the vertical scroll bar\r\nShortcut Key" +
     ": B";
@@ -751,7 +754,7 @@
             this.nudgeFasterButton.Image = ((System.Drawing.Image)(resources.GetObject("nudgeFasterButton.Image")));
             this.nudgeFasterButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.nudgeFasterButton.Name = "nudgeFasterButton";
-            this.nudgeFasterButton.Size = new System.Drawing.Size(81, 22);
+            this.nudgeFasterButton.Size = new System.Drawing.Size(81, 21);
             this.nudgeFasterButton.Text = "Nudge Faster";
             this.nudgeFasterButton.ToolTipText = "Move entities/tiles in a larger increment. (Configurable in Options)\r\nShortcut Ke" +
     "y: N";
@@ -1294,14 +1297,14 @@
             // x16ToolStripMenuItem
             // 
             this.x16ToolStripMenuItem.Name = "x16ToolStripMenuItem";
-            this.x16ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.x16ToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.x16ToolStripMenuItem.Text = "16x16";
             this.x16ToolStripMenuItem.Click += new System.EventHandler(this.x16ToolStripMenuItem_Click);
             // 
             // x128ToolStripMenuItem
             // 
             this.x128ToolStripMenuItem.Name = "x128ToolStripMenuItem";
-            this.x128ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.x128ToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.x128ToolStripMenuItem.Text = "128x128";
             this.x128ToolStripMenuItem.Click += new System.EventHandler(this.x128ToolStripMenuItem_Click);
             // 
@@ -1329,6 +1332,19 @@
             this.GraphicPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseMove);
             this.GraphicPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseUp);
             this.GraphicPanel.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_MouseWheel);
+            // 
+            // spacingLabel
+            // 
+            this.spacingLabel.Name = "spacingLabel";
+            this.spacingLabel.Size = new System.Drawing.Size(896, 18);
+            this.spacingLabel.Spring = true;
+            this.spacingLabel.Text = "                              ";
+            // 
+            // toolStripSeparator15
+            // 
+            this.toolStripSeparator15.Name = "toolStripSeparator15";
+            this.toolStripSeparator15.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.toolStripSeparator15.Size = new System.Drawing.Size(6, 23);
             // 
             // Editor
             // 
@@ -1423,7 +1439,7 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripMenuItem controlsToolStripMenuItem;
-        private System.Windows.Forms.ToolStrip toolStrip3;
+        private System.Windows.Forms.StatusStrip toolStrip3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripLabel selectionSizeLabel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
@@ -1431,7 +1447,6 @@
         private System.Windows.Forms.ToolStripButton scrollLockButton;
         private System.Windows.Forms.ToolStripLabel positionLabel;
         private System.Windows.Forms.ToolStripStatusLabel _baseDataDirectoryLabel;
-        private System.Windows.Forms.ToolStripButton pixelModeButton;
         private System.Windows.Forms.ToolStripButton nudgeFasterButton;
         private System.Windows.Forms.ToolStripMenuItem removeObjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem backupToolStripMenuItem;
@@ -1495,6 +1510,9 @@
         private System.Windows.Forms.ToolStripSplitButton gridSizeButton;
         private System.Windows.Forms.ToolStripMenuItem x16ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem x128ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton pixelModeButton;
+        private System.Windows.Forms.ToolStripStatusLabel spacingLabel;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
     }
 }
 

@@ -145,7 +145,6 @@
             this.Controls.Add(this.progressBar1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "preLoadBox";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

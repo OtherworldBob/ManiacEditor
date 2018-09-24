@@ -3933,7 +3933,7 @@ Error: {ex.Message}");
 
         private void openDataDirectoryMenuButton(object sender, EventArgs e)
         {
-            string dataDirectory = _recentDataItems[0].Tag.ToString();
+            string dataDirectory = _recentDataItems[1].Tag.ToString();
             if (dataDirectory != null)
             {
                 RecentDataDirectoryClicked(sender, e, dataDirectory);
@@ -4066,28 +4066,23 @@ Error: {ex.Message}");
             toolStripSplitButton1.AutoToolTip = true;
         }
 
+        public void toggleEditorButtons(bool enabled)
+        {
+            Editor.Instance.menuStrip1.Enabled = enabled;
+            Editor.Instance.toolStrip1.Enabled = enabled;
+            Editor.Instance.toolStrip2.Enabled = enabled;
+            Editor.Instance.toolStrip3.Enabled = enabled;
+            Editor.Instance.toolStrip4.Enabled = enabled;
+            Editor.Instance.panel3.Enabled = enabled;
+            Editor.Instance.splitContainer1.Enabled = enabled;
+        }
+
         public void preLoadSceneButton_Click(object sender, EventArgs e)
         {
             isPreRending = true;
-            var thread = new Thread(
-            () =>
-            {
-                preLoadBox p = new preLoadBox();
-                p.ShowDialog();
-            });
-            thread.Start();
-
-            var preLoadForm = (preLoadBox)Application.OpenForms["preLoadBox"] as preLoadBox;
-            //TODO: This is supposed to grab the open box so we can make calls to it, but it does not
-            for (bool s = false; s == true;)
-            {
-                preLoadForm = (preLoadBox)Application.OpenForms["preLoadBox"] as preLoadBox;
-                if(preLoadForm != null)
-                {
-                    s = true;
-                }
-            }
-            
+            preLoadBox preLoadForm = new preLoadBox();
+            preLoadForm.Show();
+            toggleEditorButtons(false);
 
 
             hScrollBar1.Value = 0;
@@ -4109,7 +4104,8 @@ Error: {ex.Message}");
                     {
                         x = x + 100;
                     }
-                    //progressValueX = (hScrollBar1.Value / hScrollBar1.Maximum);
+                    Application.DoEvents();
+                    //preLoadForm.SetProgressBarStatus(progressValueX, progressValueY);
                     // Enable when the previous TODO above is Fixed
 
                 }
@@ -4123,8 +4119,8 @@ Error: {ex.Message}");
                 {
                     y = y + 100;
                 }
-                //progressValueY = (vScrollBar1.Value / vScrollBar1.Maximum);
-                // Enable when the previous TODO above is Fixed
+                Application.DoEvents();
+                //preLoadForm.SetProgressBarStatus(progressValueX, progressValueY);
 
 
             }
@@ -4133,7 +4129,8 @@ Error: {ex.Message}");
 
             // get the form reference back and close it
             isPreRending = false;
-            thread.Abort();
+            preLoadForm.Close();
+            toggleEditorButtons(true);
         }
 
         private void gameOptionsToolStripMenuItem_Click(object sender, EventArgs e)
