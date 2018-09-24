@@ -9,6 +9,7 @@ Find the fork by **OtherworldBob** over [there](https://github.com/OtherworldBob
 BUILD STATUS NOT OFFERED FOR NOW, Sorry.
 
 This Fork is Experimental, if OtherworldBob does not comeback, this might become the main fork. No Guarentees though.
+Also, apearently koolkdev is potetnially back, so we will se what will happen to this fork.
 
 ## Tiles editing
 
