@@ -391,7 +391,7 @@ namespace ManiacEditor
             {
                 AllowSceneChange = false;
                 UnloadScene();
-                UseVisibilityPrefrences();
+                UseDefaultPrefrences();
                 DataDirectory = newDataDirectory;
                 AddRecentDataFolder(newDataDirectory);
                 SetGameConfig();
@@ -2000,7 +2000,7 @@ namespace ManiacEditor
             CollisionLayerB.Clear();
         }
 
-        void UseVisibilityPrefrences()
+        void UseDefaultPrefrences()
         {
             if (!Properties.Settings.Default.FGLowerDefault)
             {
@@ -2050,6 +2050,39 @@ namespace ManiacEditor
             {
                 ShowAnimations.Checked = true;
             }
+            if (!Properties.Settings.Default.x16Default)
+            {
+                x16ToolStripMenuItem.Checked = false;
+            }
+            else
+            {
+                x16ToolStripMenuItem.Checked = true;
+            }
+            if (!Properties.Settings.Default.x128Default)
+            {
+                x128ToolStripMenuItem.Checked = false;
+            }
+            else
+            {
+                x128ToolStripMenuItem.Checked = true;
+            }
+            if (!Properties.Settings.Default.x256Default)
+            {
+                x256ToolStripMenuItem.Checked = false;
+            }
+            else
+            {
+                x256ToolStripMenuItem.Checked = true;
+            }
+            if (!Properties.Settings.Default.CustomGridDefault)
+            {
+                customToolStripMenuItem.Checked = false;
+            }
+            else
+            {
+                customToolStripMenuItem.Checked = true;
+            }
+
         }
 
         private void Open_Click(object sender, EventArgs e)
@@ -2082,7 +2115,7 @@ namespace ManiacEditor
                 return;
 
             UnloadScene();
-            UseVisibilityPrefrences();
+            UseDefaultPrefrences();
 
             try
             {
@@ -2181,7 +2214,7 @@ namespace ManiacEditor
                 return;
 
             UnloadScene();
-            UseVisibilityPrefrences();
+            UseDefaultPrefrences();
 
             try
             {
@@ -3442,6 +3475,22 @@ Error: {ex.Message}");
             }
         }
 
+        private void ReloadSpecificTextures(object sender, EventArgs e)
+        {
+            try
+            {
+                // release all our resources, and force a reload of the tiles
+                // Entities should take care of themselves
+                DisposeTextures();
+
+                StageTiles?.Image.Reload();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void RunScene_Click(object sender, EventArgs e)
         {
             IntPtr hWnd = FindWindow("SonicMania", null); // this gives you the handle of the window you need.
@@ -3697,13 +3746,13 @@ Error: {ex.Message}");
             if (showTileIDButton.Checked == false)
             {
                 showTileIDButton.Checked = true;
-                ReloadToolStripButton_Click(sender, e);
+                ReloadSpecificTextures(sender, e);
                 showTileID = true;
             }
             else
             {
                 showTileIDButton.Checked = false;
-                ReloadToolStripButton_Click(sender, e);
+                ReloadSpecificTextures(sender, e);
                 showTileID = false;
             }
         }
@@ -3714,11 +3763,33 @@ Error: {ex.Message}");
             {
                 showGridButton.Checked = true;
                 showGrid = true;
+                gridCheckStateCheck();
+
             }
             else
             {
                 showGridButton.Checked = false;
                 showGrid = false;
+            }
+        }
+
+        private void gridCheckStateCheck()
+        {
+            if (x16ToolStripMenuItem.Checked == true)
+            {
+                Background.GRID_TILE_SIZE = 16;
+            }
+            if (x128ToolStripMenuItem.Checked == true)
+            {
+                Background.GRID_TILE_SIZE = 128;
+            }
+            if (x256ToolStripMenuItem.Checked == true)
+            {
+                Background.GRID_TILE_SIZE = 256;
+            }
+            if (customToolStripMenuItem.Checked == true)
+            {
+                Background.GRID_TILE_SIZE = Properties.Settings.Default.CustomGridSizeValue;
             }
         }
 
@@ -3730,7 +3801,7 @@ Error: {ex.Message}");
                 showCollisionA = true;
                 showCollisionBButton.Checked = false;
                 showCollisionB = false;
-                ReloadToolStripButton_Click(sender, e);
+                ReloadSpecificTextures(sender, e);
             }
             else
             {
@@ -3738,7 +3809,7 @@ Error: {ex.Message}");
                 showCollisionA = false;
                 showCollisionBButton.Checked = false;
                 showCollisionB = false;
-                ReloadToolStripButton_Click(sender, e);
+                ReloadSpecificTextures(sender, e);
             }
         }
 
@@ -3750,7 +3821,7 @@ Error: {ex.Message}");
                 showCollisionB = true;
                 showCollisionAButton.Checked = false;
                 showCollisionA = false;
-                ReloadToolStripButton_Click(sender, e);
+                ReloadSpecificTextures(sender, e);
             }
             else
             {
@@ -3758,7 +3829,7 @@ Error: {ex.Message}");
                 showCollisionB = false;
                 showCollisionAButton.Checked = false;
                 showCollisionA = false;
-                ReloadToolStripButton_Click(sender, e);
+                ReloadSpecificTextures(sender, e);
             }
         }
 
@@ -3913,7 +3984,7 @@ Error: {ex.Message}");
                 return;
 
             UnloadScene();
-            UseVisibilityPrefrences();
+            UseDefaultPrefrences();
             File.Replace(Result, ResultOriginal, ResultOld);
 
         }
@@ -4270,6 +4341,22 @@ Error: {ex.Message}");
         {
             x16ToolStripMenuItem.Checked = false;
             x128ToolStripMenuItem.Checked = false;
+            x256ToolStripMenuItem.Checked = false;
+            customToolStripMenuItem.Checked = false;
+        }
+
+        private void x256ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Background.GRID_TILE_SIZE = 256;
+            resetGridOptions();
+            x128ToolStripMenuItem.Checked = true;
+        }
+
+        private void customToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Background.GRID_TILE_SIZE = Properties.Settings.Default.CustomGridSizeValue;
+            resetGridOptions();
+            customToolStripMenuItem.Checked = true;
         }
 
         private void hScrollBar1_Entered(object sender, EventArgs e)

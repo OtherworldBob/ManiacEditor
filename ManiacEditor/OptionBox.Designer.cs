@@ -54,7 +54,17 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button10 = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.x256checkbox = new System.Windows.Forms.RadioButton();
+            this.customGridCheckbox = new System.Windows.Forms.RadioButton();
+            this.x16checkbox = new System.Windows.Forms.RadioButton();
+            this.x128checkbox = new System.Windows.Forms.RadioButton();
+            this.gridSizeDown = new System.Windows.Forms.Button();
+            this.gridSizeDownMore = new System.Windows.Forms.Button();
+            this.gridSizeUp = new System.Windows.Forms.Button();
+            this.gridSizeUpMore = new System.Windows.Forms.Button();
+            this.gridSizeValueLabel = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
             this.nudgeValueDownButton = new System.Windows.Forms.Button();
             this.nudgeValueDownMoreButton = new System.Windows.Forms.Button();
             this.nudgeValueUpButton = new System.Windows.Forms.Button();
@@ -122,6 +132,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.checkBox9 = new System.Windows.Forms.CheckBox();
             this.checkBox27 = new System.Windows.Forms.CheckBox();
             this.checkBox20 = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -152,7 +163,7 @@
             this.label31 = new System.Windows.Forms.Label();
             this.checkBox34 = new System.Windows.Forms.CheckBox();
             this.checkBox35 = new System.Windows.Forms.CheckBox();
-            this.checkBox9 = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tabPage4.SuspendLayout();
             this.panel11.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -173,6 +184,7 @@
             this.tabPage5.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel14.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPage4
@@ -474,7 +486,14 @@
             // 
             this.panel7.BackColor = System.Drawing.Color.Transparent;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel7.Controls.Add(this.groupBox1);
+            this.panel7.Controls.Add(this.gridSizeDown);
+            this.panel7.Controls.Add(this.gridSizeDownMore);
+            this.panel7.Controls.Add(this.gridSizeUp);
+            this.panel7.Controls.Add(this.gridSizeUpMore);
+            this.panel7.Controls.Add(this.gridSizeValueLabel);
             this.panel7.Controls.Add(this.label21);
+            this.panel7.Controls.Add(this.label32);
             this.panel7.Controls.Add(this.nudgeValueDownButton);
             this.panel7.Controls.Add(this.nudgeValueDownMoreButton);
             this.panel7.Controls.Add(this.nudgeValueUpButton);
@@ -494,8 +513,104 @@
             this.panel7.Controls.Add(this.checkBox3);
             this.panel7.Location = new System.Drawing.Point(192, 8);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(168, 404);
+            this.panel7.Size = new System.Drawing.Size(168, 532);
             this.panel7.TabIndex = 0;
+            // 
+            // x256checkbox
+            // 
+            this.x256checkbox.BackColor = System.Drawing.Color.Transparent;
+            this.x256checkbox.Location = new System.Drawing.Point(83, 19);
+            this.x256checkbox.Name = "x256checkbox";
+            this.x256checkbox.Size = new System.Drawing.Size(77, 17);
+            this.x256checkbox.TabIndex = 117;
+            this.x256checkbox.Text = "256x256";
+            this.x256checkbox.UseVisualStyleBackColor = false;
+            this.x256checkbox.CheckedChanged += new System.EventHandler(this.x256checkbox_CheckedChanged);
+            // 
+            // customGridCheckbox
+            // 
+            this.customGridCheckbox.BackColor = System.Drawing.Color.Transparent;
+            this.customGridCheckbox.Location = new System.Drawing.Point(83, 42);
+            this.customGridCheckbox.Name = "customGridCheckbox";
+            this.customGridCheckbox.Size = new System.Drawing.Size(77, 17);
+            this.customGridCheckbox.TabIndex = 116;
+            this.customGridCheckbox.Text = "Custom...";
+            this.customGridCheckbox.UseVisualStyleBackColor = false;
+            this.customGridCheckbox.CheckedChanged += new System.EventHandler(this.customGridCheckbox_CheckedChanged);
+            // 
+            // x16checkbox
+            // 
+            this.x16checkbox.BackColor = System.Drawing.Color.Transparent;
+            this.x16checkbox.Checked = true;
+            this.x16checkbox.Location = new System.Drawing.Point(6, 19);
+            this.x16checkbox.Name = "x16checkbox";
+            this.x16checkbox.Size = new System.Drawing.Size(77, 17);
+            this.x16checkbox.TabIndex = 115;
+            this.x16checkbox.TabStop = true;
+            this.x16checkbox.Text = "16x16";
+            this.x16checkbox.UseVisualStyleBackColor = false;
+            this.x16checkbox.CheckedChanged += new System.EventHandler(this.x16checkbox_CheckedChanged);
+            // 
+            // x128checkbox
+            // 
+            this.x128checkbox.BackColor = System.Drawing.Color.Transparent;
+            this.x128checkbox.Location = new System.Drawing.Point(6, 42);
+            this.x128checkbox.Name = "x128checkbox";
+            this.x128checkbox.Size = new System.Drawing.Size(77, 17);
+            this.x128checkbox.TabIndex = 114;
+            this.x128checkbox.Text = "128x128";
+            this.x128checkbox.UseVisualStyleBackColor = false;
+            this.x128checkbox.CheckedChanged += new System.EventHandler(this.X128checkbox_CheckedChanged);
+            // 
+            // gridSizeDown
+            // 
+            this.gridSizeDown.Location = new System.Drawing.Point(39, 418);
+            this.gridSizeDown.Name = "gridSizeDown";
+            this.gridSizeDown.Size = new System.Drawing.Size(23, 23);
+            this.gridSizeDown.TabIndex = 112;
+            this.gridSizeDown.Text = "<";
+            this.gridSizeDown.UseVisualStyleBackColor = true;
+            this.gridSizeDown.Click += new System.EventHandler(this.gridSizeDown_Click);
+            // 
+            // gridSizeDownMore
+            // 
+            this.gridSizeDownMore.Location = new System.Drawing.Point(7, 418);
+            this.gridSizeDownMore.Name = "gridSizeDownMore";
+            this.gridSizeDownMore.Size = new System.Drawing.Size(28, 23);
+            this.gridSizeDownMore.TabIndex = 111;
+            this.gridSizeDownMore.Text = "<<";
+            this.gridSizeDownMore.UseVisualStyleBackColor = true;
+            this.gridSizeDownMore.Click += new System.EventHandler(this.gridSizeDownMore_Click);
+            // 
+            // gridSizeUp
+            // 
+            this.gridSizeUp.Location = new System.Drawing.Point(106, 418);
+            this.gridSizeUp.Name = "gridSizeUp";
+            this.gridSizeUp.Size = new System.Drawing.Size(23, 23);
+            this.gridSizeUp.TabIndex = 110;
+            this.gridSizeUp.Text = ">";
+            this.gridSizeUp.UseVisualStyleBackColor = true;
+            this.gridSizeUp.Click += new System.EventHandler(this.gridSizeUp_Click);
+            // 
+            // gridSizeUpMore
+            // 
+            this.gridSizeUpMore.Location = new System.Drawing.Point(132, 418);
+            this.gridSizeUpMore.Name = "gridSizeUpMore";
+            this.gridSizeUpMore.Size = new System.Drawing.Size(28, 23);
+            this.gridSizeUpMore.TabIndex = 109;
+            this.gridSizeUpMore.Text = ">>";
+            this.gridSizeUpMore.UseVisualStyleBackColor = true;
+            this.gridSizeUpMore.Click += new System.EventHandler(this.gridSizeUpMore_Click);
+            // 
+            // gridSizeValueLabel
+            // 
+            this.gridSizeValueLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.gridSizeValueLabel.Location = new System.Drawing.Point(68, 416);
+            this.gridSizeValueLabel.Name = "gridSizeValueLabel";
+            this.gridSizeValueLabel.Size = new System.Drawing.Size(32, 23);
+            this.gridSizeValueLabel.TabIndex = 108;
+            this.gridSizeValueLabel.Text = "0";
+            this.gridSizeValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label21
             // 
@@ -506,6 +621,18 @@
             this.label21.TabIndex = 103;
             this.label21.Text = "0";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label32
+            // 
+            this.label32.BackColor = System.Drawing.Color.Transparent;
+            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label32.Location = new System.Drawing.Point(8, 387);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(152, 13);
+            this.label32.TabIndex = 95;
+            this.label32.Text = "Custom Grid Size";
+            this.label32.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // nudgeValueDownButton
             // 
@@ -638,9 +765,9 @@
             // checkBox6
             // 
             this.checkBox6.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox6.Checked = global::ManiacEditor.Properties.Settings.Default.Unkown2Default;
-            this.checkBox6.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "Unkown2Default", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox6.Enabled = false;
+            this.checkBox6.Checked = global::ManiacEditor.Properties.Settings.Default.showOtherEntities;
+            this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox6.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "showOtherEntities", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox6.Location = new System.Drawing.Point(8, 109);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(152, 17);
@@ -664,9 +791,9 @@
             // checkBox5
             // 
             this.checkBox5.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox5.Checked = global::ManiacEditor.Properties.Settings.Default.Unkown1Default;
-            this.checkBox5.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "Unkown1Default", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox5.Enabled = false;
+            this.checkBox5.Checked = global::ManiacEditor.Properties.Settings.Default.showBothEntities;
+            this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox5.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "showBothEntities", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox5.Location = new System.Drawing.Point(8, 86);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(152, 17);
@@ -690,9 +817,9 @@
             // checkBox4
             // 
             this.checkBox4.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox4.Checked = global::ManiacEditor.Properties.Settings.Default.SolidAllButTopDefault;
-            this.checkBox4.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "SolidAllButTopDefault", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox4.Enabled = false;
+            this.checkBox4.Checked = global::ManiacEditor.Properties.Settings.Default.showEncoreEntities;
+            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox4.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "showEncoreEntities", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox4.Location = new System.Drawing.Point(8, 63);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(152, 17);
@@ -703,9 +830,9 @@
             // checkBox3
             // 
             this.checkBox3.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox3.Checked = global::ManiacEditor.Properties.Settings.Default.SolidTopDefault;
-            this.checkBox3.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "solidTopDefault", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox3.Enabled = false;
+            this.checkBox3.Checked = global::ManiacEditor.Properties.Settings.Default.showManiaEntities;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "showManiaEntities", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox3.Location = new System.Drawing.Point(8, 40);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(152, 17);
@@ -786,7 +913,7 @@
             // 
             this.panel2.Controls.Add(this.SceneSelectRadio1);
             this.panel2.Controls.Add(this.SceneSelectRadio2);
-            this.panel2.Location = new System.Drawing.Point(8, 488);
+            this.panel2.Location = new System.Drawing.Point(8, 507);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(160, 48);
             this.panel2.TabIndex = 94;
@@ -843,7 +970,6 @@
             // label20
             // 
             this.label20.BackColor = System.Drawing.Color.Transparent;
-            this.label20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label20.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label20.Location = new System.Drawing.Point(8, 384);
@@ -939,7 +1065,6 @@
             // label1
             // 
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(8, 288);
             this.label1.Name = "label1";
@@ -989,12 +1114,11 @@
             // label8
             // 
             this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label8.Location = new System.Drawing.Point(8, 464);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(160, 19);
+            this.label8.Size = new System.Drawing.Size(160, 40);
             this.label8.TabIndex = 62;
             this.label8.Text = "Scene Select Default Format:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1318,6 +1442,21 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(184, 459);
             this.panel3.TabIndex = 98;
+            // 
+            // checkBox9
+            // 
+            this.checkBox9.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox9.Checked = global::ManiacEditor.Properties.Settings.Default.AutoPreloadScene;
+            this.checkBox9.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "AutoPreloadScene", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox9.Location = new System.Drawing.Point(16, 403);
+            this.checkBox9.Margin = new System.Windows.Forms.Padding(5);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Size = new System.Drawing.Size(160, 43);
+            this.checkBox9.TabIndex = 99;
+            this.checkBox9.Text = "Preload Scene on Scene Load";
+            this.checkBox9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox9.UseVisualStyleBackColor = false;
             // 
             // checkBox27
             // 
@@ -1734,20 +1873,19 @@
             this.checkBox35.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBox35.UseVisualStyleBackColor = false;
             // 
-            // checkBox9
+            // groupBox1
             // 
-            this.checkBox9.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox9.Checked = global::ManiacEditor.Properties.Settings.Default.AutoPreloadScene;
-            this.checkBox9.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "AutoPreloadScene", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox9.Location = new System.Drawing.Point(16, 403);
-            this.checkBox9.Margin = new System.Windows.Forms.Padding(5);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Size = new System.Drawing.Size(160, 43);
-            this.checkBox9.TabIndex = 99;
-            this.checkBox9.Text = "Preload Scene on Scene Load";
-            this.checkBox9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox9.UseVisualStyleBackColor = false;
+            this.groupBox1.Controls.Add(this.x16checkbox);
+            this.groupBox1.Controls.Add(this.x256checkbox);
+            this.groupBox1.Controls.Add(this.customGridCheckbox);
+            this.groupBox1.Controls.Add(this.x128checkbox);
+            this.groupBox1.Location = new System.Drawing.Point(3, 459);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(160, 68);
+            this.groupBox1.TabIndex = 118;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Default Setting";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // OptionBox
             // 
@@ -1763,6 +1901,7 @@
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ShowInTaskbar = false;
             this.Text = "Maniac Editor Options";
+            this.Load += new System.EventHandler(this.OptionBox_Load);
             this.tabPage4.ResumeLayout(false);
             this.panel11.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
@@ -1787,6 +1926,7 @@
             this.tabPage5.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.panel14.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1917,5 +2057,16 @@
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.CheckBox checkBox9;
+        private System.Windows.Forms.Label gridSizeValueLabel;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Button gridSizeDown;
+        private System.Windows.Forms.Button gridSizeDownMore;
+        private System.Windows.Forms.Button gridSizeUp;
+        private System.Windows.Forms.Button gridSizeUpMore;
+        private System.Windows.Forms.RadioButton x256checkbox;
+        private System.Windows.Forms.RadioButton customGridCheckbox;
+        private System.Windows.Forms.RadioButton x16checkbox;
+        private System.Windows.Forms.RadioButton x128checkbox;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

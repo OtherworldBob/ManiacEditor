@@ -151,6 +151,8 @@
             this.GraphicPanel = new ManiacEditor.DevicePanel();
             this.spacingLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.x256ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -1288,7 +1290,9 @@
             this.gridSizeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
             this.gridSizeButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.x16ToolStripMenuItem,
-            this.x128ToolStripMenuItem});
+            this.x128ToolStripMenuItem,
+            this.x256ToolStripMenuItem,
+            this.customToolStripMenuItem});
             this.gridSizeButton.Image = ((System.Drawing.Image)(resources.GetObject("gridSizeButton.Image")));
             this.gridSizeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.gridSizeButton.Name = "gridSizeButton";
@@ -1345,6 +1349,20 @@
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 23);
+            // 
+            // x256ToolStripMenuItem
+            // 
+            this.x256ToolStripMenuItem.Name = "x256ToolStripMenuItem";
+            this.x256ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.x256ToolStripMenuItem.Text = "256x256";
+            this.x256ToolStripMenuItem.Click += new System.EventHandler(this.x256ToolStripMenuItem_Click);
+            // 
+            // customToolStripMenuItem
+            // 
+            this.customToolStripMenuItem.Name = "customToolStripMenuItem";
+            this.customToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.customToolStripMenuItem.Text = "Custom...";
+            this.customToolStripMenuItem.Click += new System.EventHandler(this.customToolStripMenuItem_Click);
             // 
             // Editor
             // 
@@ -1513,6 +1531,8 @@
         private System.Windows.Forms.ToolStripButton pixelModeButton;
         private System.Windows.Forms.ToolStripStatusLabel spacingLabel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
+        private System.Windows.Forms.ToolStripMenuItem x256ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem customToolStripMenuItem;
     }
 }
 

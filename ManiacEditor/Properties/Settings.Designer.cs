@@ -531,7 +531,7 @@ namespace ManiacEditor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
         public int FasterNudgeValue {
             get {
@@ -818,6 +818,66 @@ namespace ManiacEditor.Properties {
             }
             set {
                 this["AutoPreloadScene"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int CustomGridSizeValue {
+            get {
+                return ((int)(this["CustomGridSizeValue"]));
+            }
+            set {
+                this["CustomGridSizeValue"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool x16Default {
+            get {
+                return ((bool)(this["x16Default"]));
+            }
+            set {
+                this["x16Default"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool x128Default {
+            get {
+                return ((bool)(this["x128Default"]));
+            }
+            set {
+                this["x128Default"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool x256Default {
+            get {
+                return ((bool)(this["x256Default"]));
+            }
+            set {
+                this["x256Default"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CustomGridDefault {
+            get {
+                return ((bool)(this["CustomGridDefault"]));
+            }
+            set {
+                this["CustomGridDefault"] = value;
             }
         }
     }

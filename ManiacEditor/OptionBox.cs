@@ -16,6 +16,12 @@ namespace ManiacEditor
         public OptionBox()
         {
             InitializeComponent();
+            this.label21.Text = Properties.Settings.Default.FasterNudgeValue.ToString();
+            this.gridSizeValueLabel.Text = Properties.Settings.Default.CustomGridSizeValue.ToString();
+            if (Properties.Settings.Default.x16Default) uncheckOtherGridDefaults(1);
+            if (Properties.Settings.Default.x128Default) uncheckOtherGridDefaults(2);
+            if (Properties.Settings.Default.x256Default) uncheckOtherGridDefaults(3);
+            if (Properties.Settings.Default.CustomGridDefault) uncheckOtherGridDefaults(4);
 
         }
 
@@ -103,7 +109,7 @@ namespace ManiacEditor
         {
             if (Properties.Settings.Default.FasterNudgeValue <= 100 && Properties.Settings.Default.FasterNudgeValue >= 0)
                 Properties.Settings.Default.FasterNudgeValue -= 5;
-            if (Properties.Settings.Default.FasterNudgeValue < 0)
+            if (Properties.Settings.Default.FasterNudgeValue <= 0)
                 Properties.Settings.Default.FasterNudgeValue = 1;
             if (Properties.Settings.Default.FasterNudgeValue > 100)
                 Properties.Settings.Default.FasterNudgeValue = 100;
@@ -233,6 +239,167 @@ namespace ManiacEditor
             ofd.Filter = "Windows PE Executable|*.exe";
             if (ofd.ShowDialog() == DialogResult.OK)
                 Properties.Settings.Default.RunPalleteEditorPath = ofd.FileName;
+        }
+
+        private void OptionBox_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gridSizeDownMore_Click(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.CustomGridSizeValue <= 500 && Properties.Settings.Default.CustomGridSizeValue >= 0)
+                Properties.Settings.Default.CustomGridSizeValue -= 5;
+            if (Properties.Settings.Default.CustomGridSizeValue <= 0)
+                Properties.Settings.Default.CustomGridSizeValue = 1;
+            if (Properties.Settings.Default.CustomGridSizeValue > 500)
+                Properties.Settings.Default.CustomGridSizeValue = 500;
+            this.gridSizeValueLabel.Text = Properties.Settings.Default.CustomGridSizeValue.ToString();
+        }
+
+        private void gridSizeDown_Click(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.CustomGridSizeValue <= 500 && Properties.Settings.Default.CustomGridSizeValue >= 0)
+                Properties.Settings.Default.CustomGridSizeValue -= 1;
+            if (Properties.Settings.Default.CustomGridSizeValue <= 0)
+                Properties.Settings.Default.CustomGridSizeValue = 1;
+            if (Properties.Settings.Default.CustomGridSizeValue > 500)
+                Properties.Settings.Default.CustomGridSizeValue = 500;
+            this.gridSizeValueLabel.Text = Properties.Settings.Default.CustomGridSizeValue.ToString();
+        }
+
+        private void gridSizeUp_Click(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.CustomGridSizeValue != 500 && Properties.Settings.Default.CustomGridSizeValue >= 0)
+                Properties.Settings.Default.CustomGridSizeValue += 1;
+            if (Properties.Settings.Default.CustomGridSizeValue <= 0)
+                Properties.Settings.Default.CustomGridSizeValue = 1;
+            if (Properties.Settings.Default.CustomGridSizeValue > 500)
+                Properties.Settings.Default.CustomGridSizeValue = 500;
+            this.gridSizeValueLabel.Text = Properties.Settings.Default.CustomGridSizeValue.ToString();
+        }
+
+        private void gridSizeUpMore_Click(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.CustomGridSizeValue != 500 && Properties.Settings.Default.CustomGridSizeValue >= 0)
+                Properties.Settings.Default.CustomGridSizeValue += 5;
+            if (Properties.Settings.Default.CustomGridSizeValue <= 0)
+                Properties.Settings.Default.CustomGridSizeValue = 1;
+            if (Properties.Settings.Default.CustomGridSizeValue > 500)
+                Properties.Settings.Default.CustomGridSizeValue = 500;
+            this.label21.Text = Properties.Settings.Default.CustomGridSizeValue.ToString();
+        }
+
+        private void checkBox12_CheckStateChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox13_CheckStateChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox10_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox11_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void uncheckOtherGridDefaults(int i)
+        {
+            switch (i)
+            {
+                case 1:
+                    Properties.Settings.Default.x16Default = true;
+                    Properties.Settings.Default.x128Default = false;
+                    Properties.Settings.Default.x256Default = false;
+                    Properties.Settings.Default.CustomGridDefault = false;
+                    x16checkbox.Checked = true;
+                    x128checkbox.Checked = false;
+                    x256checkbox.Checked = false;
+                    customGridCheckbox.Checked = false;
+                    break;
+                case 2:
+                    Properties.Settings.Default.x16Default = false;
+                    Properties.Settings.Default.x128Default = true;
+                    Properties.Settings.Default.x256Default = false;
+                    Properties.Settings.Default.CustomGridDefault = false;
+                    x16checkbox.Checked = false;
+                    x128checkbox.Checked = true;
+                    x256checkbox.Checked = false;
+                    customGridCheckbox.Checked = false;
+                    break;
+                case 3:
+                    Properties.Settings.Default.x16Default = false;
+                    Properties.Settings.Default.x128Default = false;
+                    Properties.Settings.Default.x256Default = true;
+                    Properties.Settings.Default.CustomGridDefault = false;
+                    x16checkbox.Checked = false;
+                    x128checkbox.Checked = false;
+                    x256checkbox.Checked = true;
+                    customGridCheckbox.Checked = false;
+                    break;
+                case 4:
+                    Properties.Settings.Default.x16Default = false;
+                    Properties.Settings.Default.x128Default = false;
+                    Properties.Settings.Default.x256Default = false;
+                    Properties.Settings.Default.CustomGridDefault = true;
+                    x16checkbox.Checked = false;
+                    x128checkbox.Checked = false;
+                    x256checkbox.Checked = false;
+                    customGridCheckbox.Checked = true;
+                    break;
+                /*default:
+                    //x16checkbox.Checked = true; //Default
+                    x128checkbox.Checked = false;
+                    x256checkbox.Checked = false;
+                    customGridCheckbox.Checked = false;
+                    break;*/
+            }
+
+
+        }
+
+        private void x16checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (x16checkbox.Checked == true)
+            {
+                uncheckOtherGridDefaults(1);
+            }
+        }
+
+        private void X128checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (x128checkbox.Checked == true)
+            {
+                uncheckOtherGridDefaults(2);
+            }
+        }
+
+        private void customGridCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (customGridCheckbox.Checked == true)
+            {
+                uncheckOtherGridDefaults(4);
+            }
+        }
+
+        private void x256checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (x256checkbox.Checked == true)
+            {
+                uncheckOtherGridDefaults(3);
+            }
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
