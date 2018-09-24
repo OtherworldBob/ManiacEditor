@@ -12,6 +12,7 @@ namespace ManiacEditor
     {
         const int BOX_SIZE = 8;
         const int TILE_BOX_SIZE = 1;
+        public int GRID_TILE_SIZE = 16;
 
         static int DivideRoundUp(int number, int by)
         {
@@ -86,30 +87,22 @@ namespace ManiacEditor
         {
             Rectangle screen = d.GetScreen();
 
-            RSDKv5Color rcolor1 = Editor.Instance.EditorScene.EditorMetadata.BackgroundColor1;
-            RSDKv5Color rcolor2 = Editor.Instance.EditorScene.EditorMetadata.BackgroundColor2;
+            int start_x = screen.X / (TILE_BOX_SIZE * GRID_TILE_SIZE);
+            int end_x = Math.Min(DivideRoundUp(screen.X + screen.Width, TILE_BOX_SIZE * GRID_TILE_SIZE), Editor.Instance.SceneWidth);
+            int start_y = screen.Y / (TILE_BOX_SIZE * GRID_TILE_SIZE);
+            int end_y = Math.Min(DivideRoundUp(screen.Y + screen.Height, TILE_BOX_SIZE * GRID_TILE_SIZE), Editor.Instance.Height);
 
-            Color color1 = Color.FromArgb(rcolor1.A, rcolor1.R, rcolor1.G, rcolor1.B);
-            Color color2 = Color.FromArgb(rcolor2.A, rcolor2.R, rcolor2.G, rcolor2.B);
 
-            int start_x = screen.X / (TILE_BOX_SIZE * EditorLayer.TILE_SIZE);
-            int end_x = Math.Min(DivideRoundUp(screen.X + screen.Width, TILE_BOX_SIZE * EditorLayer.TILE_SIZE), Editor.Instance.SceneWidth);
-            int start_y = screen.Y / (TILE_BOX_SIZE * EditorLayer.TILE_SIZE);
-            int end_y = Math.Min(DivideRoundUp(screen.Y + screen.Height, TILE_BOX_SIZE * EditorLayer.TILE_SIZE), Editor.Instance.Height);
-
-            if (color2.A != 0)
-            {
                 for (int y = start_y; y < end_y; ++y)
                 {
                     for (int x = start_x; x < end_x; ++x)
                     {
-                            d.DrawLine(x * EditorLayer.TILE_SIZE, y * EditorLayer.TILE_SIZE, x * EditorLayer.TILE_SIZE + EditorLayer.TILE_SIZE, y * EditorLayer.TILE_SIZE, System.Drawing.Color.Black);
-                            d.DrawLine(x * EditorLayer.TILE_SIZE, y * EditorLayer.TILE_SIZE, x * EditorLayer.TILE_SIZE, y * EditorLayer.TILE_SIZE + EditorLayer.TILE_SIZE, System.Drawing.Color.Black);
-                            //d.DrawLine(x * EditorLayer.TILE_SIZE + EditorLayer.TILE_SIZE, y * EditorLayer.TILE_SIZE + EditorLayer.TILE_SIZE, x * EditorLayer.TILE_SIZE + EditorLayer.TILE_SIZE, y * EditorLayer.TILE_SIZE, System.Drawing.Color.Black);
-                            //d.DrawLine(x * EditorLayer.TILE_SIZE + EditorLayer.TILE_SIZE, y * EditorLayer.TILE_SIZE + EditorLayer.TILE_SIZE, x * EditorLayer.TILE_SIZE, y * EditorLayer.TILE_SIZE + EditorLayer.TILE_SIZE, System.Drawing.Color.Black);
+                            d.DrawLine(x * GRID_TILE_SIZE, y * GRID_TILE_SIZE, x * GRID_TILE_SIZE + GRID_TILE_SIZE, y * GRID_TILE_SIZE, System.Drawing.Color.Black);
+                            d.DrawLine(x * GRID_TILE_SIZE, y * GRID_TILE_SIZE, x * GRID_TILE_SIZE, y * GRID_TILE_SIZE + GRID_TILE_SIZE, System.Drawing.Color.Black);
+                            d.DrawLine(x * GRID_TILE_SIZE + GRID_TILE_SIZE, y * GRID_TILE_SIZE + GRID_TILE_SIZE, x * GRID_TILE_SIZE + GRID_TILE_SIZE, y * GRID_TILE_SIZE, System.Drawing.Color.Black);
+                            d.DrawLine(x * GRID_TILE_SIZE + GRID_TILE_SIZE, y * GRID_TILE_SIZE + GRID_TILE_SIZE, x * GRID_TILE_SIZE, y * GRID_TILE_SIZE + GRID_TILE_SIZE, System.Drawing.Color.Black);
                     }
                 }
-            }
         }
     }
 }

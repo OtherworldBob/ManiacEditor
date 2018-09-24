@@ -31,7 +31,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -521,6 +521,7 @@
     <Content Include="64x64.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Entity Renders\" />
     <Folder Include="Resources\VS2017\" />
   </ItemGroup>
   <ItemGroup>

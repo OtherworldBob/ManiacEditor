@@ -127,7 +127,6 @@
             this.MagnetMode = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.showTileIDButton = new System.Windows.Forms.ToolStripButton();
-            this.showGridButton = new System.Windows.Forms.ToolStripButton();
             this.showCollisionAButton = new System.Windows.Forms.ToolStripButton();
             this.showCollisionBButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -145,6 +144,10 @@
             this.EditEntities = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.showGridButton = new System.Windows.Forms.ToolStripButton();
+            this.gridSizeButton = new System.Windows.Forms.ToolStripSplitButton();
+            this.x16ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.x128ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GraphicPanel = new ManiacEditor.DevicePanel();
             this.menuStrip1.SuspendLayout();
             this.mainPanel.SuspendLayout();
@@ -1036,17 +1039,6 @@
             this.showTileIDButton.Text = "Show Tile ID Number";
             this.showTileIDButton.Click += new System.EventHandler(this.showTileIDButton_Click);
             // 
-            // showGridButton
-            // 
-            this.showGridButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.showGridButton.Image = ((System.Drawing.Image)(resources.GetObject("showGridButton.Image")));
-            this.showGridButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.showGridButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.showGridButton.Name = "showGridButton";
-            this.showGridButton.Size = new System.Drawing.Size(23, 22);
-            this.showGridButton.Text = "Show Grid";
-            this.showGridButton.Click += new System.EventHandler(this.showGridButton_Click);
-            // 
             // showCollisionAButton
             // 
             this.showCollisionAButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -1252,6 +1244,7 @@
             this.toolStripSeparator14,
             this.showTileIDButton,
             this.showGridButton,
+            this.gridSizeButton,
             this.showCollisionAButton,
             this.showCollisionBButton,
             this.toolStripSeparator4,
@@ -1274,6 +1267,43 @@
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "Open Most Recent Data Directory";
             this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
+            // 
+            // showGridButton
+            // 
+            this.showGridButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.showGridButton.Image = ((System.Drawing.Image)(resources.GetObject("showGridButton.Image")));
+            this.showGridButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.showGridButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.showGridButton.Name = "showGridButton";
+            this.showGridButton.Size = new System.Drawing.Size(23, 22);
+            this.showGridButton.Text = "Show Grid";
+            this.showGridButton.Click += new System.EventHandler(this.showGridButton_Click);
+            // 
+            // gridSizeButton
+            // 
+            this.gridSizeButton.AutoSize = false;
+            this.gridSizeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.gridSizeButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.x16ToolStripMenuItem,
+            this.x128ToolStripMenuItem});
+            this.gridSizeButton.Image = ((System.Drawing.Image)(resources.GetObject("gridSizeButton.Image")));
+            this.gridSizeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.gridSizeButton.Name = "gridSizeButton";
+            this.gridSizeButton.Size = new System.Drawing.Size(10, 22);
+            // 
+            // x16ToolStripMenuItem
+            // 
+            this.x16ToolStripMenuItem.Name = "x16ToolStripMenuItem";
+            this.x16ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.x16ToolStripMenuItem.Text = "16x16";
+            this.x16ToolStripMenuItem.Click += new System.EventHandler(this.x16ToolStripMenuItem_Click);
+            // 
+            // x128ToolStripMenuItem
+            // 
+            this.x128ToolStripMenuItem.Name = "x128ToolStripMenuItem";
+            this.x128ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.x128ToolStripMenuItem.Text = "128x128";
+            this.x128ToolStripMenuItem.Click += new System.EventHandler(this.x128ToolStripMenuItem_Click);
             // 
             // GraphicPanel
             // 
@@ -1442,7 +1472,6 @@
         private System.Windows.Forms.ToolStripButton MagnetMode;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
         private System.Windows.Forms.ToolStripButton showTileIDButton;
-        private System.Windows.Forms.ToolStripButton showGridButton;
         private System.Windows.Forms.ToolStripButton showCollisionAButton;
         private System.Windows.Forms.ToolStripButton showCollisionBButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -1462,6 +1491,10 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripMenuItem gameOptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton showGridButton;
+        private System.Windows.Forms.ToolStripSplitButton gridSizeButton;
+        private System.Windows.Forms.ToolStripMenuItem x16ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem x128ToolStripMenuItem;
     }
 }
 

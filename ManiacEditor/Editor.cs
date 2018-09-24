@@ -534,6 +534,7 @@ namespace ManiacEditor
             showCollisionAButton.Enabled = enabled && StageConfig != null;
             showCollisionBButton.Enabled = enabled && StageConfig != null;
             showTileIDButton.Enabled = enabled && StageConfig != null;
+            gridSizeButton.Enabled = enabled && StageConfig != null;
 
 
             //Doing this too often seems to cause a lot of grief for the app, should be relocated and stored as a bool
@@ -895,8 +896,10 @@ namespace ManiacEditor
         {
             if (e.KeyCode == Keys.ControlKey)
             {
-                if (IsTilesEdit() && placeTilesButton.Checked)
-                    TilesToolbar.SetSelectTileOption(0, true);
+                e.Handled = true;
+                nudgeFasterButton.Checked = true;
+                Properties.Settings.Default.EnableFasterNudge = true;
+
             }
             else if (e.KeyCode == Keys.Alt)
             {
@@ -905,9 +908,8 @@ namespace ManiacEditor
             }
             else if (e.KeyCode == Keys.ShiftKey)
             {
-                e.Handled = true;
-                nudgeFasterButton.Checked = true;
-                Properties.Settings.Default.EnableFasterNudge = true;
+                if (IsTilesEdit() && placeTilesButton.Checked)
+                    TilesToolbar.SetSelectTileOption(0, true);
             }
             else if (e.Control && e.KeyCode == Keys.O)
             {
@@ -1523,11 +1525,11 @@ namespace ManiacEditor
                 {
                     // Remove tile
                     Point p = new Point((int)(e.X / Zoom), (int)(e.Y / Zoom));
-                    if (!EditLayer.IsPointSelected(p))
+                    if (!EditLayer.IsPointSelected(p) && !multiLayerSelect)
                     {
                         EditLayer.Select(p);
                     }
-                    if ((!FGHigh.IsPointSelected(p) || !FGHigher.IsPointSelected(p) || !FGLow.IsPointSelected(p) || !FGLower.IsPointSelected(p)))
+                    if ((!FGHigh.IsPointSelected(p) || !FGHigher.IsPointSelected(p) || !FGLow.IsPointSelected(p) || !FGLower.IsPointSelected(p)) && multiLayerSelect)
                     {
                         FGLow?.Select(p);
                         FGLower?.Select(p);
@@ -4248,9 +4250,29 @@ Error: {ex.Message}");
             if (!EditFGHigh.Checked && !EditFGLow.Checked && !EditFGLower.Checked && !EditFGHigher.Checked)
             {
                 //Work around to prevent a bad crash
-                DisposeTextures();
+                //DisposeTextures();
                 //GraphicPanel.AttemptRecovery();
             }
+        }
+
+        private void x16ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Background.GRID_TILE_SIZE = 16;
+            resetGridOptions();
+            x16ToolStripMenuItem.Checked = true;
+        }
+
+        private void x128ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Background.GRID_TILE_SIZE = 128;
+            resetGridOptions();
+            x128ToolStripMenuItem.Checked = true;
+        }
+
+        private void resetGridOptions()
+        {
+            x16ToolStripMenuItem.Checked = false;
+            x128ToolStripMenuItem.Checked = false;
         }
 
         private void hScrollBar1_Entered(object sender, EventArgs e)
