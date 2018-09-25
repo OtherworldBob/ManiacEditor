@@ -23,18 +23,37 @@ namespace ManiacEditor.Entity_Renders
                 d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX, y + frame.Frame.CenterY,
                     frame.Frame.Width, frame.Frame.Height, false, Transparency);
             }
-            editorAnim = e.LoadAnimation2("SignPost", d, 4, -1, false, false, false);
-            if (editorAnim != null && editorAnim.Frames.Count != 0)
+            if (Properties.Settings.Default.UsePrePlusOffsets)
             {
-                for (int i = 0; i < editorAnim.Frames.Count; ++i)
+                editorAnim = e.LoadAnimation2("SignPost", d, 4, -1, false, false, false);
+                if (editorAnim != null && editorAnim.Frames.Count != 0)
                 {
-                    if (i == 1)
-                        continue;
-                    var frame = editorAnim.Frames[i];
-                    d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX, y + frame.Frame.CenterY,
-                        frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                    for (int i = 0; i < editorAnim.Frames.Count; ++i)
+                    {
+                        if (i == 1)
+                            continue;
+                        var frame = editorAnim.Frames[i];
+                        d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX, y + frame.Frame.CenterY,
+                            frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                    }
                 }
             }
+            else
+            {
+                editorAnim = e.LoadAnimation2("SignPost", d, 6, -1, false, false, false);
+                if (editorAnim != null && editorAnim.Frames.Count != 0)
+                {
+                    for (int i = 0; i < editorAnim.Frames.Count; ++i)
+                    {
+                        if (i == 1)
+                            continue;
+                        var frame = editorAnim.Frames[i];
+                        d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX, y + frame.Frame.CenterY,
+                            frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                    }
+                }
+            }
+
         }
     }
 }

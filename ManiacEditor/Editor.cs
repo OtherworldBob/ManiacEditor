@@ -539,7 +539,7 @@ namespace ManiacEditor
 
 
             //Doing this too often seems to cause a lot of grief for the app, should be relocated and stored as a bool
-            //windowsClipboardState = Clipboard.ContainsData("ManiacTiles");
+            windowsClipboardState = Clipboard.ContainsData("ManiacTiles");
             windowsClipboardState = false;
 
 
@@ -1891,10 +1891,10 @@ namespace ManiacEditor
             }
 
             zooming = false;
-            if (Properties.Settings.Default.AllowMoreRenderUpdates)
+            /*if (Properties.Settings.Default.AllowMoreRenderUpdates)
             {
                 UpdateRender();
-            }
+            }*/
 
             UpdateControls();
         }
@@ -2026,7 +2026,7 @@ namespace ManiacEditor
                 TilesClipboard = null;
                 entitiesClipboard = null;
             }
-            if (Properties.Settings.Default.ProhibitEntityUseOnExternalClipboard)
+            if (Properties.Settings.Default.ProhibitEntityUseOnExternalClipboard || !Properties.Settings.Default.ForceCopyUnlock)
             {
                 entitiesClipboard = null;
             }

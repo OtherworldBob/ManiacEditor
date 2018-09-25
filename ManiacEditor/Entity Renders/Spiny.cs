@@ -23,7 +23,7 @@ namespace ManiacEditor.Entity_Renders
             if (type == 1)
             {
                 animID = 2;
-                if (direction == 3)
+                if (direction == 3 || direction == 2)
                 {
                     fliph = true;
                 }
@@ -31,7 +31,7 @@ namespace ManiacEditor.Entity_Renders
             else
             {
                 animID = 0;
-                if (direction == 3)
+                if (direction == 3 || direction == 2)
                 {
                     flipv = true;
                 }
