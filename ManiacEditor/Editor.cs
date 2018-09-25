@@ -19,6 +19,7 @@ using RSDKv5;
 using SharpDX.Direct3D9;
 using Color = System.Drawing.Color;
 using System.Runtime.CompilerServices;
+using System.Collections;
 
 namespace ManiacEditor
 {
@@ -129,7 +130,7 @@ namespace ManiacEditor
         {
             Instance = this;
             InitializeComponent();
-            InitDiscord();
+            //InitDiscord();
 
             /*using (var customMsgBox = new CustomMsgBox($"The specified Data Directory {1} is not valid. Please Try again with a Better Data Directory. It could be outdated, corrupted or worse something else", "Invalid Data Directory!", 2, 1))
             {
@@ -178,45 +179,45 @@ namespace ManiacEditor
 
         public void InitDiscord()
         {
-            SharpPresence.Discord.Initialize("484279851830870026", RPCEventHandler);
+            /* SharpPresence.Discord.Initialize("484279851830870026", RPCEventHandler);
 
-            if (Properties.Settings.Default.ShowDiscordRPC)
-            {
-                RPCcontrol.state = "Maniac Editor";
-                RPCcontrol.details = "Idle";
+             if (Properties.Settings.Default.ShowDiscordRPC)
+             {
+                 RPCcontrol.state = "Maniac Editor";
+                 RPCcontrol.details = "Idle";
 
-                RPCcontrol.largeImageKey = "maniac";
-                RPCcontrol.largeImageText = "maniac-small";
+                 RPCcontrol.largeImageKey = "maniac";
+                 RPCcontrol.largeImageText = "maniac-small";
 
-                TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
-                int secondsSinceEpoch = (int)t.TotalSeconds;
+                 TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+                 int secondsSinceEpoch = (int)t.TotalSeconds;
 
-                RPCcontrol.startTimestamp = secondsSinceEpoch;
+                 RPCcontrol.startTimestamp = secondsSinceEpoch;
 
-                SharpPresence.Discord.RunCallbacks();
-                SharpPresence.Discord.UpdatePresence(RPCcontrol);
-            }
-            else
-            {
-                RPCcontrol.state = "Maniac Editor";
-                RPCcontrol.details = "";
+                 SharpPresence.Discord.RunCallbacks();
+                 SharpPresence.Discord.UpdatePresence(RPCcontrol);
+             }
+             else
+             {
+                 RPCcontrol.state = "Maniac Editor";
+                 RPCcontrol.details = "";
 
-                RPCcontrol.largeImageKey = "maniac";
-                RPCcontrol.largeImageText = "Maniac Editor";
+                 RPCcontrol.largeImageKey = "maniac";
+                 RPCcontrol.largeImageText = "Maniac Editor";
 
-                TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
-                int secondsSinceEpoch = (int)t.TotalSeconds;
+                 TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+                 int secondsSinceEpoch = (int)t.TotalSeconds;
 
-                RPCcontrol.startTimestamp = secondsSinceEpoch;
+                 RPCcontrol.startTimestamp = secondsSinceEpoch;
 
-                SharpPresence.Discord.RunCallbacks();
-                SharpPresence.Discord.UpdatePresence(RPCcontrol);
-            }
+                 SharpPresence.Discord.RunCallbacks();
+                 SharpPresence.Discord.UpdatePresence(RPCcontrol);
+             }*/
         }
 
         public void UpdateDiscord(string Details = null)
         {
-            if (Properties.Settings.Default.ShowDiscordRPC)
+            /*if (Properties.Settings.Default.ShowDiscordRPC)
             {
                 SharpPresence.Discord.RunCallbacks();
                 if (Details != null)
@@ -239,13 +240,13 @@ namespace ManiacEditor
 
                 SharpPresence.Discord.RunCallbacks();
                 SharpPresence.Discord.UpdatePresence(RPCcontrol);
-            }
+            }*/
         }
 
         public void DisposeDiscord()
         {
-            RPCcontrol.startTimestamp = 0;
-            SharpPresence.Discord.Shutdown();
+            /*RPCcontrol.startTimestamp = 0;
+            SharpPresence.Discord.Shutdown();*/
         }
 
         /// <summary>
@@ -503,7 +504,7 @@ namespace ManiacEditor
             EditFGHigher.Enabled = enabled && FGHigher != null;
             EditEntities.Enabled = enabled;
             importObjectsToolStripMenuItem.Enabled = enabled && StageConfig != null;
-            removeObjectToolStripMenuItem.Enabled = enabled && StageConfig != null;
+            entityManagerToolStripMenuItem.Enabled = enabled && StageConfig != null;
             importSoundsToolStripMenuItem.Enabled = enabled && StageConfig != null;
             layerManagerToolStripMenuItem.Enabled = enabled;
 
@@ -894,19 +895,68 @@ namespace ManiacEditor
 
         public void GraphicPanel_OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.ControlKey)
+            if (CtrlPressed() && e.KeyCode == Properties.KeyBinds.Default.NudgeFaster)
             {
-                e.Handled = true;
-                nudgeFasterButton.Checked = true;
-                Properties.Settings.Default.EnableFasterNudge = true;
+                switch (nudgeFasterButton.Checked) {
+                    case false:
+                        nudgeFasterButton.Checked = true;
+                        break;
+                    case true:
+                        nudgeFasterButton.Checked = false;
+                        break;
+                }
+                switch (Properties.Settings.Default.EnableFasterNudge)
+                {
+                    case false:
+                        Properties.Settings.Default.EnableFasterNudge = true;
+                        break;
+                    case true:
+                        Properties.Settings.Default.EnableFasterNudge = false;
+                        break;
+                }
 
             }
-            else if (e.KeyCode == Keys.Alt)
+            else if (CtrlPressed() && e.KeyCode == Properties.KeyBinds.Default.ScrollLock)
+            {
+                switch (scrollLockButton.Checked)
+                {
+                    case false:
+                        scrollLockButton.Checked = true;
+                        break;
+                    case true:
+                        scrollLockButton.Checked = false;
+                        break;
+                }
+                switch (Properties.Settings.Default.scrollLock)
+                {
+                    case false:
+                        Properties.Settings.Default.scrollLock = true;
+                        break;
+                    case true:
+                        Properties.Settings.Default.scrollLock = false;
+                        break;
+                }
+
+            }
+            else if (CtrlPressed() && e.KeyCode == Properties.KeyBinds.Default.ScrollLockTypeSwitch)
+            {
+                switch (Properties.Settings.Default.ScrollLockDirection)
+                {
+                    case false:
+                        Properties.Settings.Default.ScrollLockDirection = true;
+                        break;
+                    case true:
+                        Properties.Settings.Default.ScrollLockDirection = false;
+                        break;
+                }
+
+            }
+            else if (e.KeyCode == Keys.ShiftKey)
             {
                 if (IsTilesEdit() && placeTilesButton.Checked)
                     TilesToolbar.SetSelectTileOption(1, true);
             }
-            else if (e.KeyCode == Keys.ShiftKey)
+            else if (e.KeyCode == Keys.ControlKey)
             {
                 if (IsTilesEdit() && placeTilesButton.Checked)
                     TilesToolbar.SetSelectTileOption(0, true);
@@ -1062,19 +1112,10 @@ namespace ManiacEditor
                 if (IsTilesEdit() && placeTilesButton.Checked)
                     TilesToolbar.SetSelectTileOption(0, false);
             }
-            else if (e.KeyCode == Keys.Alt)
+            else if (e.KeyCode == Keys.ShiftKey)
             {
                 if (IsTilesEdit() && placeTilesButton.Checked)
                     TilesToolbar.SetSelectTileOption(1, false);
-            }
-            else if (e.KeyCode == Keys.ShiftKey)
-            {
-                nudgeFasterButton.Checked = false;
-                Properties.Settings.Default.EnableFasterNudge = false;
-            }
-            else if (e.KeyCode == Keys.B)
-            {
-                scrollLockButton_Click(sender, e);
             }
         }
 
@@ -3565,6 +3606,7 @@ Error: {ex.Message}");
                 GameRunning = true;
                 UpdateControls();
                 UseCheatCodes(p);
+
 
                 new Thread(() =>
                 {

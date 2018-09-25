@@ -22,6 +22,8 @@ namespace ManiacEditor
             if (Properties.Settings.Default.x128Default) uncheckOtherGridDefaults(2);
             if (Properties.Settings.Default.x256Default) uncheckOtherGridDefaults(3);
             if (Properties.Settings.Default.CustomGridDefault) uncheckOtherGridDefaults(4);
+            initilizeKeyDefaults();
+
 
         }
 
@@ -401,5 +403,54 @@ namespace ManiacEditor
         {
 
         }
+
+        private void initilizeKeyDefaults()
+        {
+            scrollLockAxisKeyBox.Text = Properties.KeyBinds.Default.ScrollLockTypeSwitch.ToString();
+            nudgeFasterKeyBox.Text = Properties.KeyBinds.Default.NudgeFaster.ToString();
+            scrollLockKeyBox.Text = Properties.KeyBinds.Default.ScrollLock.ToString();
+        }
+
+        private void nudgeFaster_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!(e.Alt || e.Control || e.Shift))
+            {
+                Keys keyData = e.KeyCode;
+                Properties.KeyBinds.Default.NudgeFaster = keyData;
+                nudgeFasterKeyBox.Text = "";
+                nudgeFasterKeyBox.Text = Properties.KeyBinds.Default.NudgeFaster.ToString();
+                Properties.KeyBinds.Default.Save();
+            }
+
+            
+        }
+
+        private void scrollLock_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!(e.Alt || e.Control || e.Shift))
+            {
+                Keys keyData = e.KeyCode;
+                Properties.KeyBinds.Default.ScrollLock = keyData;
+                scrollLockKeyBox.Text = "";
+                scrollLockKeyBox.Text = Properties.KeyBinds.Default.ScrollLock.ToString();
+                Properties.KeyBinds.Default.Save();
+            }
+
+        }
+
+        private void scrollLockType_KeyDown(object sender, KeyEventArgs e)
+        {
+                if (!(e.Alt || e.Control || e.Shift))
+                {
+                    Keys keyData = e.KeyCode;
+                    Properties.KeyBinds.Default.ScrollLockTypeSwitch = keyData;
+                    scrollLockAxisKeyBox.Text = "";
+                    scrollLockAxisKeyBox.Text = Properties.KeyBinds.Default.ScrollLockTypeSwitch.ToString();
+                    Properties.KeyBinds.Default.Save();
+            }
+
+        }
+
+
     }
 }
