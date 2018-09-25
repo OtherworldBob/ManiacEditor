@@ -880,5 +880,17 @@ namespace ManiacEditor.Properties {
                 this["CustomGridDefault"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool allowForSmoothSelection {
+            get {
+                return ((bool)(this["allowForSmoothSelection"]));
+            }
+            set {
+                this["allowForSmoothSelection"] = value;
+            }
+        }
     }
 }

@@ -1129,13 +1129,43 @@ namespace ManiacEditor
             return ModifierKeys.HasFlag(Keys.Alt);
         }
 
-        private void GraphicPanel_OnMouseDoubleClick(object sender, MouseEventArgs e)
+        private void GraphicPanel_OnMouseMove_UpdatePanel(object sender, MouseEventArgs e)
         {
+            //
+            // Tooltip Bar Info 
+            //
+            positionLabel.Text = "X: " + (int)(e.X / Zoom) + " Y: " + (int)(e.Y / Zoom);
+
+            if (Properties.Settings.Default.pixelCountMode == false)
+            {
+                selectedPositionLabel.Text = "Selected Tile Position: X: " + (int)SelectedTileX + ", Y: " + (int)SelectedTileY;
+                selectedPositionLabel.ToolTipText = "The Position of the Selected Tile";
+            }
+            else
+            {
+                selectedPositionLabel.Text = "Selected Tile Pixel Position: " + "X: " + (int)SelectedTileX * 16 + ", Y: " + (int)SelectedTileY * 16;
+                selectedPositionLabel.ToolTipText = "The Pixel Position of the Selected Tile";
+            }
+            if (Properties.Settings.Default.pixelCountMode == false)
+            {
+                selectionSizeLabel.Text = "Amount of Tiles in Selection: " + (SelectedTilesCount - DeselectTilesCount);
+                selectionSizeLabel.ToolTipText = "The Size of the Selection";
+            }
+            else
+            {
+                selectionSizeLabel.Text = "Length of Pixels in Selection: " + (SelectedTilesCount - DeselectTilesCount) * 16;
+                selectionSizeLabel.ToolTipText = "The Length of all the Tiles (by Pixels) in the Selection";
+            }
+
+
+            //
+            // End of Tooltip Bar Info Section
+            //
         }
 
         private void GraphicPanel_OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (Properties.Settings.Default.AllowMoreRenderUpdates)
+            if (Properties.Settings.Default.allowForSmoothSelection)
             {
                 UpdateRender();
             }
@@ -1311,39 +1341,8 @@ namespace ManiacEditor
                     }
                     GraphicPanel.OnMouseMoveEventCreate();
                 }
-
+                UpdateRender();
             }
-
-            //
-            // Tooltip Bar Info 
-            //
-
-            positionLabel.Text = "X: " + (int)(e.X / Zoom) + " Y: " + (int)(e.Y / Zoom);
-
-            if (Properties.Settings.Default.pixelCountMode == false)
-            {
-                selectedPositionLabel.Text = "Selected Tile Position: X: " + (int)SelectedTileX + ", Y: " + (int)SelectedTileY;
-                selectedPositionLabel.ToolTipText = "The Position of the Selected Tile";
-            }
-            else
-            {
-                selectedPositionLabel.Text = "Selected Tile Pixel Position: " + "X: " + (int)SelectedTileX * 16 + ", Y: " + (int)SelectedTileY * 16;
-                selectedPositionLabel.ToolTipText = "The Pixel Position of the Selected Tile";
-            }
-            if (Properties.Settings.Default.pixelCountMode == false)
-            {
-                selectionSizeLabel.Text = "Amount of Tiles in Selection: " + (SelectedTilesCount - DeselectTilesCount);
-                selectionSizeLabel.ToolTipText = "The Size of the Selection";
-            }
-            else
-            {
-                selectionSizeLabel.Text = "Length of Pixels in Selection: " + (SelectedTilesCount - DeselectTilesCount) * 16;
-                selectionSizeLabel.ToolTipText = "The Length of all the Tiles (by Pixels) in the Selection";
-            }
-
-            //
-            // End of Tooltip Bar Info Section
-            //
 
             if (IsEditing())
             {
@@ -1505,6 +1504,8 @@ namespace ManiacEditor
             lastX = e.X;
             lastY = e.Y;
         }
+
+
         private void GraphicPanel_OnMouseDown(object sender, MouseEventArgs e)
         {
             GraphicPanel.Focus();
@@ -1568,7 +1569,7 @@ namespace ManiacEditor
                     // Remove tile
                     Point p = new Point((int)(e.X / Zoom), (int)(e.Y / Zoom));
 
-                    // Prevent Error by Preventing NULL if Multi-Layer isn't on
+                    // Prevent Error by Preventing NULL if these don't exist
                     bool? pointSelect1 = FGHigh?.IsPointSelected(p);
                     bool? pointSelect2 = FGHigher?.IsPointSelected(p);
                     bool? pointSelect3 = FGLow?.IsPointSelected(p);
@@ -4558,7 +4559,43 @@ Error: {ex.Message}");
 
         public void UpdateRender()
         {
-                GraphicPanel.Render();
+           GraphicPanel.Render();
+        }
+
+        public void UpdateRenderMouse(MouseEventArgs e)
+        {
+            //
+            // Tooltip Bar Info 
+            //
+            positionLabel.Text = "X: " + (int)(e.X / Zoom) + " Y: " + (int)(e.Y / Zoom);
+
+            if (Properties.Settings.Default.pixelCountMode == false)
+            {
+                selectedPositionLabel.Text = "Selected Tile Position: X: " + (int)SelectedTileX + ", Y: " + (int)SelectedTileY;
+                selectedPositionLabel.ToolTipText = "The Position of the Selected Tile";
+            }
+            else
+            {
+                selectedPositionLabel.Text = "Selected Tile Pixel Position: " + "X: " + (int)SelectedTileX * 16 + ", Y: " + (int)SelectedTileY * 16;
+                selectedPositionLabel.ToolTipText = "The Pixel Position of the Selected Tile";
+            }
+            if (Properties.Settings.Default.pixelCountMode == false)
+            {
+                selectionSizeLabel.Text = "Amount of Tiles in Selection: " + (SelectedTilesCount - DeselectTilesCount);
+                selectionSizeLabel.ToolTipText = "The Size of the Selection";
+            }
+            else
+            {
+                selectionSizeLabel.Text = "Length of Pixels in Selection: " + (SelectedTilesCount - DeselectTilesCount) * 16;
+                selectionSizeLabel.ToolTipText = "The Length of all the Tiles (by Pixels) in the Selection";
+            }
+
+
+            //
+            // End of Tooltip Bar Info Section
+            //
+
+            GraphicPanel.Render();
         }
     }
 }

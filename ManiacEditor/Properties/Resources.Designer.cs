@@ -156,6 +156,58 @@ namespace ManiacEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Spring
+        ///Player
+        ///Platform
+        ///TimeAttackGate
+        ///Spikes
+        ///ItemBox
+        ///Bridge
+        ///TeeterTotter
+        ///HUD
+        ///Music
+        ///BoundsMarker
+        ///TitleCard
+        ///CorkscrewPath
+        ///BGSwitch
+        ///ForceSpin
+        ///UIControl
+        ///SignPost
+        ///UFO_Ring
+        ///UFO_Sphere
+        ///UFO_Player
+        ///UFO_ItemBox
+        ///UFO_Springboard
+        ///Decoration
+        ///WaterGush
+        ///BreakBar
+        ///InvisibleBlock
+        ///ForceUnstick
+        ///BreakableWall
+        ///CollapsingPlatform
+        ///PlaneSwitch
+        ///ChemicalPool
+        ///Newtron
+        ///Chopper
+        ///TippingPlatform
+        ///Spiny
+        ///OneWayDoor
+        ///Syringe
+        ///StickyPlatform
+        ///TwistedTubes
+        ///ShopWindow
+        ///DirectorChair
+        ///TVVan
+        ///FilmProjector
+        ///Rockem [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string objectRenderList {
+            get {
+                return ResourceManager.GetString("objectRenderList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\deflang2057{\fonttbl{\f0\fswiss\fprq2\fcharset0 Segoe UI;}{\f1\fnil\fcharset0 Calibri;}}
         ///{\colortbl ;\red255\green0\blue0;}
         ///\viewkind4\uc1\pard\qc\f0\fs18 This feature is \cf1\b highly experimental\cf0\b0 .\par

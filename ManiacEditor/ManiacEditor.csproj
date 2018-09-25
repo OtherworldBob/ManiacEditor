@@ -32,7 +32,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\DebugBuild\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -182,6 +182,65 @@
     <Compile Include="EntitiesToolbar.Designer.cs">
       <DependentUpon>EntitiesToolbar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entity Renders\BGSwitch.cs" />
+    <Compile Include="Entity Renders\BoundsMarker.cs" />
+    <Compile Include="Entity Renders\BreakableWall.cs" />
+    <Compile Include="Entity Renders\BreakBar.cs" />
+    <Compile Include="Entity Renders\Bridge.cs" />
+    <Compile Include="Entity Renders\CaterkillerJr.cs" />
+    <Compile Include="Entity Renders\ChemicalPool.cs" />
+    <Compile Include="Entity Renders\Chopper.cs" />
+    <Compile Include="Entity Renders\Clapperboard.cs" />
+    <Compile Include="Entity Renders\CollapsingPlatform.cs" />
+    <Compile Include="Entity Renders\CorkscrewPath.cs" />
+    <Compile Include="Entity Renders\Decoration.cs" />
+    <Compile Include="Entity Renders\DirectorChair.cs" />
+    <Compile Include="Entity Renders\DNARiser.cs" />
+    <Compile Include="Entity Renders\EggTV.cs" />
+    <Compile Include="Entity Renders\FilmProjector.cs" />
+    <Compile Include="Entity Renders\ForceSpin.cs" />
+    <Compile Include="Entity Renders\ForceUnstick.cs" />
+    <Compile Include="Entity Renders\Funnel.cs" />
+    <Compile Include="Entity Renders\Grabber.cs" />
+    <Compile Include="Entity Renders\HUD.cs" />
+    <Compile Include="Entity Renders\InvisibleBlock.cs" />
+    <Compile Include="Entity Renders\LEDPanel.cs" />
+    <Compile Include="Entity Renders\Letterboard.cs" />
+    <Compile Include="Entity Renders\LottoMachine.cs" />
+    <Compile Include="Entity Renders\Music.cs" />
+    <Compile Include="Entity Renders\OneWayDoor.cs" />
+    <Compile Include="Entity Renders\PlaneSwitch.cs" />
+    <Compile Include="Entity Renders\Platform.cs" />
+    <Compile Include="Entity Renders\Player.cs" />
+    <Compile Include="Entity Renders\PopcornMachine.cs" />
+    <Compile Include="Entity Renders\Ring.cs" />
+    <Compile Include="Entity Renders\RockemSockem.cs" />
+    <Compile Include="Entity Renders\ShopWindow.cs" />
+    <Compile Include="Entity Renders\SignPost.cs" />
+    <Compile Include="Entity Renders\Spikes.cs" />
+    <Compile Include="Entity Renders\SpinBooster.cs" />
+    <Compile Include="Entity Renders\SpinSign.cs" />
+    <Compile Include="Entity Renders\Spiny.cs" />
+    <Compile Include="Entity Renders\Spring.cs" />
+    <Compile Include="Entity Renders\StickyPlatform.cs" />
+    <Compile Include="Entity Renders\Syringe.cs" />
+    <Compile Include="Entity Renders\TeeterTotter.cs" />
+    <Compile Include="Entity Renders\Template.cs" />
+    <Compile Include="Entity Renders\Newtron.cs" />
+    <Compile Include="Entity Renders\ItemBox.cs" />
+    <Compile Include="Entity Renders\TimeAttackGate.cs" />
+    <Compile Include="Entity Renders\TippingPlatform.cs" />
+    <Compile Include="Entity Renders\TitleCard.cs" />
+    <Compile Include="Entity Renders\TVVan.cs" />
+    <Compile Include="Entity Renders\TwistedTubes.cs" />
+    <Compile Include="Entity Renders\UFO_ItemBox.cs" />
+    <Compile Include="Entity Renders\UFO_Player.cs" />
+    <Compile Include="Entity Renders\UFO_Ring.cs" />
+    <Compile Include="Entity Renders\UFO_Sphere.cs" />
+    <Compile Include="Entity Renders\UFO_Springboard.cs" />
+    <Compile Include="Entity Renders\UIControl.cs" />
+    <Compile Include="Entity Renders\Water.cs" />
+    <Compile Include="Entity Renders\WaterGush.cs" />
     <Compile Include="Enums\FlipDirection.cs" />
     <Compile Include="DevWarningBox.cs">
       <SubType>Form</SubType>
@@ -321,6 +380,9 @@
     <Compile Include="IDrawable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Resources\objectRenderList.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="Properties\KeyBinds.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>KeyBinds.Designer.cs</LastGenOutput>
@@ -548,9 +610,7 @@
     </Content>
     <Content Include="64x64.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entity Renders\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>

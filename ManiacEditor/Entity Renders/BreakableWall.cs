@@ -1,0 +1,116 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using ManiacEditor;
+using Microsoft.Xna.Framework;
+using RSDKv5;
+
+namespace ManiacEditor.Entity_Renders
+{
+    public class BreakableWall
+    {
+
+        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        {
+            var type = entity.attributesMap["type"].ValueUInt8;
+            var width = (int)(entity.attributesMap["size"].ValuePosition.X.High) - 1;
+            var height = (int)(entity.attributesMap["size"].ValuePosition.Y.High) - 1;
+
+            var editorAnim = e.LoadAnimation2("EditorAssets", d, 0, 0, false, false, false);
+
+            if (width != -1 && height != -1)
+            {
+                // draw corners
+                for (int i = 0; i < 4; i++)
+                {
+                    bool right = (i & 1) > 0;
+                    bool bottom = (i & 2) > 0;
+
+                    editorAnim = e.LoadAnimation2("EditorAssets", d, 0, 0, right, bottom, false);
+                    if (editorAnim != null && editorAnim.Frames.Count != 0)
+                    {
+                        var frame = editorAnim.Frames[e.index];
+                        e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
+                        bool wEven = width % 2 == 0;
+                        bool hEven = height % 2 == 0;
+                        d.DrawBitmap(frame.Texture,
+                            (x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-width / 2 + (right ? width : 0)) * frame.Frame.Width),
+                            (y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-height / 2 + (bottom ? height : 0)) * frame.Frame.Height),
+                            frame.Frame.Width, frame.Frame.Height, false, Transparency);
+
+                    }
+                }
+
+                // draw top and bottom
+                for (int i = 0; i < 2; i++)
+                {
+                    bool bottom = (i & 1) > 0;
+
+                    editorAnim = e.LoadAnimation2("EditorAssets", d, 0, 1, false, bottom, false);
+                    if (editorAnim != null && editorAnim.Frames.Count != 0)
+                    {
+                        var frame = editorAnim.Frames[e.index];
+                        e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
+                        bool wEven = width % 2 == 0;
+                        bool hEven = height % 2 == 0;
+                        for (int j = 1; j < width; j++)
+                            d.DrawBitmap(frame.Texture,
+                                (x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-width / 2 + j) * frame.Frame.Width),
+                                (y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-height / 2 + (bottom ? height : 0)) * frame.Frame.Height),
+                                frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                    }
+                }
+
+                // draw sides
+                for (int i = 0; i < 2; i++)
+                {
+                    bool right = (i & 1) > 0;
+
+                    editorAnim = e.LoadAnimation2("EditorAssets", d, 0, 2, right, false, false);
+                    if (editorAnim != null && editorAnim.Frames.Count != 0)
+                    {
+                        var frame = editorAnim.Frames[e.index];
+                        e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
+                        bool wEven = width % 2 == 0;
+                        bool hEven = height % 2 == 0;
+                        for (int j = 1; j < height; j++)
+                            d.DrawBitmap(frame.Texture,
+                                (x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-width / 2 + (right ? width : 0)) * frame.Frame.Width),
+                                (y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-height / 2 + j) * frame.Frame.Height),
+                                frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                    }
+                }
+            }
+
+            bool knux = entity.attributesMap["onlyKnux"].ValueBool;
+            bool mighty = entity.attributesMap.ContainsKey("onlyMighty") && entity.attributesMap["onlyMighty"].ValueBool;
+
+            // draw Knuckles icon
+            if (knux)
+            {
+                editorAnim = e.LoadAnimation2("HUD", d, 2, 2, false, false, false);
+                if (editorAnim != null && editorAnim.Frames.Count != 0)
+                {
+                    var frame = editorAnim.Frames[e.index];
+                    e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
+                    d.DrawBitmap(frame.Texture, x - frame.Frame.Width / (mighty ? 1 : 2), y - frame.Frame.Height / 2, frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                }
+            }
+
+            // draw Mighty icon
+            if (mighty)
+            {
+                editorAnim = e.LoadAnimation2("HUD", d, 2, 3, false, false, false);
+                if (editorAnim != null && editorAnim.Frames.Count != 0)
+                {
+                    var frame = editorAnim.Frames[e.index];
+                    e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
+                    d.DrawBitmap(frame.Texture, x - (knux ? 0 : frame.Frame.Width / 2), y - frame.Frame.Height / 2, frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                }
+            }
+        }
+    }
+}
