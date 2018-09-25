@@ -1311,7 +1311,7 @@ namespace ManiacEditor
                     }
                     GraphicPanel.OnMouseMoveEventCreate();
                 }
-                UpdateRender();
+
             }
 
             //
@@ -1373,6 +1373,7 @@ namespace ManiacEditor
                             EditLayer.Select(p);
                         }
                         DeleteSelected();
+
                     }
                 }
                 if (draggingSelection || dragged)
@@ -1566,11 +1567,26 @@ namespace ManiacEditor
                 {
                     // Remove tile
                     Point p = new Point((int)(e.X / Zoom), (int)(e.Y / Zoom));
+
+                    // Prevent Error by Preventing NULL if Multi-Layer isn't on
+                    bool? pointSelect1 = FGHigh?.IsPointSelected(p);
+                    bool? pointSelect2 = FGHigher?.IsPointSelected(p);
+                    bool? pointSelect3 = FGLow?.IsPointSelected(p);
+                    bool? pointSelect4 = FGLower?.IsPointSelected(p);
+                    if (pointSelect1 == null) pointSelect1 = false;
+                    if (pointSelect2 == null) pointSelect2 = false;
+                    if (pointSelect3 == null) pointSelect3 = false;
+                    if (pointSelect4 == null) pointSelect4 = false;
+                    bool point1 = pointSelect1.Value;
+                    bool point2 = pointSelect1.Value;
+                    bool point3 = pointSelect1.Value;
+                    bool point4 = pointSelect1.Value;
+
                     if (!EditLayer.IsPointSelected(p) && !multiLayerSelect)
                     {
                         EditLayer.Select(p);
                     }
-                    if ((!FGHigh.IsPointSelected(p) || !FGHigher.IsPointSelected(p) || !FGLow.IsPointSelected(p) || !FGLower.IsPointSelected(p)) && multiLayerSelect)
+                    if ((!point1 || !point2 || !point3 || !point4) && multiLayerSelect)
                     {
                         FGLow?.Select(p);
                         FGLower?.Select(p);
