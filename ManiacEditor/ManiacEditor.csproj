@@ -187,6 +187,7 @@
     <Compile Include="Entity Renders\BreakableWall.cs" />
     <Compile Include="Entity Renders\BreakBar.cs" />
     <Compile Include="Entity Renders\Bridge.cs" />
+    <Compile Include="Entity Renders\CableWarp.cs" />
     <Compile Include="Entity Renders\CaterkillerJr.cs" />
     <Compile Include="Entity Renders\ChemicalPool.cs" />
     <Compile Include="Entity Renders\Chopper.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Entity Renders\LottoMachine.cs" />
     <Compile Include="Entity Renders\Music.cs" />
     <Compile Include="Entity Renders\OneWayDoor.cs" />
+    <Compile Include="Entity Renders\PimPom.cs" />
     <Compile Include="Entity Renders\PlaneSwitch.cs" />
     <Compile Include="Entity Renders\Platform.cs" />
     <Compile Include="Entity Renders\Player.cs" />
@@ -239,6 +241,7 @@
     <Compile Include="Entity Renders\UFO_Sphere.cs" />
     <Compile Include="Entity Renders\UFO_Springboard.cs" />
     <Compile Include="Entity Renders\UIControl.cs" />
+    <Compile Include="Entity Renders\WarpDoor.cs" />
     <Compile Include="Entity Renders\Water.cs" />
     <Compile Include="Entity Renders\WaterGush.cs" />
     <Compile Include="Enums\FlipDirection.cs" />

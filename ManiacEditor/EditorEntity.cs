@@ -90,6 +90,9 @@ namespace ManiacEditor
         Grabber grabber = new Grabber();
         SpinBooster spinBooster = new SpinBooster();
         Water water = new Water();
+        WarpDoor warpDoor = new WarpDoor();
+        CableWarp cableWarp = new CableWarp();
+        PimPom pimPom = new PimPom();
         // Object List for initilizing the if statement
         List<string> entityRenderingObjects;
         // Bool to check for first time load
@@ -1013,6 +1016,18 @@ namespace ManiacEditor
             else if (entity.Object.Name.Name == "PlaneSwitch")
             {
                 planeSwitch.Draw(d, entity, this, x, y, Transparency);
+            }
+            else if (entity.Object.Name.Name == "WarpDoor")
+            {
+                warpDoor.Draw(d, entity, this, x, y, Transparency);
+            }
+            else if (entity.Object.Name.Name == "CableWarp")
+            {
+                cableWarp.Draw(d, entity, this, x, y, Transparency);
+            }
+            else if (entity.Object.Name.Name == "PimPom")
+            {
+                pimPom.Draw(d, entity, this, x, y, Transparency);
             }
         }
 

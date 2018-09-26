@@ -107,7 +107,7 @@ y + frame9.Frame.CenterY + (flipv ? (frame9.Frame.Height - editorAnim9.Frames[0]
 frame9.Frame.Width, frame9.Frame.Height, false, Transparency);
                 d.DrawBitmap(frame10.Texture,
                     x + frame10.Frame.CenterX - (fliph ? (frame10.Frame.Width - editorAnim10.Frames[0].Frame.Width) : 0),
-                    y + frame10.Frame.CenterY + (flipv ? (frame10.Frame.Height - editorAnim10.Frames[0].Frame.Height) : 0),
+                    y - 4 + frame10.Frame.CenterY + (flipv ? (frame10.Frame.Height - editorAnim10.Frames[0].Frame.Height) : 0),
                     frame10.Frame.Width, frame10.Frame.Height, false, Transparency);
                 d.DrawBitmap(frame11.Texture,
 x + frame11.Frame.Width + 32 + frame11.Frame.CenterX - (true ? (frame11.Frame.Width - editorAnim11.Frames[0].Frame.Width) : 0),
