@@ -18,23 +18,25 @@ namespace ManiacEditor.Entity_Renders
             var width = (int)(entity.attributesMap["width"].ValueUInt8);
             var height = (int)(entity.attributesMap["height"].ValueUInt8);
             var editorAnim = e.LoadAnimation2("ItemBox", d, 2, 10, false, false, false);
-            if (editorAnim != null && editorAnim.Frames.Count != 0)
-            {
-                var frame = editorAnim.Frames[e.index];
-                e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
-                bool wEven = width % 2 == 0;
-                bool hEven = height % 2 == 0;
-                for (int xx = 0; xx <= width; ++xx)
+
+                if (editorAnim != null && editorAnim.Frames.Count != 0)
                 {
-                    for (int yy = 0; yy <= height; ++yy)
+                    var frame = editorAnim.Frames[e.index];
+                    e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
+                    bool wEven = width % 2 == 0;
+                    bool hEven = height % 2 == 0;
+                    for (int xx = 0; xx <= width; ++xx)
                     {
-                        d.DrawBitmap(frame.Texture,
-                            x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-width / 2 + xx) * frame.Frame.Width,
-                            y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-height / 2 + yy) * frame.Frame.Height,
-                            frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                        for (int yy = 0; yy <= height; ++yy)
+                        {
+                            d.DrawBitmap(frame.Texture,
+                                x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-width / 2 + xx) * frame.Frame.Width,
+                                y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-height / 2 + yy) * frame.Frame.Height,
+                                frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                        }
                     }
                 }
-            }
+
         }
     }
 }

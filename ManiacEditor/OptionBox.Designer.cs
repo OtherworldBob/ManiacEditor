@@ -221,6 +221,7 @@
             this.label24 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
             this.panel14 = new System.Windows.Forms.Panel();
+            this.checkBox10 = new System.Windows.Forms.CheckBox();
             this.checkBox26 = new System.Windows.Forms.CheckBox();
             this.checkBox25 = new System.Windows.Forms.CheckBox();
             this.checkBox24 = new System.Windows.Forms.CheckBox();
@@ -232,7 +233,7 @@
             this.label31 = new System.Windows.Forms.Label();
             this.checkBox34 = new System.Windows.Forms.CheckBox();
             this.checkBox35 = new System.Windows.Forms.CheckBox();
-            this.checkBox10 = new System.Windows.Forms.CheckBox();
+            this.checkBox11 = new System.Windows.Forms.CheckBox();
             this.tabPage4.SuspendLayout();
             this.panel11.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -2492,6 +2493,7 @@
             // panel14
             // 
             this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel14.Controls.Add(this.checkBox11);
             this.panel14.Controls.Add(this.checkBox10);
             this.panel14.Controls.Add(this.checkBox26);
             this.panel14.Controls.Add(this.checkBox25);
@@ -2509,13 +2511,28 @@
             this.panel14.Size = new System.Drawing.Size(184, 560);
             this.panel14.TabIndex = 102;
             // 
+            // checkBox10
+            // 
+            this.checkBox10.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox10.Checked = global::ManiacEditor.Properties.Settings.Default.allowForSmoothSelection;
+            this.checkBox10.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "allowForSmoothSelection", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox10.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox10.Location = new System.Drawing.Point(5, 356);
+            this.checkBox10.Margin = new System.Windows.Forms.Padding(5);
+            this.checkBox10.Name = "checkBox10";
+            this.checkBox10.Size = new System.Drawing.Size(178, 43);
+            this.checkBox10.TabIndex = 106;
+            this.checkBox10.Text = "Allow for Smoother Selecting/Moving*\r\n(Slows down Status Information)\r\n";
+            this.checkBox10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox10.UseVisualStyleBackColor = false;
+            // 
             // checkBox26
             // 
             this.checkBox26.BackColor = System.Drawing.Color.Transparent;
             this.checkBox26.Checked = global::ManiacEditor.Properties.Settings.Default.AlternativeRenderingMethod;
             this.checkBox26.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "AlternativeRenderingMethod", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox26.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox26.Location = new System.Drawing.Point(5, 493);
+            this.checkBox26.Location = new System.Drawing.Point(5, 518);
             this.checkBox26.Margin = new System.Windows.Forms.Padding(5);
             this.checkBox26.Name = "checkBox26";
             this.checkBox26.Size = new System.Drawing.Size(171, 35);
@@ -2530,7 +2547,7 @@
             this.checkBox25.Checked = global::ManiacEditor.Properties.Settings.Default.AlwaysRenderTextures;
             this.checkBox25.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "AlwaysRenderTextures", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox25.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox25.Location = new System.Drawing.Point(5, 451);
+            this.checkBox25.Location = new System.Drawing.Point(5, 441);
             this.checkBox25.Margin = new System.Windows.Forms.Padding(5);
             this.checkBox25.Name = "checkBox25";
             this.checkBox25.Size = new System.Drawing.Size(171, 32);
@@ -2671,20 +2688,20 @@
             this.checkBox35.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBox35.UseVisualStyleBackColor = false;
             // 
-            // checkBox10
+            // checkBox11
             // 
-            this.checkBox10.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox10.Checked = global::ManiacEditor.Properties.Settings.Default.allowForSmoothSelection;
-            this.checkBox10.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "allowForSmoothSelection", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox10.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox10.Location = new System.Drawing.Point(5, 356);
-            this.checkBox10.Margin = new System.Windows.Forms.Padding(5);
-            this.checkBox10.Name = "checkBox10";
-            this.checkBox10.Size = new System.Drawing.Size(178, 43);
-            this.checkBox10.TabIndex = 106;
-            this.checkBox10.Text = "Allow for Smoother Selecting/Moving*\r\n(Slows down Status Information)\r\n";
-            this.checkBox10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox10.UseVisualStyleBackColor = false;
+            this.checkBox11.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox11.Checked = global::ManiacEditor.Properties.Settings.Default.AlwaysRenderRectangles;
+            this.checkBox11.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "AlwaysRenderRectangles", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox11.Location = new System.Drawing.Point(5, 476);
+            this.checkBox11.Margin = new System.Windows.Forms.Padding(5);
+            this.checkBox11.Name = "checkBox11";
+            this.checkBox11.Size = new System.Drawing.Size(171, 32);
+            this.checkBox11.TabIndex = 107;
+            this.checkBox11.Text = "Always Render Rectangles";
+            this.checkBox11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox11.UseVisualStyleBackColor = false;
             // 
             // OptionBox
             // 
@@ -2942,5 +2959,6 @@
         private System.Windows.Forms.TextBox openSceneFolderKeyBox;
         private System.Windows.Forms.Label label65;
         private System.Windows.Forms.CheckBox checkBox10;
+        private System.Windows.Forms.CheckBox checkBox11;
     }
 }

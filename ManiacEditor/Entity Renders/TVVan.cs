@@ -81,7 +81,7 @@ namespace ManiacEditor.Entity_Renders
             var editorAnim13 = e.LoadAnimation2("TVVan", d, 6, 0, fliph, flipv, false);
             var editorAnim14 = e.LoadAnimation2("TVVan", d, 6, 1, fliph, flipv, false);
             var editorAnim15 = e.LoadAnimation2("TVVan", d, 6, 2, fliph, flipv, false);
-            var editorAnim16 = e.LoadAnimation2("TVVan", d, 15, 0, fliph, flipv, false);
+            var editorAnim16 = e.LoadAnimation2("TVVan", d, 15, -1, fliph, flipv, false);
             var normalSataliteReversedHV = e.LoadAnimation2("TVVan", d, 6, 0, true, true, false);
             var normalSataliteReversedV = e.LoadAnimation2("TVVan", d, 6, 0, false, true, false);
             var normalSataliteReversedH = e.LoadAnimation2("TVVan", d, 6, 0, true, false, false);
@@ -130,19 +130,19 @@ namespace ManiacEditor.Entity_Renders
                 var frontTireR = editorAnim.Frames[6];
                 var Window = editorAnim.Frames[7];
                 var VanSatalite = editorAnim.Frames[8];
-                var frame10 = editorAnim10.Frames[e.index];
-                var frame11 = editorAnim11.Frames[e.index];
-                var frame12 = editorAnim12.Frames[e.index];
-                var normalSatalite = editorAnim13.Frames[e.index];
-                var upwardsSatalite = editorAnim14.Frames[e.index];
-                var sataliteHook = editorAnim15.Frames[e.index];
+                var frame10 = editorAnim10.Frames[0];
+                var frame11 = editorAnim11.Frames[0];
+                var frame12 = editorAnim12.Frames[0];
+                var normalSatalite = editorAnim13.Frames[0];
+                var upwardsSatalite = editorAnim14.Frames[0];
+                var sataliteHook = editorAnim15.Frames[0];
                 var frame16 = editorAnim16.Frames[e.index];
-                var normalSatalite2 = normalSataliteReversedHV.Frames[e.index];
-                var normalSataliteH = normalSataliteReversedH.Frames[e.index];
-                var normalSataliteV = normalSataliteReversedV.Frames[e.index];
-                var downwardsFaceSatalite = downwardsSatalite.Frames[e.index];
+                var normalSatalite2 = normalSataliteReversedHV.Frames[0];
+                var normalSataliteH = normalSataliteReversedH.Frames[0];
+                var normalSataliteV = normalSataliteReversedV.Frames[0];
+                var downwardsFaceSatalite = downwardsSatalite.Frames[0];
 
-                //ProcessAnimation(frame16.Entry.FrameSpeed, frame16.Entry.Frames.Count, frame16.Frame.Duration);
+                e.ProcessAnimation(frame16.Entry.FrameSpeed, frame16.Entry.Frames.Count, frame16.Frame.Duration);
 
                 if (objType == 0 || objType == 12 || objType == 13) // Normal (TV Van)
                 {

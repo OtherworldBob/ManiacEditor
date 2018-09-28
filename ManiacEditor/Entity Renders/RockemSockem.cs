@@ -24,11 +24,11 @@ namespace ManiacEditor.Entity_Renders
             var editorAnim3 = e.LoadAnimation2("RockemSockem", d, 2, -1, fliph, flipv, false);
             if (editorAnim != null && editorAnim.Frames.Count != 0 && editorAnim2 != null && editorAnim2.Frames.Count != 0 && editorAnim3 != null && editorAnim3.Frames.Count != 0)
             {
-                var frame = editorAnim.Frames[e.index];
-                var frame2 = editorAnim2.Frames[e.index];
+                var frame = editorAnim.Frames[0];
+                var frame2 = editorAnim2.Frames[0];
                 var frame3 = editorAnim3.Frames[e.index];
 
-                //ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
+                e.ProcessAnimation(frame3.Entry.FrameSpeed, frame3.Entry.Frames.Count, frame3.Frame.Duration);
 
                 d.DrawBitmap(frame.Texture,
                     x + frame.Frame.CenterX - (fliph ? (frame.Frame.Width - editorAnim.Frames[0].Frame.Width) : 0),

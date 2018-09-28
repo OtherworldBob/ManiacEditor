@@ -6,7 +6,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Linq;
@@ -14,6 +13,7 @@ using System.Linq.Expressions;
 using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Forms;
 using System.Diagnostics;
+using MonoGame.UI.Forms;
 
 namespace ManiacEditor
 {
@@ -93,10 +93,19 @@ namespace ManiacEditor
         WarpDoor warpDoor = new WarpDoor();
         CableWarp cableWarp = new CableWarp();
         PimPom pimPom = new PimPom();
+        SpecialRing specialRing = new SpecialRing();
+        CircleBumper circleBumper = new CircleBumper();
+        Tubinaut tubinaut = new Tubinaut();
+        LottoBall lottoBall = new LottoBall();
+        WeatherMobile weatherMobile = new WeatherMobile();
+        TVPole tvPole = new TVPole();
+        Launcher launcher = new Launcher();
+
         // Object List for initilizing the if statement
-        List<string> entityRenderingObjects;
-        // Bool to check for first time load
-        bool firstTime = true;
+        List<string> entityRenderingObjects = EditorEntity_ini.getSpecialRenderList(1);
+        List<string> renderOnScreenExlusions = EditorEntity_ini.getSpecialRenderList(0);
+
+
 
 
         public static Dictionary<string, EditorAnimation> Animations = new Dictionary<string, EditorAnimation>();
@@ -112,52 +121,6 @@ namespace ManiacEditor
         {
             this.entity = entity;
             lastFrametime = DateTime.Now;
-        }
-
-        List<string> getEntityInternalList()
-        {
-            var resourceName = "ManiacEditor.Resources.objectRenderList.ini";
-            var assembly = Assembly.GetExecutingAssembly();
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                return EnumerateLines(reader).ToList<string>();
-            }
-        }
-        List<string> getEntityExternalList()
-        {
-            var path = Path.Combine(Environment.CurrentDirectory, "Resources\\objectRenderList.ini");
-            Debug.Print(path.ToString());
-            using (StreamReader reader = new StreamReader(path))
-            {
-                return EnumerateLines(reader).ToList<string>();
-            }
-        }
-
-        List<string> getSpecialRenderList()
-        {
-            List<string> entityRenderListInternal = getEntityInternalList(); // Get the list embeded in the editor
-            List<string> entityRenderListExternal = getEntityExternalList(); // Get the list the user is allowed to edit
-            if (entityRenderListExternal != entityRenderListInternal)
-            {
-                return entityRenderListExternal;
-            }
-            else
-            {
-                return entityRenderListInternal;
-            }
-
-
-        }
-
-        IEnumerable<string> EnumerateLines(TextReader reader)
-        {
-            string line;
-
-            while ((line = reader.ReadLine()) != null)
-            {
-                yield return line;
-            }
         }
 
         public void Draw(Graphics g)
@@ -264,7 +227,7 @@ namespace ManiacEditor
                         {
                             LoadAnimation(val.name, val.d, val.AnimId, val.frameId, val.fliph, val.flipv, val.rotate, false);
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             // lots of changes introduced by Plus, just hide errors for now (evil I know!)
                             //Console.WriteLine($"Pop loading next animiation. {val.name}, {val.AnimId}, {val.frameId}, {val.fliph}, {val.flipv}, {val.rotate}", e);
@@ -384,6 +347,12 @@ namespace ManiacEditor
                 if (!File.Exists(path2))
                     return null;
             }
+            /*else if (name == "SuperSpecialRing")
+            {
+                path2 = Path.Combine(Environment.CurrentDirectory, "\\Global\\SpecialRing1.bin");
+                if (!File.Exists(path2))
+                    return null;
+            }*/
             else
             {
                 if (DataDirectoryList == null)
@@ -466,6 +435,8 @@ namespace ManiacEditor
                     string targetFile;
                     if (name == "EditorAssets")
                         targetFile = Path.Combine(Environment.CurrentDirectory, "EditorAssets.gif");
+                    /*else if (name == "SuperSpecialRing")
+                        targetFile = Path.Combine(Environment.CurrentDirectory, "Global", rsdkAnim.SpriteSheets[frame.SpriteSheet].Replace('/', '\\'));*/
                     else
                         targetFile = Path.Combine(Editor.DataDirectory, "sprites", rsdkAnim.SpriteSheets[frame.SpriteSheet].Replace('/', '\\'));
                     if (!File.Exists(targetFile))
@@ -547,22 +518,16 @@ namespace ManiacEditor
         // allow derived types to override the draw
         public virtual void Draw(DevicePanel d)
         {
-            /*Read the List of "Special" Objects from the resource file and 
-            convert it to something usable to minimize the amount of lines of code.*/
-            if (firstTime)
-            {
-                entityRenderingObjects = getSpecialRenderList();
-                firstTime = false;
-            }
             List<string> entityRenderList = entityRenderingObjects;
+            List<string> onScreenExlusionList = renderOnScreenExlusions;
 
 
             if (filteredOut) return;
 
 
-            if (Properties.Settings.Default.AlwaysRenderObjects == false)
+            if (Properties.Settings.Default.AlwaysRenderObjects == false && !onScreenExlusionList.Contains(entity.Object.Name.Name))
             {
-                //This causes some objects not to load ever, which is problamatic, so I made a toggle. It can also have some performance benifits
+                //This causes some objects not to load ever, which is problamatic, so I made a toggle(and a list as of recently). It can also have some performance benifits
                 if (!d.IsObjectOnScreen(entity.Position.X.High, entity.Position.Y.High, NAME_BOX_WIDTH, NAME_BOX_HEIGHT)) return;
             }
             System.Drawing.Color color = Selected ? System.Drawing.Color.MediumPurple : System.Drawing.Color.MediumTurquoise;
@@ -628,13 +593,19 @@ namespace ManiacEditor
                 d.DrawRectangle(x, y, x + NAME_BOX_WIDTH, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Transparency, color));
             }
 
-            d.DrawRectangle(x, y, x + NAME_BOX_WIDTH, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Selected ? 0x60 : 0x00, System.Drawing.Color.MediumPurple));
-            d.DrawLine(x, y, x + NAME_BOX_WIDTH, y, System.Drawing.Color.FromArgb(Transparency, color2));
-            d.DrawLine(x, y, x, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Transparency, color2));
-            d.DrawLine(x, y + NAME_BOX_HEIGHT, x + NAME_BOX_WIDTH, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Transparency, color2));
-            d.DrawLine(x + NAME_BOX_WIDTH, y, x + NAME_BOX_WIDTH, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Transparency, color2));
-            if (Properties.Settings.Default.UseObjectRenderingImprovements == false)
-                if (Editor.Instance.GetZoom() >= 1) d.DrawTextSmall(String.Format("{0} (ID: {1})", entity.Object.Name, entity.SlotID), x + 2, y + 2, NAME_BOX_WIDTH - 4, System.Drawing.Color.FromArgb(Transparency, System.Drawing.Color.Black), true);
+            if (d.IsObjectOnScreen(entity.Position.X.High, entity.Position.Y.High, NAME_BOX_WIDTH, NAME_BOX_HEIGHT))
+            {
+                d.DrawRectangle(x, y, x + NAME_BOX_WIDTH, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Selected ? 0x60 : 0x00, System.Drawing.Color.MediumPurple));
+                d.DrawLine(x, y, x + NAME_BOX_WIDTH, y, System.Drawing.Color.FromArgb(Transparency, color2));
+                d.DrawLine(x, y, x, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Transparency, color2));
+                d.DrawLine(x, y + NAME_BOX_HEIGHT, x + NAME_BOX_WIDTH, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Transparency, color2));
+                d.DrawLine(x + NAME_BOX_WIDTH, y, x + NAME_BOX_WIDTH, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Transparency, color2));
+                if (Properties.Settings.Default.UseObjectRenderingImprovements == false)
+                    if (Editor.Instance.GetZoom() >= 1) d.DrawTextSmall(String.Format("{0} (ID: {1})", entity.Object.Name, entity.SlotID), x + 2, y + 2, NAME_BOX_WIDTH - 4, System.Drawing.Color.FromArgb(Transparency, System.Drawing.Color.Black), true);
+            }
+
+
+
         }
 
         public EditorAnimation.EditorFrame GetFrameFromAttribute(EditorAnimation anim, AttributeValue attribute, string key = "frameID")
@@ -1029,6 +1000,36 @@ namespace ManiacEditor
             {
                 pimPom.Draw(d, entity, this, x, y, Transparency);
             }
+            else if (entity.Object.Name.Name == "SpecialRing")
+            {
+                specialRing.Draw(d, entity, this, x, y, Transparency);
+            }
+            else if (entity.Object.Name.Name == "CircleBumper")
+            {
+                circleBumper.Draw(d, entity, this, x, y, Transparency);
+            }
+            else if (entity.Object.Name.Name == "Tubinaut")
+            {
+                tubinaut.Draw(d, entity, this, x, y, Transparency);
+            }
+            else if (entity.Object.Name.Name == "LottoBall")
+            {
+                lottoBall.Draw(d, entity, this, x, y, Transparency);
+            }
+            else if (entity.Object.Name.Name == "WeatherMobile")
+            {
+                weatherMobile.Draw(d, entity, this, x, y, Transparency);
+            }
+            else if (entity.Object.Name.Name == "TVPole")
+            {
+                tvPole.Draw(d, entity, this, x, y, Transparency);
+            }
+            else if (entity.Object.Name.Name == "Launcher")
+            {
+                launcher.Draw(d, entity, this, x, y, Transparency);
+            }
+
+
         }
 
         public bool HasFilter()
@@ -1080,5 +1081,6 @@ namespace ManiacEditor
                 public Bitmap _Bitmap;
             }
         }
+
     }
 }

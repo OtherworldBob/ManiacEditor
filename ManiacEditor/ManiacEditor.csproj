@@ -28,7 +28,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
@@ -90,6 +90,16 @@
     <DocumentationFile>
     </DocumentationFile>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug%28x64%29|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug%28x64%29\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Extended, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -169,6 +179,7 @@
     </Compile>
     <Compile Include="Discord.cs" />
     <Compile Include="EditorBackground.cs" />
+    <Compile Include="EditorEntity_ini.cs" />
     <Compile Include="EditorScene.cs" />
     <Compile Include="EditSceneSelectInfoForm.cs">
       <SubType>Form</SubType>
@@ -191,9 +202,11 @@
     <Compile Include="Entity Renders\CaterkillerJr.cs" />
     <Compile Include="Entity Renders\ChemicalPool.cs" />
     <Compile Include="Entity Renders\Chopper.cs" />
+    <Compile Include="Entity Renders\CircleBumper.cs" />
     <Compile Include="Entity Renders\Clapperboard.cs" />
     <Compile Include="Entity Renders\CollapsingPlatform.cs" />
     <Compile Include="Entity Renders\CorkscrewPath.cs" />
+    <Compile Include="Entity Renders\CutsceneHBH.cs" />
     <Compile Include="Entity Renders\Decoration.cs" />
     <Compile Include="Entity Renders\DirectorChair.cs" />
     <Compile Include="Entity Renders\DNARiser.cs" />
@@ -205,8 +218,10 @@
     <Compile Include="Entity Renders\Grabber.cs" />
     <Compile Include="Entity Renders\HUD.cs" />
     <Compile Include="Entity Renders\InvisibleBlock.cs" />
+    <Compile Include="Entity Renders\Launcher.cs" />
     <Compile Include="Entity Renders\LEDPanel.cs" />
     <Compile Include="Entity Renders\Letterboard.cs" />
+    <Compile Include="Entity Renders\LottoBall.cs" />
     <Compile Include="Entity Renders\LottoMachine.cs" />
     <Compile Include="Entity Renders\Music.cs" />
     <Compile Include="Entity Renders\OneWayDoor.cs" />
@@ -219,6 +234,7 @@
     <Compile Include="Entity Renders\RockemSockem.cs" />
     <Compile Include="Entity Renders\ShopWindow.cs" />
     <Compile Include="Entity Renders\SignPost.cs" />
+    <Compile Include="Entity Renders\SpecialRing.cs" />
     <Compile Include="Entity Renders\Spikes.cs" />
     <Compile Include="Entity Renders\SpinBooster.cs" />
     <Compile Include="Entity Renders\SpinSign.cs" />
@@ -233,6 +249,8 @@
     <Compile Include="Entity Renders\TimeAttackGate.cs" />
     <Compile Include="Entity Renders\TippingPlatform.cs" />
     <Compile Include="Entity Renders\TitleCard.cs" />
+    <Compile Include="Entity Renders\Tubinaut.cs" />
+    <Compile Include="Entity Renders\TVPole.cs" />
     <Compile Include="Entity Renders\TVVan.cs" />
     <Compile Include="Entity Renders\TwistedTubes.cs" />
     <Compile Include="Entity Renders\UFO_ItemBox.cs" />
@@ -244,6 +262,7 @@
     <Compile Include="Entity Renders\WarpDoor.cs" />
     <Compile Include="Entity Renders\Water.cs" />
     <Compile Include="Entity Renders\WaterGush.cs" />
+    <Compile Include="Entity Renders\WeatherMobile.cs" />
     <Compile Include="Enums\FlipDirection.cs" />
     <Compile Include="DevWarningBox.cs">
       <SubType>Form</SubType>
@@ -386,10 +405,16 @@
     <EmbeddedResource Include="Resources\objectRenderList.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Content Include="Global\SuperSpecialRing.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\KeyBinds.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>KeyBinds.Designer.cs</LastGenOutput>
     </None>
+    <EmbeddedResource Include="Resources\onScreenRenderExclusions.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="Resources\WarningStatic2.gif" />
     <None Include="Resources\RefreshStatic2.gif" />
     <None Include="Resources\WarningNoStatic2.gif" />
@@ -612,6 +637,42 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="64x64.ico" />
+    <Content Include="Global\SpecialRing1.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global\SpecialRing10.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global\SpecialRing11.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global\SpecialRing12.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global\SpecialRing2.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global\SpecialRing3.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global\SpecialRing4.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global\SpecialRing5.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global\SpecialRing6.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global\SpecialRing7.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global\SpecialRing8.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global\SpecialRing9.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

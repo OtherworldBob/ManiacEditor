@@ -18,6 +18,12 @@ namespace ManiacEditor.Entity_Renders
             int frameID = 0;
             int targetFrameID = -1;
             var attribute = entity.attributesMap["frameID"];
+            int angle = (int)entity.attributesMap["angle"].ValueInt32;
+            int type = (int)entity.attributesMap["type"].ValueVar;
+            int amplitudeX = (int)entity.attributesMap["amplitude"].ValuePosition.X.High;
+            int amplitudeY = (int)entity.attributesMap["amplitude"].ValuePosition.Y.High;
+            int angleStateX = 0;
+            int angleStateY = 0;
             switch (attribute.Type)
             {
                 case AttributeTypes.UINT8:
@@ -63,7 +69,14 @@ namespace ManiacEditor.Entity_Renders
                 else
                     frame = editorAnim.Frames[frameID > 0 ? frameID : 0];
                 e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
-                d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX, y + frame.Frame.CenterY,
+
+                if ((amplitudeX != 0 || amplitudeY != 0) && type == 3)
+                {
+                    angleStateX = (int)((frame.Frame.CenterX + amplitudeX) * Math.Cos(Math.PI * angle / 128) + (frame.Frame.CenterY + amplitudeY) * Math.Sin(Math.PI * angle / 128));
+                    angleStateY = (int)((frame.Frame.CenterX + amplitudeX) * Math.Sin(Math.PI * angle / 128) - (frame.Frame.CenterY + amplitudeY) * Math.Cos(Math.PI * angle / 128));
+                }
+
+                d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX + angleStateX, y + frame.Frame.CenterY - angleStateY,
                     frame.Frame.Width, frame.Frame.Height, false, Transparency);
             }
         }

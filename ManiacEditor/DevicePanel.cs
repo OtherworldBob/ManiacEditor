@@ -564,7 +564,10 @@ namespace ManiacEditor
             if (!IsObjectOnScreen(x, y, width, height)) return;
             Rectangle screen = _parent.GetScreen();
             double zoom = _parent.GetZoom();
-            DrawTexture(image, new Rectangle(0, 0, width, height), new Vector3(), new Vector3(x - (int)(screen.X / zoom), y - (int)(screen.Y / zoom), 0), (selected) ? Color.BlueViolet : Color.FromArgb(transparency, Color.White));
+            if (zoom == 1.0)
+                DrawTexture(image, new Rectangle(0, 0, width, height), new Vector3(), new Vector3(x - screen.X, y - screen.Y, 0), (selected) ? Color.BlueViolet : Color.FromArgb(transparency, Color.White));
+            else
+                DrawTexture(image, new Rectangle(0, 0, width, height), new Vector3(), new Vector3(x - (int)(screen.X / zoom), y - (int)(screen.Y / zoom), 0), (selected) ? Color.BlueViolet : Color.FromArgb(transparency, Color.White));
         }
 
         public void DrawBitmap(Texture image, int x, int y, Rectangle size, bool selected, int transparency)
@@ -700,7 +703,10 @@ namespace ManiacEditor
 
         public void DrawRectangle(int x1, int y1, int x2, int y2, Color color)
         {
-            //if (!IsObjectOnScreen(x1, y1, x2 - x1, y2 - y1)) return;
+            if (Properties.Settings.Default.AlwaysRenderRectangles != true)
+            {
+                if (!IsObjectOnScreen(x1, y1, x2 - x1, y2 - y1)) return;
+            }
 
             Rectangle screen = _parent.GetScreen();
             double zoom = _parent.GetZoom();

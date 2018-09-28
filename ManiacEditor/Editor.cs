@@ -2588,7 +2588,7 @@ a valid Data Directory.",
                     FGLower.Draw(GraphicPanel);
                 if (ShowFGLow.Checked || EditFGLow.Checked)
                     FGLow.Draw(GraphicPanel);
-                if (ShowEntities.Checked || !EditEntities.Checked)
+                if (ShowEntities.Checked && !EditEntities.Checked)
                     entities.Draw(GraphicPanel);
                 if (ShowFGHigh.Checked || EditFGHigh.Checked)
                     FGHigh.Draw(GraphicPanel);
