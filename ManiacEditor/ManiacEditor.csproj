@@ -28,7 +28,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
@@ -36,7 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -100,6 +100,70 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug%28x64%29\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'x64 Release|x64'">
+    <OutputPath>bin\x64\x64 Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'x86 Release|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\x86 Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'x86 Debug|x64'">
+    <OutputPath>bin\x64\x86 Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'x64 Debug|x64'">
+    <OutputPath>bin\x64\x64 Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug%28x64%29|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug%28x64%29\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Extended, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -211,11 +275,14 @@
     <Compile Include="Entity Renders\DirectorChair.cs" />
     <Compile Include="Entity Renders\DNARiser.cs" />
     <Compile Include="Entity Renders\EggTV.cs" />
+    <Compile Include="Entity Renders\FBZSinkTrash.cs" />
+    <Compile Include="Entity Renders\FBZTrash.cs" />
     <Compile Include="Entity Renders\FilmProjector.cs" />
     <Compile Include="Entity Renders\ForceSpin.cs" />
     <Compile Include="Entity Renders\ForceUnstick.cs" />
     <Compile Include="Entity Renders\Funnel.cs" />
     <Compile Include="Entity Renders\Grabber.cs" />
+    <Compile Include="Entity Renders\HangPoint.cs" />
     <Compile Include="Entity Renders\HUD.cs" />
     <Compile Include="Entity Renders\InvisibleBlock.cs" />
     <Compile Include="Entity Renders\Launcher.cs" />
@@ -242,6 +309,7 @@
     <Compile Include="Entity Renders\Spring.cs" />
     <Compile Include="Entity Renders\StickyPlatform.cs" />
     <Compile Include="Entity Renders\Syringe.cs" />
+    <Compile Include="Entity Renders\Technosqueek.cs" />
     <Compile Include="Entity Renders\TeeterTotter.cs" />
     <Compile Include="Entity Renders\Template.cs" />
     <Compile Include="Entity Renders\Newtron.cs" />
@@ -294,10 +362,20 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>CheatCodes.settings</DependentUpon>
     </Compile>
+    <Compile Include="Properties\EditorState.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>EditorState.settings</DependentUpon>
+    </Compile>
     <Compile Include="Properties\KeyBinds.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>KeyBinds.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\UniversalNumbers.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>UniversalNumbers.settings</DependentUpon>
     </Compile>
     <Compile Include="RunSceneOptions.cs">
       <SubType>Form</SubType>
@@ -311,11 +389,11 @@
     <Compile Include="ObjectImporter.designer.cs">
       <DependentUpon>ObjectImporter.cs</DependentUpon>
     </Compile>
-    <Compile Include="ObjectManager.cs">
+    <Compile Include="developerTool.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ObjectManager.Designer.cs">
-      <DependentUpon>ObjectManager.cs</DependentUpon>
+    <Compile Include="developerTool.Designer.cs">
+      <DependentUpon>developerTool.cs</DependentUpon>
     </Compile>
     <Compile Include="HorizontalLayerScroll.cs" />
     <Compile Include="IDrawArea.cs" />
@@ -402,6 +480,12 @@
     <Compile Include="IDrawable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Properties\EditorState.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>EditorState.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\Settings_12x_16x.png" />
+    <None Include="Resources\Image1.bmp" />
     <EmbeddedResource Include="Resources\objectRenderList.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -415,6 +499,10 @@
     <EmbeddedResource Include="Resources\onScreenRenderExclusions.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Include="Properties\UniversalNumbers.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>UniversalNumbers.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Resources\WarningStatic2.gif" />
     <None Include="Resources\RefreshStatic2.gif" />
     <None Include="Resources\WarningNoStatic2.gif" />
@@ -520,8 +608,8 @@
     <EmbeddedResource Include="ObjectRemover.resx">
       <DependentUpon>ObjectRemover.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ObjectManager.resx">
-      <DependentUpon>ObjectManager.cs</DependentUpon>
+    <EmbeddedResource Include="developerTool.resx">
+      <DependentUpon>developerTool.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionBox.resx">
       <DependentUpon>OptionBox.cs</DependentUpon>
@@ -554,9 +642,9 @@
     <None Include="discord-rpc.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="EditorAssets.bin">
+    <Content Include="EditorAssets.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -624,9 +712,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="EditorAssets.gif">
+    <Content Include="EditorAssets.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="128x128.ico" />

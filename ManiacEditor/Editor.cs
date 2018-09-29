@@ -72,6 +72,7 @@ namespace ManiacEditor
         internal EditorScene EditorScene;
         internal StageConfig StageConfig;
         public ObjectRemover objectRemover;
+        internal EditorEntity editorEntity;
 
         string SceneFilename = null;
         string StageConfigFileName = null;
@@ -267,6 +268,7 @@ namespace ManiacEditor
 
                 WindowState = mySettings.IsMaximized ? FormWindowState.Maximized : WindowState;
                 GamePath = mySettings.GamePath;
+                editEntitesTransparencyToolStripMenuItem.Checked = Properties.EditorState.Default.editEntitiesTransparency;
 
                 if (mySettings.DataDirectories?.Count > 0)
                 {
@@ -539,7 +541,7 @@ namespace ManiacEditor
 
 
             //Doing this too often seems to cause a lot of grief for the app, should be relocated and stored as a bool
-            windowsClipboardState = Clipboard.ContainsData("ManiacTiles");
+            //windowsClipboardState = Clipboard.ContainsData("ManiacTiles");
             windowsClipboardState = false;
 
 
@@ -944,9 +946,11 @@ namespace ManiacEditor
                 {
                     case false:
                         Properties.Settings.Default.ScrollLockDirection = true;
+                        scrollLockDirLabel.Text = "Scroll Lock Direction: Y";
                         break;
                     case true:
                         Properties.Settings.Default.ScrollLockDirection = false;
+                        scrollLockDirLabel.Text = "Scroll Lock Direction: X";
                         break;
                 }
 
@@ -1129,7 +1133,7 @@ namespace ManiacEditor
             return ModifierKeys.HasFlag(Keys.Alt);
         }
 
-        private void GraphicPanel_OnMouseMove_UpdatePanel(object sender, MouseEventArgs e)
+        private void UpdateStatusPanel(object sender, MouseEventArgs e)
         {
             //
             // Tooltip Bar Info 
@@ -1157,6 +1161,16 @@ namespace ManiacEditor
                 selectionSizeLabel.ToolTipText = "The Length of all the Tiles (by Pixels) in the Selection";
             }
 
+            if (Properties.Settings.Default.ScrollLockDirection == true)
+            {
+                scrollLockDirLabel.Text = "Scroll Lock Direction: X";
+            }
+            else
+            {
+                scrollLockDirLabel.Text = "Scroll Lock Direction: Y";
+            }
+
+
 
             //
             // End of Tooltip Bar Info Section
@@ -1168,6 +1182,7 @@ namespace ManiacEditor
             if (Properties.Settings.Default.allowForSmoothSelection)
             {
                 UpdateRender();
+                UpdateStatusPanel(sender, e);
             }
             if (ClickedX != -1)
             {
@@ -1199,7 +1214,7 @@ namespace ManiacEditor
                 bool hasTileAt2_c = hasTileAt2.Value;
                 bool hasTileAt3_c = hasTileAt3.Value;
                 bool hasTileAt4_c = hasTileAt4.Value;
-
+                UpdateStatusPanel(sender, e);
 
                 if (IsTilesEdit())
                 {
@@ -1209,6 +1224,7 @@ namespace ManiacEditor
                         dragged = true;
                         startDragged = true;
                         EditLayer.StartDrag();
+                        UpdateStatusPanel(sender, e);
                     }
 
                     else if ((pointSelect1_c || pointSelect2_c || pointSelect3_c || pointSelect4_c) && multiLayerSelect)
@@ -1220,6 +1236,7 @@ namespace ManiacEditor
                         FGLow?.StartDrag();
                         FGLower?.StartDrag();
                         FGHigher?.StartDrag();
+                        UpdateStatusPanel(sender, e);
                     }
 
                     else if (!selectTool.Checked && !ShiftPressed() && !CtrlPressed() && EditLayer.HasTileAt(clicked_point) && !multiLayerSelect)
@@ -1229,6 +1246,7 @@ namespace ManiacEditor
                         dragged = true;
                         startDragged = true;
                         EditLayer.StartDrag();
+                        UpdateStatusPanel(sender, e);
                     }
                     else if (!selectTool.Checked && !ShiftPressed() && !CtrlPressed() && (hasTileAt1_c || hasTileAt2_c || hasTileAt3_c || hasTileAt4_c) && multiLayerSelect)
                     {
@@ -1243,6 +1261,7 @@ namespace ManiacEditor
                         FGLow?.StartDrag();
                         FGLower?.StartDrag();
                         FGHigher?.StartDrag();
+                        UpdateStatusPanel(sender, e);
                     }
                     else
                     {
@@ -1252,6 +1271,7 @@ namespace ManiacEditor
                             Deselect();
                         UpdateControls();
                         UpdateEditLayerActions();
+                        UpdateStatusPanel(sender, e);
                         draggingSelection = true;
                         selectingX = ClickedX;
                         selectingY = ClickedY;
@@ -1268,6 +1288,7 @@ namespace ManiacEditor
                         draggedX = 0;
                         draggedY = 0;
                         startDragged = true;
+                        UpdateStatusPanel(sender, e);
                     }
                     else
                     {
@@ -1278,16 +1299,20 @@ namespace ManiacEditor
                         draggingSelection = true;
                         selectingX = ClickedX;
                         selectingY = ClickedY;
+                        UpdateStatusPanel(sender, e);
                     }
                 }
                 ClickedX = -1;
                 ClickedY = -1;
+                UpdateStatusPanel(sender, e);
             }
             if (scrolling)
             {
                 if (wheelClicked)
                 {
                     scrollingDragged = true;
+                    UpdateStatusPanel(sender, e);
+                    UpdateStatusPanel(sender, e);
                 }
 
                 int xMove = (hScrollBar1.Visible) ? e.X - ShiftX - scrollPosition.X : 0;
@@ -1301,15 +1326,18 @@ namespace ManiacEditor
                     if (yMove > 0) Cursor = Cursors.PanSE;
                     else if (yMove < 0) Cursor = Cursors.PanNE;
                     else Cursor = Cursors.PanEast;
+                    UpdateStatusPanel(sender, e);
                 }
                 else if (xMove < 0)
                 {
                     if (yMove > 0) Cursor = Cursors.PanSW;
                     else if (yMove < 0) Cursor = Cursors.PanNW;
                     else Cursor = Cursors.PanWest;
+                    UpdateStatusPanel(sender, e);
                 }
                 else
                 {
+                    UpdateStatusPanel(sender, e);
                     if (yMove > 0) Cursor = Cursors.PanSouth;
                     else if (yMove < 0) Cursor = Cursors.PanNorth;
                     else
@@ -1318,6 +1346,7 @@ namespace ManiacEditor
                         else if (vScrollBar1.Visible) Cursor = Cursors.NoMoveVert;
                         else if (hScrollBar1.Visible) Cursor = Cursors.NoMoveHoriz;
                     }
+                    UpdateStatusPanel(sender, e);
                 }
 
                 Point position = new Point(ShiftX, ShiftY); ;
@@ -1340,8 +1369,11 @@ namespace ManiacEditor
                         hScrollBar1.Value = x;
                     }
                     GraphicPanel.OnMouseMoveEventCreate();
+                    UpdateStatusPanel(sender, e);
                 }
+                UpdateStatusPanel(sender, e);
                 UpdateRender();
+
             }
 
             if (IsEditing())
@@ -1419,7 +1451,9 @@ namespace ManiacEditor
                             hScrollBar1.Value = x;
                         }
                         GraphicPanel.OnMouseMoveEventCreate();
+                        UpdateStatusPanel(sender, e);
                         UpdateRender();
+
 
 
                     }
@@ -1503,6 +1537,7 @@ namespace ManiacEditor
             }
             lastX = e.X;
             lastY = e.Y;
+            UpdateStatusPanel(sender, e);
         }
 
 
@@ -4249,7 +4284,6 @@ Error: {ex.Message}");
                 {
                     y = y + 100;
                 }
-                Application.DoEvents();
                 //preLoadForm.SetProgressBarStatus(progressValueX, progressValueY);
 
 
@@ -4429,6 +4463,91 @@ Error: {ex.Message}");
                 scrollDirection = "Locked";
             }
         }
+
+        private void developerTerminalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeveloperTerminal devTerm = new DeveloperTerminal();
+            devTerm.Show();
+
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+        public void moreSettingsButton_ButtonClick(object sender, EventArgs e)
+        {
+            switch (Properties.EditorState.Default.lastQuickButtonState)
+            {
+                case 1:
+                    swapScrollLockDirectionToolStripMenuItem_Click(sender, e);
+                    break;
+                case 2:
+                    editEntitesTransparencyToolStripMenuItem_Click(sender, e);
+                    break;
+                case 3:
+                    toggleEncoreManiaEntitiesToolStripMenuItem_Click(sender, e);
+                    break;
+                default:
+                    swapScrollLockDirectionToolStripMenuItem_Click(sender, e);
+                    break;
+
+
+            }
+        }
+
+        public void swapScrollLockDirectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.EditorState.Default.lastQuickButtonState = 1;
+            if (Properties.Settings.Default.ScrollLockDirection == true)
+            {
+                Properties.Settings.Default.ScrollLockDirection = false;
+                scrollLockDirLabel.Text = "Scroll Lock Direction: X";
+            }
+            else
+            {
+                Properties.Settings.Default.ScrollLockDirection = true;
+                scrollLockDirLabel.Text = "Scroll Lock Direction: Y";
+            }
+        }
+
+        public void editEntitesTransparencyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.EditorState.Default.lastQuickButtonState = 2;
+            if (Properties.EditorState.Default.editEntitiesTransparency == false)
+            {
+                Properties.EditorState.Default.editEntitiesTransparency = true;
+                editEntitesTransparencyToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                Properties.EditorState.Default.editEntitiesTransparency = false;
+                editEntitesTransparencyToolStripMenuItem.Checked = false;
+            }
+        }
+
+        public void toggleEncoreManiaEntitiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.EditorState.Default.lastQuickButtonState = 3;
+            if (Properties.Settings.Default.showEncoreEntities == true && Properties.Settings.Default.showManiaEntities == true)
+            {
+                Properties.Settings.Default.showManiaEntities = true;
+                Properties.Settings.Default.showEncoreEntities = false;
+            }
+            if (Properties.Settings.Default.showEncoreEntities == true && Properties.Settings.Default.showManiaEntities == false) {
+                Properties.Settings.Default.showManiaEntities = true;
+                Properties.Settings.Default.showEncoreEntities = false;
+            }
+            else
+            {
+                Properties.Settings.Default.showManiaEntities = false;
+                Properties.Settings.Default.showEncoreEntities = true;
+            }
+            
+        }
+
+
+
         public void DisposeTextures()
         {
             // Make sure to dispose the textures of the extra layers too

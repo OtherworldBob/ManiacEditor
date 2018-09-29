@@ -450,7 +450,5 @@ namespace ManiacEditor
             }
 
         }
-
-
     }
 }

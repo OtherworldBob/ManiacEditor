@@ -919,7 +919,7 @@ x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, selected, Transperncy);
                         }
                     }
                 }
-                this.TileChunksTextures[y][x] = TextureCreator.FromBitmap(d._device, bmp);
+                this.TileChunksTextures[y][x] = TextureCreator.FromBitmapSlow(d._device, bmp);
             }
 
             return this.TileChunksTextures[y][x];
@@ -968,7 +968,20 @@ x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, selected, Transperncy);
 
         public void Draw(DevicePanel d)
         {
-            int Transperncy = (Editor.Instance.EditLayer != null && Editor.Instance.EditLayer != this) ? 0x32 : 0xFF;
+            int Transperncy;
+
+            if (Editor.Instance.EditLayer != null && Editor.Instance.EditLayer != this)
+            {
+                Transperncy = 0x32;
+            }
+            else if (Editor.Instance.EditEntities.Checked && Editor.Instance.EditLayer == null && Properties.EditorState.Default.editEntitiesTransparency)
+            {
+                Transperncy = 0x32;
+            }
+            else
+            {
+                Transperncy = 0xFF;
+            }
 
             Rectangle screen = d.GetScreen();
             

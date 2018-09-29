@@ -44,7 +44,7 @@ y + frame.Frame.CenterY + (flipv ? (frame.Frame.Height - editorAnim.Frames[0].Fr
 frame.Frame.Width, frame.Frame.Height, false, Transparency);
 
             }
-            else if (width != 0 && height != 0 && type == 1)
+            else if (width != 0 && height != 0 && type != 2)
             {
                 // draw corners
                 for (int i = 0; i < 4; i++)
@@ -52,7 +52,7 @@ frame.Frame.Width, frame.Frame.Height, false, Transparency);
                     bool right = (i & 1) > 0;
                     bool bottom = (i & 2) > 0;
 
-                    editorAnim = e.LoadAnimation2("EditorAssets", d, 0, 0, right, bottom, false);
+                    editorAnim = e.LoadAnimation2("EditorAssets", d, 2, 0, right, bottom, false);
                     if (editorAnim != null && editorAnim.Frames.Count != 0)
                     {
                         var frame = editorAnim.Frames[e.index];
@@ -70,7 +70,7 @@ frame.Frame.Width, frame.Frame.Height, false, Transparency);
                 {
                     bool bottom = (i & 1) > 0;
 
-                    editorAnim = e.LoadAnimation2("EditorAssets", d, 0, 1, false, bottom, false);
+                    editorAnim = e.LoadAnimation2("EditorAssets", d, 2, 1, false, bottom, false);
                     if (editorAnim != null && editorAnim.Frames.Count != 0)
                     {
                         var frame = editorAnim.Frames[e.index];
@@ -89,7 +89,7 @@ frame.Frame.Width, frame.Frame.Height, false, Transparency);
                 {
                     bool right = (i & 1) > 0;
 
-                    editorAnim = e.LoadAnimation2("EditorAssets", d, 0, 2, right, false, false);
+                    editorAnim = e.LoadAnimation2("EditorAssets", d, 2, 2, right, false, false);
                     if (editorAnim != null && editorAnim.Frames.Count != 0)
                     {
                         var frame = editorAnim.Frames[e.index];

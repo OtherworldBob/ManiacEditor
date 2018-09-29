@@ -14,6 +14,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Forms;
 using System.Diagnostics;
 using MonoGame.UI.Forms;
+using MonoGame.Extended;
 
 namespace ManiacEditor
 {
@@ -28,78 +29,84 @@ namespace ManiacEditor
 
         public bool Selected;
 
+        public static EditorEntity Instance;
+
         private SceneEntity entity;
         private bool filteredOut;
 
         // Object Render List
-        ItemBox itemBox = new ItemBox();
-        Bridge bridge = new Bridge();
-        Newtron newtron = new Newtron();
-        Ring ring = new Ring();
-        Chopper chopper = new Chopper();
-        TippingPlatform tippingPlatform = new TippingPlatform();
-        Spiny spiny = new Spiny();
-        StickyPlatform stickyPlatform = new StickyPlatform();
-        OneWayDoor oneWayDoor = new OneWayDoor();
-        TwistedTubes twistedTubes = new TwistedTubes();
-        Syringe syringe = new Syringe();
-        ShopWindow shopWindow = new ShopWindow();
-        Spring spring = new Spring();
-        Player player = new Player();
-        Platform platform = new Platform();
-        TimeAttackGate timeAttackGate = new TimeAttackGate();
-        Spikes spikes = new Spikes();
-        TeeterTotter teeterTotter = new TeeterTotter();
-        HUD hud = new HUD();
-        Music music = new Music();
-        BoundsMarker boundsMarker = new BoundsMarker();
-        TitleCard titleCard = new TitleCard();
-        CorkscrewPath corkscrewPath = new CorkscrewPath();
-        BGSwitch bgSwitch = new BGSwitch();
-        ForceSpin forceSpin = new ForceSpin();
-        UIControl uiControl = new UIControl();
-        SignPost signPost = new SignPost();
-        UFO_Ring ufo_Ring = new UFO_Ring();
-        UFO_Sphere ufo_Sphere = new UFO_Sphere();
-        UFO_Player ufo_Player = new UFO_Player();
-        UFO_ItemBox ufo_ItemBox = new UFO_ItemBox();
-        UFO_Springboard ufo_Springboard = new UFO_Springboard();
-        Decoration decoration = new Decoration();
-        WaterGush waterGush = new WaterGush();
-        BreakBar breakBar = new BreakBar();
-        InvisibleBlock invisibleBlock = new InvisibleBlock();
-        ForceUnstick forceUnstick = new ForceUnstick();
-        BreakableWall breakableWall = new BreakableWall();
-        CollapsingPlatform collapsingPlatform = new CollapsingPlatform();
-        PlaneSwitch planeSwitch = new PlaneSwitch();
-        ChemicalPool chemicalPool = new ChemicalPool();
-        DirectorChair directorChair = new DirectorChair();
-        TVVan tvVan = new TVVan();
-        FilmProjector filmProjector = new FilmProjector();
-        RockemSockem rockemSockem = new RockemSockem();
-        Clapperboard clapperboard = new Clapperboard();
-        PopcornMachine popcornMachine = new PopcornMachine();
-        LEDPanel ledPanel = new LEDPanel();
-        SpinSign spinSign = new SpinSign();
-        EggTV eggTV = new EggTV();
-        LottoMachine lottoMachine = new LottoMachine();
-        Funnel funnel = new Funnel();
-        Letterboard letterboard = new Letterboard();
-        DNARiser dnaRiser = new DNARiser();
-        CaterkillerJr caterkillerJr = new CaterkillerJr();
-        Grabber grabber = new Grabber();
-        SpinBooster spinBooster = new SpinBooster();
-        Water water = new Water();
-        WarpDoor warpDoor = new WarpDoor();
-        CableWarp cableWarp = new CableWarp();
-        PimPom pimPom = new PimPom();
-        SpecialRing specialRing = new SpecialRing();
-        CircleBumper circleBumper = new CircleBumper();
-        Tubinaut tubinaut = new Tubinaut();
-        LottoBall lottoBall = new LottoBall();
-        WeatherMobile weatherMobile = new WeatherMobile();
-        TVPole tvPole = new TVPole();
-        Launcher launcher = new Launcher();
+        internal ItemBox itemBox = new ItemBox();
+        internal Bridge bridge = new Bridge();
+        internal Newtron newtron = new Newtron();
+        internal Ring ring = new Ring();
+        internal Chopper chopper = new Chopper();
+        internal TippingPlatform tippingPlatform = new TippingPlatform();
+        internal Spiny spiny = new Spiny();
+        internal StickyPlatform stickyPlatform = new StickyPlatform();
+        internal OneWayDoor oneWayDoor = new OneWayDoor();
+        internal TwistedTubes twistedTubes = new TwistedTubes();
+        internal Syringe syringe = new Syringe();
+        internal ShopWindow shopWindow = new ShopWindow();
+        internal Spring spring = new Spring();
+        internal Player player = new Player();
+        internal Platform platform = new Platform();
+        internal TimeAttackGate timeAttackGate = new TimeAttackGate();
+        internal Spikes spikes = new Spikes();
+        internal TeeterTotter teeterTotter = new TeeterTotter();
+        internal HUD hud = new HUD();
+        internal Music music = new Music();
+        internal BoundsMarker boundsMarker = new BoundsMarker();
+        internal TitleCard titleCard = new TitleCard();
+        internal CorkscrewPath corkscrewPath = new CorkscrewPath();
+        internal BGSwitch bgSwitch = new BGSwitch();
+        internal ForceSpin forceSpin = new ForceSpin();
+        internal UIControl uiControl = new UIControl();
+        internal SignPost signPost = new SignPost();
+        internal UFO_Ring ufo_Ring = new UFO_Ring();
+        internal UFO_Sphere ufo_Sphere = new UFO_Sphere();
+        internal UFO_Player ufo_Player = new UFO_Player();
+        internal UFO_ItemBox ufo_ItemBox = new UFO_ItemBox();
+        internal UFO_Springboard ufo_Springboard = new UFO_Springboard();
+        internal Decoration decoration = new Decoration();
+        internal WaterGush waterGush = new WaterGush();
+        internal BreakBar breakBar = new BreakBar();
+        internal InvisibleBlock invisibleBlock = new InvisibleBlock();
+        internal ForceUnstick forceUnstick = new ForceUnstick();
+        internal BreakableWall breakableWall = new BreakableWall();
+        internal CollapsingPlatform collapsingPlatform = new CollapsingPlatform();
+        internal PlaneSwitch planeSwitch = new PlaneSwitch();
+        internal ChemicalPool chemicalPool = new ChemicalPool();
+        internal DirectorChair directorChair = new DirectorChair();
+        internal TVVan tvVan = new TVVan();
+        internal FilmProjector filmProjector = new FilmProjector();
+        internal RockemSockem rockemSockem = new RockemSockem();
+        internal Clapperboard clapperboard = new Clapperboard();
+        internal PopcornMachine popcornMachine = new PopcornMachine();
+        internal LEDPanel ledPanel = new LEDPanel();
+        internal SpinSign spinSign = new SpinSign();
+        internal EggTV eggTV = new EggTV();
+        internal LottoMachine lottoMachine = new LottoMachine();
+        internal Funnel funnel = new Funnel();
+        internal Letterboard letterboard = new Letterboard();
+        internal DNARiser dnaRiser = new DNARiser();
+        internal CaterkillerJr caterkillerJr = new CaterkillerJr();
+        internal Grabber grabber = new Grabber();
+        internal SpinBooster spinBooster = new SpinBooster();
+        internal Water water = new Water();
+        internal WarpDoor warpDoor = new WarpDoor();
+        internal CableWarp cableWarp = new CableWarp();
+        internal PimPom pimPom = new PimPom();
+        internal SpecialRing specialRing = new SpecialRing();
+        internal CircleBumper circleBumper = new CircleBumper();
+        internal Tubinaut tubinaut = new Tubinaut();
+        internal LottoBall lottoBall = new LottoBall();
+        internal WeatherMobile weatherMobile = new WeatherMobile();
+        internal TVPole tvPole = new TVPole();
+        internal Launcher launcher = new Launcher();
+        internal Technosqueek technosqueek = new Technosqueek();
+        internal HangPoint hangPoint = new HangPoint();
+        internal FBZTrash fbzTrash = new FBZTrash();
+        internal FBZSinkTrash fbzSinkTrash = new FBZSinkTrash();
 
         // Object List for initilizing the if statement
         List<string> entityRenderingObjects = EditorEntity_ini.getSpecialRenderList(1);
@@ -347,16 +354,11 @@ namespace ManiacEditor
                 if (!File.Exists(path2))
                     return null;
             }
-            /*else if (name == "SuperSpecialRing")
-            {
-                path2 = Path.Combine(Environment.CurrentDirectory, "\\Global\\SpecialRing1.bin");
-                if (!File.Exists(path2))
-                    return null;
-            }*/
             else
             {
                 if (DataDirectoryList == null)
                     DataDirectoryList = Directory.GetFiles(Path.Combine(Editor.DataDirectory, "Sprites"), $"*.bin", SearchOption.AllDirectories);
+
 
                 // Checks Global frist
                 path = Editor.Instance.SelectedZone + "\\" + name + ".bin";
@@ -366,6 +368,11 @@ namespace ManiacEditor
                     // Checks without last character
                     path = path = Editor.Instance.SelectedZone.Substring(0, Editor.Instance.SelectedZone.Length - 1) + "\\" + name + ".bin";
                     path2 = Path.Combine(Editor.DataDirectory, "sprites") + '\\' + path;
+                }
+                if (!File.Exists(path2))
+                {
+                    // Checks Editor Global
+                    path2 = Environment.CurrentDirectory + "\\Global\\" + name + ".bin";
                 }
                 if (!File.Exists(path2))
                 {
@@ -430,35 +437,186 @@ namespace ManiacEditor
                 if (frameId >= 0 && frameId < animiation.Frames.Count)
                     frame = animiation.Frames[frameId];
                 Bitmap map;
+                Bitmap map2,map3,map4,map5,map6,map7,map8,map9,map10,map11,map12;
+
+                //This is for the SuperSpecialRing
+                bool allTexturesFound = false;
+
                 if (!Sheets.ContainsKey(rsdkAnim.SpriteSheets[frame.SpriteSheet]))
                 {
                     string targetFile;
                     if (name == "EditorAssets")
                         targetFile = Path.Combine(Environment.CurrentDirectory, "EditorAssets.gif");
-                    /*else if (name == "SuperSpecialRing")
-                        targetFile = Path.Combine(Environment.CurrentDirectory, "Global", rsdkAnim.SpriteSheets[frame.SpriteSheet].Replace('/', '\\'));*/
+                    else if (name == "SuperSpecialRing")
+                    {
+                        
+                        targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing1.gif";
+                        if (File.Exists(targetFile))
+                        {
+                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing2.gif";
+                            if (File.Exists(targetFile))
+                            {
+                                targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing3.gif";
+                                if (File.Exists(targetFile))
+                                {
+                                    targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing4.gif";
+                                    if (File.Exists(targetFile))
+                                    {
+                                        targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing5.gif";
+                                        if (File.Exists(targetFile))
+                                        {
+                                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing6.gif";
+                                            if (File.Exists(targetFile))
+                                            {
+                                                targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing7.gif";
+                                                if (File.Exists(targetFile))
+                                                {
+                                                    targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing8.gif";
+                                                    if (File.Exists(targetFile))
+                                                    {
+                                                        targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing9.gif";
+                                                        if (File.Exists(targetFile))
+                                                        {
+                                                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing10.gif";
+                                                            if (File.Exists(targetFile))
+                                                            {
+                                                                targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing11.gif";
+                                                                if (File.Exists(targetFile))
+                                                                {
+                                                                    targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing12.gif";
+                                                                    if (File.Exists(targetFile))
+                                                                    {
+                                                                        allTexturesFound = true;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     else
                         targetFile = Path.Combine(Editor.DataDirectory, "sprites", rsdkAnim.SpriteSheets[frame.SpriteSheet].Replace('/', '\\'));
-                    if (!File.Exists(targetFile))
+                    if (!File.Exists(targetFile) && allTexturesFound == false)
                     {
                         map = null;
+                        map2 = null;
+                        map3 = null;
+                        map4 = null;
+                        map5 = null;
+                        map6 = null;
+                        map7 = null;
+                        map8 = null;
+                        map9 = null;
+                        map10 = null;
+                        map11 = null;
+                        map12 = null;
+                        
                         // add a Null to our lookup, so we can avoid looking again in the future
                         Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet], map);
                     }
                     else
                     {
-                        map = new Bitmap(targetFile);
-                        Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet], map);
+                        if (name == "SuperSpecialRing" && allTexturesFound == true)
+                        {
+                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing1.gif";
+                            map = new Bitmap(targetFile);
+                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet], map);
+                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing2.gif";
+                            map2 = new Bitmap(targetFile);
+                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 2], map2);
+                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing3.gif";
+                            map3 = new Bitmap(targetFile);
+                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 3], map3);
+                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing4.gif";
+                            map4 = new Bitmap(targetFile);
+                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 4], map4);
+                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing5.gif";
+                            map5 = new Bitmap(targetFile);
+                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 5], map5);
+                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing6.gif";
+                            map6 = new Bitmap(targetFile);
+                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 6], map6);
+                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing7.gif";
+                            map7 = new Bitmap(targetFile);
+                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 7], map7);
+                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing8.gif";
+                            map8 = new Bitmap(targetFile);
+                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 8], map8);
+                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing9.gif";
+                            map9 = new Bitmap(targetFile);
+                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 9], map9);
+                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing10.gif";
+                            map10 = new Bitmap(targetFile);
+                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 10], map10);
+                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing11.gif";
+                            map11 = new Bitmap(targetFile);
+                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 11], map11);
+                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing12.gif";
+                            map12 = new Bitmap(targetFile);
+                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 12], map12);
+                        }
+                        else
+                        {
+                            map = new Bitmap(targetFile);
+                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet], map);
+                            map = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                            map2 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                            map3 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                            map4 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                            map5 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                            map6 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                            map7 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                            map8 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                            map9 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                            map10 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                            map11 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                            map12 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                        }
+
+
                     }
                 }
                 else
+                {
                     map = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                    map2 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                    map3 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                    map4 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                    map5 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                    map6 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                    map7 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                    map8 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                    map9 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                    map10 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                    map11 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                    map12 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
+                }
+
 
                 if (frame.Width == 0 || frame.Height == 0)
                     continue;
 
                 // can't load the animation, it probably doesn't exist in the User's Sprites folder
                 if (map == null) return null;
+
+                // this is also for our super special ring
+                if (map2 == null) return null;
+                if (map3 == null) return null;
+                if (map4 == null) return null;
+                if (map5 == null) return null;
+                if (map6 == null) return null;
+                if (map7 == null) return null;
+                if (map8 == null) return null;
+                if (map9 == null) return null;
+                if (map10 == null) return null;
+                if (map11 == null) return null;
+                if (map12 == null) return null;
 
                 // We are storing the first colour from the palette so we can use it to make sprites transparent
                 var colour = map.Palette.Entries[0];
@@ -470,6 +628,7 @@ namespace ManiacEditor
                 if (loadImageToDX)
                 {
                     texture = TextureCreator.FromBitmap(d._device, map);
+
                 }
                 var editorFrame = new EditorAnimation.EditorFrame()
                 {
@@ -748,6 +907,7 @@ namespace ManiacEditor
             else index = 0;
             if (index >= frameCount)
                 index = 0;
+
         }
 
         // These are special
@@ -1028,7 +1188,22 @@ namespace ManiacEditor
             {
                 launcher.Draw(d, entity, this, x, y, Transparency);
             }
-
+            else if (entity.Object.Name.Name == "Technosqueek")
+            {
+                technosqueek.Draw(d, entity, this, x, y, Transparency);
+            }
+            else if (entity.Object.Name.Name == "HangPoint")
+            {
+                hangPoint.Draw(d, entity, this, x, y, Transparency);
+            }
+            else if (entity.Object.Name.Name == "FBZTrash")
+            {
+                fbzTrash.Draw(d, entity, this, x, y, Transparency);
+            }
+            if (entity.Object.Name.Name == "FBZSinkTrash")
+            {
+                fbzSinkTrash.Draw(d, entity, this, x, y, Transparency);
+            }
 
         }
 

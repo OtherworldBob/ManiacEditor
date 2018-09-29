@@ -211,6 +211,13 @@
             this.openDataFolderKeyBox = new System.Windows.Forms.TextBox();
             this.openSceneFolderKeyBox = new System.Windows.Forms.TextBox();
             this.label65 = new System.Windows.Forms.Label();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label59 = new System.Windows.Forms.Label();
+            this.label70 = new System.Windows.Forms.Label();
+            this.label71 = new System.Windows.Forms.Label();
             this.button19 = new System.Windows.Forms.Button();
             this.button18 = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
@@ -221,6 +228,7 @@
             this.label24 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
             this.panel14 = new System.Windows.Forms.Panel();
+            this.checkBox11 = new System.Windows.Forms.CheckBox();
             this.checkBox10 = new System.Windows.Forms.CheckBox();
             this.checkBox26 = new System.Windows.Forms.CheckBox();
             this.checkBox25 = new System.Windows.Forms.CheckBox();
@@ -233,7 +241,6 @@
             this.label31 = new System.Windows.Forms.Label();
             this.checkBox34 = new System.Windows.Forms.CheckBox();
             this.checkBox35 = new System.Windows.Forms.CheckBox();
-            this.checkBox11 = new System.Windows.Forms.CheckBox();
             this.tabPage4.SuspendLayout();
             this.panel11.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -256,6 +263,7 @@
             this.tabControl2.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tabPage8.SuspendLayout();
+            this.tabPage9.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel14.SuspendLayout();
@@ -1703,6 +1711,7 @@
             // 
             this.tabControl2.Controls.Add(this.tabPage7);
             this.tabControl2.Controls.Add(this.tabPage8);
+            this.tabControl2.Controls.Add(this.tabPage9);
             this.tabControl2.Location = new System.Drawing.Point(0, 0);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
@@ -2386,6 +2395,89 @@
             this.label65.Text = "Open Data Folder";
             this.label65.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // tabPage9
+            // 
+            this.tabPage9.Controls.Add(this.comboBox3);
+            this.tabPage9.Controls.Add(this.comboBox2);
+            this.tabPage9.Controls.Add(this.comboBox1);
+            this.tabPage9.Controls.Add(this.label59);
+            this.tabPage9.Controls.Add(this.label70);
+            this.tabPage9.Controls.Add(this.label71);
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage9.Size = new System.Drawing.Size(478, 514);
+            this.tabPage9.TabIndex = 2;
+            this.tabPage9.Text = "UI";
+            this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Items.AddRange(new object[] {
+            "Scroll Lock",
+            "Nudge Faster",
+            "Pixel Mode"});
+            this.comboBox3.Location = new System.Drawing.Point(59, 63);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(121, 21);
+            this.comboBox3.TabIndex = 163;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "Scroll Lock",
+            "Nudge Faster",
+            "Pixel Mode"});
+            this.comboBox2.Location = new System.Drawing.Point(59, 36);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 162;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Scroll Lock",
+            "Nudge Faster",
+            "Pixel Mode"});
+            this.comboBox1.Location = new System.Drawing.Point(59, 8);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 161;
+            this.comboBox1.Tag = "";
+            // 
+            // label59
+            // 
+            this.label59.Location = new System.Drawing.Point(6, 8);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(47, 20);
+            this.label59.TabIndex = 156;
+            this.label59.Text = "Button 1";
+            this.label59.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label70
+            // 
+            this.label70.Location = new System.Drawing.Point(6, 35);
+            this.label70.Name = "label70";
+            this.label70.Size = new System.Drawing.Size(47, 20);
+            this.label70.TabIndex = 158;
+            this.label70.Text = "Button 2";
+            this.label70.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label71
+            // 
+            this.label71.Location = new System.Drawing.Point(6, 62);
+            this.label71.Name = "label71";
+            this.label71.Size = new System.Drawing.Size(47, 20);
+            this.label71.TabIndex = 160;
+            this.label71.Text = "Button 3";
+            this.label71.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // button19
             // 
             this.button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -2510,6 +2602,21 @@
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(184, 560);
             this.panel14.TabIndex = 102;
+            // 
+            // checkBox11
+            // 
+            this.checkBox11.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox11.Checked = global::ManiacEditor.Properties.Settings.Default.AlwaysRenderRectangles;
+            this.checkBox11.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "AlwaysRenderRectangles", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox11.Location = new System.Drawing.Point(5, 476);
+            this.checkBox11.Margin = new System.Windows.Forms.Padding(5);
+            this.checkBox11.Name = "checkBox11";
+            this.checkBox11.Size = new System.Drawing.Size(171, 32);
+            this.checkBox11.TabIndex = 107;
+            this.checkBox11.Text = "Always Render Rectangles";
+            this.checkBox11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox11.UseVisualStyleBackColor = false;
             // 
             // checkBox10
             // 
@@ -2688,21 +2795,6 @@
             this.checkBox35.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBox35.UseVisualStyleBackColor = false;
             // 
-            // checkBox11
-            // 
-            this.checkBox11.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox11.Checked = global::ManiacEditor.Properties.Settings.Default.AlwaysRenderRectangles;
-            this.checkBox11.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "AlwaysRenderRectangles", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox11.Location = new System.Drawing.Point(5, 476);
-            this.checkBox11.Margin = new System.Windows.Forms.Padding(5);
-            this.checkBox11.Name = "checkBox11";
-            this.checkBox11.Size = new System.Drawing.Size(171, 32);
-            this.checkBox11.TabIndex = 107;
-            this.checkBox11.Text = "Always Render Rectangles";
-            this.checkBox11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox11.UseVisualStyleBackColor = false;
-            // 
             // OptionBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2746,6 +2838,7 @@
             this.tabPage7.PerformLayout();
             this.tabPage8.ResumeLayout(false);
             this.tabPage8.PerformLayout();
+            this.tabPage9.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.panel14.ResumeLayout(false);
@@ -2960,5 +3053,12 @@
         private System.Windows.Forms.Label label65;
         private System.Windows.Forms.CheckBox checkBox10;
         private System.Windows.Forms.CheckBox checkBox11;
+        private System.Windows.Forms.TabPage tabPage9;
+        private System.Windows.Forms.Label label59;
+        private System.Windows.Forms.Label label70;
+        private System.Windows.Forms.Label label71;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
