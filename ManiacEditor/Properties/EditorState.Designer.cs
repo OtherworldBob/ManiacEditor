@@ -46,5 +46,29 @@ namespace ManiacEditor.Properties {
                 this["lastQuickButtonState"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool movingPlatformsChecked {
+            get {
+                return ((bool)(this["movingPlatformsChecked"]));
+            }
+            set {
+                this["movingPlatformsChecked"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool annimationsChecked {
+            get {
+                return ((bool)(this["annimationsChecked"]));
+            }
+            set {
+                this["annimationsChecked"] = value;
+            }
+        }
     }
 }

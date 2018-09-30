@@ -12,10 +12,10 @@ using System.Diagnostics;
 
 namespace ManiacEditor
 {
-    public partial class preLoadBox : Form
+    public partial class PreLoadBox : Form
     {
         public bool isVisible = false;
-        public preLoadBox()
+        public PreLoadBox()
         {
             InitializeComponent();
             backgroundWorker1.RunWorkerAsync();

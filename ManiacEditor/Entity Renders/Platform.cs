@@ -83,22 +83,20 @@ namespace ManiacEditor.Entity_Renders
                 }
 
                 e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
-                //e.ProcessRotate(angle,entity);
-                //768
-                //12
-                //
-                if ((amplitudeX != 0 || amplitudeY != 0) && type == 2)
+
+                if ((amplitudeX != 0 || amplitudeY != 0) && type == 2 && e.Selected)
                 {
-                    int x2 = x + amplitudeX;
-                    int y2 = y + amplitudeY;
-                    int xx = x - amplitudeX;
-                    int yy = y - amplitudeY;
-                    d.DrawLine(xx, yy, x2, y2, System.Drawing.Color.White);
-                    d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX + angleStateX, y + frame.Frame.CenterY - angleStateY,
+                    d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX + amplitudeX, y + frame.Frame.CenterY + amplitudeY,
+                        frame.Frame.Width, frame.Frame.Height, false, 125);
+                    d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX - amplitudeX, y + frame.Frame.CenterY - amplitudeY,
+                        frame.Frame.Width, frame.Frame.Height, false, 125);
+                    d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX, y + frame.Frame.CenterY,
                         frame.Frame.Width, frame.Frame.Height, false, Transparency);
                 }
-                if ((amplitudeX != 0 || amplitudeY != 0) && type == 3)
+                else if ((amplitudeX != 0 || amplitudeY != 0) && type == 3)
                 {
+                    e.ProcessMovingPlatform(angle);
+                    angle = e.angle;
                     double xd = x;
                     double yd = y;
                     double x2 = x + amplitudeX - amplitudeX / 3.7;
@@ -109,16 +107,6 @@ namespace ManiacEditor.Entity_Renders
                     int newY = (int)(radiusInt * Math.Sin(Math.PI * angle / 128));
                     d.DrawBitmap(frame.Texture, (x + newX) + frame2.Frame.CenterX, (y - newY) + frame2.Frame.CenterY,
                        frame.Frame.Width, frame.Frame.Height, false, Transparency);
-
-                    //angleStateX = (int)((frame.Frame.CenterX + amplitudeX) * Math.Cos(Math.PI * angle / Properties.UniversalNumbers.Default.angle_divide) + (frame.Frame.CenterY + amplitudeY) * Math.Sin(Math.PI * angle / Properties.UniversalNumbers.Default.angle_divide));
-                    //angleStateY = (int)((frame.Frame.CenterX + amplitudeX) * Math.Sin(Math.PI * angle / Properties.UniversalNumbers.Default.angle_divide) - (frame.Frame.CenterY + amplitudeY) * Math.Cos(Math.PI * angle / Properties.UniversalNumbers.Default.angle_divide));
-                    //d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX + angleStateX, y + frame.Frame.CenterY - angleStateY,
-                    //frame.Frame.Width, frame.Frame.Height, false, Transparency);
-
-                    /*int[] drawCoords = RotatePoints(x - frame.Frame.Width,
-                        y + frame.Frame.Height, xd, yd, angle);
-
-                    d.DrawBitmap(frame.Texture, drawCoords[0], drawCoords[1], frame.Frame.Width, frame.Frame.Height, false, Transparency);*/
                 }
                 else
                 {
@@ -130,29 +118,6 @@ namespace ManiacEditor.Entity_Renders
             }
 
 
-        }
-        private static int[] RotatePoints(double initX, double initY, double centerX, double centerY, int angle)
-        {
-            initX -= centerX;
-            initY -= centerY;
-
-            if (initX == 0 && initY == 0)
-            {
-                int[] results2 = { (int)centerX, (int)centerY };
-                return results2;
-            }
-
-            const double FACTOR = 40.743665431525205956834243423364;
-
-            double hypo = Math.Sqrt(Math.Pow(initX, 2) + Math.Pow(initY, 2));
-            double initAngle = Math.Acos(initX / hypo);
-            if (initY < 0) initAngle = 2 * Math.PI - initAngle;
-            double newAngle = initAngle - angle / FACTOR;
-            double finalX = hypo * Math.Cos(newAngle) + centerX;
-            double finalY = hypo * Math.Sin(newAngle) + centerY;
-
-            int[] results = { (int)Math.Round(finalX), (int)Math.Round(finalY) };
-            return results;
         }
     }
 }

@@ -26,7 +26,6 @@ namespace ManiacEditor.Entity_Renders
             {
                 var frame = editorAnim.Frames[0];
                 var frame2 = editorAnim2.Frames[0];
-                int i = 0;
                 int lengthMemory = length;
 
                 //e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);

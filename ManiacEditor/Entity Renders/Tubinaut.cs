@@ -34,7 +34,19 @@ namespace ManiacEditor.Entity_Renders
 
                 e.ProcessAnimation(frame2.Entry.FrameSpeed, frame2.Entry.Frames.Count, frame2.Frame.Duration);
 
-                if (Editor.Instance.ShowAnimations.Checked == false)
+                if (Editor.Instance.ShowAnimations.Checked == true && Properties.EditorState.Default.annimationsChecked)
+                {
+
+                    d.DrawBitmap(frame6.Texture,
+                        x + frame6.Frame.CenterX - (fliph ? (frame6.Frame.Width - editorAnim6.Frames[0].Frame.Width) : 0),
+                        y + frame6.Frame.CenterY + (flipv ? (frame6.Frame.Height - editorAnim6.Frames[0].Frame.Height) : 0),
+                        frame6.Frame.Width, frame6.Frame.Height, false, Transparency);
+                    d.DrawBitmap(frame2.Texture,
+                        x + frame2.Frame.CenterX - (fliph ? (frame2.Frame.Width - editorAnim2.Frames[0].Frame.Width) : 0),
+                        y + frame2.Frame.CenterY + (flipv ? (frame2.Frame.Height - editorAnim2.Frames[0].Frame.Height) : 0),
+                        frame2.Frame.Width, frame2.Frame.Height, false, Transparency);
+                }
+                else
                 {
                     d.DrawBitmap(frame.Texture,
                         x + frame.Frame.CenterX - (fliph ? (frame.Frame.Width - editorAnim.Frames[0].Frame.Width) : 0),
@@ -52,17 +64,6 @@ namespace ManiacEditor.Entity_Renders
                         x + frame5.Frame.CenterX - (fliph ? (frame5.Frame.Width - editorAnim5.Frames[0].Frame.Width) : 0),
                         y - 24 + frame5.Frame.CenterY + (flipv ? (frame5.Frame.Height - editorAnim5.Frames[0].Frame.Height) : 0),
                         frame5.Frame.Width, frame5.Frame.Height, false, Transparency);
-                }
-                else
-                {
-                    d.DrawBitmap(frame6.Texture,
-                        x + frame6.Frame.CenterX - (fliph ? (frame6.Frame.Width - editorAnim6.Frames[0].Frame.Width) : 0),
-                        y + frame6.Frame.CenterY + (flipv ? (frame6.Frame.Height - editorAnim6.Frames[0].Frame.Height) : 0),
-                        frame6.Frame.Width, frame6.Frame.Height, false, Transparency);
-                    d.DrawBitmap(frame2.Texture,
-                        x + frame2.Frame.CenterX - (fliph ? (frame2.Frame.Width - editorAnim2.Frames[0].Frame.Width) : 0),
-                        y + frame2.Frame.CenterY + (flipv ? (frame2.Frame.Height - editorAnim2.Frames[0].Frame.Height) : 0),
-                        frame2.Frame.Width, frame2.Frame.Height, false, Transparency);
                 }
 
             }

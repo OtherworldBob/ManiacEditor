@@ -13,7 +13,7 @@ namespace ManiacEditor.Entity_Renders
 {
     public class PimPom
     {
-
+        Boolean boolState = true;
         public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int type = (int)entity.attributesMap["type"].ValueVar;
@@ -77,7 +77,7 @@ namespace ManiacEditor.Entity_Renders
                     fliph = true;
                     break;
                 case 2:
-                    animID = 2;
+                    animID = 3;
                     flipv = true;
                     break;
                 case 3:
@@ -94,12 +94,74 @@ namespace ManiacEditor.Entity_Renders
                 var frame = editorAnim.Frames[e.index];
 
                 //e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
-
-
+                if (length != 0 && angle == 0)
+                {
+                    var value = entity.attributesMap["length"].ValueUInt8;
+                    if (editorAnim != null && editorAnim.Frames.Count != 0)
+                    {
+                        bool wEven = value % 2 == 0;
+                        for (int xx = 0; xx <= value; ++xx)
+                        {
+                            d.DrawBitmap(frame.Texture,
+                                (x - 3) + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-value / 2 + xx) * (frame.Frame.Width + (gap*2)),
+                                y + frame.Frame.CenterY,
+                                frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                        }
+                    }
+                }
+                else if (length != 0 && angle == 3)
+                {
+                    var value = entity.attributesMap["length"].ValueUInt8;
+                    if (editorAnim != null && editorAnim.Frames.Count != 0)
+                    {
+                        bool wEven = value % 2 == 0;
+                        for (int xx = 0; xx <= value; ++xx)
+                        {
+                            d.DrawBitmap(frame.Texture,
+                                x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-value / 2 + xx) * (frame.Frame.Width),
+                                y + (wEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-value / 2 + xx) * (frame.Frame.Height),
+                                frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                        }
+                    }
+                }
+                else if (length != 0 && angle == 1)
+                {
+                    var value = entity.attributesMap["length"].ValueUInt8;
+                    if (editorAnim != null && editorAnim.Frames.Count != 0)
+                    {
+                        bool wEven = value % 2 == 0;
+                        for (int xx = 0; xx <= value; ++xx)
+                        {
+                            d.DrawBitmap(frame.Texture,
+                                (x - frame.Frame.Width) - (wEven ? frame.Frame.CenterX : -frame.Frame.Width) - (-value / 2 + xx) * (frame.Frame.Width),
+                                y + (wEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-value / 2 + xx) * (frame.Frame.Height - 2),
+                                frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                        }
+                    }
+                }
+                else if (length != 0 && angle == 2)
+                {
+                    var value = entity.attributesMap["length"].ValueUInt8;
+                    if (editorAnim != null && editorAnim.Frames.Count != 0)
+                    {
+                        bool wEven = value % 2 == 0;
+                        wEven = boolState;
+                        for (int xx = 0; xx <= value; ++xx)
+                        {
+                            d.DrawBitmap(frame.Texture,
+                                (x + 3) + frame.Frame.CenterX,
+                                y + (wEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-value / 2 + xx) * (frame.Frame.Height + (gap * 2)),
+                                frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                        }
+                    }
+                }
+                else {
                     d.DrawBitmap(frame.Texture,
                         x + frame.Frame.CenterX - (fliph ? (frame.Frame.Width - editorAnim.Frames[0].Frame.Width) : 0),
                         y + frame.Frame.CenterY + (flipv ? (frame.Frame.Height - editorAnim.Frames[0].Frame.Height) : 0),
                         frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                }
+
 
             }
         }

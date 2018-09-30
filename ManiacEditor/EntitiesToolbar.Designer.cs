@@ -147,7 +147,7 @@
             this.addAllFiltersButton.Name = "addAllFiltersButton";
             this.addAllFiltersButton.Size = new System.Drawing.Size(115, 23);
             this.addAllFiltersButton.TabIndex = 3;
-            this.addAllFiltersButton.Text = "Add filter to all";
+            this.addAllFiltersButton.Text = "Add filters to all";
             this.addAllFiltersButton.UseVisualStyleBackColor = true;
             this.addAllFiltersButton.Click += new System.EventHandler(this.addAllFiltersButton_Click);
             // 
@@ -256,7 +256,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox entitiesList;
+        public System.Windows.Forms.ComboBox entitiesList;
         private System.Windows.Forms.PropertyGrid entityProperties;
         private System.Windows.Forms.GroupBox gbSpawn;
         private System.Windows.Forms.Button btnSpawn;

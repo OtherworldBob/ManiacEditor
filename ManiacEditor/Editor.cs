@@ -72,7 +72,6 @@ namespace ManiacEditor
         internal EditorScene EditorScene;
         internal StageConfig StageConfig;
         public ObjectRemover objectRemover;
-        internal EditorEntity editorEntity;
 
         string SceneFilename = null;
         string StageConfigFileName = null;
@@ -269,6 +268,8 @@ namespace ManiacEditor
                 WindowState = mySettings.IsMaximized ? FormWindowState.Maximized : WindowState;
                 GamePath = mySettings.GamePath;
                 editEntitesTransparencyToolStripMenuItem.Checked = Properties.EditorState.Default.editEntitiesTransparency;
+                spriteFramesToolStripMenuItem.Checked = Properties.EditorState.Default.annimationsChecked;
+                movingPlatformsObjectsToolStripMenuItem.Checked = Properties.EditorState.Default.movingPlatformsChecked;
 
                 if (mySettings.DataDirectories?.Count > 0)
                 {
@@ -456,6 +457,7 @@ namespace ManiacEditor
             ShowFGLower.Enabled = enabled && FGLower != null;
             ShowEntities.Enabled = enabled;
             ShowAnimations.Enabled = enabled;
+            animationsSplitButton.Enabled = enabled;
             ReloadToolStripButton.Enabled = enabled;
             preLoadSceneButton.Enabled = enabled;
 
@@ -493,7 +495,7 @@ namespace ManiacEditor
 
             if (IsEntitiesEdit())
             {
-                entitiesToolbar.SelectedEntities = entities.SelectedEntities.Select(x => x.Entity).ToList();
+                    entitiesToolbar.SelectedEntities = entities.SelectedEntities.Select(x => x.Entity).ToList();
             }
         }
 
@@ -4245,7 +4247,7 @@ Error: {ex.Message}");
         public void preLoadSceneButton_Click(object sender, EventArgs e)
         {
             isPreRending = true;
-            preLoadBox preLoadForm = new preLoadBox();
+            PreLoadBox preLoadForm = new PreLoadBox();
             preLoadForm.Show();
             toggleEditorButtons(false);
 
@@ -4546,7 +4548,34 @@ Error: {ex.Message}");
             
         }
 
+        private void movingPlatformsObjectsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (movingPlatformsObjectsToolStripMenuItem.Checked == false)
+            {
+                movingPlatformsObjectsToolStripMenuItem.Checked = true;
+                Properties.EditorState.Default.movingPlatformsChecked = true;
+            }
+            else
+            {
+                movingPlatformsObjectsToolStripMenuItem.Checked = false;
+                Properties.EditorState.Default.movingPlatformsChecked = false;
+            }
 
+        }
+
+        private void spriteFramesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (spriteFramesToolStripMenuItem.Checked == false)
+            {
+                spriteFramesToolStripMenuItem.Checked = true;
+                Properties.EditorState.Default.annimationsChecked = true;
+            }
+            else
+            {
+                spriteFramesToolStripMenuItem.Checked = false;
+                Properties.EditorState.Default.annimationsChecked = false;
+            }
+        }
 
         public void DisposeTextures()
         {

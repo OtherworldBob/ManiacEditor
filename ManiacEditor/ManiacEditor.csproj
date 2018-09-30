@@ -433,11 +433,11 @@
     <Compile Include="OptionBox.Designer.cs">
       <DependentUpon>OptionBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="preLoadBox.cs">
+    <Compile Include="PreLoadBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="preLoadBox.Designer.cs">
-      <DependentUpon>preLoadBox.cs</DependentUpon>
+    <Compile Include="PreLoadBox.Designer.cs">
+      <DependentUpon>PreLoadBox.cs</DependentUpon>
     </Compile>
     <Compile Include="ProcessMemory.cs" />
     <Compile Include="Reflector.cs" />
@@ -484,8 +484,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>EditorState.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\Settings_12x_16x.png" />
-    <None Include="Resources\Image1.bmp" />
     <EmbeddedResource Include="Resources\objectRenderList.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -503,66 +501,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>UniversalNumbers.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\WarningStatic2.gif" />
-    <None Include="Resources\RefreshStatic2.gif" />
-    <None Include="Resources\WarningNoStatic2.gif" />
-    <None Include="Resources\WarningStatic.gif" />
-    <None Include="Resources\RefreshStatic.gif" />
     <None Include="Properties\CheatCodes.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>CheatCodes.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\zoomOutButton.Image1.png" />
-    <None Include="Resources\zoomInButton.Image1.png" />
-    <None Include="Resources\undoButton.Image1.png" />
-    <None Include="Resources\toolStripButton1.Image1.png" />
-    <None Include="Resources\showTileIDButton.Image1.png" />
-    <None Include="Resources\showGridButton.Image1.png" />
-    <None Include="Resources\ShowFGLower.Image1.png" />
-    <None Include="Resources\ShowFGLow.Image1.png" />
-    <None Include="Resources\ShowFGHigher.Image1.png" />
-    <None Include="Resources\ShowFGHigh.Image1.png" />
-    <None Include="Resources\ShowEntities.Image1.png" />
-    <None Include="Resources\showCollisionBButton.Image1.png" />
-    <None Include="Resources\showCollisionAButton.Image1.png" />
-    <None Include="Resources\ShowAnimations.Image1.png" />
-    <None Include="Resources\selectTool.Image1.png" />
-    <None Include="Resources\scrollLockButton.Image1.png" />
-    <None Include="Resources\Save.Image1.png" />
-    <None Include="Resources\RunScene.Image1.png" />
-    <None Include="Resources\resetDeviceButton.Image1.png" />
-    <None Include="Resources\ReloadToolStripButton.Image1.png" />
-    <None Include="Resources\redoButton.Image1.png" />
-    <None Include="Resources\pointerButton.Image1.png" />
-    <None Include="Resources\placeTilesButton.Image1.png" />
-    <None Include="Resources\pixelModeButton.Image1.png" />
-    <None Include="Resources\Open.Image1.png" />
-    <None Include="Resources\zoomOutButton.Image.png" />
-    <None Include="Resources\zoomInButton.Image.png" />
-    <None Include="Resources\undoButton.Image.png" />
-    <None Include="Resources\toolStripButton1.Image.png" />
-    <None Include="Resources\showTileIDButton.Image.png" />
-    <None Include="Resources\showGridButton.Image.png" />
-    <None Include="Resources\ShowFGLower.Image.png" />
-    <None Include="Resources\ShowFGLow.Image.png" />
-    <None Include="Resources\ShowFGHigher.Image.png" />
-    <None Include="Resources\ShowFGHigh.Image.png" />
-    <None Include="Resources\ShowEntities.Image.png" />
-    <None Include="Resources\showCollisionBButton.Image.png" />
-    <None Include="Resources\showCollisionAButton.Image.png" />
-    <None Include="Resources\ShowAnimations.Image.png" />
-    <None Include="Resources\selectTool.Image.png" />
-    <None Include="Resources\scrollLockButton.Image.png" />
-    <None Include="Resources\Save.Image.png" />
-    <None Include="Resources\RunScene.Image.png" />
-    <None Include="Resources\resetDeviceButton.Image.png" />
-    <None Include="Resources\ReloadToolStripButton.Image.png" />
-    <None Include="Resources\redoButton.Image.png" />
-    <None Include="Resources\pointerButton.Image.png" />
-    <None Include="Resources\placeTilesButton.Image.png" />
-    <None Include="Resources\pixelModeButton.Image.png" />
-    <None Include="Resources\Open.Image.png" />
-    <None Include="Resources\WarningMonitor.gif" />
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -614,8 +556,8 @@
     <EmbeddedResource Include="OptionBox.resx">
       <DependentUpon>OptionBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="preLoadBox.resx">
-      <DependentUpon>preLoadBox.cs</DependentUpon>
+    <EmbeddedResource Include="PreLoadBox.resx">
+      <DependentUpon>PreLoadBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SceneSelect.resx">
       <DependentUpon>SceneSelect.cs</DependentUpon>
@@ -655,28 +597,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\ErrorMonitor.gif" />
-    <None Include="Resources\EditFGLow.Image.png" />
-    <None Include="Resources\EditEntities.Image.png" />
-    <None Include="Resources\EditFGHigh.Image.png" />
-    <None Include="Resources\EditFGHigher.Image.png" />
-    <None Include="Resources\EditFGLower.Image.png" />
-    <None Include="Resources\MagnetMode.Image.png" />
-    <None Include="Resources\New.Image.png" />
-    <None Include="Resources\nudgeFasterButton.Image.png" />
-    <None Include="Resources\EditEntities.Image1.png" />
-    <None Include="Resources\EditFGHigh.Image1.png" />
-    <None Include="Resources\EditFGHigher.Image1.png" />
-    <None Include="Resources\EditFGLow.Image1.png" />
-    <None Include="Resources\EditFGLower.Image1.png" />
-    <None Include="Resources\MagnetMode.Image1.png" />
-    <None Include="Resources\New.Image1.png" />
-    <None Include="Resources\nudgeFasterButton.Image1.png" />
-    <None Include="Resources\ApplicationServiceOK_16x.png" />
-    <None Include="Resources\ErrorStatic.gif" />
-    <None Include="Resources\InfoStatic.gif" />
-    <None Include="Resources\InfoStatic2.gif" />
-    <None Include="Resources\ErrorStatic2.gif" />
     <EmbeddedResource Include="Resources\objects_attributes.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>

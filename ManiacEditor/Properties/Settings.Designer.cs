@@ -904,5 +904,17 @@ namespace ManiacEditor.Properties {
                 this["AlwaysRenderRectangles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool LockOnSupport {
+            get {
+                return ((bool)(this["LockOnSupport"]));
+            }
+            set {
+                this["LockOnSupport"] = value;
+            }
+        }
     }
 }

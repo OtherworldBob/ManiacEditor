@@ -15,6 +15,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using MonoGame.UI.Forms;
 using MonoGame.Extended;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Runtime.InteropServices;
 
 namespace ManiacEditor
 {
@@ -112,7 +114,8 @@ namespace ManiacEditor
         List<string> entityRenderingObjects = EditorEntity_ini.getSpecialRenderList(1);
         List<string> renderOnScreenExlusions = EditorEntity_ini.getSpecialRenderList(0);
 
-
+        //Rotating Platforms
+        public int angle = 0;
 
 
         public static Dictionary<string, EditorAnimation> Animations = new Dictionary<string, EditorAnimation>();
@@ -359,7 +362,7 @@ namespace ManiacEditor
                 if (DataDirectoryList == null)
                     DataDirectoryList = Directory.GetFiles(Path.Combine(Editor.DataDirectory, "Sprites"), $"*.bin", SearchOption.AllDirectories);
 
-
+                
                 // Checks Global frist
                 path = Editor.Instance.SelectedZone + "\\" + name + ".bin";
                 path2 = Path.Combine(Editor.DataDirectory, "sprites") + '\\' + path;
@@ -437,165 +440,31 @@ namespace ManiacEditor
                 if (frameId >= 0 && frameId < animiation.Frames.Count)
                     frame = animiation.Frames[frameId];
                 Bitmap map;
-                Bitmap map2,map3,map4,map5,map6,map7,map8,map9,map10,map11,map12;
-
-                //This is for the SuperSpecialRing
-                bool allTexturesFound = false;
 
                 if (!Sheets.ContainsKey(rsdkAnim.SpriteSheets[frame.SpriteSheet]))
                 {
                     string targetFile;
                     if (name == "EditorAssets")
                         targetFile = Path.Combine(Environment.CurrentDirectory, "EditorAssets.gif");
-                    else if (name == "SuperSpecialRing")
-                    {
-                        
-                        targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing1.gif";
-                        if (File.Exists(targetFile))
-                        {
-                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing2.gif";
-                            if (File.Exists(targetFile))
-                            {
-                                targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing3.gif";
-                                if (File.Exists(targetFile))
-                                {
-                                    targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing4.gif";
-                                    if (File.Exists(targetFile))
-                                    {
-                                        targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing5.gif";
-                                        if (File.Exists(targetFile))
-                                        {
-                                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing6.gif";
-                                            if (File.Exists(targetFile))
-                                            {
-                                                targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing7.gif";
-                                                if (File.Exists(targetFile))
-                                                {
-                                                    targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing8.gif";
-                                                    if (File.Exists(targetFile))
-                                                    {
-                                                        targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing9.gif";
-                                                        if (File.Exists(targetFile))
-                                                        {
-                                                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing10.gif";
-                                                            if (File.Exists(targetFile))
-                                                            {
-                                                                targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing11.gif";
-                                                                if (File.Exists(targetFile))
-                                                                {
-                                                                    targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing12.gif";
-                                                                    if (File.Exists(targetFile))
-                                                                    {
-                                                                        allTexturesFound = true;
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
                     else
                         targetFile = Path.Combine(Editor.DataDirectory, "sprites", rsdkAnim.SpriteSheets[frame.SpriteSheet].Replace('/', '\\'));
-                    if (!File.Exists(targetFile) && allTexturesFound == false)
+                    if (!File.Exists(targetFile))
                     {
                         map = null;
-                        map2 = null;
-                        map3 = null;
-                        map4 = null;
-                        map5 = null;
-                        map6 = null;
-                        map7 = null;
-                        map8 = null;
-                        map9 = null;
-                        map10 = null;
-                        map11 = null;
-                        map12 = null;
                         
                         // add a Null to our lookup, so we can avoid looking again in the future
                         Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet], map);
                     }
                     else
                     {
-                        if (name == "SuperSpecialRing" && allTexturesFound == true)
-                        {
-                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing1.gif";
+                        
                             map = new Bitmap(targetFile);
                             Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet], map);
-                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing2.gif";
-                            map2 = new Bitmap(targetFile);
-                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 2], map2);
-                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing3.gif";
-                            map3 = new Bitmap(targetFile);
-                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 3], map3);
-                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing4.gif";
-                            map4 = new Bitmap(targetFile);
-                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 4], map4);
-                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing5.gif";
-                            map5 = new Bitmap(targetFile);
-                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 5], map5);
-                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing6.gif";
-                            map6 = new Bitmap(targetFile);
-                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 6], map6);
-                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing7.gif";
-                            map7 = new Bitmap(targetFile);
-                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 7], map7);
-                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing8.gif";
-                            map8 = new Bitmap(targetFile);
-                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 8], map8);
-                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing9.gif";
-                            map9 = new Bitmap(targetFile);
-                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 9], map9);
-                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing10.gif";
-                            map10 = new Bitmap(targetFile);
-                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 10], map10);
-                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing11.gif";
-                            map11 = new Bitmap(targetFile);
-                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 11], map11);
-                            targetFile = Environment.CurrentDirectory + "\\Global\\" + "SpecialRing12.gif";
-                            map12 = new Bitmap(targetFile);
-                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet * 12], map12);
-                        }
-                        else
-                        {
-                            map = new Bitmap(targetFile);
-                            Sheets.Add(rsdkAnim.SpriteSheets[frame.SpriteSheet], map);
-                            map = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                            map2 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                            map3 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                            map4 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                            map5 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                            map6 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                            map7 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                            map8 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                            map9 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                            map10 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                            map11 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                            map12 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                        }
-
-
                     }
                 }
                 else
                 {
                     map = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                    map2 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                    map3 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                    map4 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                    map5 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                    map6 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                    map7 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                    map8 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                    map9 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                    map10 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                    map11 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
-                    map12 = Sheets[rsdkAnim.SpriteSheets[frame.SpriteSheet]];
                 }
 
 
@@ -604,19 +473,6 @@ namespace ManiacEditor
 
                 // can't load the animation, it probably doesn't exist in the User's Sprites folder
                 if (map == null) return null;
-
-                // this is also for our super special ring
-                if (map2 == null) return null;
-                if (map3 == null) return null;
-                if (map4 == null) return null;
-                if (map5 == null) return null;
-                if (map6 == null) return null;
-                if (map7 == null) return null;
-                if (map8 == null) return null;
-                if (map9 == null) return null;
-                if (map10 == null) return null;
-                if (map11 == null) return null;
-                if (map12 == null) return null;
 
                 // We are storing the first colour from the palette so we can use it to make sprites transparent
                 var colour = map.Palette.Entries[0];
@@ -890,7 +746,7 @@ namespace ManiacEditor
         public void ProcessAnimation(int speed, int frameCount, int duration)
         {
             // Playback
-            if (Editor.Instance.ShowAnimations.Checked)
+            if (Editor.Instance.ShowAnimations.Checked && Properties.EditorState.Default.annimationsChecked)
             {
                 if (speed > 0)
                 {
@@ -907,6 +763,30 @@ namespace ManiacEditor
             else index = 0;
             if (index >= frameCount)
                 index = 0;
+
+        }
+
+        public void ProcessMovingPlatform(int angleDefault, int speed = 3)
+        {
+            int duration = 1;
+            // Playback
+            if (Editor.Instance.ShowAnimations.Checked && Properties.EditorState.Default.movingPlatformsChecked)
+            {
+                if (speed > 0)
+                {
+                    int speed1 = speed * 64 / (duration == 0 ? 256 : duration);
+                    if (speed1 == 0)
+                        speed1 = 1;
+                    if ((DateTime.Now - lastFrametime).TotalMilliseconds > 1024 / speed1)
+                    {
+                        angle++;
+                        lastFrametime = DateTime.Now;
+                    }
+                }
+            }
+            else angle = angleDefault;
+            if (angle >= 768)
+                angle = 0;
 
         }
 

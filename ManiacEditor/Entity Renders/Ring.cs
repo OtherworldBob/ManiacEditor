@@ -16,19 +16,12 @@ namespace ManiacEditor.Entity_Renders
         public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int type = (int)entity.attributesMap["type"].ValueVar;
-            int angle = 0;
-            if (entity.Object.Attributes.Contains(new AttributeInfo("angle", AttributeTypes.INT32)))
-            {
-                angle = (int)entity.attributesMap["angle"].ValueInt32;
-            }
+            int moveType = (int)entity.attributesMap["moveType"].ValueVar;
+            int angle = (int)entity.attributesMap["angle"].ValueInt32;
             bool fliph = false;
             bool flipv = false;
-            int amplitudeX = 0;
-            int amplitudeY = 0;
-            if (entity.Object.Attributes.Contains(new AttributeInfo("amplitude", AttributeTypes.POSITION))) {
-                amplitudeX = (int)entity.attributesMap["amplitude"].ValuePosition.X.High;
-                amplitudeY = (int)entity.attributesMap["amplitude"].ValuePosition.Y.High;
-            }
+            int amplitudeX = (int)entity.attributesMap["amplitude"].ValuePosition.X.High;
+            int amplitudeY = (int)entity.attributesMap["amplitude"].ValuePosition.Y.High;
             int angleStateX = 0;
             int angleStateY = 0;
             int animID;
@@ -54,25 +47,38 @@ namespace ManiacEditor.Entity_Renders
             if (editorAnim != null && editorAnim.Frames.Count != 0 && animID >= 0)
             {
                 var frame = editorAnim.Frames[0];
-                if (entity.Object.Attributes.Contains(new AttributeInfo("amplitude", AttributeTypes.POSITION)))
+                if (moveType != 2)
                 {
-                    if (amplitudeX != 0 || amplitudeY != 0)
-                    {
-                        angleStateX = (int)((frame.Frame.CenterX + amplitudeX - 8) * Math.Cos(Math.PI * angle / 128) + (frame.Frame.CenterY + amplitudeY - 8) * Math.Sin(Math.PI * angle / 128));
-                        angleStateY = (int)((frame.Frame.CenterX + amplitudeX - 8) * Math.Sin(Math.PI * angle / 128) - (frame.Frame.CenterY + amplitudeY - 8) * Math.Cos(Math.PI * angle / 128));
-                    }
+                    e.ProcessMovingPlatform(angle);
+                    angle = e.angle;
                 }
-
                 if (type != 2)
                 {
                     frame = editorAnim.Frames[e.index];
                     e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
                 }
+                if ((amplitudeX != 0 || amplitudeY != 0))
+                {
+                        double xd = x;
+                        double yd = y;
+                        double x2 = x + amplitudeX - amplitudeX / 3.7;
+                        double y2 = y + amplitudeY - amplitudeY / 3.7;
+                        double radius = Math.Pow(x2 - xd, 2) + Math.Pow(y2 - yd, 2);
+                        int radiusInt = (int)Math.Sqrt(radius);
+                        int newX = (int)(radiusInt * Math.Cos(Math.PI * angle / 128));
+                        int newY = (int)(radiusInt * Math.Sin(Math.PI * angle / 128));
+                        d.DrawBitmap(frame.Texture, (x + newX) + frame.Frame.CenterX, (y - newY) + frame.Frame.CenterY,
+                           frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                }
+                else
+                {
+                    d.DrawBitmap(frame.Texture,
+                        x + frame.Frame.CenterX + (angleStateX),
+                        y + frame.Frame.CenterY - (angleStateY),
+                        frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                }
 
-                d.DrawBitmap(frame.Texture,
-                    x + frame.Frame.CenterX + (angleStateX),
-                    y + frame.Frame.CenterY - (angleStateY),
-                    frame.Frame.Width, frame.Frame.Height, false, Transparency);
+
             }
         }
     }

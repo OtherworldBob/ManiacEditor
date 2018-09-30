@@ -17,7 +17,10 @@ namespace ManiacEditor
         public Action<Actions.IAction> AddAction;
         public Action<RSDKv5.SceneObject> Spawn;
 
+        public bool multipleObjects = false;
+
         private List<RSDKv5.SceneEntity> _entities;
+        private List<int> _selectedEntitySlots = new List<int>();
         private BindingSource _bindingSceneObjectsSource = new BindingSource();
 
         private RSDKv5.SceneEntity currentEntity;
@@ -108,9 +111,14 @@ namespace ManiacEditor
             }
         }
 
-        private void entitiesList_SelectedIndexChanged(object sender, EventArgs e)
+        public void entitiesList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (updateSelected) SelectedEntity?.Invoke(_entities[entitiesList.SelectedIndex].SlotID);
+            String input = entitiesList.Text.ToString();
+            Int32.TryParse(input.Substring(input.LastIndexOf(" ")), out int targetSlotID);
+            int selectedIndex = entitiesList.SelectedIndex;
+
+            if (updateSelected && !multipleObjects) SelectedEntity?.Invoke(_entities[entitiesList.SelectedIndex].SlotID);
+            if (updateSelected && multipleObjects) SelectedEntity?.Invoke(_entities[_selectedEntitySlots[selectedIndex]].SlotID);
         }
 
         private void addProperty(LocalProperties properties, int category_index, string category, string name, string value_type, object value, bool read_only=false) {
@@ -121,7 +129,7 @@ namespace ManiacEditor
 
         private void UpdateEntitiesProperties(List<RSDKv5.SceneEntity> selectedEntities)
         {
-            // TODO: Allow to change multiple entities
+            //TODO: Allow to change multiple entities
             /*bool first_entity = true;
             RSDKv5.SceneObject commonObject = null;
 
@@ -135,14 +143,21 @@ namespace ManiacEditor
             {
                 currentObject = commonObject;*/
 
+            multipleObjects = false;
+            
             if (selectedEntities.Count != 1)
             {
                 entityProperties.SelectedObject = null;
                 currentEntity = null;
                 entitiesList.ResetText();
+                _selectedEntitySlots.Clear();
                 if (selectedEntities.Count > 1)
                 {
                     entitiesList.SelectedText = String.Format("{0} entities selected", selectedEntities.Count);
+                    entitiesList.Items.Clear();
+                    entitiesList.Items.AddRange(selectedEntities.Select(x => String.Format("{0} - {1}", x.SlotID, x.Object.Name)).ToArray());
+                    multipleObjects = true;
+                    _selectedEntitySlots.AddRange(selectedEntities.Select(x => (int)x.SlotID).ToList());
                 }
                 return;
             }
@@ -223,7 +238,7 @@ namespace ManiacEditor
 
         public void UpdateCurrentEntityProperites()
         {
-            var obj = (entityProperties.SelectedObject as LocalPropertyGridObject);
+            var obj = entityProperties.SelectedObject as LocalPropertyGridObject;
             if (obj != null)
             {
                 obj.setValue("position.x", currentEntity.Position.X.High + ((float)currentEntity.Position.X.Low / 0x10000));
@@ -450,9 +465,14 @@ namespace ManiacEditor
 
         private void entitiesList_DropDown(object sender, EventArgs e)
         {
-            // It is slow to update the list, so lets generate it when the menu opens
-            entitiesList.Items.Clear();
-            entitiesList.Items.AddRange(_entities.Select(x => String.Format("{0} - {1}", x.SlotID, x.Object.Name)).ToArray());
+            if (multipleObjects == false)
+            {
+                // It is slow to update the list, so lets generate it when the menu opens
+                entitiesList.Items.Clear();
+                entitiesList.Items.AddRange(_entities.Select(x => String.Format("{0} - {1}", x.SlotID, x.Object.Name)).ToArray());
+            }
+
+
         }
 
         private void btnSpawn_Click(object sender, EventArgs e)
