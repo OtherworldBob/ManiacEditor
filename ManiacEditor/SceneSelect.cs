@@ -24,8 +24,7 @@ namespace ManiacEditor
         public SceneSelect(GameConfig config)
         {
             InitializeComponent();
-            LoadFromGameConfig(config);
-            _GameConfig = config;
+            GetDataDirectories();
         }
 
         public void LoadFromGameConfig(GameConfig config)
@@ -68,6 +67,21 @@ namespace ManiacEditor
             {
                 this.isFilesView.Checked = false;
             }
+        }
+
+        public void GetDataDirectories()
+        {
+            this.recentDataDirList.ImageList = new ImageList();
+            this.recentDataDirList.ImageList.Images.Add("Folder", Properties.Resources.folder);
+            this.recentDataDirList.ImageList.Images.Add("File", Properties.Resources.file);
+            foreach (ToolStripMenuItem dataDir in Editor.Instance._recentDataItems)
+            {
+                var node = recentDataDirList.Nodes[0].Nodes.Add(dataDir.Text.Substring(dataDir.Text.LastIndexOf('\\') + 1));
+                node.Tag = dataDir.Text;
+                node.ToolTipText = dataDir.Text;
+            }
+            recentDataDirList.Nodes[0].ExpandAll();
+
         }
 
         private void selectButton_Click(object sender, EventArgs e)
@@ -269,6 +283,50 @@ namespace ManiacEditor
                 if (MessageBox.Show("Write Changes to File?", "Write to File", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     _GameConfig.Write(Path.Combine(Editor.DataDirectory, "Game", "GameConfig.bin"));
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            bool isDataFolderNode = false;
+            for (int i = 0; i < recentDataDirList.Nodes[0].Nodes.Count; i++)
+            {
+                if (recentDataDirList.Nodes[0].Nodes[i].IsSelected)
+                {
+                    isDataFolderNode = true;
+                }
+            }
+
+            if (isDataFolderNode == true)
+            {
+                GameConfig GameConfig;
+                String DataDirectory = recentDataDirList.SelectedNode.Tag.ToString();
+                {
+                    GameConfig = new GameConfig(Path.Combine(DataDirectory, "Game", "GameConfig.bin"));
+                }
+                LoadFromGameConfig(GameConfig);
+                _GameConfig = GameConfig;
+            }
+
+        }
+
+        private void setButtonEnabledState(bool enabled)
+        {
+            this.browse.Enabled = enabled;
+            this.cancelButton.Enabled = enabled;
+            this.selectButton.Enabled = enabled;
+            this.FilterText.Enabled = enabled;
+            this.scenesTree.Enabled = enabled;
+            this.isFilesView.Enabled = enabled;
         }
     }
 }

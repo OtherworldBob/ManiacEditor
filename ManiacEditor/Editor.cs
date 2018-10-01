@@ -116,7 +116,7 @@ namespace ManiacEditor
 
         public static Editor Instance;
 
-        private IList<ToolStripMenuItem> _recentDataItems;
+        public IList<ToolStripMenuItem> _recentDataItems;
         private IList<ToolStripMenuItem> _recentDataItems_Button;
         public static ProcessMemory GameMemory = new ProcessMemory();
         public static bool GameRunning = false;
