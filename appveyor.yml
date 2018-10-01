@@ -13,7 +13,10 @@ before_build:
 build:
   verbosity: minimal
 after_build:
-- cmd: 7z a ManiacEditor-Beta-Generations-v%APPVEYOR_BUILD_VERSION%.zip %APPVEYOR_BUILD_FOLDER%\%PLATFORM_DIR%\ManiacEditor\bin\Release\*.exe %APPVEYOR_BUILD_FOLDER%\%PLATFORM_DIR%\ManiacEditor\bin\Release\*.dll %APPVEYOR_BUILD_FOLDER%\%PLATFORM_DIR%\ManiacEditor\bin\Release\*.gif %APPVEYOR_BUILD_FOLDER%\%PLATFORM_DIR%\ManiacEditor\bin\Release\Resources %APPVEYOR_BUILD_FOLDER%\LICENSE
+- cmd: 7z a ManiacEditor-Beta-Generations-v%APPVEYOR_BUILD_VERSION%.zip %APPVEYOR_BUILD_FOLDER%\%PLATFORM_DIR%\ManiacEditor\bin\Release\* %APPVEYOR_BUILD_FOLDER%\%PLATFORM_DIR%\ManiacEditor\bin\Release\Resources %APPVEYOR_BUILD_FOLDER%\LICENSE
+- cmd: 7z a ManiacEditor-Beta-Generations-x64-v%APPVEYOR_BUILD_VERSION%.zip %APPVEYOR_BUILD_FOLDER%\%PLATFORM_DIR%\ManiacEditor\bin\Release(x64)\* %APPVEYOR_BUILD_FOLDER%\%PLATFORM_DIR%\ManiacEditor\bin\Release(x64)\Resources %APPVEYOR_BUILD_FOLDER%\LICENSE
 artifacts:
 - path: ManiacEditor-Beta-Generations-v%APPVEYOR_BUILD_VERSION%.zip
   name: ManiacEditor-Generations
+- path: ManiacEditor-Beta-Generations-x64-v%APPVEYOR_BUILD_VERSION%.zip
+  name: ManiacEditor-Generations-x64
