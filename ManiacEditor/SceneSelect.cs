@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -8,7 +9,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ManiacEditor.Properties;
+using System.Configuration;
 using RSDKv5;
+using System.Diagnostics;
 
 namespace ManiacEditor
 {
@@ -21,10 +25,16 @@ namespace ManiacEditor
         public string Result = null;
 
 
-        public SceneSelect(GameConfig config)
+        public SceneSelect(GameConfig config = null)
         {
             InitializeComponent();
             GetDataDirectories();
+            ReloadQuickPanel();
+            if (config != null)
+            {
+                LoadFromGameConfig(config);
+                _GameConfig = config;
+            }
         }
 
         public void LoadFromGameConfig(GameConfig config)
@@ -71,16 +81,41 @@ namespace ManiacEditor
 
         public void GetDataDirectories()
         {
+
+
+        }
+
+        public void ReloadQuickPanel()
+        {
+            recentDataDirList.Nodes.Clear();
+            recentDataDirList.Nodes.Add("Recent Data Directories");
+            recentDataDirList.Nodes.Add("Saved Places");
+            recentDataDirList.Nodes.Add("Important Places");
             this.recentDataDirList.ImageList = new ImageList();
             this.recentDataDirList.ImageList.Images.Add("Folder", Properties.Resources.folder);
             this.recentDataDirList.ImageList.Images.Add("File", Properties.Resources.file);
             foreach (ToolStripMenuItem dataDir in Editor.Instance._recentDataItems)
             {
-                var node = recentDataDirList.Nodes[0].Nodes.Add(dataDir.Text.Substring(dataDir.Text.LastIndexOf('\\') + 1));
+                var node = recentDataDirList.Nodes[0].Nodes.Add(dataDir.Text);
                 node.Tag = dataDir.Text;
                 node.ToolTipText = dataDir.Text;
             }
             recentDataDirList.Nodes[0].ExpandAll();
+
+            if (Properties.Settings.Default.SavedPlaces?.Count > 0)
+            {
+                StringCollection recentFolders = new StringCollection();
+                this.recentDataDirList.ImageList.Images.Add("SubFolder", Properties.Resources.folder);
+                int index = this.recentDataDirList.ImageList.Images.IndexOfKey("SubFolder");
+                recentFolders = Properties.Settings.Default.SavedPlaces;
+                foreach (string folder in recentFolders)
+                {
+                    var node = recentDataDirList.Nodes[1].Nodes.Add(folder, folder, index, index);
+                    node.Tag = folder;
+                    node.ToolTipText = folder;
+                }
+                recentDataDirList.Nodes[1].ExpandAll();
+            }
 
         }
 
@@ -200,6 +235,19 @@ namespace ManiacEditor
         private void browse_Click(object sender, EventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
+            open.InitialDirectory = 
+            open.Filter = "Scene File|*.bin";
+            if (open.ShowDialog() != DialogResult.Cancel)
+            {
+                Result = open.FileName;
+                Close();
+            }
+        }
+
+        private void selectable_browse_Click(string initialDir)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.InitialDirectory = initialDir;
             open.Filter = "Scene File|*.bin";
             if (open.ShowDialog() != DialogResult.Cancel)
             {
@@ -295,18 +343,26 @@ namespace ManiacEditor
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void load_Click(object sender, EventArgs e)
         {
-            bool isDataFolderNode = false;
+            int NodeType = 0;
             for (int i = 0; i < recentDataDirList.Nodes[0].Nodes.Count; i++)
             {
                 if (recentDataDirList.Nodes[0].Nodes[i].IsSelected)
                 {
-                    isDataFolderNode = true;
+                    NodeType = 0;
                 }
             }
 
-            if (isDataFolderNode == true)
+            for (int i = 0; i < recentDataDirList.Nodes[1].Nodes.Count; i++)
+            {
+                if (recentDataDirList.Nodes[1].Nodes[i].IsSelected)
+                {
+                    NodeType = 1;
+                }
+            }
+
+            if (NodeType == 0)
             {
                 GameConfig GameConfig;
                 String DataDirectory = recentDataDirList.SelectedNode.Tag.ToString();
@@ -316,17 +372,188 @@ namespace ManiacEditor
                 LoadFromGameConfig(GameConfig);
                 _GameConfig = GameConfig;
             }
+            if (NodeType == 1)
+            {
+
+            }
 
         }
 
         private void setButtonEnabledState(bool enabled)
         {
             this.browse.Enabled = enabled;
-            this.cancelButton.Enabled = enabled;
             this.selectButton.Enabled = enabled;
             this.FilterText.Enabled = enabled;
             this.scenesTree.Enabled = enabled;
             this.isFilesView.Enabled = enabled;
+        }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            Button btnSender = (Button)sender;
+            Point ptLowerLeft = new Point(0, btnSender.Height);
+            ptLowerLeft = btnSender.PointToScreen(ptLowerLeft);
+            contextMenuStrip3.Show(ptLowerLeft);
+        }
+
+        private void dataDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newDataDirectory = Editor.Instance.GetDataDirectory();
+            string returnDataDirectory;
+
+            if (string.IsNullOrWhiteSpace(newDataDirectory)) return;
+            if (Editor.Instance.IsDataDirectoryValid(newDataDirectory))
+            {
+                Editor.DataDirectory = newDataDirectory;
+                returnDataDirectory = newDataDirectory;
+                Editor.Instance.SetGameConfig();
+                Editor.Instance.AddRecentDataFolder(Editor.DataDirectory);
+                Editor.Instance.RefreshDataDirectories(Properties.Settings.Default.DataDirectories);
+                GetDataDirectories();
+                ReloadQuickPanel();
+
+            }
+            else
+            {
+                return;
+            }
+
+        }
+
+        private void clearDataDirectoriesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.DataDirectories.Clear();
+            Editor.Instance.RefreshDataDirectories(Properties.Settings.Default.DataDirectories);
+            GetDataDirectories();
+            ReloadQuickPanel();
+
+
+        }
+
+        private void recentDataDirList_Click(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                for (int i = 0; i < recentDataDirList.Nodes[0].Nodes.Count; i++)
+                {
+                    if (recentDataDirList.Nodes[0].Nodes[i].IsSelected)
+                    {
+                        dataDirEditContext.Show(recentDataDirList, e.Location);
+                    }
+                }
+
+                for (int i = 0; i < recentDataDirList.Nodes[1].Nodes.Count; i++)
+                {
+                    if (recentDataDirList.Nodes[1].Nodes[i].IsSelected)
+                    {
+                        folderEditContext.Show(recentDataDirList, e.Location);
+                    }
+                }
+            }
+        }
+
+        public void savedPlaceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String newSavedPlace;
+            using (var folderBrowserDialog = new FolderSelectDialog())
+            {
+                folderBrowserDialog.Title = "Select A Folder";
+
+                if (!folderBrowserDialog.ShowDialog())
+                {
+                    newSavedPlace = null;
+                }
+                else
+                {
+                    newSavedPlace = folderBrowserDialog.FileName.ToString();
+                }
+
+            }
+            MessageBox.Show(newSavedPlace);
+            AddANewSavedPlace(newSavedPlace);
+
+
+        }
+        public void AddANewSavedPlace(string savedFolder)
+        {
+            try
+            {
+                var mySettings = Properties.Settings.Default;
+                var savedPlaces = mySettings.SavedPlaces;
+
+                if (savedPlaces == null)
+                {
+                    savedPlaces = new StringCollection();
+                    mySettings.SavedPlaces = savedPlaces;
+                }
+
+                if (savedPlaces.Contains(savedFolder))
+                {
+                    savedPlaces.Remove(savedFolder);
+                }
+
+                savedPlaces.Insert(0, savedFolder);
+
+                mySettings.Save();
+
+                ReloadQuickPanel();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("Failed to add Saved Place to list: " + ex);
+            }
+        }
+
+        private void removeSavedFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String toRemove = recentDataDirList.SelectedNode.Tag.ToString();
+            if (Settings.Default.SavedPlaces.Contains(toRemove))
+            {
+                Settings.Default.SavedPlaces.Remove(toRemove);
+            }
+            ReloadQuickPanel();
+        }
+
+        private void removeDataDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String toRemove = recentDataDirList.SelectedNode.Tag.ToString();
+            if (Settings.Default.DataDirectories.Contains(toRemove))
+            {
+                Settings.Default.DataDirectories.Remove(toRemove);
+            }
+            Editor.Instance.RefreshDataDirectories(Properties.Settings.Default.DataDirectories);
+            ReloadQuickPanel();
+        }
+
+        private void recentDataDirList_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                for (int i = 0; i < recentDataDirList.Nodes[0].Nodes.Count; i++)
+                {
+                    if (recentDataDirList.Nodes[0].Nodes[i].IsSelected)
+                    {
+                        load_Click(sender, e);
+                    }
+                }
+
+                for (int i = 0; i < recentDataDirList.Nodes[1].Nodes.Count; i++)
+                {
+                    if (recentDataDirList.Nodes[1].Nodes[i].IsSelected)
+                    {
+                        if (_GameConfig != null)
+                        {
+                            selectable_browse_Click(recentDataDirList.Nodes[1].Nodes[i].Tag.ToString());
+                        }
+                        else
+                        {
+                            CustomMsgBox c = new CustomMsgBox("Please Select/Open a Data Directory First", "ERROR!", 2, 1);
+                            c.Show();
+                        }
+
+                    }
+                }
+            }
         }
     }
 }

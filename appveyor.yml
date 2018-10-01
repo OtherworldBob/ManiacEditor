@@ -4,8 +4,10 @@ environment:
   matrix:
     - appveyor_build_worker_image: Visual Studio 2017
       configuration: Release
+      platform: Any CPU
     - appveyor_build_worker_image: Visual Studio 2017
-      configuration: Release(x64)
+      configuration: Release
+      platform: x64
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
@@ -18,8 +20,8 @@ build:
   verbosity: minimal
 artifacts:
  - path: 'ManiacEditor\bin\Release'
-   name: '$(appveyor_project_name) $(appveyor_build_version) [x86]'
+   name: 'ManiacEditor-Generations-BETA-$(appveyor_build_version)[x86-x64]'
    type: zip
  - path: 'ManiacEditor\bin\Release(x64)'
-   name: '$(appveyor_project_name) $(appveyor_build_version) [x64]'
+   name: 'ManiacEditor-Generations-BETA-$(appveyor_build_version)[x64]' 
    type: zip

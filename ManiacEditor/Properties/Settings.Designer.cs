@@ -916,5 +916,16 @@ namespace ManiacEditor.Properties {
                 this["LockOnSupport"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection SavedPlaces {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["SavedPlaces"]));
+            }
+            set {
+                this["SavedPlaces"] = value;
+            }
+        }
     }
 }

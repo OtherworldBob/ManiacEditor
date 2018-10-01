@@ -68,10 +68,10 @@ namespace ManiacEditor
         public string SelectedZone;
         string SelectedScene;
 
-        internal StageTiles StageTiles;
-        internal EditorScene EditorScene;
-        internal StageConfig StageConfig;
-        public ObjectRemover objectRemover;
+        public StageTiles StageTiles;
+        public EditorScene EditorScene;
+        public StageConfig StageConfig;
+        public ObjectManager objectRemover;
 
         string SceneFilename = null;
         string StageConfigFileName = null;
@@ -286,7 +286,7 @@ namespace ManiacEditor
         /// Refreshes the Data directories displayed in the recent list under the File menu.
         /// </summary>
         /// <param name="settings">The settings file containing the </param>
-        private void RefreshDataDirectories(StringCollection recentDataDirectories)
+        public void RefreshDataDirectories(StringCollection recentDataDirectories)
         {
             recentDataDirectoriesToolStripMenuItem.Visible = false;
             CleanUpRecentList();
@@ -1940,7 +1940,7 @@ namespace ManiacEditor
         {
             if (DataDirectory == null)
             {
-                do
+                /*do
                 {
                     MessageBox.Show("Please select the \"Data\" folder", "Message");
                     string newDataDirectory = GetDataDirectory();
@@ -1955,14 +1955,15 @@ namespace ManiacEditor
                 while (null == DataDirectory);
 
                 SetGameConfig();
-                AddRecentDataFolder(DataDirectory);
+                AddRecentDataFolder(DataDirectory);*/
+                return false;
             }
             // Clears all the Textures
             EditorEntity.ReleaseResources();
             return true;
         }
 
-        private string GetDataDirectory()
+        public string GetDataDirectory()
         {
             using (var folderBrowserDialog = new FolderSelectDialog())
             {
@@ -1975,12 +1976,12 @@ namespace ManiacEditor
             }
         }
 
-        private bool IsDataDirectoryValid()
+        public bool IsDataDirectoryValid()
         {
             return IsDataDirectoryValid(DataDirectory);
         }
 
-        private bool IsDataDirectoryValid(string directoryToCheck)
+        public bool IsDataDirectoryValid(string directoryToCheck)
         {
             return File.Exists(Path.Combine(directoryToCheck, "Game", "GameConfig.bin"));
         }
@@ -1988,7 +1989,7 @@ namespace ManiacEditor
         /// <summary>
         /// Sets the GameConfig property in relation to the DataDirectory property.
         /// </summary>
-        private void SetGameConfig()
+        public void SetGameConfig()
         {
             GameConfig = new GameConfig(Path.Combine(DataDirectory, "Game", "GameConfig.bin"));
         }
@@ -1997,7 +1998,7 @@ namespace ManiacEditor
         /// Adds a Data directory to the persisted list, and refreshes the UI.
         /// </summary>
         /// <param name="dataDirectory">Path to the Data directory</param>
-        private void AddRecentDataFolder(string dataDirectory)
+        public void AddRecentDataFolder(string dataDirectory)
         {
             try
             {
@@ -2186,7 +2187,6 @@ namespace ManiacEditor
             if (AllowSceneChange == true || SceneLoaded == false || Properties.Settings.Default.DisableSaveWarnings == true)
             {
                 AllowSceneChange = false;
-                if (!load()) return;
                 if (Properties.Settings.Default.forceBrowse == true)
                     OpenSceneManual();
                 else
@@ -2202,9 +2202,17 @@ namespace ManiacEditor
 
         private void OpenScene()
         {
-
-            SceneSelect select = new SceneSelect(GameConfig);
+            SceneSelect select;
+            if (!load())
+            {
+                select = new SceneSelect();
+            }
+            else
+            {
+                select = new SceneSelect(GameConfig);
+            }
             select.ShowDialog();
+
 
             if (select.Result == null)
                 return;
@@ -3265,7 +3273,7 @@ Error: {ex.Message}");
             if (e.Data.GetDataPresent(typeof(Int32)) && IsTilesEdit())
             {
                 Point rel = GraphicPanel.PointToScreen(Point.Empty);
-                e.Effect = DragDropEffects.None;
+                e.Effect = DragDropEffects.Move;
                 //(ushort)((Int32)e.Data.GetData(e.Data.GetFormats()[0])
                 if (multiLayerSelect == true)
                 {
@@ -3948,7 +3956,7 @@ Error: {ex.Message}");
             try
             {
 
-                using (var ObjectRemover = new ObjectRemover(EditorScene.Objects, StageConfig))
+                using (var ObjectRemover = new ObjectManager(EditorScene.Objects, StageConfig))
                 {
                     if (ObjectRemover.ShowDialog() != DialogResult.OK)
                         return; // nothing to do

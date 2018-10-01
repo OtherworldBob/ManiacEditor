@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace ManiacEditor
 {
-    public partial class ObjectRemover : Form
+    public partial class ObjectManager : Form
     {
         private IList<SceneObject> _sourceSceneObjects;
         private IList<SceneObject> _targetSceneObjects;
@@ -22,7 +22,7 @@ namespace ManiacEditor
         public List<String> objectCheckMemory = new List<string>();
 
 
-        public ObjectRemover(IList<SceneObject> targetSceneObjects, StageConfig stageConfig)
+        public ObjectManager(IList<SceneObject> targetSceneObjects, StageConfig stageConfig)
         {
 
 
@@ -291,22 +291,26 @@ namespace ManiacEditor
             try
             {
                 Scene sourceScene = Editor.Instance.GetSceneSelection();
-                if (null == sourceScene) return;
+                if (sourceScene == null)
+                {
+                    return;
+                } 
 
                 using (var objectImporter = new ObjectImporter(sourceScene.Objects, Editor.Instance.EditorScene.Objects, Editor.Instance.StageConfig))
                 {
-                    /*if (objectImporter.ShowDialog() != DialogResult.OK)
-                        return; // nothing to do*/
-                    //Does Not Work Correctly
+                    if (objectImporter.ShowDialog() != DialogResult.OK)
+                        return;
 
                     // user clicked Import, get to it!
-                    Editor.Instance.objectRemover.RefreshList();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Unable to import Objects. " + ex.Message);
+                MessageBox.Show("Unable to import Objects." + ex.Message);
             }
+
+            //RefreshList();
+            // Blanks the list for some reason should consider fixing badly
         }
 
         private void lvObjects_SelectedIndexChanged_1(object sender, EventArgs e)

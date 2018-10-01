@@ -1,6 +1,6 @@
 ﻿namespace ManiacEditor
 {
-    partial class ObjectRemover
+    partial class ObjectManager
     {
         /// <summary>
         /// Required designer variable.
