@@ -6,7 +6,7 @@ Find the original by **koolkdev** over [there](https://github.com/koolkdev/Mania
 
 Find the fork by **OtherworldBob** over [there](https://github.com/OtherworldBob/ManiacEditor/releases/latest), from which this version also derives from. None of this would be possible without the work done in the fork!
 
-BUILD STATUS NOT OFFERED FOR NOW, Sorry.
+[![Build status](https://ci.appveyor.com/api/projects/status/5afkvi67rhtv1m85?svg=true)](https://ci.appveyor.com/project/CarJem/maniaceditor-generationsedition)
 
 This Fork is Experimental, if OtherworldBob does not comeback, this might become the main fork. No Guarentees though.
 Also, apearently koolkdev is potetnially back, so we will se what will happen to this fork.
