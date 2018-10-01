@@ -70,5 +70,29 @@ namespace ManiacEditor.Properties {
                 this["annimationsChecked"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isPreRendering {
+            get {
+                return ((bool)(this["isPreRendering"]));
+            }
+            set {
+                this["isPreRendering"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int developerInt {
+            get {
+                return ((int)(this["developerInt"]));
+            }
+            set {
+                this["developerInt"] = value;
+            }
+        }
     }
 }

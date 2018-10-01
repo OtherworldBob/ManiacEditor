@@ -357,11 +357,6 @@
     <Compile Include="Form2.Designer.cs">
       <DependentUpon>CustomMsgBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Properties\CheatCodes.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>CheatCodes.settings</DependentUpon>
-    </Compile>
     <Compile Include="Properties\EditorState.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -371,11 +366,6 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>KeyBinds.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\UniversalNumbers.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>UniversalNumbers.settings</DependentUpon>
     </Compile>
     <Compile Include="RunSceneOptions.cs">
       <SubType>Form</SubType>
@@ -497,14 +487,6 @@
     <EmbeddedResource Include="Resources\onScreenRenderExclusions.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <None Include="Properties\UniversalNumbers.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>UniversalNumbers.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Properties\CheatCodes.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>CheatCodes.Designer.cs</LastGenOutput>
-    </None>
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>

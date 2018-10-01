@@ -14,7 +14,7 @@ namespace ManiacEditor
     public partial class DeveloperTerminal : Form
     {
         // For Interger Changer; Change to the Value you want to tweak
-        int valueINI = Properties.UniversalNumbers.Default.angle_divide;
+        int valueINI = Properties.EditorState.Default.developerInt;
         string curVal = "Current Value: ";
 
         public DeveloperTerminal()
@@ -25,26 +25,26 @@ namespace ManiacEditor
 
         private void subtract10_Click(object sender, EventArgs e)
         {
-            Properties.UniversalNumbers.Default.angle_divide = Properties.UniversalNumbers.Default.angle_divide - 10;
-            currentLabel.Text = curVal + Properties.UniversalNumbers.Default.angle_divide;
+            Properties.EditorState.Default.developerInt = Properties.EditorState.Default.developerInt - 10;
+            currentLabel.Text = curVal + Properties.EditorState.Default.developerInt;
         }
 
         private void subtract_Click(object sender, EventArgs e)
         {
-            Properties.UniversalNumbers.Default.angle_divide = Properties.UniversalNumbers.Default.angle_divide - 1;
-            currentLabel.Text = curVal + Properties.UniversalNumbers.Default.angle_divide;
+            Properties.EditorState.Default.developerInt = Properties.EditorState.Default.developerInt - 1;
+            currentLabel.Text = curVal + Properties.EditorState.Default.developerInt;
         }
 
         private void add10_Click(object sender, EventArgs e)
         {
-            Properties.UniversalNumbers.Default.angle_divide = Properties.UniversalNumbers.Default.angle_divide + 10;
-            currentLabel.Text = curVal + Properties.UniversalNumbers.Default.angle_divide;
+            Properties.EditorState.Default.developerInt = Properties.EditorState.Default.developerInt + 10;
+            currentLabel.Text = curVal + Properties.EditorState.Default.developerInt;
         }
 
         private void add_Click(object sender, EventArgs e)
         {
-            Properties.UniversalNumbers.Default.angle_divide = Properties.UniversalNumbers.Default.angle_divide + 1;
-            currentLabel.Text = curVal + Properties.UniversalNumbers.Default.angle_divide;
+            Properties.EditorState.Default.developerInt = Properties.EditorState.Default.developerInt + 1;
+            currentLabel.Text = curVal + Properties.EditorState.Default.developerInt;
         }
 
         private void enterManualEntry_Click(object sender, EventArgs e)
@@ -53,12 +53,12 @@ namespace ManiacEditor
             if (!Int32.TryParse(manualEntryText.Text, out manualTextInt))
             {
                 errorLabel.Text = "Error: Not an Int";
-                currentLabel.Text = curVal + Properties.UniversalNumbers.Default.angle_divide;
+                currentLabel.Text = curVal + Properties.EditorState.Default.developerInt;
             }
             else
             {
-                Properties.UniversalNumbers.Default.angle_divide = Properties.UniversalNumbers.Default.angle_divide + manualTextInt;
-                currentLabel.Text = curVal + Properties.UniversalNumbers.Default.angle_divide;
+                Properties.EditorState.Default.developerInt = Properties.EditorState.Default.developerInt + manualTextInt;
+                currentLabel.Text = curVal + Properties.EditorState.Default.developerInt;
             }
             
         }

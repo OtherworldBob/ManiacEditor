@@ -14,7 +14,6 @@ namespace ManiacEditor.Entity_Renders
 {
     public class Platform
     {
-        public int angle_divide = Properties.UniversalNumbers.Default.angle_divide;
 
         
         public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)

@@ -44,15 +44,14 @@ namespace ManiacEditor
         {
             for (bool w = false; w != true;)
                 {
-                    if (Properties.CheatCodes.Default.isPreRendering == true)
+                    if (Properties.EditorState.Default.isPreRendering == true)
                     {
                     //Properties.CheatCodes.Default.Reload();
                     //backgroundWorker1.ReportProgress((Properties.CheatCodes.Default.ProgressX + Properties.CheatCodes.Default.ProgressY)/2);
-                }
+                    }
                     else
                     {
-                        w = true;
-
+                    w = true;
                     }       
 
                 }
