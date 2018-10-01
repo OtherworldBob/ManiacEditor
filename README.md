@@ -8,17 +8,11 @@ Find the fork by **OtherworldBob** over [there](https://github.com/OtherworldBob
 
 ## Development Build Status
 
-### x86:
 [![Build status](https://ci.appveyor.com/api/projects/status/5afkvi67rhtv1m85?svg=true)](https://ci.appveyor.com/project/CarJem/maniaceditor-generationsedition)
-
-### x64:
-[![Build status](https://ci.appveyor.com/api/projects/status/s4ay69lu9gaegdj4?svg=true)](https://ci.appveyor.com/project/CarJem/maniaceditor-generationsedition-ebcr5)
 
 Builds will be offered on commit now! Click Below for the links to the respective versions
 
-x64 Version: [Download at Appveyor](https://ci.appveyor.com/project/CarJem/maniaceditor-generationsedition-ebcr5)
-
-x86 Version: [Download at Appveyor](https://ci.appveyor.com/project/CarJem/maniaceditor-generationsedition)
+Development Versions: [Download at Appveyor](https://ci.appveyor.com/project/CarJem/maniaceditor-generationsedition)
 
 **x64 is Highly Recomended!**
 
