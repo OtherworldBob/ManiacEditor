@@ -4,10 +4,8 @@ environment:
   matrix:
     - appveyor_build_worker_image: Visual Studio 2017
       configuration: Release
-      platform: x86
     - appveyor_build_worker_image: Visual Studio 2017
       configuration: Release(x64)
-      platform: x64
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
@@ -18,8 +16,6 @@ before_build:
 - cmd: nuget restore
 build:
   verbosity: minimal
-after_build:
-- cmd: 7z a ManiacEditor-Beta-Generations-v%APPVEYOR_BUILD_VERSION%.zip %APPVEYOR_BUILD_FOLDER%\%PLATFORM_DIR%\ManiacEditor\bin\Release\* %APPVEYOR_BUILD_FOLDER%\%PLATFORM_DIR%\ManiacEditor\bin\Release\Resources %APPVEYOR_BUILD_FOLDER%\LICENSE
 artifacts:
  - path: 'ManiacEditor\bin\Release'
    name: '$(appveyor_project_name) $(appveyor_build_version) [x86]'
