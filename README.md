@@ -9,7 +9,9 @@ Find the fork by **OtherworldBob** over [there](https://github.com/OtherworldBob
 [![Build status](https://ci.appveyor.com/api/projects/status/5afkvi67rhtv1m85?svg=true)](https://ci.appveyor.com/project/CarJem/maniaceditor-generationsedition)
 
 Builds will be offered Nightly Now! Click Below for the links to the respective versions
+
 x64 Version(HIGHLY RECOMENDED; Faster): [Download at Appveyor](https://ci.appveyor.com/project/CarJem/maniaceditor-generationsedition-ebcr5)
+
 x86 Version(Backwards Compatible; Slower): [Download at Appveyor](https://ci.appveyor.com/project/CarJem/maniaceditor-generationsedition)
 
 This Fork is Experimental, if OtherworldBob does not comeback, this might become the main fork. No Guarentees though.
