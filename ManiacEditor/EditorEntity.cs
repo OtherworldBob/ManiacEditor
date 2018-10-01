@@ -111,8 +111,8 @@ namespace ManiacEditor
         internal FBZSinkTrash fbzSinkTrash = new FBZSinkTrash();
 
         // Object List for initilizing the if statement
-        List<string> entityRenderingObjects = EditorEntity_ini.getSpecialRenderList(1);
-        List<string> renderOnScreenExlusions = EditorEntity_ini.getSpecialRenderList(0);
+        List<string> entityRenderingObjects = Editor.Instance.entityRenderingObjects;
+        List<string> renderOnScreenExlusions = Editor.Instance.renderOnScreenExlusions;
 
         //Rotating Platforms
         public int angle = 0;

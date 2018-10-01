@@ -56,11 +56,11 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearDataDirectoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeAllSavedPlacesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderEditContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeSavedFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataDirEditContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeDataDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeAllSavedPlacesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.contextMenuStrip3.SuspendLayout();
@@ -72,7 +72,7 @@
             // scenesTree
             // 
             this.scenesTree.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.scenesTree.Location = new System.Drawing.Point(12, 65);
+            this.scenesTree.Location = new System.Drawing.Point(14, 63);
             this.scenesTree.Name = "scenesTree";
             this.scenesTree.Size = new System.Drawing.Size(472, 349);
             this.scenesTree.TabIndex = 0;
@@ -85,7 +85,7 @@
             // 
             this.selectButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.selectButton.Enabled = false;
-            this.selectButton.Location = new System.Drawing.Point(379, 420);
+            this.selectButton.Location = new System.Drawing.Point(381, 418);
             this.selectButton.Name = "selectButton";
             this.selectButton.Size = new System.Drawing.Size(105, 28);
             this.selectButton.TabIndex = 4;
@@ -97,7 +97,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(891, 420);
+            this.cancelButton.Location = new System.Drawing.Point(893, 418);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(105, 28);
             this.cancelButton.TabIndex = 5;
@@ -109,7 +109,7 @@
             // 
             this.searchLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.searchLabel.AutoSize = true;
-            this.searchLabel.Location = new System.Drawing.Point(9, 39);
+            this.searchLabel.Location = new System.Drawing.Point(11, 37);
             this.searchLabel.Name = "searchLabel";
             this.searchLabel.Size = new System.Drawing.Size(32, 13);
             this.searchLabel.TabIndex = 8;
@@ -118,7 +118,7 @@
             // FilterText
             // 
             this.FilterText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.FilterText.Location = new System.Drawing.Point(52, 39);
+            this.FilterText.Location = new System.Drawing.Point(54, 37);
             this.FilterText.Name = "FilterText";
             this.FilterText.Size = new System.Drawing.Size(432, 20);
             this.FilterText.TabIndex = 7;
@@ -127,7 +127,7 @@
             // browse
             // 
             this.browse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.browse.Location = new System.Drawing.Point(268, 420);
+            this.browse.Location = new System.Drawing.Point(270, 418);
             this.browse.Name = "browse";
             this.browse.Size = new System.Drawing.Size(105, 28);
             this.browse.TabIndex = 9;
@@ -139,7 +139,7 @@
             // 
             this.isFilesView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.isFilesView.AutoSize = true;
-            this.isFilesView.Location = new System.Drawing.Point(12, 456);
+            this.isFilesView.Location = new System.Drawing.Point(14, 429);
             this.isFilesView.Name = "isFilesView";
             this.isFilesView.Size = new System.Drawing.Size(73, 17);
             this.isFilesView.TabIndex = 6;
@@ -168,7 +168,6 @@
             this.deleteSceneInfoToolStripMenuItem});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
             this.contextMenuStrip2.Size = new System.Drawing.Size(166, 48);
-            this.contextMenuStrip2.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip2_Opening);
             // 
             // toolStripMenuItem1
             // 
@@ -188,7 +187,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(490, 42);
+            this.label2.Location = new System.Drawing.Point(492, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(68, 13);
             this.label2.TabIndex = 14;
@@ -209,7 +208,6 @@
             this.TopToolStripPanel.Orientation = System.Windows.Forms.Orientation.Horizontal;
             this.TopToolStripPanel.RowMargin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.TopToolStripPanel.Size = new System.Drawing.Size(0, 0);
-            this.TopToolStripPanel.Click += new System.EventHandler(this.toolStripContainer1_TopToolStripPanel_Click);
             // 
             // RightToolStripPanel
             // 
@@ -234,7 +232,7 @@
             // recentDataDirList
             // 
             this.recentDataDirList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.recentDataDirList.Location = new System.Drawing.Point(490, 65);
+            this.recentDataDirList.Location = new System.Drawing.Point(492, 63);
             this.recentDataDirList.Name = "recentDataDirList";
             this.recentDataDirList.Size = new System.Drawing.Size(506, 349);
             this.recentDataDirList.TabIndex = 13;
@@ -244,7 +242,7 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(797, 420);
+            this.button3.Location = new System.Drawing.Point(799, 418);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(88, 28);
             this.button3.TabIndex = 16;
@@ -255,7 +253,7 @@
             // addButton
             // 
             this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addButton.Location = new System.Drawing.Point(716, 420);
+            this.addButton.Location = new System.Drawing.Point(718, 418);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(75, 28);
             this.addButton.TabIndex = 19;
@@ -292,7 +290,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(1008, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1010, 24);
             this.menuStrip1.TabIndex = 20;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -311,6 +309,12 @@
             this.clearDataDirectoriesToolStripMenuItem.Name = "clearDataDirectoriesToolStripMenuItem";
             this.clearDataDirectoriesToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.clearDataDirectoriesToolStripMenuItem.Text = "Remove All Data Directories";
+            // 
+            // removeAllSavedPlacesToolStripMenuItem
+            // 
+            this.removeAllSavedPlacesToolStripMenuItem.Name = "removeAllSavedPlacesToolStripMenuItem";
+            this.removeAllSavedPlacesToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.removeAllSavedPlacesToolStripMenuItem.Text = "Remove All Saved Places";
             // 
             // folderEditContext
             // 
@@ -340,19 +344,13 @@
             this.removeDataDirectoryToolStripMenuItem.Text = "Remove Data Directory";
             this.removeDataDirectoryToolStripMenuItem.Click += new System.EventHandler(this.removeDataDirectoryToolStripMenuItem_Click);
             // 
-            // removeAllSavedPlacesToolStripMenuItem
-            // 
-            this.removeAllSavedPlacesToolStripMenuItem.Name = "removeAllSavedPlacesToolStripMenuItem";
-            this.removeAllSavedPlacesToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.removeAllSavedPlacesToolStripMenuItem.Text = "Remove All Saved Places";
-            // 
             // SceneSelect
             // 
             this.AcceptButton = this.selectButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(1008, 455);
+            this.ClientSize = new System.Drawing.Size(1010, 456);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label2);
@@ -365,14 +363,16 @@
             this.Controls.Add(this.selectButton);
             this.Controls.Add(this.scenesTree);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(350, 200);
             this.Name = "SceneSelect";
             this.ShowIcon = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Select Scene...";
-            this.Load += new System.EventHandler(this.SceneSelect_Load);
             this.contextMenuStrip1.ResumeLayout(false);
             this.contextMenuStrip2.ResumeLayout(false);
             this.contextMenuStrip3.ResumeLayout(false);

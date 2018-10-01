@@ -28,7 +28,6 @@ namespace ManiacEditor
         public SceneSelect(GameConfig config = null)
         {
             InitializeComponent();
-            GetDataDirectories();
             ReloadQuickPanel();
             if (config != null)
             {
@@ -77,12 +76,6 @@ namespace ManiacEditor
             {
                 this.isFilesView.Checked = false;
             }
-        }
-
-        public void GetDataDirectories()
-        {
-
-
         }
 
         public void ReloadQuickPanel()
@@ -227,11 +220,6 @@ namespace ManiacEditor
             }
         }
 
-        private void scenesTree_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
         private void browse_Click(object sender, EventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
@@ -284,16 +272,6 @@ namespace ManiacEditor
             }
         }
 
-        private void contextMenuStrip2_Opening(object sender, CancelEventArgs e)
-        {
-
-        }
-
-        private void SceneSelect_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var cat = _GameConfig.Categories.Where(t => t.Name == scenesTree.SelectedNode.Parent.Text).FirstOrDefault();
@@ -331,16 +309,6 @@ namespace ManiacEditor
                 if (MessageBox.Show("Write Changes to File?", "Write to File", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     _GameConfig.Write(Path.Combine(Editor.DataDirectory, "Game", "GameConfig.bin"));
             }
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void load_Click(object sender, EventArgs e)
@@ -409,7 +377,6 @@ namespace ManiacEditor
                 Editor.Instance.SetGameConfig();
                 Editor.Instance.AddRecentDataFolder(Editor.DataDirectory);
                 Editor.Instance.RefreshDataDirectories(Properties.Settings.Default.DataDirectories);
-                GetDataDirectories();
                 ReloadQuickPanel();
 
             }
@@ -424,7 +391,6 @@ namespace ManiacEditor
         {
             Properties.Settings.Default.DataDirectories.Clear();
             Editor.Instance.RefreshDataDirectories(Properties.Settings.Default.DataDirectories);
-            GetDataDirectories();
             ReloadQuickPanel();
 
 

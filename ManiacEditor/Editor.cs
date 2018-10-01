@@ -73,6 +73,10 @@ namespace ManiacEditor
         public StageConfig StageConfig;
         public ObjectManager objectRemover;
 
+
+        public List<string> entityRenderingObjects = EditorEntity_ini.getSpecialRenderList(1);
+        public List<string> renderOnScreenExlusions = EditorEntity_ini.getSpecialRenderList(0);
+
         string SceneFilename = null;
         string StageConfigFileName = null;
 
@@ -149,6 +153,8 @@ namespace ManiacEditor
             _extraLayerButtons = new List<ToolStripButton>();
             _recentDataItems = new List<ToolStripMenuItem>();
             _recentDataItems_Button = new List<ToolStripMenuItem>();
+
+            
 
             SetViewSize();
 

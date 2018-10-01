@@ -37,7 +37,9 @@ Missing file: {fnfe.FileName}");
 
             if (allowedToLoad)
             {
-                new Editor().Run();
+                Editor e = new Editor();
+                e.Text = "Maniac Editor - Generations Edition (BETA) (" + Assembly.GetExecutingAssembly().GetName().Version.ToString() + ") ";
+                e.Run();
             }
         }
 
