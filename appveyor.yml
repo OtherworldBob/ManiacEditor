@@ -1,7 +1,9 @@
 version: 0.2.25.{build}
 skip_tags: true
 image: Visual Studio 2017
-configuration: Release
+configuration:
+- x64 Release
+- Release
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
