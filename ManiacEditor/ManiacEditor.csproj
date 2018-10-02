@@ -291,6 +291,7 @@
     <Compile Include="Actions\ActionsGroup.cs" />
     <Compile Include="Actions\ActionsGroupCloseMarker.cs" />
     <Compile Include="Actions\IAction.cs" />
+    <Compile Include="ColorConsole.cs" />
     <Compile Include="ColorsCaching.cs" />
     <Compile Include="DeviceEventArgs.cs" />
     <Compile Include="AddAttributeBox.cs">
@@ -306,6 +307,8 @@
       <DependentUpon>DeviceLostBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Discord.cs" />
+    <Compile Include="DuplicateAction.cs" />
+    <Compile Include="DuplicateObjectHealer.cs" />
     <Compile Include="EditorBackground.cs" />
     <Compile Include="EditorEntity_ini.cs" />
     <Compile Include="EditorScene.cs" />

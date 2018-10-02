@@ -164,6 +164,7 @@
             this.animationsSplitButton = new System.Windows.Forms.ToolStripSplitButton();
             this.movingPlatformsObjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteFramesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.duplicateObjectIDHealerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -497,7 +498,8 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.collisionEditorToolStripMenuItem,
             this.rSDKAnnimationEditorToolStripMenuItem,
-            this.colorPaletteEditorToolStripMenuItem});
+            this.colorPaletteEditorToolStripMenuItem,
+            this.duplicateObjectIDHealerToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -1476,6 +1478,13 @@
             this.spriteFramesToolStripMenuItem.Text = "Sprite Frames";
             this.spriteFramesToolStripMenuItem.Click += new System.EventHandler(this.spriteFramesToolStripMenuItem_Click);
             // 
+            // duplicateObjectIDHealerToolStripMenuItem
+            // 
+            this.duplicateObjectIDHealerToolStripMenuItem.Name = "duplicateObjectIDHealerToolStripMenuItem";
+            this.duplicateObjectIDHealerToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.duplicateObjectIDHealerToolStripMenuItem.Text = "Duplicate Object ID Healer";
+            this.duplicateObjectIDHealerToolStripMenuItem.Click += new System.EventHandler(this.duplicateObjectIDHealerToolStripMenuItem_Click);
+            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1656,6 +1665,7 @@
         private System.Windows.Forms.ToolStripMenuItem movingPlatformsObjectsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem spriteFramesToolStripMenuItem;
         public System.Windows.Forms.ToolStripButton ShowAnimations;
+        private System.Windows.Forms.ToolStripMenuItem duplicateObjectIDHealerToolStripMenuItem;
     }
 }
 

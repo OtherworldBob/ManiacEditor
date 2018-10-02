@@ -104,7 +104,7 @@ namespace ManiacEditor.Entity_Renders
                     int radiusInt = (int)Math.Sqrt(radius);
                     int newX = (int)(radiusInt * Math.Cos(Math.PI * angle / 128));
                     int newY = (int)(radiusInt * Math.Sin(Math.PI * angle / 128));
-                    d.DrawBitmap(frame.Texture, (x + newX) + frame2.Frame.CenterX, (y - newY) + frame2.Frame.CenterY,
+                    d.DrawBitmap(frame.Texture, (x + newX) + frame.Frame.CenterX, (y - newY) + frame.Frame.CenterY,
                        frame.Frame.Width, frame.Frame.Height, false, Transparency);
                 }
                 else

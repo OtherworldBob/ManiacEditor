@@ -1,0 +1,3 @@
+OtherworldBob:
+sure, just be careful: There may be more than 2 entities with the same ID
+also there could be more than one set of duplicates, so make sure you handle that too

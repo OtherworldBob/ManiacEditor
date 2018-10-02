@@ -2309,6 +2309,29 @@ namespace ManiacEditor
             }
         }
 
+        private void RepairScene()
+        {
+            string Result = null;
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "Scene File|*.bin";
+            if (open.ShowDialog() != DialogResult.Cancel)
+            {
+                Result = open.FileName;
+            }
+
+            if (Result == null)
+                return;
+
+            UnloadScene();
+            UseDefaultPrefrences();
+
+            DuplicateObjectIdHealer healer = new DuplicateObjectIdHealer();
+            healer.startHealing(open.FileName);
+
+            
+
+        }
+
         private void OpenSceneManual()
         {
             string Result = null;
@@ -4589,6 +4612,11 @@ Error: {ex.Message}");
                 spriteFramesToolStripMenuItem.Checked = false;
                 Properties.EditorState.Default.annimationsChecked = false;
             }
+        }
+
+        private void duplicateObjectIDHealerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RepairScene();
         }
 
         public void DisposeTextures()

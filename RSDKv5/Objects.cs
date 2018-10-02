@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using IniParser;
 using IniParser.Model;
 using System.IO;
-
+using Newtonsoft.Json.Serialization;
 
 namespace RSDKv5
 {
@@ -16,7 +16,7 @@ namespace RSDKv5
         static List<ObjectInfo> objects = new List<ObjectInfo>();
         static Dictionary<string, ObjectInfo> hashToObject = new Dictionary<string, ObjectInfo>();
 
-        public static void InitObjects(Stream stream)
+        public static void InitObjects(Stream stream, bool skipHash = false)
         {
             var parser = new IniParser.StreamIniDataParser();
             IniData data = parser.ReadData(new StreamReader(stream));
@@ -36,7 +36,12 @@ namespace RSDKv5
                 }
                 objects.Add(new ObjectInfo(new NameIdentifier(section.SectionName), attributes));
             }
-            hashToObject = objects.ToDictionary(x => x.Name.HashString());
+            if (skipHash != true)
+            {
+                hashToObject = objects.ToDictionary(x => x.Name.HashString());
+            }
+
+
         }
 
         public static ObjectInfo GetObjectInfo(NameIdentifier name)
