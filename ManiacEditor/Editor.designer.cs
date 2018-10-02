@@ -75,6 +75,7 @@
             this.collisionEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rSDKAnnimationEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorPaletteEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.duplicateObjectIDHealerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -124,7 +125,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.runSceneButton = new System.Windows.Forms.ToolStripSplitButton();
             this.openModManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gameOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetDeviceButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.undoButton = new System.Windows.Forms.ToolStripButton();
@@ -164,7 +164,6 @@
             this.animationsSplitButton = new System.Windows.Forms.ToolStripSplitButton();
             this.movingPlatformsObjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteFramesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.duplicateObjectIDHealerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -524,6 +523,13 @@
             this.colorPaletteEditorToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.colorPaletteEditorToolStripMenuItem.Text = "Color Palette Editor";
             this.colorPaletteEditorToolStripMenuItem.Click += new System.EventHandler(this.colorPaletteEditorToolStripMenuItem_Click);
+            // 
+            // duplicateObjectIDHealerToolStripMenuItem
+            // 
+            this.duplicateObjectIDHealerToolStripMenuItem.Name = "duplicateObjectIDHealerToolStripMenuItem";
+            this.duplicateObjectIDHealerToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.duplicateObjectIDHealerToolStripMenuItem.Text = "Duplicate Object ID Healer";
+            this.duplicateObjectIDHealerToolStripMenuItem.Click += new System.EventHandler(this.duplicateObjectIDHealerToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -1018,8 +1024,7 @@
             this.runSceneButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.runSceneButton.DropDownButtonWidth = 16;
             this.runSceneButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openModManagerToolStripMenuItem,
-            this.gameOptionsToolStripMenuItem});
+            this.openModManagerToolStripMenuItem});
             this.runSceneButton.Image = global::ManiacEditor.Properties.Resources.RunScene;
             this.runSceneButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.runSceneButton.Name = "runSceneButton";
@@ -1033,13 +1038,6 @@
             this.openModManagerToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.openModManagerToolStripMenuItem.Text = "Open Mod Manager";
             this.openModManagerToolStripMenuItem.Click += new System.EventHandler(this.openModManagerToolStripMenuItem_Click);
-            // 
-            // gameOptionsToolStripMenuItem
-            // 
-            this.gameOptionsToolStripMenuItem.Name = "gameOptionsToolStripMenuItem";
-            this.gameOptionsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.gameOptionsToolStripMenuItem.Text = "Game Options";
-            this.gameOptionsToolStripMenuItem.Click += new System.EventHandler(this.gameOptionsToolStripMenuItem_Click);
             // 
             // resetDeviceButton
             // 
@@ -1478,13 +1476,6 @@
             this.spriteFramesToolStripMenuItem.Text = "Sprite Frames";
             this.spriteFramesToolStripMenuItem.Click += new System.EventHandler(this.spriteFramesToolStripMenuItem_Click);
             // 
-            // duplicateObjectIDHealerToolStripMenuItem
-            // 
-            this.duplicateObjectIDHealerToolStripMenuItem.Name = "duplicateObjectIDHealerToolStripMenuItem";
-            this.duplicateObjectIDHealerToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.duplicateObjectIDHealerToolStripMenuItem.Text = "Duplicate Object ID Healer";
-            this.duplicateObjectIDHealerToolStripMenuItem.Click += new System.EventHandler(this.duplicateObjectIDHealerToolStripMenuItem_Click);
-            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1642,7 +1633,6 @@
         public System.Windows.Forms.ToolStripButton EditEntities;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripMenuItem gameOptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton showGridButton;
         private System.Windows.Forms.ToolStripSplitButton gridSizeButton;

@@ -276,7 +276,8 @@ namespace ManiacEditor
 
         public void Draw(Graphics g)
         {
-
+            foreach (var entity in entities)
+                entity.Draw(g);
         }
 
         public void Draw(DevicePanel d)

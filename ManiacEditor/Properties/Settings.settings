@@ -113,9 +113,6 @@
     <Setting Name="DisableSaveWarnings" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="enableMightySupport" Roaming="true" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="EnableFasterNudge" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
@@ -136,9 +133,6 @@
     </Setting>
     <Setting Name="ShowDiscordRPC" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="DeleteObjectsInsteadOfImport" Roaming="true" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="forceBrowse" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

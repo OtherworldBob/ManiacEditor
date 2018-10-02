@@ -38,19 +38,6 @@
             this.RPCCheckBox = new System.Windows.Forms.CheckBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.button9 = new System.Windows.Forms.Button();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.checkBox28 = new System.Windows.Forms.CheckBox();
-            this.checkBox19 = new System.Windows.Forms.CheckBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.enableWindowsClipboard = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button10 = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -125,7 +112,6 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.button12 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
@@ -230,7 +216,6 @@
             this.panel14 = new System.Windows.Forms.Panel();
             this.checkBox11 = new System.Windows.Forms.CheckBox();
             this.checkBox10 = new System.Windows.Forms.CheckBox();
-            this.checkBox26 = new System.Windows.Forms.CheckBox();
             this.checkBox25 = new System.Windows.Forms.CheckBox();
             this.checkBox24 = new System.Windows.Forms.CheckBox();
             this.checkBox21 = new System.Windows.Forms.CheckBox();
@@ -241,11 +226,21 @@
             this.label31 = new System.Windows.Forms.Label();
             this.checkBox34 = new System.Windows.Forms.CheckBox();
             this.checkBox35 = new System.Windows.Forms.CheckBox();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.checkBox28 = new System.Windows.Forms.CheckBox();
+            this.checkBox19 = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.enableWindowsClipboard = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.checkBox18 = new System.Windows.Forms.CheckBox();
+            this.checkBox17 = new System.Windows.Forms.CheckBox();
+            this.label54 = new System.Windows.Forms.Label();
             this.tabPage4.SuspendLayout();
             this.panel11.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.panel10.SuspendLayout();
-            this.panel9.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panel7.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -267,11 +262,15 @@
             this.tabPage5.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel14.SuspendLayout();
+            this.panel10.SuspendLayout();
+            this.panel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.tabPage4.Controls.Add(this.panel9);
+            this.tabPage4.Controls.Add(this.panel10);
             this.tabPage4.Controls.Add(this.button7);
             this.tabPage4.Controls.Add(this.importOptionsButton);
             this.tabPage4.Controls.Add(this.button5);
@@ -345,6 +344,7 @@
             this.RPCCheckBox.BackColor = System.Drawing.Color.Transparent;
             this.RPCCheckBox.Checked = global::ManiacEditor.Properties.Settings.Default.ForceCopyUnlock;
             this.RPCCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "forceCopyUnlock", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.RPCCheckBox.Enabled = false;
             this.RPCCheckBox.Location = new System.Drawing.Point(16, 32);
             this.RPCCheckBox.Name = "RPCCheckBox";
             this.RPCCheckBox.Size = new System.Drawing.Size(160, 40);
@@ -374,170 +374,6 @@
             this.button3.Size = new System.Drawing.Size(75, 22);
             this.button3.TabIndex = 102;
             this.button3.Text = "&OK";
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.BackColor = System.Drawing.SystemColors.MenuBar;
-            this.tabPage3.Controls.Add(this.button9);
-            this.tabPage3.Controls.Add(this.panel10);
-            this.tabPage3.Controls.Add(this.panel9);
-            this.tabPage3.Controls.Add(this.button2);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(482, 574);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Experimental";
-            // 
-            // button9
-            // 
-            this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button9.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button9.Location = new System.Drawing.Point(317, 546);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 22);
-            this.button9.TabIndex = 108;
-            this.button9.Text = "Save";
-            this.button9.Click += new System.EventHandler(this.button11_Click);
-            // 
-            // panel10
-            // 
-            this.panel10.Controls.Add(this.checkBox28);
-            this.panel10.Controls.Add(this.checkBox19);
-            this.panel10.Controls.Add(this.label12);
-            this.panel10.Controls.Add(this.enableWindowsClipboard);
-            this.panel10.Controls.Add(this.checkBox2);
-            this.panel10.Location = new System.Drawing.Point(8, 8);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(176, 274);
-            this.panel10.TabIndex = 102;
-            // 
-            // checkBox28
-            // 
-            this.checkBox28.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox28.Checked = global::ManiacEditor.Properties.Settings.Default.DisableEntityReading;
-            this.checkBox28.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "DisableEntityReading", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox28.Location = new System.Drawing.Point(8, 189);
-            this.checkBox28.Margin = new System.Windows.Forms.Padding(5);
-            this.checkBox28.Name = "checkBox28";
-            this.checkBox28.Size = new System.Drawing.Size(160, 32);
-            this.checkBox28.TabIndex = 61;
-            this.checkBox28.Text = "Disable Entity Reading\r\n(Scene Rescue Mode)";
-            this.checkBox28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox28.UseVisualStyleBackColor = false;
-            // 
-            // checkBox19
-            // 
-            this.checkBox19.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox19.Checked = global::ManiacEditor.Properties.Settings.Default.ProhibitEntityUseOnExternalClipboard;
-            this.checkBox19.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox19.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "ProhibitEntityUseOnExternalClipboard", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox19.Location = new System.Drawing.Point(8, 112);
-            this.checkBox19.Name = "checkBox19";
-            this.checkBox19.Size = new System.Drawing.Size(160, 69);
-            this.checkBox19.TabIndex = 60;
-            this.checkBox19.Text = "Prohibit Entities from Using Windows Clipboard and Between Scenes Copying**";
-            this.checkBox19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox19.UseVisualStyleBackColor = false;
-            // 
-            // label12
-            // 
-            this.label12.BackColor = System.Drawing.Color.Transparent;
-            this.label12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(8, 8);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(160, 13);
-            this.label12.TabIndex = 56;
-            this.label12.Text = "Experimental Options:";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // enableWindowsClipboard
-            // 
-            this.enableWindowsClipboard.BackColor = System.Drawing.Color.Transparent;
-            this.enableWindowsClipboard.Checked = global::ManiacEditor.Properties.Settings.Default.EnableWindowsClipboard;
-            this.enableWindowsClipboard.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "EnableWindowsClipboard", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.enableWindowsClipboard.Location = new System.Drawing.Point(8, 32);
-            this.enableWindowsClipboard.Margin = new System.Windows.Forms.Padding(5);
-            this.enableWindowsClipboard.Name = "enableWindowsClipboard";
-            this.enableWindowsClipboard.Size = new System.Drawing.Size(160, 32);
-            this.enableWindowsClipboard.TabIndex = 57;
-            this.enableWindowsClipboard.Text = "Enable Windows Clipboard*";
-            this.enableWindowsClipboard.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.enableWindowsClipboard.UseVisualStyleBackColor = false;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox2.Checked = global::ManiacEditor.Properties.Settings.Default.RemoveObjectImportLock;
-            this.checkBox2.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "RemoveObjectImportLock", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox2.Location = new System.Drawing.Point(8, 72);
-            this.checkBox2.Margin = new System.Windows.Forms.Padding(5);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(160, 32);
-            this.checkBox2.TabIndex = 59;
-            this.checkBox2.Text = "Remove Object Import Lock**";
-            this.checkBox2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox2.UseVisualStyleBackColor = false;
-            // 
-            // panel9
-            // 
-            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel9.Controls.Add(this.label11);
-            this.panel9.Controls.Add(this.label27);
-            this.panel9.Controls.Add(this.label25);
-            this.panel9.Location = new System.Drawing.Point(329, 356);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(144, 184);
-            this.panel9.TabIndex = 101;
-            // 
-            // label11
-            // 
-            this.label11.BackColor = System.Drawing.Color.Transparent;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label11.Location = new System.Drawing.Point(0, 8);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(144, 29);
-            this.label11.TabIndex = 74;
-            this.label11.Text = "Other Notes for Certain Settings:";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label27
-            // 
-            this.label27.BackColor = System.Drawing.Color.Transparent;
-            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label27.Location = new System.Drawing.Point(3, 52);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(133, 36);
-            this.label27.TabIndex = 77;
-            this.label27.Text = "* Use at your own risk, does not work on entities";
-            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label25
-            // 
-            this.label25.BackColor = System.Drawing.Color.Transparent;
-            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label25.Location = new System.Drawing.Point(8, 96);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(128, 80);
-            this.label25.TabIndex = 80;
-            this.label25.Text = "** Extremely Dangerous to touch if you have no Idea what you \r\nare doing, please " +
-    "make a backup";
-            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // button2
-            // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(398, 546);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 22);
-            this.button2.TabIndex = 76;
-            this.button2.Text = "&OK";
             // 
             // tabPage2
             // 
@@ -1247,6 +1083,9 @@
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.checkBox17);
+            this.panel4.Controls.Add(this.checkBox18);
+            this.panel4.Controls.Add(this.label54);
             this.panel4.Controls.Add(this.button17);
             this.panel4.Controls.Add(this.button16);
             this.panel4.Controls.Add(this.button15);
@@ -1263,10 +1102,9 @@
             this.panel4.Controls.Add(this.textBox1);
             this.panel4.Controls.Add(this.label18);
             this.panel4.Controls.Add(this.label17);
-            this.panel4.Controls.Add(this.button12);
             this.panel4.Location = new System.Drawing.Point(291, 8);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(182, 309);
+            this.panel4.Size = new System.Drawing.Size(182, 338);
             this.panel4.TabIndex = 99;
             // 
             // button17
@@ -1441,16 +1279,6 @@
             this.label17.TabIndex = 55;
             this.label17.Text = "Program Paths:";
             this.label17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // button12
-            // 
-            this.button12.Location = new System.Drawing.Point(3, 281);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(173, 23);
-            this.button12.TabIndex = 109;
-            this.button12.Text = "Run Game Options";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // button11
             // 
@@ -1684,7 +1512,6 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage4);
@@ -2587,7 +2414,6 @@
             this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel14.Controls.Add(this.checkBox11);
             this.panel14.Controls.Add(this.checkBox10);
-            this.panel14.Controls.Add(this.checkBox26);
             this.panel14.Controls.Add(this.checkBox25);
             this.panel14.Controls.Add(this.checkBox24);
             this.panel14.Controls.Add(this.checkBox21);
@@ -2600,7 +2426,7 @@
             this.panel14.Controls.Add(this.checkBox35);
             this.panel14.Location = new System.Drawing.Point(8, 6);
             this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(184, 560);
+            this.panel14.Size = new System.Drawing.Size(184, 522);
             this.panel14.TabIndex = 102;
             // 
             // checkBox11
@@ -2632,21 +2458,6 @@
             this.checkBox10.Text = "Allow for Smoother Selecting/Moving*\r\n(Slows down Status Information)\r\n";
             this.checkBox10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBox10.UseVisualStyleBackColor = false;
-            // 
-            // checkBox26
-            // 
-            this.checkBox26.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox26.Checked = global::ManiacEditor.Properties.Settings.Default.AlternativeRenderingMethod;
-            this.checkBox26.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "AlternativeRenderingMethod", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox26.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox26.Location = new System.Drawing.Point(5, 518);
-            this.checkBox26.Margin = new System.Windows.Forms.Padding(5);
-            this.checkBox26.Name = "checkBox26";
-            this.checkBox26.Size = new System.Drawing.Size(171, 35);
-            this.checkBox26.TabIndex = 105;
-            this.checkBox26.Text = "Use Alt. Rendering Method\r\n(Discouraged)\r\n\r\n";
-            this.checkBox26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox26.UseVisualStyleBackColor = false;
             // 
             // checkBox25
             // 
@@ -2795,6 +2606,175 @@
             this.checkBox35.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBox35.UseVisualStyleBackColor = false;
             // 
+            // panel10
+            // 
+            this.panel10.Controls.Add(this.checkBox28);
+            this.panel10.Controls.Add(this.checkBox19);
+            this.panel10.Controls.Add(this.label12);
+            this.panel10.Controls.Add(this.enableWindowsClipboard);
+            this.panel10.Controls.Add(this.checkBox2);
+            this.panel10.Location = new System.Drawing.Point(8, 93);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(183, 240);
+            this.panel10.TabIndex = 108;
+            // 
+            // checkBox28
+            // 
+            this.checkBox28.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox28.Checked = global::ManiacEditor.Properties.Settings.Default.DisableEntityReading;
+            this.checkBox28.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "DisableEntityReading", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox28.Location = new System.Drawing.Point(16, 189);
+            this.checkBox28.Margin = new System.Windows.Forms.Padding(5);
+            this.checkBox28.Name = "checkBox28";
+            this.checkBox28.Size = new System.Drawing.Size(152, 32);
+            this.checkBox28.TabIndex = 61;
+            this.checkBox28.Text = "Disable Entity Reading\r\n(Scene Rescue Mode)";
+            this.checkBox28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox28.UseVisualStyleBackColor = false;
+            // 
+            // checkBox19
+            // 
+            this.checkBox19.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox19.Checked = global::ManiacEditor.Properties.Settings.Default.ProhibitEntityUseOnExternalClipboard;
+            this.checkBox19.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox19.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "ProhibitEntityUseOnExternalClipboard", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox19.Location = new System.Drawing.Point(16, 112);
+            this.checkBox19.Name = "checkBox19";
+            this.checkBox19.Size = new System.Drawing.Size(152, 69);
+            this.checkBox19.TabIndex = 60;
+            this.checkBox19.Text = "Prohibit Entities from Using Windows Clipboard and Between Scenes Copying**";
+            this.checkBox19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox19.UseVisualStyleBackColor = false;
+            // 
+            // label12
+            // 
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(16, 8);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(160, 13);
+            this.label12.TabIndex = 56;
+            this.label12.Text = "Experimental Options:";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // enableWindowsClipboard
+            // 
+            this.enableWindowsClipboard.BackColor = System.Drawing.Color.Transparent;
+            this.enableWindowsClipboard.Checked = global::ManiacEditor.Properties.Settings.Default.EnableWindowsClipboard;
+            this.enableWindowsClipboard.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "EnableWindowsClipboard", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.enableWindowsClipboard.Location = new System.Drawing.Point(16, 30);
+            this.enableWindowsClipboard.Margin = new System.Windows.Forms.Padding(5);
+            this.enableWindowsClipboard.Name = "enableWindowsClipboard";
+            this.enableWindowsClipboard.Size = new System.Drawing.Size(152, 32);
+            this.enableWindowsClipboard.TabIndex = 57;
+            this.enableWindowsClipboard.Text = "Enable Windows Clipboard*";
+            this.enableWindowsClipboard.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.enableWindowsClipboard.UseVisualStyleBackColor = false;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox2.Checked = global::ManiacEditor.Properties.Settings.Default.RemoveObjectImportLock;
+            this.checkBox2.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "RemoveObjectImportLock", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox2.Location = new System.Drawing.Point(16, 72);
+            this.checkBox2.Margin = new System.Windows.Forms.Padding(5);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(152, 32);
+            this.checkBox2.TabIndex = 59;
+            this.checkBox2.Text = "Remove Object Import Lock**";
+            this.checkBox2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox2.UseVisualStyleBackColor = false;
+            // 
+            // panel9
+            // 
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel9.Controls.Add(this.label11);
+            this.panel9.Controls.Add(this.label27);
+            this.panel9.Controls.Add(this.label25);
+            this.panel9.Location = new System.Drawing.Point(8, 384);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(144, 184);
+            this.panel9.TabIndex = 109;
+            // 
+            // label11
+            // 
+            this.label11.BackColor = System.Drawing.Color.Transparent;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label11.Location = new System.Drawing.Point(0, 8);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(144, 29);
+            this.label11.TabIndex = 74;
+            this.label11.Text = "Other Notes for Certain Settings:";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label27
+            // 
+            this.label27.BackColor = System.Drawing.Color.Transparent;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label27.Location = new System.Drawing.Point(3, 52);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(133, 36);
+            this.label27.TabIndex = 77;
+            this.label27.Text = "* Use at your own risk, does not work on entities";
+            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label25
+            // 
+            this.label25.BackColor = System.Drawing.Color.Transparent;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label25.Location = new System.Drawing.Point(8, 96);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(128, 80);
+            this.label25.TabIndex = 80;
+            this.label25.Text = "** Extremely Dangerous to touch if you have no Idea what you \r\nare doing, please " +
+    "make a backup";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // checkBox18
+            // 
+            this.checkBox18.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox18.Checked = global::ManiacEditor.Properties.Settings.Default.UsePrePlusOffsets;
+            this.checkBox18.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "UsePrePlusOffsets", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox18.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox18.Location = new System.Drawing.Point(19, 286);
+            this.checkBox18.Margin = new System.Windows.Forms.Padding(5);
+            this.checkBox18.Name = "checkBox18";
+            this.checkBox18.Size = new System.Drawing.Size(144, 16);
+            this.checkBox18.TabIndex = 110;
+            this.checkBox18.Text = "Use Pre-Plus Offsets";
+            this.checkBox18.UseVisualStyleBackColor = false;
+            // 
+            // checkBox17
+            // 
+            this.checkBox17.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox17.Checked = global::ManiacEditor.Properties.Settings.Default.RunGameInsteadOfScene;
+            this.checkBox17.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "RunGameInsteadOfScene", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox17.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox17.Location = new System.Drawing.Point(19, 309);
+            this.checkBox17.Margin = new System.Windows.Forms.Padding(5);
+            this.checkBox17.Name = "checkBox17";
+            this.checkBox17.Size = new System.Drawing.Size(144, 16);
+            this.checkBox17.TabIndex = 109;
+            this.checkBox17.Text = "Just Run the Game";
+            this.checkBox17.UseVisualStyleBackColor = false;
+            // 
+            // label54
+            // 
+            this.label54.BackColor = System.Drawing.Color.Transparent;
+            this.label54.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label54.Location = new System.Drawing.Point(17, 268);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(160, 13);
+            this.label54.TabIndex = 124;
+            this.label54.Text = "Run Game Options:";
+            this.label54.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // OptionBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2812,9 +2792,6 @@
             this.Load += new System.EventHandler(this.OptionBox_Load);
             this.tabPage4.ResumeLayout(false);
             this.panel11.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.panel10.ResumeLayout(false);
-            this.panel9.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -2842,6 +2819,8 @@
             this.tabPage5.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.panel14.ResumeLayout(false);
+            this.panel10.ResumeLayout(false);
+            this.panel9.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2851,16 +2830,6 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.CheckBox enableWindowsClipboard;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label label21;
@@ -2920,7 +2889,6 @@
         private System.Windows.Forms.CheckBox checkBox15;
         private System.Windows.Forms.CheckBox layerHide;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.CheckBox checkBox19;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.CheckBox RPCCheckBox;
@@ -2943,17 +2911,13 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.CheckBox checkBox24;
         private System.Windows.Forms.CheckBox checkBox25;
         private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.CheckBox checkBox26;
         private System.Windows.Forms.CheckBox checkBox27;
-        private System.Windows.Forms.CheckBox checkBox28;
-        private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox textBox5;
@@ -3060,5 +3024,18 @@
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.CheckBox checkBox28;
+        private System.Windows.Forms.CheckBox checkBox19;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.CheckBox enableWindowsClipboard;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox17;
+        private System.Windows.Forms.CheckBox checkBox18;
+        private System.Windows.Forms.Label label54;
     }
 }

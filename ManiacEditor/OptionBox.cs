@@ -8,9 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.PropertyGridInternal;
 
 namespace ManiacEditor
 {
+    
     public partial class OptionBox : Form
     {
         public OptionBox()
@@ -186,14 +188,6 @@ namespace ManiacEditor
             else
             {
                 return;
-            }
-        }
-
-        private void button12_Click(object sender, EventArgs e)
-        {
-            using (var runSceneOptions = new RunSceneOptions())
-            {
-                runSceneOptions.ShowDialog();
             }
         }
 

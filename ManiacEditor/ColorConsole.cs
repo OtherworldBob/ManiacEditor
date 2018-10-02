@@ -8,6 +8,7 @@ namespace ManiacEditor
     /// </summary>
     internal static class ColorConsole
     {
+
         internal static void Write(string text, ConsoleColor foreColour)
         {
             Console.ForegroundColor = foreColour;

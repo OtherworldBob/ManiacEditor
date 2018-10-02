@@ -35850,12 +35850,12 @@
   </data>
   <data name="ApplicationServiceOK_16x" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAADnSURBVDhPpZIxDoIwFIY5infwAoQZDsCNuACDk5NOJgzc
-        wMmBC7AwMDgYIyKF9dkf26Y8C5H4Jx/k9b3/b2nwiOgvnItr+NIwDLQGpyEIgp/A7BjAF+16CRPAQfPZ
-        tIuYAP3dduqqADw4PODVdiSEoF704xv1JACFhgeITlByTmi72xrSS2o2WzwBduJmf+9TeS+pftSfAC4d
-        oE/jMoPwEM4H2MSnmIprQdExMmYEIbC6VY5f0RIC9K6QbQboq1G35ECGO4ApL/OJGevoq1G35MBG0vCL
-        VOYGfTU6LxWSScy9qFqaPe8NaA+LUuGbA0EAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAOdJREFUOE+lkjEOgjAUhjmKd/AChBkOwI24AIOTk04mDNzAyYELsDAwOBgjIoX1
+        2R/bpjwLkfgnH+T1vf9vafCI6C+ci2v40jAMtAanIQiCn8DsGMAX7XoJE8BB89m0i5gA/d126qoAPDg8
+        4NV2JISgXvTjG/UkAIWGB4hOUHJOaLvbGtJLajZbPAF24mZ/71N5L6l+1J8ALh2gT+Myg/AQzgfYxKeY
+        imtB0TEyZgQhsLpVjl/REgL0rpBtBuirUbfkQIY7gCkv84kZ6+irUbfkwEbS8ItU5gZ9NTovFZJJzL2o
+        Wpo97w1oD4tS4ZsDQQAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="ErrorStatic2" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -44130,12 +44130,15 @@
   </data>
   <data name="Settings_12x_16x" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAADpSURBVDhPrZPBDYMwDEWrDlB1A3ZhEK6swCZsgoA7YgoE
-        nDmTE5LrFyURlFKJUksPRfb3ByfhJiKX2IUxJlLuCiEOglzkZDZ2BirIlEXJx3GUOI4tfd9jkrta5uRb
-        Awpd10maptI0jdR1HQzKsrQ5ami8STDQBJ+9IPBNR6BBS8/agPly3vKpaQ0atPRYA108FMOcRVEEYZIk
-        0rathbXPM9owDDLPs/EGTyUIPDSSB9bv9WmatP9PBnYEjm2980cjcCJowwiXN9EZXDtGQhObi7Q+kaqq
-        vl8kHxSc+/mr7EMF534mHr8jtxfp4mv15CFFFAAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAOlJREFUOE+tk8ENgzAMRasOUHUDdmEQrqzAJmyCgDtiCgScOZMTkusXJRGUUolS
+        Sw9F9vcHJ+EmIpfYhTEmUu4KIQ6CXORkNnYGKsiURcnHcZQ4ji1932OSu1rm5FsDCl3XSZqm0jSN1HUd
+        DMqytDlqaLxJMNAEn70g8E1HoEFLz9qA+XLe8qlpDRq09FgDXTwUw5xFUQRhkiTStq2Ftc8z2jAMMs+z
+        8QZPJQg8NJIH1u/1aZq0/08GdgSObb3zRyNwImjDCJc30RlcO0ZCE5uLtD6Rqqq+XyQfFJz7+avsQwXn
+        fiYevyO3F+nia/XkIUUUAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="ScoreTotal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ScoreTotal.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

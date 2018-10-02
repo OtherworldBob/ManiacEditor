@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Threading.Tasks;
+using System.IO;
 using System.Reflection;
 using RSDKv5;
+using System.Runtime.CompilerServices;
 
-namespace DuplicateObjectIdHealer
+namespace ManiacEditor
 {
-    class Program
+    public partial class ObjectIDHealer
     {
         static Scene _scene;
         static IList<SceneEntity> _entities;
-        static void Main(string[] args)
-        {
-            if (!CheckArgs(args))
-            {
-                PrintHelp();
-                Environment.Exit(-1);
-            }
 
-            string fileName = args[0];
+        public void startHealing(string fixFile)
+        {
+            Editor.ShowConsoleWindow();
+            string fileName = fixFile;
 
             if (!File.Exists(fileName))
             {
                 ColorConsole.WriteLine("File {0} doesn't exist.", ConsoleColor.Red, fileName);
-                Exit(-2);
+                CloseConsole(-2);
             }
 
             try
@@ -35,18 +38,18 @@ namespace DuplicateObjectIdHealer
             {
                 ColorConsole.WriteLine("A bad thing happened.", ConsoleColor.Red);
                 Console.WriteLine(ex);
-                Exit(-3);
+                CloseConsole(-3);
             }
-            
 
-            Exit();
+
+            CloseConsole();
         }
 
-        private static void FixFile(string fileName)
+        private void FixFile(string fileName)
         {
-            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("DuplicateObjectIdHealer.objects_attributes.ini"))
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("ManiacEditor.Resources.objects_attributes.ini"))
             {
-                Objects.InitObjects(stream);
+                Objects.InitObjects(stream, true);
             }
 
             _scene = new Scene(fileName);
@@ -56,7 +59,7 @@ namespace DuplicateObjectIdHealer
 
             if (duplicateGroups == null || !duplicateGroups.Any())
             {
-                Exit(1);
+                CloseConsole(1);
             }
 
             foreach (var duplicateGroup in duplicateGroups)
@@ -99,7 +102,7 @@ namespace DuplicateObjectIdHealer
             return null;
         }
 
-        private static void HandleDuplicateGroup(IGrouping<ushort, SceneEntity> duplicateGroup)
+        private void HandleDuplicateGroup(IGrouping<ushort, SceneEntity> duplicateGroup)
         {
             ushort id = duplicateGroup.Key;
             int duplicateCount = duplicateGroup.Count();
@@ -129,7 +132,7 @@ namespace DuplicateObjectIdHealer
                         break;
                     default:
                         Console.WriteLine("All changes aborted!");
-                        Exit(-2);
+                        CloseConsole(-2);
                         break;
                 }
             }
@@ -138,7 +141,7 @@ namespace DuplicateObjectIdHealer
         static void PrintEntitySummary(SceneEntity entity, int index)
         {
             Console.WriteLine("Entity '{0}' is a {1}, at location {2}",
-                              index, entity.Object.Name.Name, 
+                              index, entity.Object.Name.Name,
                               entity.Position);
         }
 
@@ -161,7 +164,7 @@ namespace DuplicateObjectIdHealer
 
         static void PerformKeep(IGrouping<ushort, SceneEntity> duplicateGroup)
         {
-            Console.WriteLine("Enter number between 0 and {0}, to indicate which entity to keep. ", 
+            Console.WriteLine("Enter number between 0 and {0}, to indicate which entity to keep. ",
                           duplicateGroup.Count() - 1);
             ColorConsole.WriteLine("All others in this group will be deleted!", ConsoleColor.Yellow);
 
@@ -238,7 +241,7 @@ namespace DuplicateObjectIdHealer
                         break;
                 }
             }
-            
+
             return action;
         }
 
@@ -269,12 +272,18 @@ namespace DuplicateObjectIdHealer
 DuplicateObjectIdHealer.exe MySceneFile.bin");
         }
 
-        static void Exit(int exitCode = 0)
+        private void CloseConsole(int exitCode = 0)
         {
             Console.Write("Press any key to exit...");
             Console.ReadKey(false);
             Console.WriteLine();
-            Environment.Exit(exitCode);
+            Application.Restart();
+            Environment.Exit(0);
+        }
+
+        private void ObjectIDHealer_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

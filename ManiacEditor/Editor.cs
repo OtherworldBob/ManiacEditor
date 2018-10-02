@@ -20,6 +20,8 @@ using SharpDX.Direct3D9;
 using Color = System.Drawing.Color;
 using System.Runtime.CompilerServices;
 using System.Collections;
+using System.Reflection;
+
 
 namespace ManiacEditor
 {
@@ -72,7 +74,6 @@ namespace ManiacEditor
         public EditorScene EditorScene;
         public StageConfig StageConfig;
         public ObjectManager objectRemover;
-
 
         public List<string> entityRenderingObjects = EditorEntity_ini.getSpecialRenderList(1);
         public List<string> renderOnScreenExlusions = EditorEntity_ini.getSpecialRenderList(0);
@@ -130,10 +131,76 @@ namespace ManiacEditor
         public SharpPresence.Discord.EventHandlers RPCEventHandler = new SharpPresence.Discord.EventHandlers(); //For Discord RPC
         public string ScenePath = ""; //For Discord RPC
 
+        //Shorthanding Settings
+        Properties.Settings mySettings = Properties.Settings.Default;
+        Properties.EditorState myEditorState = Properties.EditorState.Default;
+        Properties.KeyBinds myKeyBinds = Properties.KeyBinds.Default;
+
+        /// <summary>
+        /// This is for focusing Sonic Mania or anything else if opened.
+        /// Also this for showing and hiding the console when needed
+        /// </summary>
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)]
+        private static extern bool ShowWindow(IntPtr hWnd, ShowWindowEnum flags);
+
+        [DllImport("USER32.DLL")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        private enum ShowWindowEnum
+        {
+            Hide = 0,
+            ShowNormal = 1, ShowMinimized = 2, ShowMaximized = 3,
+            Maximize = 3, ShowNormalNoActivate = 4, Show = 5,
+            Minimize = 6, ShowMinNoActivate = 7, ShowNoActivate = 8,
+            Restore = 9, ShowDefault = 10, ForceMinimized = 11
+        };
+
+        public static void ShowConsoleWindow()
+        {
+            var handle = GetConsoleWindow();
+
+            if (handle == IntPtr.Zero)
+            {
+                AllocConsole();
+            }
+            else
+            {
+                ShowWindow(handle, SW_SHOW);
+            }
+        }
+
+        public static void HideConsoleWindow()
+        {
+            var handle = GetConsoleWindow();
+
+            ShowWindow(handle, SW_HIDE);
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool AllocConsole();
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool AttachConsole(int dwProcessId);
+
+        [DllImport("kernel32.dll")]
+        static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        const int SW_HIDE = 0;
+        const int SW_SHOW = 5;
+
         public Editor()
         {
             Instance = this;
             InitializeComponent();
+            AllocConsole();
+            HideConsoleWindow();
             //InitDiscord();
 
             /*using (var customMsgBox = new CustomMsgBox($"The specified Data Directory {1} is not valid. Please Try again with a Better Data Directory. It could be outdated, corrupted or worse something else", "Invalid Data Directory!", 2, 1))
@@ -164,30 +231,14 @@ namespace ManiacEditor
 
         }
 
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)]
-        private static extern bool ShowWindow(IntPtr hWnd, ShowWindowEnum flags);
 
-        [DllImport("USER32.DLL")]
-        public static extern bool SetForegroundWindow(IntPtr hWnd);
-
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-        private enum ShowWindowEnum
-        {
-            Hide = 0,
-            ShowNormal = 1, ShowMinimized = 2, ShowMaximized = 3,
-            Maximize = 3, ShowNormalNoActivate = 4, Show = 5,
-            Minimize = 6, ShowMinNoActivate = 7, ShowNoActivate = 8,
-            Restore = 9, ShowDefault = 10, ForceMinimized = 11
-        };
 
         public void InitDiscord()
         {
+            // TODO: This is broken and must be fixed before we can re-enable it
             /* SharpPresence.Discord.Initialize("484279851830870026", RPCEventHandler);
 
-             if (Properties.Settings.Default.ShowDiscordRPC)
+             if (mySettings.ShowDiscordRPC)
              {
                  RPCcontrol.state = "Maniac Editor";
                  RPCcontrol.details = "Idle";
@@ -223,7 +274,7 @@ namespace ManiacEditor
 
         public void UpdateDiscord(string Details = null)
         {
-            /*if (Properties.Settings.Default.ShowDiscordRPC)
+            /*if (mySettings.ShowDiscordRPC)
             {
                 SharpPresence.Discord.RunCallbacks();
                 if (Details != null)
@@ -263,7 +314,6 @@ namespace ManiacEditor
         {
             try
             {
-                var mySettings = Properties.Settings.Default;
                 if (mySettings.UpgradeRequired)
                 {
                     mySettings.Upgrade();
@@ -273,9 +323,9 @@ namespace ManiacEditor
 
                 WindowState = mySettings.IsMaximized ? FormWindowState.Maximized : WindowState;
                 GamePath = mySettings.GamePath;
-                editEntitesTransparencyToolStripMenuItem.Checked = Properties.EditorState.Default.editEntitiesTransparency;
-                spriteFramesToolStripMenuItem.Checked = Properties.EditorState.Default.annimationsChecked;
-                movingPlatformsObjectsToolStripMenuItem.Checked = Properties.EditorState.Default.movingPlatformsChecked;
+                editEntitesTransparencyToolStripMenuItem.Checked = myEditorState.editEntitiesTransparency;
+                spriteFramesToolStripMenuItem.Checked = myEditorState.annimationsChecked;
+                movingPlatformsObjectsToolStripMenuItem.Checked = myEditorState.movingPlatformsChecked;
 
                 if (mySettings.DataDirectories?.Count > 0)
                 {
@@ -354,8 +404,8 @@ namespace ManiacEditor
         {
             var menuItem = sender as ToolStripMenuItem;
             string dataDirectory = menuItem.Tag.ToString();
-            var dataDirectories = Properties.Settings.Default.DataDirectories;
-            Properties.Settings.Default.GamePath = GamePath;
+            var dataDirectories = mySettings.DataDirectories;
+            mySettings.GamePath = GamePath;
             if (IsDataDirectoryValid(dataDirectory))
             {
                 ResetDataDirectoryToAndResetScene(dataDirectory);
@@ -370,13 +420,13 @@ namespace ManiacEditor
                 RefreshDataDirectories(dataDirectories);
 
             }
-            Properties.Settings.Default.Save();
+            mySettings.Save();
         }
 
         private void RecentDataDirectoryClicked(object sender, EventArgs e, String dataDirectory)
         {
-            var dataDirectories = Properties.Settings.Default.DataDirectories;
-            Properties.Settings.Default.GamePath = GamePath;
+            var dataDirectories = mySettings.DataDirectories;
+            mySettings.GamePath = GamePath;
             if (IsDataDirectoryValid(dataDirectory))
             {
                 ResetDataDirectoryToAndResetScene(dataDirectory);
@@ -391,13 +441,13 @@ namespace ManiacEditor
                 RefreshDataDirectories(dataDirectories);
 
             }
-            Properties.Settings.Default.Save();
+            mySettings.Save();
         }
 
         private void ResetDataDirectoryToAndResetScene(string newDataDirectory)
         {
             Editor.Instance.SceneChangeWarning(null, null);
-            if (AllowSceneChange == true || SceneLoaded == false || Properties.Settings.Default.DisableSaveWarnings == true)
+            if (AllowSceneChange == true || SceneLoaded == false || mySettings.DisableSaveWarnings == true)
             {
                 AllowSceneChange = false;
                 UnloadScene();
@@ -405,7 +455,7 @@ namespace ManiacEditor
                 DataDirectory = newDataDirectory;
                 AddRecentDataFolder(newDataDirectory);
                 SetGameConfig();
-                if (Properties.Settings.Default.forceBrowse == true)
+                if (mySettings.forceBrowse == true)
                     OpenSceneManual();
                 else
                     OpenScene();
@@ -451,7 +501,7 @@ namespace ManiacEditor
             return false;
         }
 
-        private void SetSceneOnlyButtonsState(bool enabled)
+        private void SetSceneOnlyButtonsState(bool enabled, bool stageLoad = false)
         {
             saveToolStripMenuItem.Enabled = enabled;
             saveAsToolStripMenuItem.Enabled = enabled;
@@ -469,7 +519,7 @@ namespace ManiacEditor
 
             Save.Enabled = enabled;
 
-            if (Properties.Settings.Default.ReduceZoom)
+            if (mySettings.ReduceZoom)
             {
                 zoomInButton.Enabled = enabled && ZoomLevel < 5;
                 zoomOutButton.Enabled = enabled && ZoomLevel > -2;
@@ -486,6 +536,11 @@ namespace ManiacEditor
 
             SetEditButtonsState(enabled);
             UpdateTooltips();
+
+            if (mySettings.AutoPreloadScene == true && enabled && stageLoad)
+            {
+                preLoadSceneButton_Click(null, null);
+            }
         }
 
         private void SetSelectOnlyButtonsState(bool enabled = true)
@@ -706,9 +761,9 @@ namespace ManiacEditor
             }
         }
 
-        private void UpdateControls()
+        private void UpdateControls(bool stageLoad = false)
         {
-            SetSceneOnlyButtonsState(EditorScene != null);
+            SetSceneOnlyButtonsState(EditorScene != null, stageLoad);
         }
 
         public void OnGotFocus(object sender, EventArgs e)
@@ -905,7 +960,7 @@ namespace ManiacEditor
 
         public void GraphicPanel_OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (CtrlPressed() && e.KeyCode == Properties.KeyBinds.Default.NudgeFaster)
+            if (CtrlPressed() && e.KeyCode == myKeyBinds.NudgeFaster)
             {
                 switch (nudgeFasterButton.Checked) {
                     case false:
@@ -915,18 +970,18 @@ namespace ManiacEditor
                         nudgeFasterButton.Checked = false;
                         break;
                 }
-                switch (Properties.Settings.Default.EnableFasterNudge)
+                switch (mySettings.EnableFasterNudge)
                 {
                     case false:
-                        Properties.Settings.Default.EnableFasterNudge = true;
+                        mySettings.EnableFasterNudge = true;
                         break;
                     case true:
-                        Properties.Settings.Default.EnableFasterNudge = false;
+                        mySettings.EnableFasterNudge = false;
                         break;
                 }
 
             }
-            else if (CtrlPressed() && e.KeyCode == Properties.KeyBinds.Default.ScrollLock)
+            else if (CtrlPressed() && e.KeyCode == myKeyBinds.ScrollLock)
             {
                 switch (scrollLockButton.Checked)
                 {
@@ -937,27 +992,27 @@ namespace ManiacEditor
                         scrollLockButton.Checked = false;
                         break;
                 }
-                switch (Properties.Settings.Default.scrollLock)
+                switch (mySettings.scrollLock)
                 {
                     case false:
-                        Properties.Settings.Default.scrollLock = true;
+                        mySettings.scrollLock = true;
                         break;
                     case true:
-                        Properties.Settings.Default.scrollLock = false;
+                        mySettings.scrollLock = false;
                         break;
                 }
 
             }
-            else if (CtrlPressed() && e.KeyCode == Properties.KeyBinds.Default.ScrollLockTypeSwitch)
+            else if (CtrlPressed() && e.KeyCode == myKeyBinds.ScrollLockTypeSwitch)
             {
-                switch (Properties.Settings.Default.ScrollLockDirection)
+                switch (mySettings.ScrollLockDirection)
                 {
                     case false:
-                        Properties.Settings.Default.ScrollLockDirection = true;
+                        mySettings.ScrollLockDirection = true;
                         scrollLockDirLabel.Text = "Scroll Lock Direction: Y";
                         break;
                     case true:
-                        Properties.Settings.Default.ScrollLockDirection = false;
+                        mySettings.ScrollLockDirection = false;
                         scrollLockDirLabel.Text = "Scroll Lock Direction: X";
                         break;
                 }
@@ -1029,7 +1084,7 @@ namespace ManiacEditor
                     else if (e.KeyData == Keys.Up || e.KeyData == Keys.Down || e.KeyData == Keys.Left || e.KeyData == Keys.Right)
                     {
                         int x = 0, y = 0;
-                        if (Properties.Settings.Default.EnableFasterNudge == false)
+                        if (mySettings.EnableFasterNudge == false)
                         {
                             switch (e.KeyData)
                             {
@@ -1043,10 +1098,10 @@ namespace ManiacEditor
                         {
                             switch (e.KeyData)
                             {
-                                case Keys.Up: y = -1 - Properties.Settings.Default.FasterNudgeValue; break;
-                                case Keys.Down: y = 1 + Properties.Settings.Default.FasterNudgeValue; break;
-                                case Keys.Left: x = -1 - Properties.Settings.Default.FasterNudgeValue; break;
-                                case Keys.Right: x = 1 + Properties.Settings.Default.FasterNudgeValue; break;
+                                case Keys.Up: y = -1 - mySettings.FasterNudgeValue; break;
+                                case Keys.Down: y = 1 + mySettings.FasterNudgeValue; break;
+                                case Keys.Left: x = -1 - mySettings.FasterNudgeValue; break;
+                                case Keys.Right: x = 1 + mySettings.FasterNudgeValue; break;
                             }
                         }
                         if (!multiLayerSelect)
@@ -1148,7 +1203,7 @@ namespace ManiacEditor
             //
             positionLabel.Text = "X: " + (int)(e.X / Zoom) + " Y: " + (int)(e.Y / Zoom);
 
-            if (Properties.Settings.Default.pixelCountMode == false)
+            if (mySettings.pixelCountMode == false)
             {
                 selectedPositionLabel.Text = "Selected Tile Position: X: " + (int)SelectedTileX + ", Y: " + (int)SelectedTileY;
                 selectedPositionLabel.ToolTipText = "The Position of the Selected Tile";
@@ -1158,7 +1213,7 @@ namespace ManiacEditor
                 selectedPositionLabel.Text = "Selected Tile Pixel Position: " + "X: " + (int)SelectedTileX * 16 + ", Y: " + (int)SelectedTileY * 16;
                 selectedPositionLabel.ToolTipText = "The Pixel Position of the Selected Tile";
             }
-            if (Properties.Settings.Default.pixelCountMode == false)
+            if (mySettings.pixelCountMode == false)
             {
                 selectionSizeLabel.Text = "Amount of Tiles in Selection: " + (SelectedTilesCount - DeselectTilesCount);
                 selectionSizeLabel.ToolTipText = "The Size of the Selection";
@@ -1169,7 +1224,7 @@ namespace ManiacEditor
                 selectionSizeLabel.ToolTipText = "The Length of all the Tiles (by Pixels) in the Selection";
             }
 
-            if (Properties.Settings.Default.ScrollLockDirection == true)
+            if (mySettings.ScrollLockDirection == true)
             {
                 scrollLockDirLabel.Text = "Scroll Lock Direction: X";
             }
@@ -1187,7 +1242,7 @@ namespace ManiacEditor
 
         private void GraphicPanel_OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (Properties.Settings.Default.allowForSmoothSelection)
+            if (mySettings.allowForSmoothSelection)
             {
                 UpdateRender();
                 UpdateStatusPanel(sender, e);
@@ -1789,7 +1844,7 @@ namespace ManiacEditor
             {
                 int maxZoom;
                 int minZoom;
-                if (Properties.Settings.Default.ReduceZoom)
+                if (mySettings.ReduceZoom)
                 {
                     maxZoom = 5;
                     minZoom = -2;
@@ -1810,7 +1865,7 @@ namespace ManiacEditor
             {
                 if (vScrollBar1.Visible || hScrollBar1.Visible)
                 {
-                    if (scrollDirection == "Y" && !Properties.Settings.Default.scrollLock)
+                    if (scrollDirection == "Y" && !mySettings.scrollLock)
                     {
                         if (vScrollBar1.Visible)
                         {
@@ -1827,7 +1882,7 @@ namespace ManiacEditor
                             hScrollBar1.Value = x;
                         }
                     }
-                    else if (scrollDirection == "X" && !Properties.Settings.Default.scrollLock)
+                    else if (scrollDirection == "X" && !mySettings.scrollLock)
                     {
                         if (hScrollBar1.Visible)
                         {
@@ -1844,9 +1899,9 @@ namespace ManiacEditor
                             vScrollBar1.Value = y;
                         }
                     }
-                    else if (scrollDirection == "Locked" || Properties.Settings.Default.scrollLock == true)
+                    else if (scrollDirection == "Locked" || mySettings.scrollLock == true)
                     {
-                        if (Properties.Settings.Default.ScrollLockDirection == false)
+                        if (mySettings.ScrollLockDirection == false)
                         {
                             if (vScrollBar1.Visible)
                             {
@@ -1934,7 +1989,7 @@ namespace ManiacEditor
             }
 
             zooming = false;
-            /*if (Properties.Settings.Default.AllowMoreRenderUpdates)
+            /*if (mySettings.AllowMoreRenderUpdates)
             {
                 UpdateRender();
             }*/
@@ -2065,12 +2120,12 @@ namespace ManiacEditor
 
             Background = null;
 
-            if (!Properties.Settings.Default.ForceCopyUnlock)
+            if (!mySettings.ForceCopyUnlock)
             {
                 TilesClipboard = null;
                 entitiesClipboard = null;
             }
-            if (Properties.Settings.Default.ProhibitEntityUseOnExternalClipboard || !Properties.Settings.Default.ForceCopyUnlock)
+            if (mySettings.ProhibitEntityUseOnExternalClipboard || !mySettings.ForceCopyUnlock)
             {
                 entitiesClipboard = null;
             }
@@ -2104,7 +2159,7 @@ namespace ManiacEditor
 
         void UseDefaultPrefrences()
         {
-            if (!Properties.Settings.Default.FGLowerDefault)
+            if (!mySettings.FGLowerDefault)
             {
                 ShowFGLower.Checked = false;
             }
@@ -2112,7 +2167,7 @@ namespace ManiacEditor
             {
                 ShowFGLower.Checked = true;
             }
-            if (!Properties.Settings.Default.FGLowDefault)
+            if (!mySettings.FGLowDefault)
             {
                 ShowFGLow.Checked = false;
             }
@@ -2120,7 +2175,7 @@ namespace ManiacEditor
             {
                 ShowFGLow.Checked = true;
             }
-            if (!Properties.Settings.Default.FGHighDefault)
+            if (!mySettings.FGHighDefault)
             {
                 ShowFGHigh.Checked = false;
             }
@@ -2128,7 +2183,7 @@ namespace ManiacEditor
             {
                 ShowFGHigh.Checked = true;
             }
-            if (!Properties.Settings.Default.FGHigherDefault)
+            if (!mySettings.FGHigherDefault)
             {
                 ShowFGHigher.Checked = false;
             }
@@ -2136,7 +2191,7 @@ namespace ManiacEditor
             {
                 ShowFGHigher.Checked = true;
             }
-            if (!Properties.Settings.Default.EntitiesDefault)
+            if (!mySettings.EntitiesDefault)
             {
                 ShowEntities.Checked = false;
             }
@@ -2144,7 +2199,7 @@ namespace ManiacEditor
             {
                 ShowEntities.Checked = true;
             }
-            if (!Properties.Settings.Default.AnimationsDefault)
+            if (!mySettings.AnimationsDefault)
             {
                 ShowAnimations.Checked = false;
             }
@@ -2152,7 +2207,7 @@ namespace ManiacEditor
             {
                 ShowAnimations.Checked = true;
             }
-            if (!Properties.Settings.Default.x16Default)
+            if (!mySettings.x16Default)
             {
                 x16ToolStripMenuItem.Checked = false;
             }
@@ -2160,7 +2215,7 @@ namespace ManiacEditor
             {
                 x16ToolStripMenuItem.Checked = true;
             }
-            if (!Properties.Settings.Default.x128Default)
+            if (!mySettings.x128Default)
             {
                 x128ToolStripMenuItem.Checked = false;
             }
@@ -2168,7 +2223,7 @@ namespace ManiacEditor
             {
                 x128ToolStripMenuItem.Checked = true;
             }
-            if (!Properties.Settings.Default.x256Default)
+            if (!mySettings.x256Default)
             {
                 x256ToolStripMenuItem.Checked = false;
             }
@@ -2176,7 +2231,7 @@ namespace ManiacEditor
             {
                 x256ToolStripMenuItem.Checked = true;
             }
-            if (!Properties.Settings.Default.CustomGridDefault)
+            if (!mySettings.CustomGridDefault)
             {
                 customToolStripMenuItem.Checked = false;
             }
@@ -2190,10 +2245,10 @@ namespace ManiacEditor
         private void Open_Click(object sender, EventArgs e)
         {
             Editor.Instance.SceneChangeWarning(sender, e);
-            if (AllowSceneChange == true || SceneLoaded == false || Properties.Settings.Default.DisableSaveWarnings == true)
+            if (AllowSceneChange == true || SceneLoaded == false || mySettings.DisableSaveWarnings == true)
             {
                 AllowSceneChange = false;
-                if (Properties.Settings.Default.forceBrowse == true)
+                if (mySettings.forceBrowse == true)
                     OpenSceneManual();
                 else
                     OpenScene();
@@ -2258,7 +2313,7 @@ namespace ManiacEditor
                     CollisionLayerA.Add(StageTiles.Config.CollisionPath1[i].DrawCMask(Color.FromArgb(0, 0, 0, 0), Color.FromArgb(255, 255, 255, 255)));
                     CollisionLayerB.Add(StageTiles.Config.CollisionPath2[i].DrawCMask(Color.FromArgb(0, 0, 0, 0), Color.FromArgb(255, 255, 255, 255)));
                 }
-                if (Properties.Settings.Default.DisableEntityReading == true)
+                if (mySettings.DisableEntityReading == true)
                 {
                     EditorScene.readTilesOnly = true;
                 }
@@ -2299,14 +2354,11 @@ namespace ManiacEditor
 
             SetViewSize(SceneWidth, SceneHeight);
 
-            UpdateControls();
+            UpdateControls(true);
 
             SceneLoaded = true;
 
-            if (Properties.Settings.Default.AutoPreloadScene == true)
-            {
-                preLoadSceneButton_Click(null, null);
-            }
+
         }
 
         private void RepairScene()
@@ -2325,10 +2377,11 @@ namespace ManiacEditor
             UnloadScene();
             UseDefaultPrefrences();
 
-            DuplicateObjectIdHealer healer = new DuplicateObjectIdHealer();
+            ObjectIDHealer healer = new ObjectIDHealer();
+            ShowConsoleWindow();
             healer.startHealing(open.FileName);
-
-            
+            Application.DoEvents();
+            HideConsoleWindow();
 
         }
 
@@ -2380,7 +2433,7 @@ namespace ManiacEditor
                     CollisionLayerA.Add(StageTiles.Config.CollisionPath1[i].DrawCMask(Color.FromArgb(0, 0, 0, 0), Color.FromArgb(255, 255, 255, 255)));
                     CollisionLayerB.Add(StageTiles.Config.CollisionPath2[i].DrawCMask(Color.FromArgb(0, 0, 0, 0), Color.FromArgb(255, 255, 255, 255)));
                 }
-                if (Properties.Settings.Default.DisableEntityReading == true)
+                if (mySettings.DisableEntityReading == true)
                 {
                     RSDKv5.Scene.readTilesOnly = true;
                 }
@@ -2424,7 +2477,9 @@ namespace ManiacEditor
 
             SetViewSize(SceneWidth, SceneHeight);
 
-            UpdateControls();
+            UpdateControls(true);
+
+            SceneLoaded = true;
 
         }
 
@@ -2484,7 +2539,7 @@ namespace ManiacEditor
             Deselect(false);
             if (tsb.Checked)
             {
-                if (!Properties.Settings.Default.KeepLayersVisible)
+                if (!mySettings.KeepLayersVisible)
                 {
                     ShowFGLow.Checked = false;
                     ShowFGHigh.Checked = false;
@@ -2651,7 +2706,7 @@ a valid Data Directory.",
                     Background.Draw(GraphicPanel);
                 if (IsTilesEdit())
                 {
-                    if (Properties.Settings.Default.ShowEditLayerBackground == true)
+                    if (mySettings.ShowEditLayerBackground == true)
                     {
                         Background.DrawEdit(GraphicPanel);
                     }
@@ -2688,7 +2743,7 @@ a valid Data Directory.",
                         y2 = (int)(selectingY / Zoom);
                     }
 
-                    if (Properties.Settings.Default.UseFasterSelectionRendering == false)
+                    if (mySettings.UseFasterSelectionRendering == false)
                     {
                         GraphicPanel.DrawRectangle(x1, y1, x2, y2, Color.FromArgb(100, Color.Purple));
                     }
@@ -2924,12 +2979,79 @@ Error: {ex.Message}");
                     FGHigh?.Draw(g);
                     FGLower?.Draw(g);
                     FGHigher?.Draw(g);
+                    entities?.Draw(g);
                     bitmap.Save(save.FileName);
                 }
             }
         }
 
         private void exportEachLayerAspngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (EditorScene?.Layers == null || !EditorScene.Layers.Any()) return;
+
+                var dialog = new FolderSelectDialog()
+                {
+                    Title = "Select folder to save each exported layer image to"
+                };
+
+                if (!dialog.ShowDialog()) return;
+
+                int fileCount = 0;
+
+                foreach (var editorLayer in EditorScene.AllLayers)
+                {
+                    string fileName = Path.Combine(dialog.FileName, editorLayer.Name + ".png");
+
+                    if (!CanWriteFile(fileName))
+                    {
+                        ShowError($"Layer export aborted. {fileCount} images saved.");
+                        return;
+                    }
+
+                    using (var bitmap = new Bitmap(editorLayer.Width * EditorLayer.TILE_SIZE, editorLayer.Height * EditorLayer.TILE_SIZE))
+                    using (var g = Graphics.FromImage(bitmap))
+                    {
+                        editorLayer.Draw(g);
+                        bitmap.Save(fileName, ImageFormat.Png);
+                        ++fileCount;
+                    }
+                }
+
+                MessageBox.Show($"Layer export succeeded. {fileCount} images saved.", "Success!",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                ShowError("An error occurred: " + ex.Message);
+            }
+        }
+
+        private void saveAsgifToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (EditorScene == null) return;
+
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = ".png File|*.png";
+            save.DefaultExt = "png";
+            if (save.ShowDialog() != DialogResult.Cancel)
+            {
+                using (Bitmap bitmap = new Bitmap(SceneWidth, SceneHeight))
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    // not all scenes have both a Low and a High foreground
+                    // only attempt to render the ones we actually have
+                    FGLow?.Draw(g);
+                    FGHigh?.Draw(g);
+                    FGLower?.Draw(g);
+                    FGHigher?.Draw(g);
+                    bitmap.Save(save.FileName);
+                }
+            }
+        }
+
+        private void exportEachLayerAsgifToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -3169,7 +3291,7 @@ Error: {ex.Message}");
                 Dictionary<Point, ushort> copyDataHigher = FGHigher?.CopyToClipboard();
 
                 // Make a DataObject for the copied data and send it to the Windows clipboard for cross-instance copying
-                if (Properties.Settings.Default.EnableWindowsClipboard)
+                if (mySettings.EnableWindowsClipboard)
                 {
                     Clipboard.SetDataObject(new DataObject("ManiacTilesLower", copyDataLower), true);
                     Clipboard.SetDataObject(new DataObject("ManiacTilesLow", copyDataLow), true);
@@ -3189,7 +3311,7 @@ Error: {ex.Message}");
                 Dictionary<Point, ushort> copyData = EditLayer.CopyToClipboard();
 
                 // Make a DataObject for the copied data and send it to the Windows clipboard for cross-instance copying
-                if (Properties.Settings.Default.EnableWindowsClipboard)
+                if (mySettings.EnableWindowsClipboard)
                     Clipboard.SetDataObject(new DataObject("ManiacTiles", copyData), true);
 
                 // Also copy to Maniac's clipboard in case it gets overwritten elsewhere
@@ -3205,9 +3327,9 @@ Error: {ex.Message}");
                 List<EditorEntity> copyData = entities.CopyToClipboard();
 
                 // Make a DataObject for the copied data and send it to the Windows clipboard for cross-instance copying
-                if (Properties.Settings.Default.EnableWindowsClipboard)
+                if (mySettings.EnableWindowsClipboard)
                 {
-                    if (!Properties.Settings.Default.ProhibitEntityUseOnExternalClipboard)
+                    if (!mySettings.ProhibitEntityUseOnExternalClipboard)
                         Clipboard.SetDataObject(new DataObject("ManiacEntities", copyData), true);
                 }
 
@@ -3224,7 +3346,7 @@ Error: {ex.Message}");
                 if (multiLayerSelect == false)
                 {
                     // check if there are tiles on the Windows clipboard; if so, use those
-                    if (Properties.Settings.Default.EnableWindowsClipboard && Clipboard.ContainsData("ManiacTiles"))
+                    if (mySettings.EnableWindowsClipboard && Clipboard.ContainsData("ManiacTiles"))
                     {
                         EditLayer.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), (Dictionary<Point, ushort>)Clipboard.GetDataObject().GetData("ManiacTiles"));
                         UpdateEditLayerActions();
@@ -3240,7 +3362,7 @@ Error: {ex.Message}");
                 else
                 {
                     // check if there are tiles on the Windows clipboard; if so, use those
-                    if (Properties.Settings.Default.EnableWindowsClipboard && Clipboard.ContainsData("ManiacTiles"))
+                    if (mySettings.EnableWindowsClipboard && Clipboard.ContainsData("ManiacTiles"))
                     {
                         FGLower?.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), (Dictionary<Point, ushort>)Clipboard.GetDataObject().GetData("ManiacTilesLower"));
                         FGLow?.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), (Dictionary<Point, ushort>)Clipboard.GetDataObject().GetData("ManiacTilesLow"));
@@ -3268,7 +3390,7 @@ Error: {ex.Message}");
                     try
                     {
                         // check if there are entities on the Windows clipboard; if so, use those
-                        if (Properties.Settings.Default.EnableWindowsClipboard && Clipboard.ContainsData("ManiacEntities"))
+                        if (mySettings.EnableWindowsClipboard && Clipboard.ContainsData("ManiacEntities"))
                         {
                             entities.PasteFromClipboard(new Point((int)(lastX / Zoom), (int)(lastY / Zoom)), (List<EditorEntity>)Clipboard.GetDataObject().GetData("ManiacEntities"));
                             UpdateLastEntityAction();
@@ -3648,46 +3770,46 @@ Error: {ex.Message}");
         private void RunSequence(object sender, EventArgs e)
         {
             // Ask where Sonic Mania ia located when not set
-            if (string.IsNullOrEmpty(Properties.Settings.Default.RunGamePath))
+            if (string.IsNullOrEmpty(mySettings.RunGamePath))
             {
                 var ofd = new OpenFileDialog();
                 ofd.Title = "Select SonicMania.exe";
                 ofd.Filter = "Windows PE Executable|*.exe";
                 if (ofd.ShowDialog() == DialogResult.OK)
-                    Properties.Settings.Default.RunGamePath = ofd.FileName;
+                    mySettings.RunGamePath = ofd.FileName;
             }
             else
             {
-                if (!File.Exists(Properties.Settings.Default.RunGamePath))
+                if (!File.Exists(mySettings.RunGamePath))
                 {
-                    Properties.Settings.Default.RunGamePath = "";
+                    mySettings.RunGamePath = "";
                     return;
                 }
             }
 
             ProcessStartInfo psi;
 
-            if (Properties.Settings.Default.RunGameInsteadOfScene == true)
+            if (mySettings.RunGameInsteadOfScene == true)
             {
-                psi = new ProcessStartInfo(Properties.Settings.Default.RunGamePath);
+                psi = new ProcessStartInfo(mySettings.RunGamePath);
             }
             else
             {
-                if (Properties.Settings.Default.UsePrePlusOffsets == true)
+                if (mySettings.UsePrePlusOffsets == true)
                 {
-                    psi = new ProcessStartInfo(Properties.Settings.Default.RunGamePath, $"stage={SelectedZone};scene={SelectedScene[5]};");
+                    psi = new ProcessStartInfo(mySettings.RunGamePath, $"stage={SelectedZone};scene={SelectedScene[5]};");
                 }
                 else
                 {
-                    psi = new ProcessStartInfo(Properties.Settings.Default.RunGamePath);
+                    psi = new ProcessStartInfo(mySettings.RunGamePath);
                     // TODO: Find workaround to get Mania to boot into a Scene Post Plus
                     // Moved to main offset section
                 }
 
             }
-            if (Properties.Settings.Default.RunGamePath != "")
+            if (mySettings.RunGamePath != "")
             {
-                string maniaDir = Path.GetDirectoryName(Properties.Settings.Default.RunGamePath);
+                string maniaDir = Path.GetDirectoryName(mySettings.RunGamePath);
                 // Check if the mod loader is installed
                 if (File.Exists(Path.Combine(maniaDir, "d3d9.dll")))
                     psi.WorkingDirectory = maniaDir;
@@ -3729,7 +3851,7 @@ Error: {ex.Message}");
 
         public void UseCheatCodes(System.Diagnostics.Process p)
         {
-            if (Properties.Settings.Default.UsePrePlusOffsets == true)
+            if (mySettings.UsePrePlusOffsets == true)
             {
                 // Patches
                 GameMemory.Attach(p);
@@ -3776,12 +3898,12 @@ Error: {ex.Message}");
             if (pixelModeButton.Checked == false)
             {
                 pixelModeButton.Checked = true;
-                Properties.Settings.Default.pixelCountMode = true;
+                mySettings.pixelCountMode = true;
             }
             else
             {
                 pixelModeButton.Checked = false;
-                Properties.Settings.Default.pixelCountMode = false;
+                mySettings.pixelCountMode = false;
             }
 
         }
@@ -3791,21 +3913,21 @@ Error: {ex.Message}");
             if (scrollLockButton.Checked == false)
             {
                 scrollLockButton.Checked = true;
-                Properties.Settings.Default.scrollLock = true;
+                mySettings.scrollLock = true;
                 scrollDirection = "Locked";
             }
             else
             {
-                if (Properties.Settings.Default.ScrollLockY == true)
+                if (mySettings.ScrollLockY == true)
                 {
                     scrollLockButton.Checked = false;
-                    Properties.Settings.Default.scrollLock = false;
+                    mySettings.scrollLock = false;
                     scrollDirection = "Y";
                 }
                 else
                 {
                     scrollLockButton.Checked = false;
-                    Properties.Settings.Default.scrollLock = false;
+                    mySettings.scrollLock = false;
                     scrollDirection = "X";
                 }
 
@@ -3922,7 +4044,7 @@ Error: {ex.Message}");
             }
             if (customToolStripMenuItem.Checked == true)
             {
-                Background.GRID_TILE_SIZE = Properties.Settings.Default.CustomGridSizeValue;
+                Background.GRID_TILE_SIZE = mySettings.CustomGridSizeValue;
             }
         }
 
@@ -3971,12 +4093,12 @@ Error: {ex.Message}");
             if (nudgeFasterButton.Checked == false)
             {
                 nudgeFasterButton.Checked = true;
-                Properties.Settings.Default.EnableFasterNudge = true;
+                mySettings.EnableFasterNudge = true;
             }
             else
             {
                 nudgeFasterButton.Checked = false;
-                Properties.Settings.Default.EnableFasterNudge = false;
+                mySettings.EnableFasterNudge = false;
             }
         }
 
@@ -4124,7 +4246,7 @@ Error: {ex.Message}");
 
         private void vScrollBar1_Entered(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.scrollLock == false)
+            if (mySettings.scrollLock == false)
             {
                 scrollDirection = "Y";
             }
@@ -4161,7 +4283,7 @@ Error: {ex.Message}");
         private void openSonicManiaFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            string GameFolder = Properties.Settings.Default.RunGamePath;
+            string GameFolder = mySettings.RunGamePath;
             string GameFolder_mod = GameFolder.Replace('/', '\\');
             Process.Start("explorer.exe", "/select, " + GameFolder_mod);
             //MessageBox.Show(GameFolder_mod);
@@ -4174,7 +4296,7 @@ Error: {ex.Message}");
 
         private void rSDKAnnimationEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String aniProcessName = Path.GetFileNameWithoutExtension(Properties.Settings.Default.RunAniEdPath);
+            String aniProcessName = Path.GetFileNameWithoutExtension(mySettings.RunAniEdPath);
             IntPtr hWnd = FindWindow(aniProcessName, null); // this gives you the handle of the window you need.
             Process processes = Process.GetProcessesByName(aniProcessName).FirstOrDefault();
             if (processes != null)
@@ -4193,32 +4315,32 @@ Error: {ex.Message}");
             {
 
                 // Ask where RSDK Annimation Editor is located when not set
-                if (string.IsNullOrEmpty(Properties.Settings.Default.RunAniEdPath))
+                if (string.IsNullOrEmpty(mySettings.RunAniEdPath))
                 {
                     var ofd = new OpenFileDialog();
                     ofd.Title = "Select RSDK Animation Editor.exe";
                     ofd.Filter = "Windows PE Executable|*.exe";
                     if (ofd.ShowDialog() == DialogResult.OK)
-                        Properties.Settings.Default.RunAniEdPath = ofd.FileName;
+                        mySettings.RunAniEdPath = ofd.FileName;
                 }
                 else
                 {
-                    if (!File.Exists(Properties.Settings.Default.RunGamePath))
+                    if (!File.Exists(mySettings.RunGamePath))
                     {
-                        Properties.Settings.Default.RunAniEdPath = "";
+                        mySettings.RunAniEdPath = "";
                         return;
                     }
                 }
 
                 ProcessStartInfo psi;
-                psi = new ProcessStartInfo(Properties.Settings.Default.RunAniEdPath);
+                psi = new ProcessStartInfo(mySettings.RunAniEdPath);
                 Process.Start(psi);
             }
         }
 
         private void cToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String collisionProcessName = Path.GetFileNameWithoutExtension(Properties.Settings.Default.RunTileManiacPath);
+            String collisionProcessName = Path.GetFileNameWithoutExtension(mySettings.RunTileManiacPath);
             IntPtr hWnd = FindWindow(collisionProcessName, null); // this gives you the handle of the window you need.
             Process processes = Process.GetProcessesByName(collisionProcessName).FirstOrDefault();
             if (processes != null)
@@ -4236,25 +4358,25 @@ Error: {ex.Message}");
             else
             {
                 // Ask where Tile Maniac is located when not set
-                if (string.IsNullOrEmpty(Properties.Settings.Default.RunTileManiacPath))
+                if (string.IsNullOrEmpty(mySettings.RunTileManiacPath))
                 {
                     var ofd = new OpenFileDialog();
                     ofd.Title = "Select TileManiac.exe";
                     ofd.Filter = "Windows PE Executable|*.exe";
                     if (ofd.ShowDialog() == DialogResult.OK)
-                        Properties.Settings.Default.RunTileManiacPath = ofd.FileName;
+                        mySettings.RunTileManiacPath = ofd.FileName;
                 }
                 else
                 {
-                    if (!File.Exists(Properties.Settings.Default.RunTileManiacPath))
+                    if (!File.Exists(mySettings.RunTileManiacPath))
                     {
-                        Properties.Settings.Default.RunTileManiacPath = "";
+                        mySettings.RunTileManiacPath = "";
                         return;
                     }
                 }
 
                 ProcessStartInfo psi;
-                psi = new ProcessStartInfo(Properties.Settings.Default.RunTileManiacPath);
+                psi = new ProcessStartInfo(mySettings.RunTileManiacPath);
                 Process.Start(psi);
             }
 
@@ -4285,6 +4407,8 @@ Error: {ex.Message}");
         {
             isPreRending = true;
             PreLoadBox preLoadForm = new PreLoadBox();
+            preLoadForm.TopLevel = false;
+            GraphicPanel.Controls.Add(preLoadForm);
             preLoadForm.Show();
             toggleEditorButtons(false);
 
@@ -4334,19 +4458,17 @@ Error: {ex.Message}");
             isPreRending = false;
             preLoadForm.Close();
             toggleEditorButtons(true);
-        }
 
-        private void gameOptionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (var runSceneOptions = new RunSceneOptions())
-            {
-                runSceneOptions.ShowDialog();
-            }
+            // Play a sound to tell the user we are finished
+            System.IO.Stream str = Properties.Resources.ScoreTotal;
+            System.Media.SoundPlayer snd = new System.Media.SoundPlayer(str);
+            snd.Play();
+
         }
 
         private void openModManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String modProcessName = Path.GetFileNameWithoutExtension(Properties.Settings.Default.RunModLoaderPath);
+            String modProcessName = Path.GetFileNameWithoutExtension(mySettings.RunModLoaderPath);
             IntPtr hWnd = FindWindow(modProcessName, null); // this gives you the handle of the window you need.
             Process processes = Process.GetProcessesByName(modProcessName).FirstOrDefault();
             if (processes != null)
@@ -4364,24 +4486,24 @@ Error: {ex.Message}");
             else
             {
                 // Ask where the Mania Mod Manager is located when not set
-                if (string.IsNullOrEmpty(Properties.Settings.Default.RunModLoaderPath))
+                if (string.IsNullOrEmpty(mySettings.RunModLoaderPath))
                 {
                     var ofd = new OpenFileDialog();
                     ofd.Title = "Select Mania Mod Manager.exe";
                     ofd.Filter = "Windows PE Executable|*.exe";
                     if (ofd.ShowDialog() == DialogResult.OK)
-                        Properties.Settings.Default.RunModLoaderPath = ofd.FileName;
+                        mySettings.RunModLoaderPath = ofd.FileName;
                 }
                 else
                 {
-                    if (!File.Exists(Properties.Settings.Default.RunGamePath))
+                    if (!File.Exists(mySettings.RunGamePath))
                     {
-                        Properties.Settings.Default.RunModLoaderPath = "";
+                        mySettings.RunModLoaderPath = "";
                         return;
                     }
                 }
                 ProcessStartInfo psi;
-                psi = new ProcessStartInfo(Properties.Settings.Default.RunModLoaderPath);
+                psi = new ProcessStartInfo(mySettings.RunModLoaderPath);
                 Process.Start(psi);
             }
 
@@ -4390,7 +4512,7 @@ Error: {ex.Message}");
 
         private void colorPaletteEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String palleteProcessName = Path.GetFileNameWithoutExtension(Properties.Settings.Default.RunPalleteEditorPath);
+            String palleteProcessName = Path.GetFileNameWithoutExtension(mySettings.RunPalleteEditorPath);
             IntPtr hWnd = FindWindow(palleteProcessName, null); // this gives you the handle of the window you need.
             Process processes = Process.GetProcessesByName(palleteProcessName).FirstOrDefault();
             if (processes != null)
@@ -4408,25 +4530,25 @@ Error: {ex.Message}");
             else
             {
                 // Ask where Color Palette Program is located when not set
-                if (string.IsNullOrEmpty(Properties.Settings.Default.RunPalleteEditorPath))
+                if (string.IsNullOrEmpty(mySettings.RunPalleteEditorPath))
                 {
                     var ofd = new OpenFileDialog();
                     ofd.Title = "Select Color Palette Program (.exe)";
                     ofd.Filter = "Windows PE Executable|*.exe";
                     if (ofd.ShowDialog() == DialogResult.OK)
-                        Properties.Settings.Default.RunPalleteEditorPath = ofd.FileName;
+                        mySettings.RunPalleteEditorPath = ofd.FileName;
                 }
                 else
                 {
-                    if (!File.Exists(Properties.Settings.Default.RunPalleteEditorPath))
+                    if (!File.Exists(mySettings.RunPalleteEditorPath))
                     {
-                        Properties.Settings.Default.RunPalleteEditorPath = "";
+                        mySettings.RunPalleteEditorPath = "";
                         return;
                     }
                 }
 
                 ProcessStartInfo psi;
-                psi = new ProcessStartInfo(Properties.Settings.Default.RunPalleteEditorPath);
+                psi = new ProcessStartInfo(mySettings.RunPalleteEditorPath);
                 Process.Start(psi);
             }
         }
@@ -4486,14 +4608,14 @@ Error: {ex.Message}");
 
         private void customToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Background.GRID_TILE_SIZE = Properties.Settings.Default.CustomGridSizeValue;
+            Background.GRID_TILE_SIZE = mySettings.CustomGridSizeValue;
             resetGridOptions();
             customToolStripMenuItem.Checked = true;
         }
 
         private void hScrollBar1_Entered(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.scrollLock == false)
+            if (mySettings.scrollLock == false)
             {
                 scrollDirection = "X";
             }
@@ -4516,7 +4638,7 @@ Error: {ex.Message}");
         }
         public void moreSettingsButton_ButtonClick(object sender, EventArgs e)
         {
-            switch (Properties.EditorState.Default.lastQuickButtonState)
+            switch (myEditorState.lastQuickButtonState)
             {
                 case 1:
                     swapScrollLockDirectionToolStripMenuItem_Click(sender, e);
@@ -4537,50 +4659,50 @@ Error: {ex.Message}");
 
         public void swapScrollLockDirectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Properties.EditorState.Default.lastQuickButtonState = 1;
-            if (Properties.Settings.Default.ScrollLockDirection == true)
+            myEditorState.lastQuickButtonState = 1;
+            if (mySettings.ScrollLockDirection == true)
             {
-                Properties.Settings.Default.ScrollLockDirection = false;
+                mySettings.ScrollLockDirection = false;
                 scrollLockDirLabel.Text = "Scroll Lock Direction: X";
             }
             else
             {
-                Properties.Settings.Default.ScrollLockDirection = true;
+                mySettings.ScrollLockDirection = true;
                 scrollLockDirLabel.Text = "Scroll Lock Direction: Y";
             }
         }
 
         public void editEntitesTransparencyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Properties.EditorState.Default.lastQuickButtonState = 2;
-            if (Properties.EditorState.Default.editEntitiesTransparency == false)
+            myEditorState.lastQuickButtonState = 2;
+            if (myEditorState.editEntitiesTransparency == false)
             {
-                Properties.EditorState.Default.editEntitiesTransparency = true;
+                myEditorState.editEntitiesTransparency = true;
                 editEntitesTransparencyToolStripMenuItem.Checked = true;
             }
             else
             {
-                Properties.EditorState.Default.editEntitiesTransparency = false;
+                myEditorState.editEntitiesTransparency = false;
                 editEntitesTransparencyToolStripMenuItem.Checked = false;
             }
         }
 
         public void toggleEncoreManiaEntitiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Properties.EditorState.Default.lastQuickButtonState = 3;
-            if (Properties.Settings.Default.showEncoreEntities == true && Properties.Settings.Default.showManiaEntities == true)
+            myEditorState.lastQuickButtonState = 3;
+            if (mySettings.showEncoreEntities == true && mySettings.showManiaEntities == true)
             {
-                Properties.Settings.Default.showManiaEntities = true;
-                Properties.Settings.Default.showEncoreEntities = false;
+                mySettings.showManiaEntities = true;
+                mySettings.showEncoreEntities = false;
             }
-            if (Properties.Settings.Default.showEncoreEntities == true && Properties.Settings.Default.showManiaEntities == false) {
-                Properties.Settings.Default.showManiaEntities = true;
-                Properties.Settings.Default.showEncoreEntities = false;
+            if (mySettings.showEncoreEntities == true && mySettings.showManiaEntities == false) {
+                mySettings.showManiaEntities = true;
+                mySettings.showEncoreEntities = false;
             }
             else
             {
-                Properties.Settings.Default.showManiaEntities = false;
-                Properties.Settings.Default.showEncoreEntities = true;
+                mySettings.showManiaEntities = false;
+                mySettings.showEncoreEntities = true;
             }
             
         }
@@ -4590,12 +4712,12 @@ Error: {ex.Message}");
             if (movingPlatformsObjectsToolStripMenuItem.Checked == false)
             {
                 movingPlatformsObjectsToolStripMenuItem.Checked = true;
-                Properties.EditorState.Default.movingPlatformsChecked = true;
+                myEditorState.movingPlatformsChecked = true;
             }
             else
             {
                 movingPlatformsObjectsToolStripMenuItem.Checked = false;
-                Properties.EditorState.Default.movingPlatformsChecked = false;
+                myEditorState.movingPlatformsChecked = false;
             }
 
         }
@@ -4605,18 +4727,22 @@ Error: {ex.Message}");
             if (spriteFramesToolStripMenuItem.Checked == false)
             {
                 spriteFramesToolStripMenuItem.Checked = true;
-                Properties.EditorState.Default.annimationsChecked = true;
+                myEditorState.annimationsChecked = true;
             }
             else
             {
                 spriteFramesToolStripMenuItem.Checked = false;
-                Properties.EditorState.Default.annimationsChecked = false;
+                myEditorState.annimationsChecked = false;
             }
         }
 
         private void duplicateObjectIDHealerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RepairScene();
+            DialogResult result = MessageBox.Show("WARNING: Once you do this the editor will restart immediately, make sure your progress is closed and saved!", "WARNING", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (result == DialogResult.OK)
+            {
+                RepairScene();
+            }
         }
 
         public void DisposeTextures()
@@ -4687,7 +4813,7 @@ Error: {ex.Message}");
             }
             private void Editor_FormClosing1(object sender, System.Windows.Forms.FormClosingEventArgs e)
             {
-                if (SceneLoaded == true && Properties.Settings.Default.DisableSaveWarnings == false)
+                if (SceneLoaded == true && mySettings.DisableSaveWarnings == false)
                 {
                     DialogResult exitBoxResult;
                     using (var exitBox = new ExitWarningBox())
@@ -4718,7 +4844,7 @@ Error: {ex.Message}");
 
         private void SceneChangeWarning(object sender, EventArgs e)
         {
-            if (SceneLoaded == true && Properties.Settings.Default.DisableSaveWarnings == false)
+            if (SceneLoaded == true && mySettings.DisableSaveWarnings == false)
             {
                 DialogResult exitBoxResult;
                 using (var exitBox = new ExitWarningBox())
@@ -4759,7 +4885,7 @@ Error: {ex.Message}");
             //
             positionLabel.Text = "X: " + (int)(e.X / Zoom) + " Y: " + (int)(e.Y / Zoom);
 
-            if (Properties.Settings.Default.pixelCountMode == false)
+            if (mySettings.pixelCountMode == false)
             {
                 selectedPositionLabel.Text = "Selected Tile Position: X: " + (int)SelectedTileX + ", Y: " + (int)SelectedTileY;
                 selectedPositionLabel.ToolTipText = "The Position of the Selected Tile";
@@ -4769,7 +4895,7 @@ Error: {ex.Message}");
                 selectedPositionLabel.Text = "Selected Tile Pixel Position: " + "X: " + (int)SelectedTileX * 16 + ", Y: " + (int)SelectedTileY * 16;
                 selectedPositionLabel.ToolTipText = "The Pixel Position of the Selected Tile";
             }
-            if (Properties.Settings.Default.pixelCountMode == false)
+            if (mySettings.pixelCountMode == false)
             {
                 selectionSizeLabel.Text = "Amount of Tiles in Selection: " + (SelectedTilesCount - DeselectTilesCount);
                 selectionSizeLabel.ToolTipText = "The Size of the Selection";

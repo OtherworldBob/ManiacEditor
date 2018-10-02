@@ -507,19 +507,6 @@ namespace ManiacEditor.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public bool enableMightySupport {
-            get {
-                return ((bool)(this["enableMightySupport"]));
-            }
-            set {
-                this["enableMightySupport"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
         public bool EnableFasterNudge {
             get {
                 return ((bool)(this["EnableFasterNudge"]));
@@ -604,19 +591,6 @@ namespace ManiacEditor.Properties {
             }
             set {
                 this["ShowDiscordRPC"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public bool DeleteObjectsInsteadOfImport {
-            get {
-                return ((bool)(this["DeleteObjectsInsteadOfImport"]));
-            }
-            set {
-                this["DeleteObjectsInsteadOfImport"] = value;
             }
         }
         
