@@ -229,6 +229,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="ConsoleControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=7edd23586f5e297f, processorArchitecture=MSIL">
       <HintPath>..\packages\ConsoleControl.1.1.0.0\lib\net40\ConsoleControl.dll</HintPath>
@@ -299,6 +301,12 @@
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="ColorConsole.cs" />
     <Compile Include="ColorsCaching.cs" />
+    <Compile Include="ConfigManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigManager.Designer.cs">
+      <DependentUpon>ConfigManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeviceEventArgs.cs" />
     <Compile Include="AddAttributeBox.cs">
       <SubType>Form</SubType>
@@ -412,11 +420,11 @@
       <DependentUpon>DevWarningBox.cs</DependentUpon>
     </Compile>
     <Compile Include="FolderSelectDialog.cs" />
-    <Compile Include="controlBox.cs">
+    <Compile Include="ControlBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="controlBox.Designer.cs">
-      <DependentUpon>controlBox.cs</DependentUpon>
+    <Compile Include="ControlBox.Designer.cs">
+      <DependentUpon>ControlBox.cs</DependentUpon>
     </Compile>
     <Compile Include="ExitWarningBox.cs">
       <SubType>Form</SubType>
@@ -424,13 +432,13 @@
     <Compile Include="ExitWarningBox.Designer.cs">
       <DependentUpon>ExitWarningBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomMsgBox.cs">
+    <Compile Include="ModConfigCreator.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ObjectIDHealer.cs" />
-    <Compile Include="Form2.Designer.cs">
-      <DependentUpon>CustomMsgBox.cs</DependentUpon>
+    <Compile Include="ModConfigCreator.Designer.cs">
+      <DependentUpon>ModConfigCreator.cs</DependentUpon>
     </Compile>
+    <Compile Include="ObjectIDHealer.cs" />
     <Compile Include="Properties\EditorState.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -447,11 +455,11 @@
     <Compile Include="ObjectImporter.designer.cs">
       <DependentUpon>ObjectImporter.cs</DependentUpon>
     </Compile>
-    <Compile Include="developerTool.cs">
+    <Compile Include="DeveloperTool.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="developerTool.Designer.cs">
-      <DependentUpon>developerTool.cs</DependentUpon>
+    <Compile Include="DeveloperTool.Designer.cs">
+      <DependentUpon>DeveloperTool.cs</DependentUpon>
     </Compile>
     <Compile Include="HorizontalLayerScroll.cs" />
     <Compile Include="IDrawArea.cs" />
@@ -506,6 +514,7 @@
       <DependentUpon>SceneSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="ScrollInfoLines.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="SettingsReader.cs" />
     <Compile Include="SoundImporter.cs">
       <SubType>Form</SubType>
@@ -541,12 +550,19 @@
     <Content Include="EditorIcons.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\OhNo.wav" />
     <None Include="README.md" />
     <None Include="Resources\ScoreTotal.wav" />
     <None Include="Properties\EditorState.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>EditorState.Designer.cs</LastGenOutput>
     </None>
+    <EmbeddedResource Include="ConfigManager.resx">
+      <DependentUpon>ConfigManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModConfigCreator.resx">
+      <DependentUpon>ModConfigCreator.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\objectRenderList.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -575,17 +591,14 @@
     <EmbeddedResource Include="EntitiesToolbar.resx">
       <DependentUpon>EntitiesToolbar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="controlBox.resx">
-      <DependentUpon>controlBox.cs</DependentUpon>
+    <EmbeddedResource Include="ControlBox.resx">
+      <DependentUpon>ControlBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DevWarningBox.resx">
       <DependentUpon>DevWarningBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExitWarningBox.resx">
       <DependentUpon>ExitWarningBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>CustomMsgBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ImageViewer.resx">
       <DependentUpon>ImageViewer.cs</DependentUpon>
@@ -602,8 +615,8 @@
     <EmbeddedResource Include="ObjectManager.resx">
       <DependentUpon>ObjectManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="developerTool.resx">
-      <DependentUpon>developerTool.cs</DependentUpon>
+    <EmbeddedResource Include="DeveloperTool.resx">
+      <DependentUpon>DeveloperTool.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionBox.resx">
       <DependentUpon>OptionBox.cs</DependentUpon>
@@ -641,7 +654,7 @@
     </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">

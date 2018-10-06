@@ -15,6 +15,10 @@ namespace ManiacEditor
         public DeviceLostBox()
         {
             InitializeComponent();
+
+            System.IO.Stream str = Properties.Resources.OhNo;
+            System.Media.SoundPlayer snd = new System.Media.SoundPlayer(str);
+            snd.Play();
         }
 
         private void button1_Click(object sender, EventArgs e)

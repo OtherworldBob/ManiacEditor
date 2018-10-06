@@ -115,8 +115,13 @@ namespace ManiacEditor
         List<string> entityRenderingObjects = Editor.Instance.entityRenderingObjects;
         List<string> renderOnScreenExlusions = Editor.Instance.renderOnScreenExlusions;
 
-        //Rotating Platforms
+        //Rotating/Moving Platforms
         public int angle = 0;
+        public int positionX = 0;
+        public int positionY = 0;
+        bool disableX = false;
+        bool disableY = false;
+        bool reverse = false;
 
 
         public static Dictionary<string, EditorAnimation> Animations = new Dictionary<string, EditorAnimation>();
@@ -789,6 +794,70 @@ namespace ManiacEditor
             else angle = angleDefault;
             if (angle >= 768)
                 angle = 0;
+
+        }
+
+        public void ProcessMovingPlatform2(int ampX, int ampY, int speed = 3)
+        {
+            int duration = 1;
+            // Playback
+            if (Editor.Instance.ShowAnimations.Checked && Properties.EditorState.Default.movingPlatformsChecked)
+            {
+                if (speed > 0)
+                {
+                    int speed1 = speed * 64 / (duration == 0 ? 256 : duration);
+                    if (speed1 == 0)
+                        speed1 = 1;
+                    if ((DateTime.Now - lastFrametime).TotalMilliseconds > 1024 / speed1)
+                    {
+                        if (reverse) {
+                            if (ampX != 0 && !disableX) positionX--;
+                            if (ampY != 0 && !disableY) positionY--;
+                            if (positionX >= ampX / 2 || positionX <= -(ampX / 2))
+                            {
+                                disableX = true;
+                            }
+                            if (positionY == ampY)
+                            {
+                                disableY = true;
+                            }
+                            if (positionY == ampY && positionX == ampX)
+                            {
+                                reverse = true;
+                                disableX = false;
+                                disableY = false;
+                            }
+                        }
+                        else
+                        {
+                            if (ampX != 0 && !disableX) positionX++;
+                            if (ampY != 0 && !disableY) positionY++;
+                            if (positionX >= ampX / 2 || positionX <= -(ampX / 2))
+                            {
+                                disableX = true;
+                            }
+                            if (positionY == ampY)
+                            {
+                                disableY = true;
+                            }
+                            if (positionY == ampY && positionX == ampX)
+                            {
+                                reverse = true;
+                                disableX = false;
+                                disableY = false;
+                            }
+                        }
+
+
+                        lastFrametime = DateTime.Now;
+                    }
+                }
+            }
+            else {
+                positionX = 0;
+                positionY = 0;
+            }
+
 
         }
 

@@ -61,6 +61,7 @@
             this.removeSavedFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataDirEditContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeDataDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preRenderCheckbox = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.contextMenuStrip3.SuspendLayout();
@@ -242,18 +243,19 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(799, 418);
+            this.button3.Location = new System.Drawing.Point(718, 418);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(88, 28);
             this.button3.TabIndex = 16;
             this.button3.Text = "Load Selected";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.load_Click);
             // 
             // addButton
             // 
             this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addButton.Location = new System.Drawing.Point(718, 418);
+            this.addButton.Location = new System.Drawing.Point(812, 418);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(75, 28);
             this.addButton.TabIndex = 19;
@@ -344,6 +346,19 @@
             this.removeDataDirectoryToolStripMenuItem.Text = "Remove Data Directory";
             this.removeDataDirectoryToolStripMenuItem.Click += new System.EventHandler(this.removeDataDirectoryToolStripMenuItem_Click);
             // 
+            // preRenderCheckbox
+            // 
+            this.preRenderCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.preRenderCheckbox.AutoSize = true;
+            this.preRenderCheckbox.Enabled = false;
+            this.preRenderCheckbox.Location = new System.Drawing.Point(93, 429);
+            this.preRenderCheckbox.Name = "preRenderCheckbox";
+            this.preRenderCheckbox.Size = new System.Drawing.Size(122, 17);
+            this.preRenderCheckbox.TabIndex = 21;
+            this.preRenderCheckbox.Text = "Pre-Render on Load";
+            this.preRenderCheckbox.UseVisualStyleBackColor = true;
+            this.preRenderCheckbox.CheckedChanged += new System.EventHandler(this.preRenderCheckbox_CheckedChanged);
+            // 
             // SceneSelect
             // 
             this.AcceptButton = this.selectButton;
@@ -351,6 +366,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(1010, 456);
+            this.Controls.Add(this.preRenderCheckbox);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label2);
@@ -419,5 +435,6 @@
         private System.Windows.Forms.ContextMenuStrip dataDirEditContext;
         private System.Windows.Forms.ToolStripMenuItem removeDataDirectoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeAllSavedPlacesToolStripMenuItem;
+        private System.Windows.Forms.CheckBox preRenderCheckbox;
     }
 }

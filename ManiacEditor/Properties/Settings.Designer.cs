@@ -13,7 +13,7 @@ namespace ManiacEditor.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
         
@@ -785,18 +785,6 @@ namespace ManiacEditor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AutoPreloadScene {
-            get {
-                return ((bool)(this["AutoPreloadScene"]));
-            }
-            set {
-                this["AutoPreloadScene"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int CustomGridSizeValue {
             get {
@@ -899,6 +887,40 @@ namespace ManiacEditor.Properties {
             }
             set {
                 this["SavedPlaces"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int preRenderSceneOption {
+            get {
+                return ((int)(this["preRenderSceneOption"]));
+            }
+            set {
+                this["preRenderSceneOption"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection modConfigs {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["modConfigs"]));
+            }
+            set {
+                this["modConfigs"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection modConfigsNames {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["modConfigsNames"]));
+            }
+            set {
+                this["modConfigsNames"] = value;
             }
         }
     }

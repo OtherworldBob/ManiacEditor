@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ManiacEditor
 {
-    public partial class controlBox : Form
+    public partial class ControlBox : Form
     {
-        public controlBox()
+        public ControlBox()
         {
             InitializeComponent();
         }

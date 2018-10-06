@@ -125,6 +125,9 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.runSceneButton = new System.Windows.Forms.ToolStripSplitButton();
             this.openModManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.noConfigFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editConfigsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.resetDeviceButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.undoButton = new System.Windows.Forms.ToolStripButton();
@@ -1024,7 +1027,9 @@
             this.runSceneButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.runSceneButton.DropDownButtonWidth = 16;
             this.runSceneButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openModManagerToolStripMenuItem});
+            this.openModManagerToolStripMenuItem,
+            this.selectConfigToolStripMenuItem,
+            this.editConfigsToolStripMenuItem1});
             this.runSceneButton.Image = global::ManiacEditor.Properties.Resources.RunScene;
             this.runSceneButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.runSceneButton.Name = "runSceneButton";
@@ -1038,6 +1043,27 @@
             this.openModManagerToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.openModManagerToolStripMenuItem.Text = "Open Mod Manager";
             this.openModManagerToolStripMenuItem.Click += new System.EventHandler(this.openModManagerToolStripMenuItem_Click);
+            // 
+            // selectConfigToolStripMenuItem
+            // 
+            this.selectConfigToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.noConfigFilesToolStripMenuItem});
+            this.selectConfigToolStripMenuItem.Name = "selectConfigToolStripMenuItem";
+            this.selectConfigToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.selectConfigToolStripMenuItem.Text = "Select Config";
+            // 
+            // noConfigFilesToolStripMenuItem
+            // 
+            this.noConfigFilesToolStripMenuItem.Name = "noConfigFilesToolStripMenuItem";
+            this.noConfigFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.noConfigFilesToolStripMenuItem.Text = "No Config Files";
+            // 
+            // editConfigsToolStripMenuItem1
+            // 
+            this.editConfigsToolStripMenuItem1.Name = "editConfigsToolStripMenuItem1";
+            this.editConfigsToolStripMenuItem1.Size = new System.Drawing.Size(181, 22);
+            this.editConfigsToolStripMenuItem1.Text = "Edit Configs";
+            this.editConfigsToolStripMenuItem1.Click += new System.EventHandler(this.editConfigsToolStripMenuItem_Click);
             // 
             // resetDeviceButton
             // 
@@ -1656,6 +1682,9 @@
         private System.Windows.Forms.ToolStripMenuItem spriteFramesToolStripMenuItem;
         public System.Windows.Forms.ToolStripButton ShowAnimations;
         private System.Windows.Forms.ToolStripMenuItem duplicateObjectIDHealerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem selectConfigToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem noConfigFilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editConfigsToolStripMenuItem1;
     }
 }
 

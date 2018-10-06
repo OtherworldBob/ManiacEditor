@@ -94,5 +94,53 @@ namespace ManiacEditor.Properties {
                 this["developerInt"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool preRenderSceneSelectCheckbox {
+            get {
+                return ((bool)(this["preRenderSceneSelectCheckbox"]));
+            }
+            set {
+                this["preRenderSceneSelectCheckbox"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NULL")]
+        public string addConfigName {
+            get {
+                return ((string)(this["addConfigName"]));
+            }
+            set {
+                this["addConfigName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NULL")]
+        public string addConfigContents {
+            get {
+                return ((string)(this["addConfigContents"]));
+            }
+            set {
+                this["addConfigContents"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool addConfig {
+            get {
+                return ((bool)(this["addConfig"]));
+            }
+            set {
+                this["addConfig"] = value;
+            }
+        }
     }
 }

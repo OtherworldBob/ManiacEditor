@@ -14,7 +14,6 @@ namespace ManiacEditor.Entity_Renders
 {
     public class Platform
     {
-
         
         public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
@@ -92,6 +91,12 @@ namespace ManiacEditor.Entity_Renders
                     d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX, y + frame.Frame.CenterY,
                         frame.Frame.Width, frame.Frame.Height, false, Transparency);
                 }
+                /*if ((amplitudeX != 0 || amplitudeY != 0) && type == 2)
+                {
+                    e.ProcessMovingPlatform2(amplitudeX,amplitudeY);
+                    d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX + e.positionX, y + frame.Frame.CenterY - e.positionY,
+                        frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                }*/
                 else if ((amplitudeX != 0 || amplitudeY != 0) && type == 3)
                 {
                     e.ProcessMovingPlatform(angle);

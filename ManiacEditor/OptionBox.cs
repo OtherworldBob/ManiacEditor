@@ -15,9 +15,13 @@ namespace ManiacEditor
     
     public partial class OptionBox : Form
     {
+        bool preRenderRadioGroupCheckChangeAllowed = true;
         public OptionBox()
         {
             InitializeComponent();
+
+            preRenderRadioGroupsUpdate(Properties.Settings.Default.preRenderSceneOption);
+            preRenderRadioGroupCheckChangeAllowed = true;
             this.label21.Text = Properties.Settings.Default.FasterNudgeValue.ToString();
             this.gridSizeValueLabel.Text = Properties.Settings.Default.CustomGridSizeValue.ToString();
             if (Properties.Settings.Default.x16Default) uncheckOtherGridDefaults(1);
@@ -441,6 +445,49 @@ namespace ManiacEditor
                     scrollLockAxisKeyBox.Text = "";
                     scrollLockAxisKeyBox.Text = Properties.KeyBinds.Default.ScrollLockTypeSwitch.ToString();
                     Properties.KeyBinds.Default.Save();
+            }
+
+        }
+
+        private void preRenderAlways_CheckedChanged(object sender, EventArgs e)
+        {
+            preRenderRadioGroupsUpdate(3);
+            Properties.Settings.Default.preRenderSceneOption = 3;
+            preRenderRadioGroupCheckChangeAllowed = true;
+        }
+
+        private void promptForPreRender_CheckedChanged(object sender, EventArgs e)
+        {
+            preRenderRadioGroupsUpdate(2);
+            Properties.Settings.Default.preRenderSceneOption = 2;
+            preRenderRadioGroupCheckChangeAllowed = true;
+        }
+
+        private void caseBasedPreRender_CheckedChanged(object sender, EventArgs e)
+        {
+            preRenderRadioGroupsUpdate(1);
+            Properties.Settings.Default.preRenderSceneOption = 1;
+            preRenderRadioGroupCheckChangeAllowed = true;
+        }
+
+        private void manualPreRender_CheckedChanged(object sender, EventArgs e)
+        {
+            preRenderRadioGroupsUpdate(0);
+            Properties.Settings.Default.preRenderSceneOption = 0;
+            preRenderRadioGroupCheckChangeAllowed = true;
+        }
+
+        private void preRenderRadioGroupsUpdate(int type)
+        {
+            bool[] groups = new [] {false,false,false,false};
+            for (int i = 0; i < 4; i++) if (type == i) groups[i] = true;
+            if (preRenderRadioGroupCheckChangeAllowed == true)
+            {
+                preRenderRadioGroupCheckChangeAllowed = false;
+                manualPreRender.Checked = false || groups[0];
+                caseBasedPreRender.Checked = false || groups[1];
+                promptForPreRender.Checked = false || groups[2];
+                preRenderAlways.Checked = false || groups[3];
             }
 
         }

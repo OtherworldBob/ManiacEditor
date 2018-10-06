@@ -36,6 +36,7 @@ namespace ManiacEditor
         public bool showCollisionA;
         public bool showCollisionB;
         public bool multiLayerSelect = false;
+        public int modConfig_CheckedItem;
         public int backupType = 0;
 
         //For Preload Loading Box
@@ -74,6 +75,7 @@ namespace ManiacEditor
         public EditorScene EditorScene;
         public StageConfig StageConfig;
         public ObjectManager objectRemover;
+        public ConfigManager configLists;
 
         public List<string> entityRenderingObjects = EditorEntity_ini.getSpecialRenderList(1);
         public List<string> renderOnScreenExlusions = EditorEntity_ini.getSpecialRenderList(0);
@@ -331,6 +333,16 @@ namespace ManiacEditor
                 {
                     RefreshDataDirectories(mySettings.DataDirectories);
                 }
+
+                if (mySettings.modConfigs?.Count > 0)
+                {
+                    selectConfigToolStripMenuItem.DropDownItems.Clear();
+                    for (int i = 0; i < mySettings.modConfigs.Count; i++)
+                    {
+                        selectConfigToolStripMenuItem.DropDownItems.Add(CreateModConfigMenuItem(i));
+                    }
+                }
+
             }
             catch (Exception ex)
             {
@@ -400,6 +412,16 @@ namespace ManiacEditor
             return newItem;
         }
 
+        private ToolStripMenuItem CreateModConfigMenuItem(int i)
+        {
+            ToolStripMenuItem newItem = new ToolStripMenuItem(mySettings.modConfigsNames[i])
+            {
+                Tag = mySettings.modConfigs[i]
+            };
+            newItem.Click += ModConfigItemClicked;
+            return newItem;
+        }
+
         private void RecentDataDirectoryClicked(object sender, EventArgs e)
         {
             var menuItem = sender as ToolStripMenuItem;
@@ -421,6 +443,13 @@ namespace ManiacEditor
 
             }
             mySettings.Save();
+        }
+
+        private void ModConfigItemClicked(object sender, EventArgs e)
+        {
+            var modConfig_CheckedItem = (sender as ToolStripMenuItem);
+            selectConfigToolStripMenuItem_Click(modConfig_CheckedItem);
+
         }
 
         private void RecentDataDirectoryClicked(object sender, EventArgs e, String dataDirectory)
@@ -532,12 +561,24 @@ namespace ManiacEditor
 
 
 
-            runSceneButton.Enabled = enabled && !GameRunning;
+            //runSceneButton.Enabled = enabled && !GameRunning;
 
             SetEditButtonsState(enabled);
             UpdateTooltips();
 
-            if (mySettings.AutoPreloadScene == true && enabled && stageLoad)
+            if (mySettings.preRenderSceneOption == 3 && enabled && stageLoad)
+            {
+                preLoadSceneButton_Click(null, null);
+            }
+            else if (mySettings.preRenderSceneOption == 2 && enabled && stageLoad)
+            {
+                DialogResult result = MessageBox.Show("Do you wish to Pre-Render this scene?", "Requesting to Pre-Render the Scene", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (result == DialogResult.Yes)
+                {
+                    preLoadSceneButton_Click(null, null);
+                }
+            }
+            else if (mySettings.preRenderSceneOption == 1 && Properties.EditorState.Default.preRenderSceneSelectCheckbox && enabled && stageLoad)
             {
                 preLoadSceneButton_Click(null, null);
             }
@@ -3691,7 +3732,7 @@ Error: {ex.Message}");
         private void controlsToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            using (var ControlBox = new controlBox())
+            using (var ControlBox = new ControlBox())
             {
                 ControlBox.ShowDialog();
             }
@@ -3763,6 +3804,21 @@ Error: {ex.Message}");
             }
             else
             {
+                if (mySettings.RunModLoaderPath != null && mySettings.modConfigs?.Count > 0)
+                {
+                    string ConfigPath = mySettings.RunGamePath;
+                    var dropDownItem = selectConfigToolStripMenuItem.DropDownItems[0];
+                    ConfigPath = ConfigPath.Replace('/', '\\');
+                    ConfigPath = ConfigPath.Replace("SonicMania.exe", "//mods//ManiaModLoader.ini");
+                    foreach (ToolStripMenuItem item in selectConfigToolStripMenuItem.DropDownItems)
+                    {
+                        if (item.Checked)
+                        {
+                            dropDownItem = item;
+                        }
+                    }
+                    File.WriteAllText(ConfigPath, dropDownItem.Tag.ToString());
+                }
                 RunSequence(sender, e);
             }
         }
@@ -4743,6 +4799,30 @@ Error: {ex.Message}");
             {
                 RepairScene();
             }
+        }
+
+        public void editConfigsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConfigManager configManager = new ConfigManager();
+            configManager.ShowDialog();
+
+                
+                selectConfigToolStripMenuItem.DropDownItems.Clear();
+                for (int i = 0; i < mySettings.modConfigs.Count; i++)
+                {
+                    selectConfigToolStripMenuItem.DropDownItems.Add(CreateModConfigMenuItem(i));
+                }
+            
+        }
+
+        private void selectConfigToolStripMenuItem_Click(ToolStripMenuItem modConfig_CheckedItem)
+        {
+            foreach (ToolStripMenuItem item in selectConfigToolStripMenuItem.DropDownItems)
+            {
+                item.Checked = false;
+            }
+            modConfig_CheckedItem.Checked = true;
+            
         }
 
         public void DisposeTextures()

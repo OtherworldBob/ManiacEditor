@@ -20,5 +20,17 @@
     <Setting Name="developerInt" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="preRenderSceneSelectCheckbox" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="addConfigName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">NULL</Value>
+    </Setting>
+    <Setting Name="addConfigContents" Type="System.String" Scope="User">
+      <Value Profile="(Default)">NULL</Value>
+    </Setting>
+    <Setting Name="addConfig" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -28,6 +28,8 @@ namespace ManiacEditor
         public SceneSelect(GameConfig config = null)
         {
             InitializeComponent();
+            if (Properties.EditorState.Default.preRenderSceneSelectCheckbox) preRenderCheckbox.Checked = true;
+            if (Properties.Settings.Default.preRenderSceneOption == 1) preRenderCheckbox.Enabled = true;
             ReloadQuickPanel();
             if (config != null)
             {
@@ -45,7 +47,7 @@ namespace ManiacEditor
                 List<Tuple<string, string>> scenes = new List<Tuple<string, string>>();
                 foreach (GameConfig.SceneInfo scene in category.Scenes)
                 {
-                    scenes.Add(new Tuple<string, string>(scene.Name, scene.Zone + "/Scene" + scene.SceneID + ".bin"));
+                    scenes.Add(new Tuple<string, string>(scene.Name, scene.Zone + "\\Scene" + scene.SceneID + ".bin"));
 
                     List<string> files;
                     if (!Directories.TryGetValue(scene.Zone, out files))
@@ -513,13 +515,20 @@ namespace ManiacEditor
                         }
                         else
                         {
-                            CustomMsgBox c = new CustomMsgBox("Please Select/Open a Data Directory First", "ERROR!", 2, 1);
-                            c.Show();
+                            MessageBox.Show("Please Select/Open a Data Directory First", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
                     }
                 }
             }
+        }
+
+        private void preRenderCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (preRenderCheckbox.Checked == true)
+                Properties.EditorState.Default.preRenderSceneSelectCheckbox = true;
+            else
+                Properties.EditorState.Default.preRenderSceneSelectCheckbox = false;
         }
     }
 }

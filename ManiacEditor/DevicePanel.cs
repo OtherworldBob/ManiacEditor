@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using SharpDX;
 using SharpDX.Direct3D9;
@@ -197,14 +198,16 @@ namespace ManiacEditor
             RenderLoop.Run(this, () =>
             {
                 // Another option is not use RenderLoop at all and call Render when needed, and call here every tick for animations
-                if (bRender) Render();
-                if (mouseMoved)
-                {
-                    OnMouseMove(lastEvent);
-                    mouseMoved = false;
-                }
-                //Application.DoEvents();
+                    if (bRender) Render();
+                    if (mouseMoved)
+                    {
+                        OnMouseMove(lastEvent);
+                        mouseMoved = false;
+                    }
+
+
             });
+            //Application.DoEvents();
         }
 
         public void InitDeviceResources()

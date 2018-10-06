@@ -1,6 +1,6 @@
 ﻿namespace ManiacEditor
 {
-    partial class controlBox
+    partial class ControlBox
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(controlBox));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlBox));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.controlInfo = new System.Windows.Forms.Label();
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.controlBox_Quit);
