@@ -364,6 +364,13 @@ namespace ManiacEditor
                 if (!File.Exists(path2))
                     return null;
             }
+            if (name == "SuperSpecialRing")
+            {
+                path2 = Environment.CurrentDirectory + "\\Global\\" + "SuperSpecialRing.bin";
+                Debug.Print(path2);
+                if (!File.Exists(path2))
+                    return null;
+            }
             else
             {
                 if (DataDirectoryList == null)
@@ -453,6 +460,8 @@ namespace ManiacEditor
                     string targetFile;
                     if (name == "EditorAssets")
                         targetFile = Path.Combine(Environment.CurrentDirectory, "EditorAssets.gif");
+                    else if (name == "SuperSpecialRing")
+                        targetFile = Environment.CurrentDirectory + "\\Global\\" + "SuperSpecialRing.gif";
                     else
                         targetFile = Path.Combine(Editor.DataDirectory, "sprites", rsdkAnim.SpriteSheets[frame.SpriteSheet].Replace('/', '\\'));
                     if (!File.Exists(targetFile))
