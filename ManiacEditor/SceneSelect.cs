@@ -341,7 +341,7 @@ namespace ManiacEditor
                 }
                 LoadFromGameConfig(GameConfig);
                 _GameConfig = GameConfig;
-                Editor.DataDirectory = DataDirectory;
+                //Editor.DataDirectory = DataDirectory; Not a good idea
             }
             if (NodeType == 1)
             {
