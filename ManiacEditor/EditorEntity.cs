@@ -110,6 +110,8 @@ namespace ManiacEditor
         internal FBZTrash fbzTrash = new FBZTrash();
         internal FBZSinkTrash fbzSinkTrash = new FBZSinkTrash();
         internal SpikeLog spikeLog = new SpikeLog();
+        internal EggPrison eggPrison = new EggPrison();
+        internal GenericTrigger genericTrigger = new GenericTrigger();
 
         // Object List for initilizing the if statement
         List<string> entityRenderingObjects = Editor.Instance.entityRenderingObjects;
@@ -358,18 +360,21 @@ namespace ManiacEditor
 
 
             string path, path2;
-            if (name == "EditorAssets")
+            if (name == "EditorAssets" || name == "SuperSpecialRing")
             {
-                path2 = Path.Combine(Environment.CurrentDirectory, "EditorAssets.bin");
-                if (!File.Exists(path2))
-                    return null;
-            }
-            if (name == "SuperSpecialRing")
-            {
-                path2 = Environment.CurrentDirectory + "\\Global\\" + "SuperSpecialRing.bin";
-                Debug.Print(path2);
-                if (!File.Exists(path2))
-                    return null;
+                if (name == "EditorAssets")
+                {
+                    path2 = Path.Combine(Environment.CurrentDirectory, "EditorAssets.bin");
+                    if (!File.Exists(path2))
+                        return null;
+                }
+                else
+                {
+                    path2 = Path.Combine(Environment.CurrentDirectory, "Global\\", "SuperSpecialRing.bin");
+                    Debug.Print(path2);
+                    if (!File.Exists(path2))
+                        return null;
+                }
             }
             else
             {
@@ -386,11 +391,11 @@ namespace ManiacEditor
                     path = path = Editor.Instance.SelectedZone.Substring(0, Editor.Instance.SelectedZone.Length - 1) + "\\" + name + ".bin";
                     path2 = Path.Combine(Editor.DataDirectory, "sprites") + '\\' + path;
                 }
-                if (!File.Exists(path2))
+                /*if (!File.Exists(path2))
                 {
                     // Checks Editor Global
                     path2 = Environment.CurrentDirectory + "\\Global\\" + name + ".bin";
-                }
+                }*/
                 if (!File.Exists(path2))
                 {
                     // Checks Global
@@ -458,10 +463,17 @@ namespace ManiacEditor
                 if (!Sheets.ContainsKey(rsdkAnim.SpriteSheets[frame.SpriteSheet]))
                 {
                     string targetFile;
-                    if (name == "EditorAssets")
-                        targetFile = Path.Combine(Environment.CurrentDirectory, "EditorAssets.gif");
-                    else if (name == "SuperSpecialRing")
-                        targetFile = Environment.CurrentDirectory + "\\Global\\" + "SuperSpecialRing.gif";
+                    if (name == "EditorAssets" || name == "SuperSpecialRing")
+                    {
+                        if (name == "EditorAssets")
+                        {
+                            targetFile = Path.Combine(Environment.CurrentDirectory, "EditorAssets.gif");
+                        }
+                        else
+                        {
+                            targetFile = Path.Combine(Environment.CurrentDirectory, "Global\\", "SuperSpecialRing.gif");
+                        }
+                    }
                     else
                         targetFile = Path.Combine(Editor.DataDirectory, "sprites", rsdkAnim.SpriteSheets[frame.SpriteSheet].Replace('/', '\\'));
                     if (!File.Exists(targetFile))
@@ -1025,7 +1037,15 @@ namespace ManiacEditor
                     }
                 case "Spikes":
                     {
-                        spikes.Draw(d, entity, this, x, y, Transparency);
+                        if (Editor.Instance.SelectedZone.Contains("FBZ\\"))
+                        {
+                            spikes.Draw(d, entity, this, x, y, Transparency, true);
+                        }
+                        else
+                        {
+                            spikes.Draw(d, entity, this, x, y, Transparency, false);
+                        }
+
                         break;
                     }
                 case "Spring":
@@ -1116,6 +1136,11 @@ namespace ManiacEditor
                 case "CollapsingPlatform":
                     {
                         collapsingPlatform.Draw(d, entity, this, x, y, Transparency);
+                        break;
+                    }
+                case "GenericTrigger":
+                    {
+                        genericTrigger.Draw(d, entity, this, x, y, Transparency);
                         break;
                     }
                 case "ChemicalPool":
@@ -1243,7 +1268,11 @@ namespace ManiacEditor
                         spikeLog.Draw(d, entity, this, x, y, Transparency);
                         break;
                     }
-
+                case "EggPrison":
+                    {
+                        eggPrison.Draw(d, entity, this, x, y, Transparency);
+                        break;
+                    }
             }
         }
 

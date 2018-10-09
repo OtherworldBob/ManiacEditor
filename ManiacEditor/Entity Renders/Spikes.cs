@@ -13,7 +13,7 @@ namespace ManiacEditor.Entity_Renders
     public class Spikes
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency, bool isFBZ)
         {
             var value = entity.attributesMap["type"];
             bool fliph = false;
@@ -49,9 +49,20 @@ namespace ManiacEditor.Entity_Renders
             count *= 2; // I made all this with an incorrect assumption so here's a cheap fix
             int count2 = count >> 2;
             var editorAnim = e.LoadAnimation2("Spikes", d, animID, 0, fliph, flipv, false);
+            if (isFBZ)
+            {
+                editorAnim = e.LoadAnimation2("Spikes", d, animID, -1, fliph, flipv, false);
+            }
+
             if (editorAnim != null && editorAnim.Frames.Count != 0)
             {
                 var frame = editorAnim.Frames[0];
+                if (isFBZ)
+                {
+                    frame = editorAnim.Frames[e.index];
+                    e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
+                }
+
 
                 if (value.ValueVar == 0 || value.ValueVar == 1)
                 {

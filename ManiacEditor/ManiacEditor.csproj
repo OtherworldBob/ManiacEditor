@@ -354,6 +354,7 @@
     <Compile Include="Entity Renders\Decoration.cs" />
     <Compile Include="Entity Renders\DirectorChair.cs" />
     <Compile Include="Entity Renders\DNARiser.cs" />
+    <Compile Include="Entity Renders\EggPrison.cs" />
     <Compile Include="Entity Renders\EggTV.cs" />
     <Compile Include="Entity Renders\FBZSinkTrash.cs" />
     <Compile Include="Entity Renders\FBZTrash.cs" />
@@ -361,6 +362,7 @@
     <Compile Include="Entity Renders\ForceSpin.cs" />
     <Compile Include="Entity Renders\ForceUnstick.cs" />
     <Compile Include="Entity Renders\Funnel.cs" />
+    <Compile Include="Entity Renders\GenericTrigger.cs" />
     <Compile Include="Entity Renders\Grabber.cs" />
     <Compile Include="Entity Renders\HangPoint.cs" />
     <Compile Include="Entity Renders\HUD.cs" />
@@ -549,6 +551,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="EditorIcons.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global\SuperSpecialRing.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\OhNo.wav" />
     <None Include="README.md" />

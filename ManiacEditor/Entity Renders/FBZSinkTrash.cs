@@ -21,7 +21,7 @@ namespace ManiacEditor.Entity_Renders
             var width = (int)widthPixels / 16 - 1;
             var height = (int)heightPixels / 16 - 1;
 
-            var editorAnim = e.LoadAnimation2("EditorAssets", d, 1, 1 + (int)type * 2, false, false, false);
+            var editorAnim = e.LoadAnimation2("Trash", d, 11, 1, false, false, false);
 
             if (width != -1 && height != -1)
             {
@@ -29,7 +29,7 @@ namespace ManiacEditor.Entity_Renders
                 // TODO this is really heavy on resources, so maybe switch to just drawing a rectangle??
                 for (int i = 0; i <= height; i++)
                 {
-                    editorAnim = e.LoadAnimation2("EditorAssets", d, 1, 1 + (int)type * 2, false, false, false);
+                    editorAnim = e.LoadAnimation2("Trash", d, 11, 1, false, false, false);
                     if (editorAnim != null && editorAnim.Frames.Count != 0)
                     {
                         var frame = editorAnim.Frames[e.index];
@@ -38,9 +38,9 @@ namespace ManiacEditor.Entity_Renders
                         bool hEven = height % 2 == 0;
                         for (int j = 0; j <= width; j++)
                             d.DrawBitmap(frame.Texture,
-                                (((width + 1) * 16) - widthPixels) / 2 + (x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-width / 2 + j) * frame.Frame.Width),
-                                y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-height / 2 + i) * frame.Frame.Height,
-                                frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                                (((width + 1) * 16) - widthPixels) / 2 + (x + (wEven ? frame.Frame.CenterX : -16) + (-width / 2 + j) * 16),
+                                y + (hEven ? frame.Frame.CenterY : -16) + (-height / 2 + i) * 16,
+                                16, 16, false, Transparency);
                     }
                 }
 
@@ -49,7 +49,7 @@ namespace ManiacEditor.Entity_Renders
                 {
                     bool bottom = !((i & 1) > 0);
 
-                    editorAnim = e.LoadAnimation2("EditorAssets", d, 1, (bottom ? 1 : 0) + (int)type * 2, false, false, false);
+                    editorAnim = e.LoadAnimation2("Trash", d, 11, 1, false, false, false);
                     if (editorAnim != null && editorAnim.Frames.Count != 0)
                     {
                         var frame = editorAnim.Frames[e.index];
@@ -58,9 +58,9 @@ namespace ManiacEditor.Entity_Renders
                         bool hEven = height % 2 == 0;
                         for (int j = 0; j <= width; j++)
                             d.DrawBitmap(frame.Texture,
-                                (((width + 1) * 16) - widthPixels) / 2 + (x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-width / 2 + j) * frame.Frame.Width),
-                                (y + heightPixels / (bottom ? 2 : -2) - (bottom ? frame.Frame.Height : 0)),
-                                frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                                (((width + 1) * 16) - widthPixels) / 2 + (x + (wEven ? frame.Frame.CenterX : -16) + (-width / 2 + j) * 16),
+                                (y + heightPixels / (bottom ? 2 : -2) - (bottom ? 16 : 0)),
+                                16, 16, false, Transparency);
                     }
                 }
             }
