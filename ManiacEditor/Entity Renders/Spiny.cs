@@ -20,20 +20,73 @@ namespace ManiacEditor.Entity_Renders
             bool fliph = false;
             bool flipv = false;
             int animID = 0;
-            if (type == 1)
+            if (type == 0)
             {
-                animID = 2;
-                if (direction == 3 || direction == 2)
+                animID = 0;
+                if (direction == 1)
                 {
                     fliph = true;
                 }
-            }
-            else
-            {
-                animID = 0;
-                if (direction == 3 || direction == 2)
+                if (direction == 2)
                 {
                     flipv = true;
+                }
+                if (direction == 3)
+                {
+                    flipv = true;
+                    fliph = true;
+                }
+            }
+            else if (type == 1)
+            {
+                animID = 2;
+                if (direction == 1)
+                {
+                    fliph = true;
+                }
+                if (direction == 2)
+                {
+                    flipv = true;
+                }
+                if (direction == 3)
+                {
+                    flipv = true;
+                    fliph = true;
+                }
+            }
+            else if (type == 2)
+            {
+                animID = 0;
+                if (direction == 1)
+                {
+                    fliph = true;
+                }
+                if (direction == 2)
+                {
+                    flipv = true;
+                }
+                if (direction == 3)
+                {
+                    flipv = true;
+                    fliph = true;
+                }
+
+            }
+            else if (type == 3)
+            {
+                animID = 2;
+                if (direction == 1)
+                {
+                    fliph = true;
+                }
+                if (direction == 2)
+                {
+                    flipv = true;
+                }
+                if (direction == 3)
+                {
+                    flipv = true;
+                    fliph = true;
                 }
 
             }

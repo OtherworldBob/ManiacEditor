@@ -338,6 +338,7 @@
       <DependentUpon>EntitiesToolbar.cs</DependentUpon>
     </Compile>
     <Compile Include="Entity Renders\BGSwitch.cs" />
+    <Compile Include="Entity Renders\BlankObject.cs" />
     <Compile Include="Entity Renders\BoundsMarker.cs" />
     <Compile Include="Entity Renders\BreakableWall.cs" />
     <Compile Include="Entity Renders\BreakBar.cs" />
@@ -352,10 +353,12 @@
     <Compile Include="Entity Renders\CorkscrewPath.cs" />
     <Compile Include="Entity Renders\CutsceneHBH.cs" />
     <Compile Include="Entity Renders\Decoration.cs" />
+    <Compile Include="Entity Renders\DERobot.cs" />
     <Compile Include="Entity Renders\DirectorChair.cs" />
     <Compile Include="Entity Renders\DNARiser.cs" />
     <Compile Include="Entity Renders\EggPrison.cs" />
     <Compile Include="Entity Renders\EggTV.cs" />
+    <Compile Include="Entity Renders\EncoreRoute.cs" />
     <Compile Include="Entity Renders\FBZSinkTrash.cs" />
     <Compile Include="Entity Renders\FBZTrash.cs" />
     <Compile Include="Entity Renders\FilmProjector.cs" />
@@ -374,13 +377,18 @@
     <Compile Include="Entity Renders\LottoMachine.cs" />
     <Compile Include="Entity Renders\Music.cs" />
     <Compile Include="Entity Renders\OneWayDoor.cs" />
+    <Compile Include="Entity Renders\Outro_Intro_Object.cs" />
+    <Compile Include="Entity Renders\ParallaxSprite.cs" />
     <Compile Include="Entity Renders\PimPom.cs" />
     <Compile Include="Entity Renders\PlaneSwitch.cs" />
     <Compile Include="Entity Renders\Platform.cs" />
+    <Compile Include="Entity Renders\PlatformControl.cs" />
+    <Compile Include="Entity Renders\PlatformNode.cs" />
     <Compile Include="Entity Renders\Player.cs" />
     <Compile Include="Entity Renders\PopcornMachine.cs" />
     <Compile Include="Entity Renders\Ring.cs" />
     <Compile Include="Entity Renders\RockemSockem.cs" />
+    <Compile Include="Entity Renders\RubyFX.cs" />
     <Compile Include="Entity Renders\ShopWindow.cs" />
     <Compile Include="Entity Renders\SignPost.cs" />
     <Compile Include="Entity Renders\SpecialRing.cs" />
@@ -412,8 +420,11 @@
     <Compile Include="Entity Renders\UIControl.cs" />
     <Compile Include="Entity Renders\WarpDoor.cs" />
     <Compile Include="Entity Renders\Water.cs" />
+    <Compile Include="Entity Renders\WaterfallSound.cs" />
     <Compile Include="Entity Renders\WaterGush.cs" />
     <Compile Include="Entity Renders\WeatherMobile.cs" />
+    <Compile Include="Entity Renders\ZipLine.cs" />
+    <Compile Include="Entity Renders\ZoneSetup.cs" />
     <Compile Include="Enums\FlipDirection.cs" />
     <Compile Include="DevWarningBox.cs">
       <SubType>Form</SubType>
@@ -549,10 +560,16 @@
     <Compile Include="IDrawable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="EditorIcons2.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EditorIcons.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Global\SuperSpecialRing.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EditorIcons2.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\OhNo.wav" />

@@ -10,68 +10,44 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class Water
+    public class WaterfallSound
     {
 
         public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
-            int type = (int)entity.attributesMap["type"].ValueVar;
-            var widthPixels = (int)(entity.attributesMap["size"].ValuePosition.X.High);
-            var heightPixels = (int)(entity.attributesMap["size"].ValuePosition.Y.High);
-            var width = (int)widthPixels / 16;
-            var height = (int)heightPixels / 16;
             bool fliph = false;
             bool flipv = false;
-            int animID;
-            if (type == 2)
-            {
-                animID = 2;
-            }
-            else
-            {
-                animID = 0;
-            }
-            var editorAnim = e.LoadAnimation2("Water", d, animID, -1, fliph, flipv, false);
-            if (editorAnim != null && editorAnim.Frames.Count != 0 && animID >= 0 && type != 1)
+            var editorAnim = e.LoadAnimation2("EditorIcons2", d, 0, 6, fliph, flipv, false);
+            var width = (int)(entity.attributesMap["size"].ValuePosition.X.High);
+            var height = (int)(entity.attributesMap["size"].ValuePosition.Y.High);
+            if (editorAnim != null && editorAnim.Frames.Count != 0)
             {
                 var frame = editorAnim.Frames[e.index];
 
-                e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
-
                 d.DrawBitmap(frame.Texture,
-x + frame.Frame.CenterX - (fliph ? (frame.Frame.Width - editorAnim.Frames[0].Frame.Width) : 0),
-y + frame.Frame.CenterY + (flipv ? (frame.Frame.Height - editorAnim.Frames[0].Frame.Height) : 0),
-frame.Frame.Width, frame.Frame.Height, false, Transparency);
-
+                    x + frame.Frame.CenterX - (fliph ? (frame.Frame.Width - editorAnim.Frames[0].Frame.Width) : 0),
+                    y + frame.Frame.CenterY + (flipv ? (frame.Frame.Height - editorAnim.Frames[0].Frame.Height) : 0),
+                    frame.Frame.Width, frame.Frame.Height, false, Transparency);
             }
-            else if (width != 0 && height != 0 && type != 2)
+
+            if (width != -1 && height != -1)
             {
-                //Draw Icon
-                editorAnim = e.LoadAnimation2("EditorIcons2", d, 0, 8, fliph, flipv, false);
-                if (editorAnim != null && editorAnim.Frames.Count != 0)
-                {
-                    var frame = editorAnim.Frames[e.index];
-
-                    d.DrawBitmap(frame.Texture,
-                        x + frame.Frame.CenterX - (fliph ? (frame.Frame.Width - editorAnim.Frames[0].Frame.Width) : 0),
-                        y + frame.Frame.CenterY + (flipv ? (frame.Frame.Height - editorAnim.Frames[0].Frame.Height) : 0),
-                        frame.Frame.Width, frame.Frame.Height, false, Transparency);
-                }
-
                 // draw corners
                 for (int i = 0; i < 4; i++)
                 {
                     bool right = (i & 1) > 0;
                     bool bottom = (i & 2) > 0;
 
-                    editorAnim = e.LoadAnimation2("EditorAssets", d, 2, 0, right, bottom, false);
+                    editorAnim = e.LoadAnimation2("EditorAssets", d, 0, 0, right, bottom, false);
                     if (editorAnim != null && editorAnim.Frames.Count != 0)
                     {
                         var frame = editorAnim.Frames[e.index];
                         e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
+                        bool wEven = width % 2 == 0;
+                        bool hEven = height % 2 == 0;
                         d.DrawBitmap(frame.Texture,
-                            (x + widthPixels / (right ? 2 : -2)) - (right ? frame.Frame.Width : 0),
-                            (y + heightPixels / (bottom ? 2 : -2) - (bottom ? frame.Frame.Height : 0)),
+                            (x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-width / 2 + (right ? width : 0)) * frame.Frame.Width),
+                            (y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-height / 2 + (bottom ? height : 0)) * frame.Frame.Height),
                             frame.Frame.Width, frame.Frame.Height, false, Transparency);
 
                     }
@@ -82,16 +58,17 @@ frame.Frame.Width, frame.Frame.Height, false, Transparency);
                 {
                     bool bottom = (i & 1) > 0;
 
-                    editorAnim = e.LoadAnimation2("EditorAssets", d, 2, 1, false, bottom, false);
+                    editorAnim = e.LoadAnimation2("EditorAssets", d, 0, 1, false, bottom, false);
                     if (editorAnim != null && editorAnim.Frames.Count != 0)
                     {
                         var frame = editorAnim.Frames[e.index];
                         e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
                         bool wEven = width % 2 == 0;
+                        bool hEven = height % 2 == 0;
                         for (int j = 1; j < width; j++)
                             d.DrawBitmap(frame.Texture,
                                 (x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-width / 2 + j) * frame.Frame.Width),
-                                (y + heightPixels / (bottom ? 2 : -2) - (bottom ? frame.Frame.Height : 0)),
+                                (y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-height / 2 + (bottom ? height : 0)) * frame.Frame.Height),
                                 frame.Frame.Width, frame.Frame.Height, false, Transparency);
                     }
                 }
@@ -101,15 +78,16 @@ frame.Frame.Width, frame.Frame.Height, false, Transparency);
                 {
                     bool right = (i & 1) > 0;
 
-                    editorAnim = e.LoadAnimation2("EditorAssets", d, 2, 2, right, false, false);
+                    editorAnim = e.LoadAnimation2("EditorAssets", d, 0, 2, right, false, false);
                     if (editorAnim != null && editorAnim.Frames.Count != 0)
                     {
                         var frame = editorAnim.Frames[e.index];
                         e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
+                        bool wEven = width % 2 == 0;
                         bool hEven = height % 2 == 0;
                         for (int j = 1; j < height; j++)
                             d.DrawBitmap(frame.Texture,
-                                (x + widthPixels / (right ? 2 : -2)) - (right ? frame.Frame.Width : 0),
+                                (x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-width / 2 + (right ? width : 0)) * frame.Frame.Width),
                                 (y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-height / 2 + j) * frame.Frame.Height),
                                 frame.Frame.Width, frame.Frame.Height, false, Transparency);
                     }
