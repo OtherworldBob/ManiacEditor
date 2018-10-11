@@ -479,6 +479,10 @@ namespace ManiacEditor
                 {
                     DeviceExceptionDialog(1);
                 }
+                else if (ex.HResult == unchecked((int)(0x8876017C)))
+                {
+                    DeviceExceptionDialog(1);
+                }   
                 else
                     throw ex;
 }

@@ -326,9 +326,17 @@ namespace ManiacEditor
             int NodeType = 0;
             for (int i = 0; i < recentDataDirList.Nodes[0].Nodes.Count; i++)
             {
-                if (recentDataDirList.Nodes[0].Nodes[i].IsSelected && Editor.Instance.importingObjects == false)
+                if (recentDataDirList.Nodes[0].Nodes[i].IsSelected)
                 {
-                    NodeType = 0;
+                    if (Editor.Instance.importingObjects == false)
+                    {
+                        NodeType = 0;
+                    }
+                    else
+                    {
+                        NodeType = -1;
+                    }
+
                     if (Editor.DataDirectory != null)
                     {
                         dataLabelToolStripItem.Text = "Data Directory: " + Editor.DataDirectory;
@@ -340,7 +348,7 @@ namespace ManiacEditor
                 }
                 else
                 {
-                    NodeType = -1;
+                    
                 }
             }
 
