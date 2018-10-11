@@ -436,7 +436,7 @@
             // 
             this.entityManagerToolStripMenuItem.Enabled = false;
             this.entityManagerToolStripMenuItem.Name = "entityManagerToolStripMenuItem";
-            this.entityManagerToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.entityManagerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.entityManagerToolStripMenuItem.Text = "Entity Manager";
             this.entityManagerToolStripMenuItem.Click += new System.EventHandler(this.removeObjectToolStripMenuItem_Click);
             // 
@@ -444,15 +444,14 @@
             // 
             this.importObjectsToolStripMenuItem.Enabled = false;
             this.importObjectsToolStripMenuItem.Name = "importObjectsToolStripMenuItem";
-            this.importObjectsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.importObjectsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importObjectsToolStripMenuItem.Text = "Import Objects";
-            this.importObjectsToolStripMenuItem.Visible = false;
             // 
             // importSoundsToolStripMenuItem
             // 
             this.importSoundsToolStripMenuItem.Enabled = false;
             this.importSoundsToolStripMenuItem.Name = "importSoundsToolStripMenuItem";
-            this.importSoundsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.importSoundsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importSoundsToolStripMenuItem.Text = "Import Sounds";
             this.importSoundsToolStripMenuItem.Click += new System.EventHandler(this.importSoundsToolStripMenuItem_Click);
             // 
@@ -460,7 +459,7 @@
             // 
             this.layerManagerToolStripMenuItem.Enabled = false;
             this.layerManagerToolStripMenuItem.Name = "layerManagerToolStripMenuItem";
-            this.layerManagerToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.layerManagerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.layerManagerToolStripMenuItem.Text = "Layer Manager";
             this.layerManagerToolStripMenuItem.Click += new System.EventHandler(this.layerManagerToolStripMenuItem_Click);
             // 

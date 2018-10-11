@@ -288,28 +288,8 @@ namespace ManiacEditor
 
         private void importObjectsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            try
-            {
-                Scene sourceScene = Editor.Instance.GetSceneSelection();
-                if (sourceScene == null)
-                {
-                    return;
-                } 
-
-                using (var objectImporter = new ObjectImporter(sourceScene.Objects, Editor.Instance.EditorScene.Objects, Editor.Instance.StageConfig))
-                {
-                    if (objectImporter.ShowDialog() != DialogResult.OK)
-                        return;
-
-                    // user clicked Import, get to it!
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Unable to import Objects." + ex.Message);
-            }
-
-            //RefreshList();
+            Editor.Instance.importObjectsToolStripMenuItem_Click(sender, e);
+            ReloadList();
             // Blanks the list for some reason should consider fixing badly
         }
 

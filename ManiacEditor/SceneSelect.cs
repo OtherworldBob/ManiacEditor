@@ -326,7 +326,7 @@ namespace ManiacEditor
             int NodeType = 0;
             for (int i = 0; i < recentDataDirList.Nodes[0].Nodes.Count; i++)
             {
-                if (recentDataDirList.Nodes[0].Nodes[i].IsSelected)
+                if (recentDataDirList.Nodes[0].Nodes[i].IsSelected && Editor.Instance.importingObjects == false)
                 {
                     NodeType = 0;
                     if (Editor.DataDirectory != null)
@@ -337,6 +337,10 @@ namespace ManiacEditor
                     {
                         dataLabelToolStripItem.Text = "Data Directory: NULL";
                     }
+                }
+                else
+                {
+                    NodeType = -1;
                 }
             }
 
@@ -362,6 +366,10 @@ namespace ManiacEditor
             {
 
             }
+            if (NodeType == -1)
+            {
+                MessageBox.Show("You can't do that while importing objects!");
+            }
 
         }
 
@@ -384,24 +392,32 @@ namespace ManiacEditor
 
         private void dataDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string newDataDirectory = Editor.Instance.GetDataDirectory();
-            string returnDataDirectory;
-
-            if (string.IsNullOrWhiteSpace(newDataDirectory)) return;
-            if (Editor.Instance.IsDataDirectoryValid(newDataDirectory))
+            if (Editor.Instance.importingObjects == false)
             {
-                Editor.DataDirectory = newDataDirectory;
-                returnDataDirectory = newDataDirectory;
-                Editor.Instance.SetGameConfig();
-                Editor.Instance.AddRecentDataFolder(Editor.DataDirectory);
-                Editor.Instance.RefreshDataDirectories(Properties.Settings.Default.DataDirectories);
-                ReloadQuickPanel();
+                string newDataDirectory = Editor.Instance.GetDataDirectory();
+                string returnDataDirectory;
 
+                if (string.IsNullOrWhiteSpace(newDataDirectory)) return;
+                if (Editor.Instance.IsDataDirectoryValid(newDataDirectory))
+                {
+                    Editor.DataDirectory = newDataDirectory;
+                    returnDataDirectory = newDataDirectory;
+                    Editor.Instance.SetGameConfig();
+                    Editor.Instance.AddRecentDataFolder(Editor.DataDirectory);
+                    Editor.Instance.RefreshDataDirectories(Properties.Settings.Default.DataDirectories);
+                    ReloadQuickPanel();
+
+                }
+                else
+                {
+                    return;
+                }
             }
             else
             {
-                return;
+                MessageBox.Show("You can't do that while importing objects!");
             }
+
 
         }
 

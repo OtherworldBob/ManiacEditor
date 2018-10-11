@@ -38,6 +38,7 @@ namespace ManiacEditor
         public bool multiLayerSelect = false;
         public int modConfig_CheckedItem;
         public int backupType = 0;
+        public bool importingObjects = false;
 
         //For Preload Loading Box
         public static int progressValueX;
@@ -3640,6 +3641,7 @@ Error: {ex.Message}");
 
         public void importObjectsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Editor.Instance.importingObjects = true;
             try
             {
                 Scene sourceScene = GetSceneSelection();
@@ -3651,7 +3653,6 @@ Error: {ex.Message}");
                         return; // nothing to do
 
                     // user clicked Import, get to it!
-                    objectRemover.RefreshList();
                     UpdateControls();
                     entitiesToolbar?.RefreshObjects(EditorScene.Objects);
                 }
@@ -3660,6 +3661,7 @@ Error: {ex.Message}");
             {
                 MessageBox.Show("Unable to import Objects. " + ex.Message);
             }
+            Editor.Instance.importingObjects = false;
         }
 
         private void importSoundsToolStripMenuItem_Click(object sender, EventArgs e)
