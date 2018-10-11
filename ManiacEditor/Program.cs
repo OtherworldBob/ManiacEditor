@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace ManiacEditor
 {
@@ -15,6 +16,7 @@ namespace ManiacEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            
 
             bool allowedToLoad = false;
             try

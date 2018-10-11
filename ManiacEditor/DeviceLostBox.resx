@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="errorProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="errorProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>17, 17</value>
+  </data>
   <data name="imageViewer1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAATYAAAFACAYAAAA2x1B1AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAu
@@ -321,5 +321,15 @@
         8TyoMcZ97LvcGduf14znQY0x7mPf5c7Y/rxmPA9qjHEf+y53xvbnNeN5UGOM+9h3uTO2P68Zz4MaY9zH
         vsudsf15zXge1BjjPvZd7oztz2vG86DGGPex73Jf/PPlfwFoO0Fq06z7mwAAAABJRU5ErkJggg==
 </value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>The DirectX Device was just lost! 
+This might lead to a crash! 
+To prevent loss of data, would you like to make an emergency backup?</value>
+  </data>
+  <data name="String2" xml:space="preserve">
+    <value>The DirectX Device just ran out of memory!
+If your using the x86 version of Maniac Editor, you should upgrade to the x64 version!
+Would you like to save your progress before Maniac Editor Closes?</value>
   </data>
 </root>

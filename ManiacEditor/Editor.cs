@@ -203,6 +203,7 @@ namespace ManiacEditor
             InitializeComponent();
             AllocConsole();
             HideConsoleWindow();
+            //useDarkTheme();
             //InitDiscord();
 
             /*using (var customMsgBox = new CustomMsgBox($"The specified Data Directory {1} is not valid. Please Try again with a Better Data Directory. It could be outdated, corrupted or worse something else", "Invalid Data Directory!", 2, 1))
@@ -233,7 +234,26 @@ namespace ManiacEditor
 
         }
 
-
+        public void useDarkTheme()
+        {
+            /*Color dark = Color.Black;
+            Color whiteText = Color.White;
+            this.menuStrip1.BackColor = dark;
+            this.menuStrip1.ForeColor = whiteText;
+            this.toolStrip1.BackColor = dark;
+            this.toolStrip1.ForeColor = whiteText;
+            this.toolStrip2.BackColor = dark;
+            this.toolStrip2.ForeColor = whiteText;
+            this.toolStrip3.BackColor = dark;
+            this.toolStrip3.ForeColor = whiteText;
+            this.toolStrip4.BackColor = dark;
+            this.toolStrip4.ForeColor = whiteText;
+            this.GraphicPanel.ForeColor = dark;
+            this.GraphicPanel.BackColor = whiteText;
+            this.toolStripStatusLabel1.ForeColor = dark;
+            this.toolStripStatusLabel1.BackColor = whiteText;
+            this.ForeColor = dark;*/
+        }
 
         public void InitDiscord()
         {
@@ -561,7 +581,7 @@ namespace ManiacEditor
 
 
 
-            //runSceneButton.Enabled = enabled && !GameRunning;
+            runSceneButton.Enabled = enabled && !GameRunning;
 
             SetEditButtonsState(enabled);
             UpdateTooltips();
@@ -2321,6 +2341,7 @@ namespace ManiacEditor
 
             UnloadScene();
             UseDefaultPrefrences();
+            SetGameConfig();
 
             try
             {
@@ -2382,7 +2403,7 @@ namespace ManiacEditor
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Load failed. Error: " + ex.ToString());
+                MessageBox.Show("Load failed. Error: " + ex.ToString() + " " + select.Result);
                 return;
             }
 
@@ -3865,7 +3886,8 @@ Error: {ex.Message}");
             }
             if (mySettings.RunGamePath != "")
             {
-                string maniaDir = Path.GetDirectoryName(mySettings.RunGamePath);
+                string maniaFolder = mySettings.RunGamePath.Replace("SonicMania.exe", "");
+                string maniaDir = Path.GetDirectoryName(maniaFolder);
                 // Check if the mod loader is installed
                 if (File.Exists(Path.Combine(maniaDir, "d3d9.dll")))
                     psi.WorkingDirectory = maniaDir;
@@ -3874,13 +3896,35 @@ Error: {ex.Message}");
                 var p = Process.Start(psi);
                 GameRunning = true;
                 UpdateControls();
-                UseCheatCodes(p);
+                //UseCheatCodes(p);
+
+                GameMemory.Attach(p);
+                GameMemory.WriteByte(0x005FDD00, 0xEB);
+                GameMemory.WriteByte(0x00E48768, 0x01);
+                GameMemory.WriteByte(0x006F1806, 0x01);
+
 
 
                 new Thread(() =>
                 {
+                    int Level = 0;
+                    int Player = 0;
+                    int CloseGame = 0;
+                    if (Properties.Settings.Default.UsePrePlusOffsets == true)
+                    {
+                        Level = 0x00CCF6F8;
+                        Player = 0xA4C860;
+                        CloseGame = 0x628094;
+                    }
+                    else
+                    {
+                        Level = 0x00E48758;
+                        Player = 0x0085EC08;
+                        CloseGame = 0x0;
+                    }
+
                     /* Level != Main Menu*/
-                    while (GameMemory.ReadByte(0x00CCF6F8) != 0x02)
+                    while (GameMemory.ReadByte(Level) != 0x02)
                     {
                         // Check if the user closed the game
                         if (p.HasExited)
@@ -3890,17 +3934,23 @@ Error: {ex.Message}");
                             return;
                         }
                         // Restrict to Player 1
-                        if (GameMemory.ReadByte(0xA4C860) == 0x01)
+                        if (GameMemory.ReadByte(Player) == 0x01)
                         {
-                            GameMemory.WriteByte(0xA4C860, 0x00);
+                            GameMemory.WriteByte(Player, 0x00);
                         }
+                        //Debug.Print("Running");
                         Thread.Sleep(300);
                     }
                     // User is on the Main Menu
                     // Close the game
-                    GameMemory.WriteByte(0x628094, 0);
-                    GameRunning = false;
-                    Invoke(new Action(() => UpdateControls()));
+                    if (Properties.Settings.Default.UsePrePlusOffsets == true)
+                    {
+                        GameMemory.WriteByte(CloseGame, 0);
+                        GameRunning = false;
+                        Invoke(new Action(() => UpdateControls()));
+                        Debug.Print("Ended");
+                    }
+
                 }).Start();
             }
         }
@@ -3915,36 +3965,7 @@ Error: {ex.Message}");
             }
             else
             {
-                GameMemory.Attach(p);
-                //if (CheatCodes.Default.DisableBackgroundPausing)
-                GameMemory.WriteByte(0x005FDD00, 0xEB); // Background Pausing
-                                                        /*if (CheatCodes.Default.EnableDebugMode)
-                                                        {*/
-                GameMemory.WriteByte(0x00E48768, 0x01); // Debug Mode
-                GameMemory.WriteByte(0x006F1806, 0x01); // Dev Menu
-                //}
-                /*if (CheatCodes.Default.DisableSuperMusic)
-                    GameMemory.WriteByte(0x006F1806, 0x01);
-                if (CheatCodes.Default.DisableSuperPeelOutAnimation)
-                    GameMemory.WriteByte(0x006F1806, 0x01);
-                if (CheatCodes.Default.EnableInstaSheildandDropDash)
-                    GameMemory.WriteByte(0x006F1806, 0x01);
-                if (CheatCodes.Default.EnableSuperPeelOut)
-                    GameMemory.WriteByte(0x006F1806, 0x01);
-                if (CheatCodes.Default.EnableSuperWithNoEmerlads)
-                    GameMemory.WriteByte(0x006F1806, 0x01);
-                if (CheatCodes.Default.EnableVapeMode)
-                    GameMemory.WriteInt16(0x006F1806, 0x01);
-                if (CheatCodes.Default.FreezeTimer)
-                    GameMemory.WriteByte(0x006F1806, 0x01);
-                if (CheatCodes.Default.InfiniteLives)
-                    GameMemory.WriteByte(0x006F1806, 0x01);
-                if (CheatCodes.Default.InfiniteRings)
-                    GameMemory.WriteByte(0x006F1806, 0x01);
-                if (CheatCodes.Default.HideHUD)
-                    GameMemory.WriteByte(0x006F1806, 0x01);
-                if (CheatCodes.Default.DisableBackgroundPausing)
-                    GameMemory.WriteByte(0x006F1806, 0x01);*/
+
 
             }
         }
@@ -4851,46 +4872,6 @@ Error: {ex.Message}");
         {
             return Zoom;
         }
-
-        DialogResult deviceExceptionResult;
-        public void DeviceExceptionDialog()
-        {
-                try
-                {
-                    GraphicPanel.DisposeDeviceResources();
-                    GraphicPanel.Init(this);
-                }
-                catch (SharpDX.SharpDXException)
-                {
-                    using (var deviceLostBox = new DeviceLostBox())
-                    {
-                        deviceLostBox.ShowDialog();
-                        deviceExceptionResult = deviceLostBox.DialogResult;
-                    }
-                    if (deviceExceptionResult == DialogResult.Yes) //Yes and Exit
-                    {
-                        Editor.Instance.backupSceneBeforeCrash();
-                        Environment.Exit(1);
-
-                    }
-                    else if (deviceExceptionResult == DialogResult.No) //No and try to Restart
-                    {
-                        GraphicPanel.DisposeDeviceResources();
-                        GraphicPanel.Init(this);
-
-                    }
-                    else if (deviceExceptionResult == DialogResult.Retry) //Yes and try to Restart
-                    {
-                        Editor.Instance.backupSceneBeforeCrash();
-                        GraphicPanel.DisposeDeviceResources();
-                        GraphicPanel.Init(this);
-                    }
-                    else if (deviceExceptionResult == DialogResult.Ignore) //No and Exit
-                    {
-                        Environment.Exit(1);
-                    }
-                }
-            }
             private void Editor_FormClosing1(object sender, System.Windows.Forms.FormClosingEventArgs e)
             {
                 if (SceneLoaded == true && mySettings.DisableSaveWarnings == false)

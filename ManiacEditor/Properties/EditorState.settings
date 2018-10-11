@@ -32,5 +32,10 @@
     <Setting Name="addConfig" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="deviceCrashedString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">The DirectX Device just ran out of memory!
+If your using the x86 version of Maniac Editor, you should upgrade to the x64 version!
+Would you like to save your progress before Maniac Editor Closes?</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

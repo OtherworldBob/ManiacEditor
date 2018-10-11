@@ -57,7 +57,7 @@ namespace ManiacEditor
             }
             else
             {
-                Properties.EditorState.Default.developerInt = Properties.EditorState.Default.developerInt + manualTextInt;
+                Properties.EditorState.Default.developerInt = manualTextInt;
                 currentLabel.Text = curVal + Properties.EditorState.Default.developerInt;
             }
             

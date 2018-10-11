@@ -280,7 +280,7 @@ namespace ManiacEditor
             }
             else
             {
-                Editor.Instance.DeviceExceptionDialog();
+                DeviceExceptionDialog();
             }
         }
 
@@ -328,19 +328,54 @@ namespace ManiacEditor
 
         #region Rendering
 
-        public void DeviceExceptionDialog()
+        public void DeviceExceptionDialog(int state = 0)
         {
-            try
+            if (state == 0)
             {
-                DisposeDeviceResources();
-                Init(Editor.Instance);
+                try
+                {
+                    DisposeDeviceResources();
+                    Init(Editor.Instance);
+                }
+                catch (SharpDX.SharpDXException)
+                {
+                    using (var deviceLostBox = new DeviceLostBox())
+                    {
+                        deviceLostBox.ShowDialog();
+                        deviceExceptionResult = deviceLostBox.DialogResult;
+                    }
+                    if (deviceExceptionResult == DialogResult.Yes) //Yes and Exit
+                    {
+                        Editor.Instance.backupSceneBeforeCrash();
+                        Environment.Exit(1);
+
+                    }
+                    else if (deviceExceptionResult == DialogResult.No) //No and try to Restart
+                    {
+                        DisposeDeviceResources();
+                        Init(Editor.Instance);
+
+                    }
+                    else if (deviceExceptionResult == DialogResult.Retry) //Yes and try to Restart
+                    {
+                        Editor.Instance.backupSceneBeforeCrash();
+                        DisposeDeviceResources();
+                        Init(Editor.Instance);
+                    }
+                    else if (deviceExceptionResult == DialogResult.Ignore) //No and Exit
+                    {
+                        Environment.Exit(1);
+                    }
+                }
             }
-            catch (SharpDX.SharpDXException)
+            else if (state == 1)
             {
-                using (var deviceLostBox = new DeviceLostBox())
+
+                using (var deviceLostBox = new DeviceLostBox(1))
                 {
                     deviceLostBox.ShowDialog();
                     deviceExceptionResult = deviceLostBox.DialogResult;
+
                 }
                 if (deviceExceptionResult == DialogResult.Yes) //Yes and Exit
                 {
@@ -436,6 +471,14 @@ namespace ManiacEditor
             {
                 if (ex.ResultCode == ResultCode.DeviceLost)
                     deviceLost = true;
+                else if (ex.HResult == unchecked((int)(0x8007000E)))
+                {
+                    DeviceExceptionDialog(1);
+                }
+                else if (ex.HResult == unchecked((int)(0x8876086C)))
+                {
+                    DeviceExceptionDialog(1);
+                }
                 else
                     throw ex;
 }

@@ -82,10 +82,18 @@ namespace ManiacEditor
 
         public void ReloadQuickPanel()
         {
+            if (Editor.DataDirectory != null)
+            {
+                dataLabelToolStripItem.Text = "Data Directory: " + Editor.DataDirectory;
+            }
+            else
+            {
+                dataLabelToolStripItem.Text = "Data Directory: NULL";
+            }
+
             recentDataDirList.Nodes.Clear();
             recentDataDirList.Nodes.Add("Recent Data Directories");
             recentDataDirList.Nodes.Add("Saved Places");
-            recentDataDirList.Nodes.Add("Important Places");
             this.recentDataDirList.ImageList = new ImageList();
             this.recentDataDirList.ImageList.Images.Add("Folder", Properties.Resources.folder);
             this.recentDataDirList.ImageList.Images.Add("File", Properties.Resources.file);
@@ -97,7 +105,7 @@ namespace ManiacEditor
             }
             recentDataDirList.Nodes[0].ExpandAll();
 
-            if (Properties.Settings.Default.SavedPlaces?.Count > 0)
+            if (Properties.Settings.Default.SavedPlaces?.Count > 0 && Editor.DataDirectory != null)
             {
                 StringCollection recentFolders = new StringCollection();
                 this.recentDataDirList.ImageList.Images.Add("SubFolder", Properties.Resources.folder);
@@ -321,6 +329,14 @@ namespace ManiacEditor
                 if (recentDataDirList.Nodes[0].Nodes[i].IsSelected)
                 {
                     NodeType = 0;
+                    if (Editor.DataDirectory != null)
+                    {
+                        dataLabelToolStripItem.Text = "Data Directory: " + Editor.DataDirectory;
+                    }
+                    else
+                    {
+                        dataLabelToolStripItem.Text = "Data Directory: NULL";
+                    }
                 }
             }
 
@@ -335,13 +351,12 @@ namespace ManiacEditor
             if (NodeType == 0)
             {
                 GameConfig GameConfig;
-                String DataDirectory = recentDataDirList.SelectedNode.Tag.ToString();
+                String SelectedDataDirectory = recentDataDirList.SelectedNode.Tag.ToString();
                 {
-                    GameConfig = new GameConfig(Path.Combine(DataDirectory, "Game", "GameConfig.bin"));
+                    GameConfig = new GameConfig(Path.Combine(SelectedDataDirectory, "Game", "GameConfig.bin"));
                 }
                 LoadFromGameConfig(GameConfig);
                 _GameConfig = GameConfig;
-                //Editor.DataDirectory = DataDirectory; Not a good idea
             }
             if (NodeType == 1)
             {
@@ -502,6 +517,7 @@ namespace ManiacEditor
                 {
                     if (recentDataDirList.Nodes[0].Nodes[i].IsSelected)
                     {
+                        Editor.DataDirectory = recentDataDirList.Nodes[0].Nodes[i].Tag.ToString();
                         load_Click(sender, e);
                     }
                 }

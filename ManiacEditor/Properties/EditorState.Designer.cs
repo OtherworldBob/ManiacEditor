@@ -142,5 +142,19 @@ namespace ManiacEditor.Properties {
                 this["addConfig"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("The DirectX Device just ran out of memory!\r\nIf your using the x86 version of Mani" +
+            "ac Editor, you should upgrade to the x64 version!\r\nWould you like to save your p" +
+            "rogress before Maniac Editor Closes?")]
+        public string deviceCrashedString {
+            get {
+                return ((string)(this["deviceCrashedString"]));
+            }
+            set {
+                this["deviceCrashedString"] = value;
+            }
+        }
     }
 }

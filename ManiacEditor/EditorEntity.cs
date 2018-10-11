@@ -37,92 +37,92 @@ namespace ManiacEditor
         private bool filteredOut;
 
         // Object Render List
-        internal ItemBox itemBox = new ItemBox();
-        internal Bridge bridge = new Bridge();
-        internal Newtron newtron = new Newtron();
-        internal Ring ring = new Ring();
-        internal Chopper chopper = new Chopper();
-        internal TippingPlatform tippingPlatform = new TippingPlatform();
-        internal Spiny spiny = new Spiny();
-        internal StickyPlatform stickyPlatform = new StickyPlatform();
-        internal OneWayDoor oneWayDoor = new OneWayDoor();
-        internal TwistedTubes twistedTubes = new TwistedTubes();
-        internal Syringe syringe = new Syringe();
-        internal ShopWindow shopWindow = new ShopWindow();
-        internal Spring spring = new Spring();
-        internal Player player = new Player();
-        internal Platform platform = new Platform();
-        internal TimeAttackGate timeAttackGate = new TimeAttackGate();
-        internal Spikes spikes = new Spikes();
-        internal TeeterTotter teeterTotter = new TeeterTotter();
-        internal HUD hud = new HUD();
-        internal Music music = new Music();
-        internal BoundsMarker boundsMarker = new BoundsMarker();
-        internal TitleCard titleCard = new TitleCard();
-        internal CorkscrewPath corkscrewPath = new CorkscrewPath();
-        internal BGSwitch bgSwitch = new BGSwitch();
-        internal ForceSpin forceSpin = new ForceSpin();
-        internal UIControl uiControl = new UIControl();
-        internal SignPost signPost = new SignPost();
-        internal UFO_Ring ufo_Ring = new UFO_Ring();
-        internal UFO_Sphere ufo_Sphere = new UFO_Sphere();
-        internal UFO_Player ufo_Player = new UFO_Player();
-        internal UFO_ItemBox ufo_ItemBox = new UFO_ItemBox();
-        internal UFO_Springboard ufo_Springboard = new UFO_Springboard();
-        internal Decoration decoration = new Decoration();
-        internal WaterGush waterGush = new WaterGush();
-        internal BreakBar breakBar = new BreakBar();
-        internal InvisibleBlock invisibleBlock = new InvisibleBlock();
-        internal ForceUnstick forceUnstick = new ForceUnstick();
-        internal BreakableWall breakableWall = new BreakableWall();
-        internal CollapsingPlatform collapsingPlatform = new CollapsingPlatform();
-        internal PlaneSwitch planeSwitch = new PlaneSwitch();
-        internal ChemicalPool chemicalPool = new ChemicalPool();
-        internal DirectorChair directorChair = new DirectorChair();
-        internal TVVan tvVan = new TVVan();
-        internal FilmProjector filmProjector = new FilmProjector();
-        internal RockemSockem rockemSockem = new RockemSockem();
-        internal Clapperboard clapperboard = new Clapperboard();
-        internal PopcornMachine popcornMachine = new PopcornMachine();
-        internal LEDPanel ledPanel = new LEDPanel();
-        internal SpinSign spinSign = new SpinSign();
-        internal EggTV eggTV = new EggTV();
-        internal LottoMachine lottoMachine = new LottoMachine();
-        internal Funnel funnel = new Funnel();
-        internal Letterboard letterboard = new Letterboard();
-        internal DNARiser dnaRiser = new DNARiser();
-        internal CaterkillerJr caterkillerJr = new CaterkillerJr();
-        internal Grabber grabber = new Grabber();
-        internal SpinBooster spinBooster = new SpinBooster();
-        internal Water water = new Water();
-        internal WarpDoor warpDoor = new WarpDoor();
-        internal CableWarp cableWarp = new CableWarp();
-        internal PimPom pimPom = new PimPom();
-        internal SpecialRing specialRing = new SpecialRing();
-        internal CircleBumper circleBumper = new CircleBumper();
-        internal Tubinaut tubinaut = new Tubinaut();
-        internal LottoBall lottoBall = new LottoBall();
-        internal WeatherMobile weatherMobile = new WeatherMobile();
-        internal TVPole tvPole = new TVPole();
-        internal Launcher launcher = new Launcher();
-        internal Technosqueek technosqueek = new Technosqueek();
-        internal HangPoint hangPoint = new HangPoint();
-        internal FBZTrash fbzTrash = new FBZTrash();
-        internal FBZSinkTrash fbzSinkTrash = new FBZSinkTrash();
-        internal SpikeLog spikeLog = new SpikeLog();
-        internal EggPrison eggPrison = new EggPrison();
-        internal GenericTrigger genericTrigger = new GenericTrigger();
-        internal ZoneSetup zoneSetup = new ZoneSetup();
-        internal EncoreRoute encoreRoute = new EncoreRoute();
-        internal WaterfallSound waterfallSound = new WaterfallSound();
-        internal PlatformNode platformNode = new PlatformNode();
-        internal PlatformControl platformControl = new PlatformControl();
-        internal ParallaxSprite parallaxSprite = new ParallaxSprite();
-        internal Outro_Intro_Object outro_Intro_Object = new Outro_Intro_Object();
-        internal BlankObject blankObject = new BlankObject();
-        internal ZipLine zipLine = new ZipLine();
-        internal DERobot dERobot = new DERobot();
-        internal RubyFX rubyFX = new RubyFX();
+        ItemBox itemBox = new ItemBox();
+         Bridge bridge = new Bridge();
+         Newtron newtron = new Newtron();
+         Ring ring = new Ring();
+         Chopper chopper = new Chopper();
+         TippingPlatform tippingPlatform = new TippingPlatform();
+         Spiny spiny = new Spiny();
+         StickyPlatform stickyPlatform = new StickyPlatform();
+         OneWayDoor oneWayDoor = new OneWayDoor();
+         TwistedTubes twistedTubes = new TwistedTubes();
+         Syringe syringe = new Syringe();
+         ShopWindow shopWindow = new ShopWindow();
+         Spring spring = new Spring();
+         Player player = new Player();
+         Platform platform = new Platform();
+         TimeAttackGate timeAttackGate = new TimeAttackGate();
+         Spikes spikes = new Spikes();
+         TeeterTotter teeterTotter = new TeeterTotter();
+         HUD hud = new HUD();
+         Music music = new Music();
+         BoundsMarker boundsMarker = new BoundsMarker();
+         TitleCard titleCard = new TitleCard();
+         CorkscrewPath corkscrewPath = new CorkscrewPath();
+         BGSwitch bgSwitch = new BGSwitch();
+         ForceSpin forceSpin = new ForceSpin();
+         UIControl uiControl = new UIControl();
+         SignPost signPost = new SignPost();
+         UFO_Ring ufo_Ring = new UFO_Ring();
+         UFO_Sphere ufo_Sphere = new UFO_Sphere();
+         UFO_Player ufo_Player = new UFO_Player();
+         UFO_ItemBox ufo_ItemBox = new UFO_ItemBox();
+         UFO_Springboard ufo_Springboard = new UFO_Springboard();
+         Decoration decoration = new Decoration();
+         WaterGush waterGush = new WaterGush();
+         BreakBar breakBar = new BreakBar();
+         InvisibleBlock invisibleBlock = new InvisibleBlock();
+         ForceUnstick forceUnstick = new ForceUnstick();
+         BreakableWall breakableWall = new BreakableWall();
+         CollapsingPlatform collapsingPlatform = new CollapsingPlatform();
+         PlaneSwitch planeSwitch = new PlaneSwitch();
+         ChemicalPool chemicalPool = new ChemicalPool();
+         DirectorChair directorChair = new DirectorChair();
+         TVVan tvVan = new TVVan();
+         FilmProjector filmProjector = new FilmProjector();
+         RockemSockem rockemSockem = new RockemSockem();
+         Clapperboard clapperboard = new Clapperboard();
+         PopcornMachine popcornMachine = new PopcornMachine();
+         LEDPanel ledPanel = new LEDPanel();
+         SpinSign spinSign = new SpinSign();
+         EggTV eggTV = new EggTV();
+         LottoMachine lottoMachine = new LottoMachine();
+         Funnel funnel = new Funnel();
+         Letterboard letterboard = new Letterboard();
+         DNARiser dnaRiser = new DNARiser();
+         CaterkillerJr caterkillerJr = new CaterkillerJr();
+         Grabber grabber = new Grabber();
+         SpinBooster spinBooster = new SpinBooster();
+         Water water = new Water();
+         WarpDoor warpDoor = new WarpDoor();
+         CableWarp cableWarp = new CableWarp();
+         PimPom pimPom = new PimPom();
+         SpecialRing specialRing = new SpecialRing();
+         CircleBumper circleBumper = new CircleBumper();
+         Tubinaut tubinaut = new Tubinaut();
+         LottoBall lottoBall = new LottoBall();
+         WeatherMobile weatherMobile = new WeatherMobile();
+         TVPole tvPole = new TVPole();
+         Launcher launcher = new Launcher();
+         Technosqueek technosqueek = new Technosqueek();
+         HangPoint hangPoint = new HangPoint();
+         FBZTrash fbzTrash = new FBZTrash();
+         FBZSinkTrash fbzSinkTrash = new FBZSinkTrash();
+         SpikeLog spikeLog = new SpikeLog();
+         EggPrison eggPrison = new EggPrison();
+         GenericTrigger genericTrigger = new GenericTrigger();
+         ZoneSetup zoneSetup = new ZoneSetup();
+         EncoreRoute encoreRoute = new EncoreRoute();
+         WaterfallSound waterfallSound = new WaterfallSound();
+         PlatformNode platformNode = new PlatformNode();
+         PlatformControl platformControl = new PlatformControl();
+         ParallaxSprite parallaxSprite = new ParallaxSprite();
+         Outro_Intro_Object outro_Intro_Object = new Outro_Intro_Object();
+         BlankObject blankObject = new BlankObject();
+         ZipLine zipLine = new ZipLine();
+         DERobot dERobot = new DERobot();
+         RubyFX rubyFX = new RubyFX();
 
         // Object List for initilizing the if statement
         List<string> entityRenderingObjects = Editor.Instance.entityRenderingObjects;
@@ -175,32 +175,30 @@ namespace ManiacEditor
         {
             entity.Position.X.High += (short)diff.X;
             entity.Position.Y.High += (short)diff.Y;
-            //Since the Editor can now update without the use of this render, I removed it
-            //if (Properties.Settings.Default.AllowMoreRenderUpdates == true) Editor.Instance.UpdateRender();
             if (Editor.GameRunning)
             {
-                // TODO: Find out if this is constent
-                int ObjectStart = 0x00A5DCC0;
-                int ObjectSize = 0x458;
-                int ObbjectAddress = ObjectStart + (ObjectSize * entity.SlotID);
-                Editor.GameMemory.WriteInt16(ObbjectAddress + 2, entity.Position.X.High);
-                Editor.GameMemory.WriteInt16(ObbjectAddress + 6, entity.Position.Y.High);
+                // TODO: Find out if this is constent (apparently it isn't)
+                int ObjectStart = 0x0;
+                int ObjectSize = 0x0;
+                if (Properties.Settings.Default.UsePrePlusOffsets == true)
+                {
+                    ObjectStart = 0x00A5DCC0;
+                    ObjectSize = 0x458;
+                }
+                else
+                {
+                    ObjectStart = 0x00870850;
+                    ObjectSize = 0x458;
+                    int ObjectAddress = ObjectStart + (ObjectSize * entity.SlotID);
+                    Editor.GameMemory.WriteInt16(ObjectAddress + 2, entity.Position.X.High);
+                    Editor.GameMemory.WriteInt16(ObjectAddress + 6, entity.Position.Y.High);
+                }
             }
         }
 
         public void SnapToGrid(Point diff)
         {
-            entity.Position.X.High = (short)((diff.X + 8) / 16 * 16);
-            entity.Position.Y.High = (short)((diff.Y + 8) / 16 * 16);
-            if (Editor.GameRunning)
-            {
-                // TODO: Find out if this is constent
-                int ObjectStart = 0x00A5DCC0;
-                int ObjectSize = 0x458;
-                int ObbjectAddress = ObjectStart + (ObjectSize * entity.SlotID);
-                Editor.GameMemory.WriteInt16(ObbjectAddress + 2, entity.Position.X.High);
-                Editor.GameMemory.WriteInt16(ObbjectAddress + 6, entity.Position.Y.High);
-            }
+
         }
 
         public Rectangle GetDimensions()

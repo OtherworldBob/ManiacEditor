@@ -1,4 +1,6 @@
-﻿namespace ManiacEditor
+﻿using Microsoft.Xna.Framework;
+
+namespace ManiacEditor
 {
     partial class SceneSelect
     {
@@ -57,6 +59,7 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearDataDirectoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeAllSavedPlacesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataLabelToolStripItem = new System.Windows.Forms.ToolStripTextBox();
             this.folderEditContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeSavedFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataDirEditContext = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -288,7 +291,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.dataLabelToolStripItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -317,6 +321,17 @@
             this.removeAllSavedPlacesToolStripMenuItem.Name = "removeAllSavedPlacesToolStripMenuItem";
             this.removeAllSavedPlacesToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.removeAllSavedPlacesToolStripMenuItem.Text = "Remove All Saved Places";
+            // 
+            // dataLabelToolStripItem
+            // 
+            this.dataLabelToolStripItem.AutoSize = false;
+            this.dataLabelToolStripItem.BackColor = System.Drawing.SystemColors.Control;
+            this.dataLabelToolStripItem.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataLabelToolStripItem.Name = "dataLabelToolStripItem";
+            this.dataLabelToolStripItem.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.dataLabelToolStripItem.ReadOnly = true;
+            this.dataLabelToolStripItem.Size = new System.Drawing.Size(940, 20);
+            this.dataLabelToolStripItem.Text = "Data Directory: NULL";
             // 
             // folderEditContext
             // 
@@ -416,11 +431,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem deleteSceneInfoToolStripMenuItem;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ToolStripPanel BottomToolStripPanel;
-        private System.Windows.Forms.ToolStripPanel TopToolStripPanel;
-        private System.Windows.Forms.ToolStripPanel RightToolStripPanel;
-        private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
-        private System.Windows.Forms.ToolStripContentPanel ContentPanel;
         private System.Windows.Forms.TreeView recentDataDirList;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button addButton;
@@ -436,5 +446,11 @@
         private System.Windows.Forms.ToolStripMenuItem removeDataDirectoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeAllSavedPlacesToolStripMenuItem;
         private System.Windows.Forms.CheckBox preRenderCheckbox;
+        private System.Windows.Forms.ToolStripPanel BottomToolStripPanel;
+        private System.Windows.Forms.ToolStripPanel TopToolStripPanel;
+        private System.Windows.Forms.ToolStripPanel RightToolStripPanel;
+        private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
+        private System.Windows.Forms.ToolStripContentPanel ContentPanel;
+        private System.Windows.Forms.ToolStripTextBox dataLabelToolStripItem;
     }
 }

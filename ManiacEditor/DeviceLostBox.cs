@@ -12,13 +12,24 @@ namespace ManiacEditor
 {
     public partial class DeviceLostBox : Form
     {
-        public DeviceLostBox()
+        public DeviceLostBox(int state = 0)
         {
             InitializeComponent();
 
             System.IO.Stream str = Properties.Resources.OhNo;
             System.Media.SoundPlayer snd = new System.Media.SoundPlayer(str);
             snd.Play();
+            if (state == 1)
+            {
+                outOfMemory();
+            }
+        }
+
+        public void outOfMemory()
+        {
+            button2.Enabled = false;
+            button3.Enabled = false;
+            label1.Text = Properties.EditorState.Default.deviceCrashedString;
         }
 
         private void button1_Click(object sender, EventArgs e)

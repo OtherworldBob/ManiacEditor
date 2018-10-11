@@ -1055,7 +1055,7 @@
             // noConfigFilesToolStripMenuItem
             // 
             this.noConfigFilesToolStripMenuItem.Name = "noConfigFilesToolStripMenuItem";
-            this.noConfigFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.noConfigFilesToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.noConfigFilesToolStripMenuItem.Text = "No Config Files";
             // 
             // editConfigsToolStripMenuItem1
@@ -1514,6 +1514,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.toolStrip2);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
