@@ -18,6 +18,7 @@ namespace ManiacEditor.Entity_Renders
         public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int length = (int)entity.attributesMap["length"].ValueVar;
+            int i = 0;
             bool fliph = false;
             bool flipv = false;
             var editorAnim = e.LoadAnimation2("HangPoint", d, 0, 0, fliph, flipv, false);
@@ -29,42 +30,34 @@ namespace ManiacEditor.Entity_Renders
                 int lengthMemory = length;
 
                 //e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
-                /* if (length >= 1)
-                    {
                     int repeat = 0;
-
-                    for (bool a = false; a == true;)
+                    int lengthLeft = length;
+                    bool finalLoop = false;
+                    while (lengthLeft > 256)
                     {
-                        if (lengthMemory > 256)
-                        {
-                            repeat++;
-                        }
-                        else
-                        {
-                            a = true;
-                        }
+                        repeat++;
+                        lengthLeft = lengthLeft - 256;
                     }
-                    for (i = 0; i < repeat; i++)
+                    d.DrawBitmap(frame2.Texture,
+                        x + frame2.Frame.CenterX - (fliph ? (frame2.Frame.Width - editorAnim2.Frames[0].Frame.Width) : 0),
+                        y - (i * 256) + (flipv ? (frame2.Frame.Height - editorAnim2.Frames[0].Frame.Height) : 0),
+                        frame2.Frame.Width, lengthMemory, false, Transparency);
+                    for (i = 1; i < repeat+1; i++)
                     {
+                    if (i == repeat)
+                    {
+                        finalLoop = true;
+                    }
                         d.DrawBitmap(frame2.Texture,
                             x + frame2.Frame.CenterX - (fliph ? (frame2.Frame.Width - editorAnim2.Frames[0].Frame.Width) : 0),
-                            y + (256*i) + frame2.Frame.CenterY + (flipv ? (frame2.Frame.Height - editorAnim2.Frames[0].Frame.Height) : 0),
-                            frame2.Frame.Width, (256 * i), false, Transparency);
+                                y + (i * 256) + (flipv ? (frame2.Frame.Height - editorAnim2.Frames[0].Frame.Height) : 0),
+                                frame2.Frame.Width, (finalLoop ? lengthLeft : frame2.Frame.Height), false, Transparency);
                     }
-                    if (lengthMemory <= 256 && lengthMemory != 0)
-                    {
-                        d.DrawBitmap(frame2.Texture,
-                            x + frame2.Frame.CenterX - (fliph ? (frame2.Frame.Width - editorAnim2.Frames[0].Frame.Width) : 0),
-                            y + (i * 256) + frame2.Frame.CenterY + (flipv ? (frame2.Frame.Height - editorAnim2.Frames[0].Frame.Height) : 0),
-                            frame2.Frame.Width, lengthMemory, false, Transparency);
-                    }
+                    d.DrawBitmap(frame.Texture,
+                        x + frame.Frame.CenterX - (fliph ? (frame.Frame.Width - editorAnim.Frames[0].Frame.Width) : 0),
+                        y + length + (flipv ? (frame.Frame.Height - editorAnim.Frames[0].Frame.Height) : 0),
+                            frame.Frame.Width, frame.Frame.Height, false, Transparency);
 
-                }*/
-
-                d.DrawBitmap(frame.Texture,
-                    x + frame.Frame.CenterX - (fliph ? (frame.Frame.Width - editorAnim.Frames[0].Frame.Width) : 0),
-                    y + /*(256*i) - lengthMemory +*/ frame.Frame.CenterY + (flipv ? (frame.Frame.Height - editorAnim.Frames[0].Frame.Height) : 0),
-                    frame.Frame.Width, frame.Frame.Height, false, Transparency);
             }
         }
     }

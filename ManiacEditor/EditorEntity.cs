@@ -123,7 +123,10 @@ namespace ManiacEditor
          ZipLine zipLine = new ZipLine();
          DERobot dERobot = new DERobot();
          RubyFX rubyFX = new RubyFX();
+        ManiacEditor.Entity_Renders.Button button = new ManiacEditor.Entity_Renders.Button();
+        TwistingDoor twistingDoor = new TwistingDoor();
 
+            
         // Object List for initilizing the if statement
         List<string> entityRenderingObjects = Editor.Instance.entityRenderingObjects;
         List<string> renderOnScreenExlusions = Editor.Instance.renderOnScreenExlusions;
@@ -1345,6 +1348,16 @@ namespace ManiacEditor
                     case "FXRuby":
                         {
                             rubyFX.Draw(d, entity, this, x, y, Transparency);
+                            break;
+                        }
+                    case "Button":
+                        {
+                            button.Draw(d, entity, this, x, y, Transparency);
+                            break;
+                        }
+                    case "TwistingDoor":
+                        {
+                            twistingDoor.Draw(d, entity, this, x, y, Transparency);
                             break;
                         }
                 }

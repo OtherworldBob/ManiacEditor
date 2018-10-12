@@ -385,6 +385,7 @@
     <Compile Include="Entity Renders\BreakableWall.cs" />
     <Compile Include="Entity Renders\BreakBar.cs" />
     <Compile Include="Entity Renders\Bridge.cs" />
+    <Compile Include="Entity Renders\Button.cs" />
     <Compile Include="Entity Renders\CableWarp.cs" />
     <Compile Include="Entity Renders\CaterkillerJr.cs" />
     <Compile Include="Entity Renders\ChemicalPool.cs" />
@@ -404,6 +405,7 @@
     <Compile Include="Entity Renders\FBZSinkTrash.cs" />
     <Compile Include="Entity Renders\FBZTrash.cs" />
     <Compile Include="Entity Renders\FilmProjector.cs" />
+    <Compile Include="Entity Renders\FoldingPlatform.cs" />
     <Compile Include="Entity Renders\ForceSpin.cs" />
     <Compile Include="Entity Renders\ForceUnstick.cs" />
     <Compile Include="Entity Renders\Funnel.cs" />
@@ -454,6 +456,7 @@
     <Compile Include="Entity Renders\TVPole.cs" />
     <Compile Include="Entity Renders\TVVan.cs" />
     <Compile Include="Entity Renders\TwistedTubes.cs" />
+    <Compile Include="Entity Renders\TwistingDoor.cs" />
     <Compile Include="Entity Renders\UFO_ItemBox.cs" />
     <Compile Include="Entity Renders\UFO_Player.cs" />
     <Compile Include="Entity Renders\UFO_Ring.cs" />
