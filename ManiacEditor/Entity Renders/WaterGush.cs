@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class WaterGush
+    public class WaterGush : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             var length = (int)(entity.attributesMap["length"].ValueUInt32);
             var editorAnim = e.LoadAnimation2("WaterGush", d, 0, -1, false, false, false);
@@ -27,6 +27,11 @@ namespace ManiacEditor.Entity_Renders
                         frame.Frame.Width, frame.Frame.Height, false, Transparency);
                 }
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "WaterGush";
         }
     }
 }

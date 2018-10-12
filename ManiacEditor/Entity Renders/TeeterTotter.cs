@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class TeeterTotter
+    public class TeeterTotter : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             var value = entity.attributesMap["length"].ValueUInt32 / 2;
             var editorAnim = e.LoadAnimation2("TeeterTotter", d, 0, 0, false, false, false);
@@ -26,6 +26,11 @@ namespace ManiacEditor.Entity_Renders
                         y + frame.Frame.CenterY, frame.Frame.Width, frame.Frame.Height, false, Transparency);
                 }
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "TeeterTotter";
         }
     }
 }

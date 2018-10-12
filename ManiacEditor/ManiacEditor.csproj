@@ -402,6 +402,7 @@
     <Compile Include="Entity Renders\EggPrison.cs" />
     <Compile Include="Entity Renders\EggTV.cs" />
     <Compile Include="Entity Renders\EncoreRoute.cs" />
+    <Compile Include="Entity Renders\EntityRenderer.cs" />
     <Compile Include="Entity Renders\FBZSinkTrash.cs" />
     <Compile Include="Entity Renders\FBZTrash.cs" />
     <Compile Include="Entity Renders\FilmProjector.cs" />

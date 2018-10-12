@@ -11,10 +11,10 @@ using SharpDX.Direct3D9;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class TVPole
+    public class TVPole : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             var value = entity.attributesMap["length"].ValueUInt16 + 1;
             var editorAnim = e.LoadAnimation2("TVPole", d, 1, 0, false, false, false);
@@ -52,6 +52,11 @@ namespace ManiacEditor.Entity_Renders
 
                 }
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "TVPole";
         }
     }
 }

@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class TVVan
+    public class TVVan : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int type = (int)entity.attributesMap["type"].ValueUInt8;
             bool allowToRender = false;
@@ -302,6 +302,11 @@ y + sataliteHook.Frame.CenterY + (flipv ? (sataliteHook.Frame.Height - editorAni
 sataliteHook.Frame.Width, sataliteHook.Frame.Height, false, Transparency);
                 }
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "TVVan";
         }
     }
 }

@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class ForceUnstick
+    public class ForceUnstick : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             var width = (int)(entity.attributesMap["width"].ValueUInt8);
             var height = (int)(entity.attributesMap["height"].ValueUInt8);
@@ -41,6 +41,11 @@ namespace ManiacEditor.Entity_Renders
                     }
                 }
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "ForceUnstick";
         }
     }
 }

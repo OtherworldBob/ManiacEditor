@@ -11,10 +11,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class ZipLine
+    public class ZipLine : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int angle = (int)(entity.attributesMap["angle"].ValueInt32);
             int length = (int)(entity.attributesMap["length"].ValueVar/1.4);
@@ -72,6 +72,11 @@ namespace ManiacEditor.Entity_Renders
 
             int[] results = { (int)Math.Round(finalX), (int)Math.Round(finalY) };
             return results;
+        }
+
+        public override string GetObjectName()
+        {
+            return "ZipLine";
         }
     }
 }

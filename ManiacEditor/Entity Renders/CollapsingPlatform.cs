@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class CollapsingPlatform
+    public class CollapsingPlatform : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             var widthPixels = (int)(entity.attributesMap["size"].ValuePosition.X.High);
             var heightPixels = (int)(entity.attributesMap["size"].ValuePosition.Y.High);
@@ -81,6 +81,11 @@ namespace ManiacEditor.Entity_Renders
                     }
                 }
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "CollapsingPlatform";
         }
     }
 }

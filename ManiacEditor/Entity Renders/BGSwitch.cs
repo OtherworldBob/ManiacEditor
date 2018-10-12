@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class BGSwitch
+    public class BGSwitch : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             var editorAnim = e.LoadAnimation2("EditorIcons", d, 0, 5, false, false, false);
             if (editorAnim != null && editorAnim.Frames.Count != 0)
@@ -89,6 +89,11 @@ namespace ManiacEditor.Entity_Renders
                     }
                 }
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "BGSwitch";
         }
     }
 }

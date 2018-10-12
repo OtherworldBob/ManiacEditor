@@ -11,10 +11,10 @@ using SharpDX.Direct3D9;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class CableWarp
+    public class CableWarp : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int type = (int)entity.attributesMap["type"].ValueVar;
             bool fliph = false;
@@ -56,6 +56,11 @@ namespace ManiacEditor.Entity_Renders
                 }
 
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "CableWarp";
         }
     }
 }

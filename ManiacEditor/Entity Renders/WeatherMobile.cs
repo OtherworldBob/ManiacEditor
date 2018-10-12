@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class WeatherMobile
+    public class WeatherMobile : EntityRenderer
     {
         static int SEPERATE_VALUE = 145;
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             bool fliph = false;
             bool flipv = false;
@@ -48,6 +48,11 @@ namespace ManiacEditor.Entity_Renders
                     frame3.Frame.Width, frame3.Frame.Height, false, 100);
 
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "WeatherMobile";
         }
     }
 }

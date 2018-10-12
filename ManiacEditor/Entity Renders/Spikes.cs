@@ -10,14 +10,15 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class Spikes
+    public class Spikes : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency, bool isFBZ)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             var value = entity.attributesMap["type"];
             bool fliph = false;
             bool flipv = false;
+            bool isFBZ = Editor.Instance.SelectedZone.Contains("FBZ\\");
             int animID = 0;
 
             // Down
@@ -128,6 +129,11 @@ namespace ManiacEditor.Entity_Renders
                 }
 
             }
+        }
+
+        public override string GetObjectName()
+        {
+           return "Spikes";
         }
     }
 }

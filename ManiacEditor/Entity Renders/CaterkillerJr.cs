@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class CaterkillerJr
+    public class CaterkillerJr : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             //int type = (int)entity.attributesMap["type"].ValueUInt8;
             //int direction = (int)entity.attributesMap["direction"].ValueUInt8;
@@ -63,6 +63,11 @@ namespace ManiacEditor.Entity_Renders
 
 
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "CaterkillerJr";
         }
     }
 }

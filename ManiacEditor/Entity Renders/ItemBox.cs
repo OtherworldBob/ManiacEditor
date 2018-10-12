@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class ItemBox
+    public class ItemBox : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
                 var value = entity.attributesMap["type"];
                 int direction = (int)entity.attributesMap["direction"].ValueUInt8;
@@ -41,6 +41,11 @@ namespace ManiacEditor.Entity_Renders
                     d.DrawBitmap(frameEffect.Texture, x + frameEffect.Frame.CenterX, y + frameEffect.Frame.CenterY - (flipv ? (-3) : 3),
                         frameEffect.Frame.Width, frameEffect.Frame.Height, false, Transparency);
                 }
+        }
+
+        public override string GetObjectName()
+        {
+            return "ItemBox";
         }
     }
 }

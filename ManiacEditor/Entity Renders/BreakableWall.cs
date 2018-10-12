@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class BreakableWall
+    public class BreakableWall : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             var type = entity.attributesMap["type"].ValueUInt8;
             var width = (int)(entity.attributesMap["size"].ValuePosition.X.High) - 1;
@@ -111,6 +111,11 @@ namespace ManiacEditor.Entity_Renders
                     d.DrawBitmap(frame.Texture, x - (knux ? 0 : frame.Frame.Width / 2), y - frame.Frame.Height / 2, frame.Frame.Width, frame.Frame.Height, false, Transparency);
                 }
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "BreakableWall";
         }
     }
 }

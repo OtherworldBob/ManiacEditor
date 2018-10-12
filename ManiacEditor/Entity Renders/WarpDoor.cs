@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class WarpDoor
+    public class WarpDoor : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             var width = (int)(entity.attributesMap["width"].ValueUInt32) - 1;
             var height = (int)(entity.attributesMap["height"].ValueUInt32) - 1;
@@ -35,6 +35,11 @@ namespace ManiacEditor.Entity_Renders
                     }
                 }
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "WarpDoor";
         }
     }
 }

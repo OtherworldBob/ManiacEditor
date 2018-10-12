@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class BreakBar
+    public class BreakBar : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             var length = (short)(entity.attributesMap["length"].ValueUInt16);
             var orientation = entity.attributesMap["orientation"].ValueUInt8;
@@ -41,6 +41,11 @@ namespace ManiacEditor.Entity_Renders
                     frameBottom.Frame.Width, frameBottom.Frame.Height, false, Transparency);
 
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "BreakBar";
         }
     }
 }

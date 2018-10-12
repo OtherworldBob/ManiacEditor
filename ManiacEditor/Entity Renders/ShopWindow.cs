@@ -11,10 +11,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class ShopWindow
+    public class ShopWindow : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             var widthPixels = (int)(entity.attributesMap["size"].ValuePosition.X.High) * 2;
             var heightPixels = (int)(entity.attributesMap["size"].ValuePosition.Y.High) * 2;
@@ -82,6 +82,11 @@ namespace ManiacEditor.Entity_Renders
                     }
                 }
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "ShopWindow";
         }
     }
 }

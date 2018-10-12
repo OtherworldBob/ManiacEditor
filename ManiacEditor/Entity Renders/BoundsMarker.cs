@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class BoundsMarker
+    public class BoundsMarker : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             var editorAnim = e.LoadAnimation2("EditorIcons", d, 0, 2, false, false, false);
             if (editorAnim != null && editorAnim.Frames.Count != 0)
@@ -23,6 +23,11 @@ namespace ManiacEditor.Entity_Renders
                 d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX, y + frame.Frame.CenterY,
                     frame.Frame.Width, frame.Frame.Height, false, Transparency);
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "BoundsMarker";
         }
     }
 }

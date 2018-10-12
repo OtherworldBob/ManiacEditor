@@ -11,10 +11,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class LottoBall
+    public class LottoBall : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int type = (int)entity.attributesMap["type"].ValueUInt8;
             int lottoNum = (int)entity.attributesMap["lottoNum"].ValueUInt8;
@@ -106,6 +106,11 @@ namespace ManiacEditor.Entity_Renders
                 }
 
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "LottoBall";
         }
     }
 }

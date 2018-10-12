@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class UFO_ItemBox
+    public class UFO_ItemBox : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int id = (int)entity.attributesMap["type"].ValueVar;
             if (id > 2)
@@ -27,6 +27,11 @@ namespace ManiacEditor.Entity_Renders
                 d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX, y + frame.Frame.CenterY,
                     frame.Frame.Width, frame.Frame.Height, false, Transparency);
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "UFO_ItemBox";
         }
     }
 }

@@ -11,10 +11,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class PimPom
+    public class PimPom : EntityRenderer
     {
         Boolean boolState = true;
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int type = (int)entity.attributesMap["type"].ValueVar;
             int color = (int)entity.attributesMap["color"].ValueUInt8;
@@ -164,6 +164,11 @@ namespace ManiacEditor.Entity_Renders
 
 
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "PimPom";
         }
     }
 }

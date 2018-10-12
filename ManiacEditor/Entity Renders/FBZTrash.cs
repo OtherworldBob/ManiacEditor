@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class FBZTrash
+    public class FBZTrash : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int frameID = (int)entity.attributesMap["frameID"].ValueVar;
             bool fliph = false;
@@ -30,6 +30,11 @@ namespace ManiacEditor.Entity_Renders
                     y + frame.Frame.CenterY + (flipv ? (frame.Frame.Height - editorAnim.Frames[0].Frame.Height) : 0),
                     frame.Frame.Width, frame.Frame.Height, false, Transparency);
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "FBZTrash";
         }
     }
 }

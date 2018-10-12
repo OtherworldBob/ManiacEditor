@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class TwistedTubes
+    public class TwistedTubes : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             bool fliph = false;
             bool flipv = false;
@@ -41,6 +41,11 @@ namespace ManiacEditor.Entity_Renders
                 }
 
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "TwistedTubes";
         }
     }
 }

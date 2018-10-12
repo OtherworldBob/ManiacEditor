@@ -10,7 +10,7 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class Button
+    public class Button : EntityRenderer
     {
 
         public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
@@ -45,6 +45,11 @@ namespace ManiacEditor.Entity_Renders
                     y + frame.Frame.CenterY + (flipv ? (frame.Frame.Height - editorAnim.Frames[0].Frame.Height + 10) : 0),
                     frame.Frame.Width, frame.Frame.Height, false, Transparency);
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "Button";
         }
     }
 }

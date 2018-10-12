@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class Letterboard
+    public class Letterboard : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int letterID = (int)entity.attributesMap["letterID"].ValueUInt8;
             bool controller = entity.attributesMap["controller"].ValueBool;
@@ -44,6 +44,11 @@ namespace ManiacEditor.Entity_Renders
                 }
 
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "Letterboard";
         }
     }
 }

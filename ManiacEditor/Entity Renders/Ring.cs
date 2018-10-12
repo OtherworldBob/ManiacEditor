@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class Ring
+    public class Ring : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int type = (int)entity.attributesMap["type"].ValueVar;
             int moveType = (int)entity.attributesMap["moveType"].ValueVar;
@@ -80,6 +80,11 @@ namespace ManiacEditor.Entity_Renders
 
 
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "Ring";
         }
     }
 }

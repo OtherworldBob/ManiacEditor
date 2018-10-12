@@ -3846,50 +3846,55 @@ Error: {ex.Message}");
             }
         }
 
+        // TODO: Add Scene Autobooting
         private void RunSequence(object sender, EventArgs e)
         {
-            // Ask where Sonic Mania ia located when not set
-            if (string.IsNullOrEmpty(mySettings.RunGamePath))
+            // Ask where Sonic Mania is located when not set
+            string path = "steam://run/584400";
+            bool ready = false;
+            if (mySettings.UsePrePlusOffsets)
             {
-                var ofd = new OpenFileDialog();
-                ofd.Title = "Select SonicMania.exe";
-                ofd.Filter = "Windows PE Executable|*.exe";
-                if (ofd.ShowDialog() == DialogResult.OK)
-                    mySettings.RunGamePath = ofd.FileName;
-            }
-            else
-            {
-                if (!File.Exists(mySettings.RunGamePath))
+                if (string.IsNullOrEmpty(mySettings.RunGamePath))
                 {
-                    mySettings.RunGamePath = "";
-                    return;
+                    var ofd = new OpenFileDialog();
+                    ofd.Title = "Select SonicMania.exe";
+                    ofd.Filter = "Windows PE Executable|*.exe";
+                    if (ofd.ShowDialog() == DialogResult.OK)
+                        mySettings.RunGamePath = ofd.FileName;
                 }
+                else
+                {
+                    if (!File.Exists(mySettings.RunGamePath))
+                    {
+                        mySettings.RunGamePath = "";
+                        return;
+                    }
+                }
+                path = mySettings.RunGamePath;
             }
-
             ProcessStartInfo psi;
 
-            if (mySettings.RunGameInsteadOfScene == true)
+            if (mySettings.RunGameInsteadOfScene)
             {
-                psi = new ProcessStartInfo(mySettings.RunGamePath);
+                psi = new ProcessStartInfo(path);
             }
             else
             {
                 if (mySettings.UsePrePlusOffsets == true)
                 {
-                    psi = new ProcessStartInfo(mySettings.RunGamePath, $"stage={SelectedZone};scene={SelectedScene[5]};");
+                    psi = new ProcessStartInfo(path, $"stage={SelectedZone};scene={SelectedScene[5]};");
                 }
                 else
                 {
-                    psi = new ProcessStartInfo(mySettings.RunGamePath);
+                    psi = new ProcessStartInfo(path);
                     // TODO: Find workaround to get Mania to boot into a Scene Post Plus
                     // Moved to main offset section
                 }
 
             }
-            if (mySettings.RunGamePath != "")
+            if (path != "")
             {
-                string maniaFolder = mySettings.RunGamePath.Replace("SonicMania.exe", "");
-                string maniaDir = Path.GetDirectoryName(maniaFolder);
+                string maniaDir = Path.GetDirectoryName(path);
                 // Check if the mod loader is installed
                 if (File.Exists(Path.Combine(maniaDir, "d3d9.dll")))
                     psi.WorkingDirectory = maniaDir;
@@ -3897,36 +3902,48 @@ Error: {ex.Message}");
                     psi.WorkingDirectory = Path.GetDirectoryName(DataDirectory);
                 var p = Process.Start(psi);
                 GameRunning = true;
-                UpdateControls();
-                //UseCheatCodes(p);
-
-                GameMemory.Attach(p);
-                GameMemory.WriteByte(0x005FDD00, 0xEB);
-                GameMemory.WriteByte(0x00E48768, 0x01);
-                GameMemory.WriteByte(0x006F1806, 0x01);
-
+                if (mySettings.UsePrePlusOffsets)
+                {
+                    UpdateControls();
+                    UseCheatCodes(p);
+                    ready = true;
+                }
+                else
+                {
+                    // Wait for Steam to complete startup
+                    new Thread(() =>
+                    {
+                        Process[] Procs;
+                        while ((Procs = Process.GetProcessesByName("SonicMania")).Length == 0)
+                            Thread.Sleep(1);
+                        Invoke(new Action(() =>
+                        {
+                            p = Procs[0];
+                            // Attach and Apply Cheats
+                            UseCheatCodes(p);
+                            UpdateControls();
+                            ready = true;
+                        }));
+                    }).Start();
+                }
 
 
                 new Thread(() =>
                 {
-                    int Level = 0;
-                    int Player = 0;
-                    int CloseGame = 0;
-                    if (Properties.Settings.Default.UsePrePlusOffsets == true)
-                    {
-                        Level = 0x00CCF6F8;
-                        Player = 0xA4C860;
-                        CloseGame = 0x628094;
-                    }
-                    else
-                    {
-                        Level = 0x00E48758;
-                        Player = 0x0085EC08;
-                        CloseGame = 0x0;
-                    }
-
+                    while (!ready)
+                        Thread.Sleep(10);
                     /* Level != Main Menu*/
-                    while (GameMemory.ReadByte(Level) != 0x02)
+                    int CurrentScene_ptr = 0x00E48758;          // &CurrentScene
+                    int IsGameRunning_ptr = 0x0065D1C8;
+                    int Player1_ControllerID_ptr = 0x0085EB44;  // &Player1.ControllerID
+                    int Player2_ControllerID_ptr = 0x0085EF9C;  // &Player2.ControllerID
+                    if (mySettings.UsePrePlusOffsets)
+                    {
+                        CurrentScene_ptr = 0x00CCF6F8;
+                        IsGameRunning_ptr = 0x00628094;
+                        Player1_ControllerID_ptr = 0x00A4C860;
+                    }
+                    while (GameMemory.ReadByte(CurrentScene_ptr) != 0x02)
                     {
                         // Check if the user closed the game
                         if (p.HasExited)
@@ -3935,24 +3952,21 @@ Error: {ex.Message}");
                             Invoke(new Action(() => UpdateControls()));
                             return;
                         }
-                        // Restrict to Player 1
-                        if (GameMemory.ReadByte(Player) == 0x01)
+                        // Makes sure the process is attached
+                        GameMemory.Attach(p);
+                        // Set Player 1 Controller Set to AnyController
+                        if (GameMemory.ReadByte(Player1_ControllerID_ptr) == 0x01)
                         {
-                            GameMemory.WriteByte(Player, 0x00);
+                            GameMemory.WriteByte(Player1_ControllerID_ptr, 0x00);
+                            GameMemory.WriteByte(Player2_ControllerID_ptr, 0xFF);
                         }
-                        //Debug.Print("Running");
                         Thread.Sleep(300);
                     }
                     // User is on the Main Menu
                     // Close the game
-                    if (Properties.Settings.Default.UsePrePlusOffsets == true)
-                    {
-                        GameMemory.WriteByte(CloseGame, 0);
-                        GameRunning = false;
-                        Invoke(new Action(() => UpdateControls()));
-                        Debug.Print("Ended");
-                    }
-
+                    GameMemory.WriteByte(IsGameRunning_ptr, 0);
+                    GameRunning = false;
+                    Invoke(new Action(() => UpdateControls()));
                 }).Start();
             }
         }

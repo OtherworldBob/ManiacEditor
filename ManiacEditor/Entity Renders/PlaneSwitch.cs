@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class PlaneSwitch
+    public class PlaneSwitch : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             const int LeftDist = 1,
                       LeftPlane = 2,
@@ -89,6 +89,11 @@ namespace ManiacEditor.Entity_Renders
 
             int[] results = { (int)Math.Round(finalX), (int)Math.Round(finalY) };
             return results;
+        }
+
+        public override string GetObjectName()
+        {
+            return "PlaneSwitch";
         }
     }
 }

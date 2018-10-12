@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class DirectorChair
+    public class DirectorChair : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             //int type = (int)entity.attributesMap["type"].ValueUInt8;
             int size = (int)entity.attributesMap["size"].ValueVar;
@@ -47,6 +47,11 @@ namespace ManiacEditor.Entity_Renders
                     y - (size * 5 + 8) + frame3.Frame.CenterY + (flipv ? (frame3.Frame.Height - editorAnim3.Frames[0].Frame.Height) : 0),
                     frame3.Frame.Width, frame3.Frame.Height, false, Transparency);
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "DirectorChair";
         }
     }
 }

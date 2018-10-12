@@ -37,96 +37,7 @@ namespace ManiacEditor
         private bool filteredOut;
 
         // Object Render List
-        ItemBox itemBox = new ItemBox();
-         Bridge bridge = new Bridge();
-         Newtron newtron = new Newtron();
-         Ring ring = new Ring();
-         Chopper chopper = new Chopper();
-         TippingPlatform tippingPlatform = new TippingPlatform();
-         Spiny spiny = new Spiny();
-         StickyPlatform stickyPlatform = new StickyPlatform();
-         OneWayDoor oneWayDoor = new OneWayDoor();
-         TwistedTubes twistedTubes = new TwistedTubes();
-         Syringe syringe = new Syringe();
-         ShopWindow shopWindow = new ShopWindow();
-         Spring spring = new Spring();
-         Player player = new Player();
-         Platform platform = new Platform();
-         TimeAttackGate timeAttackGate = new TimeAttackGate();
-         Spikes spikes = new Spikes();
-         TeeterTotter teeterTotter = new TeeterTotter();
-         HUD hud = new HUD();
-         Music music = new Music();
-         BoundsMarker boundsMarker = new BoundsMarker();
-         TitleCard titleCard = new TitleCard();
-         CorkscrewPath corkscrewPath = new CorkscrewPath();
-         BGSwitch bgSwitch = new BGSwitch();
-         ForceSpin forceSpin = new ForceSpin();
-         UIControl uiControl = new UIControl();
-         SignPost signPost = new SignPost();
-         UFO_Ring ufo_Ring = new UFO_Ring();
-         UFO_Sphere ufo_Sphere = new UFO_Sphere();
-         UFO_Player ufo_Player = new UFO_Player();
-         UFO_ItemBox ufo_ItemBox = new UFO_ItemBox();
-         UFO_Springboard ufo_Springboard = new UFO_Springboard();
-         Decoration decoration = new Decoration();
-         WaterGush waterGush = new WaterGush();
-         BreakBar breakBar = new BreakBar();
-         InvisibleBlock invisibleBlock = new InvisibleBlock();
-         ForceUnstick forceUnstick = new ForceUnstick();
-         BreakableWall breakableWall = new BreakableWall();
-         CollapsingPlatform collapsingPlatform = new CollapsingPlatform();
-         PlaneSwitch planeSwitch = new PlaneSwitch();
-         ChemicalPool chemicalPool = new ChemicalPool();
-         DirectorChair directorChair = new DirectorChair();
-         TVVan tvVan = new TVVan();
-         FilmProjector filmProjector = new FilmProjector();
-         RockemSockem rockemSockem = new RockemSockem();
-         Clapperboard clapperboard = new Clapperboard();
-         PopcornMachine popcornMachine = new PopcornMachine();
-         LEDPanel ledPanel = new LEDPanel();
-         SpinSign spinSign = new SpinSign();
-         EggTV eggTV = new EggTV();
-         LottoMachine lottoMachine = new LottoMachine();
-         Funnel funnel = new Funnel();
-         Letterboard letterboard = new Letterboard();
-         DNARiser dnaRiser = new DNARiser();
-         CaterkillerJr caterkillerJr = new CaterkillerJr();
-         Grabber grabber = new Grabber();
-         SpinBooster spinBooster = new SpinBooster();
-         Water water = new Water();
-         WarpDoor warpDoor = new WarpDoor();
-         CableWarp cableWarp = new CableWarp();
-         PimPom pimPom = new PimPom();
-         SpecialRing specialRing = new SpecialRing();
-         CircleBumper circleBumper = new CircleBumper();
-         Tubinaut tubinaut = new Tubinaut();
-         LottoBall lottoBall = new LottoBall();
-         WeatherMobile weatherMobile = new WeatherMobile();
-         TVPole tvPole = new TVPole();
-         Launcher launcher = new Launcher();
-         Technosqueek technosqueek = new Technosqueek();
-         HangPoint hangPoint = new HangPoint();
-         FBZTrash fbzTrash = new FBZTrash();
-         FBZSinkTrash fbzSinkTrash = new FBZSinkTrash();
-         SpikeLog spikeLog = new SpikeLog();
-         EggPrison eggPrison = new EggPrison();
-         GenericTrigger genericTrigger = new GenericTrigger();
-         ZoneSetup zoneSetup = new ZoneSetup();
-         EncoreRoute encoreRoute = new EncoreRoute();
-         WaterfallSound waterfallSound = new WaterfallSound();
-         PlatformNode platformNode = new PlatformNode();
-         PlatformControl platformControl = new PlatformControl();
-         ParallaxSprite parallaxSprite = new ParallaxSprite();
-         Outro_Intro_Object outro_Intro_Object = new Outro_Intro_Object();
-         BlankObject blankObject = new BlankObject();
-         ZipLine zipLine = new ZipLine();
-         DERobot dERobot = new DERobot();
-         RubyFX rubyFX = new RubyFX();
-        ManiacEditor.Entity_Renders.Button button = new ManiacEditor.Entity_Renders.Button();
-        TwistingDoor twistingDoor = new TwistingDoor();
-
-            
+        public static List<EntityRenderer> EntityRenderers = new List<EntityRenderer>();
         // Object List for initilizing the if statement
         List<string> entityRenderingObjects = Editor.Instance.entityRenderingObjects;
         List<string> renderOnScreenExlusions = Editor.Instance.renderOnScreenExlusions;
@@ -153,6 +64,13 @@ namespace ManiacEditor
         {
             this.entity = entity;
             lastFrametime = DateTime.Now;
+
+            if (EntityRenderers.Count == 0)
+            {
+                var types = GetType().Assembly.GetTypes().Where(t => t.BaseType == typeof(EntityRenderer)).ToList();
+                foreach (var type in types)
+                    EntityRenderers.Add((EntityRenderer)Activator.CreateInstance(type));
+            }
         }
 
         public void Draw(Graphics g)
@@ -178,30 +96,36 @@ namespace ManiacEditor
         {
             entity.Position.X.High += (short)diff.X;
             entity.Position.Y.High += (short)diff.Y;
+            // Since the Editor can now update without the use of this render, I removed it
+            //if (Properties.Settings.Default.AllowMoreRenderUpdates == true) Editor.Instance.UpdateRender();
             if (Editor.GameRunning)
             {
-                // TODO: Find out if this is constent (apparently it isn't)
-                int ObjectStart = 0x0;
-                int ObjectSize = 0x0;
-                if (Properties.Settings.Default.UsePrePlusOffsets == true)
-                {
+                int ObjectStart = 0x0086FFA0;
+                int ObjectSize = 0x458;
+
+                if (Properties.Settings.Default.UsePrePlusOffsets)
                     ObjectStart = 0x00A5DCC0;
-                    ObjectSize = 0x458;
-                }
-                else
-                {
-                    ObjectStart = 0x00870850;
-                    ObjectSize = 0x458;
-                    int ObjectAddress = ObjectStart + (ObjectSize * entity.SlotID);
-                    Editor.GameMemory.WriteInt16(ObjectAddress + 2, entity.Position.X.High);
-                    Editor.GameMemory.WriteInt16(ObjectAddress + 6, entity.Position.Y.High);
-                }
+
+                // TODO: Find out if this is constent
+                int ObjectAddress = ObjectStart + (ObjectSize * entity.SlotID);
+                Editor.GameMemory.WriteInt16(ObjectAddress + 2, entity.Position.X.High);
+                Editor.GameMemory.WriteInt16(ObjectAddress + 6, entity.Position.Y.High);
             }
         }
 
         public void SnapToGrid(Point diff)
         {
-
+            entity.Position.X.High = (short)((diff.X + 8) / 16 * 16);
+            entity.Position.Y.High = (short)((diff.Y + 8) / 16 * 16);
+            if (Editor.GameRunning)
+            {
+                // TODO: Find out if this is constent
+                int ObjectStart = 0x00A5DCC0;
+                int ObjectSize = 0x458;
+                int ObbjectAddress = ObjectStart + (ObjectSize * entity.SlotID);
+                Editor.GameMemory.WriteInt16(ObbjectAddress + 2, entity.Position.X.High);
+                Editor.GameMemory.WriteInt16(ObbjectAddress + 6, entity.Position.Y.High);
+            }
         }
 
         public Rectangle GetDimensions()
@@ -896,7 +820,8 @@ namespace ManiacEditor
                     }
                 }
             }
-            else {
+            else
+            {
                 positionX = 0;
                 positionY = 0;
             }
@@ -912,455 +837,21 @@ namespace ManiacEditor
             int Transparency = (Editor.Instance.EditLayer == null) ? 0xff : 0x32;
             if (entity.Object.Name.Name.Contains("Setup"))
             {
-                zoneSetup.Draw(d, entity, this, x, y, Transparency);
+                EntityRenderer renderer = EntityRenderers.Where(t => t.GetObjectName() == "ZoneSetup").FirstOrDefault();
+                if (renderer != null)
+                    renderer.Draw(d, entity, this, x, y, Transparency);
             }
             else if (entity.Object.Name.Name.Contains("Intro") || entity.Object.Name.Name.Contains("Outro"))
             {
-                outro_Intro_Object.Draw(d, entity, this, x, y, Transparency);
+                EntityRenderer renderer = EntityRenderers.Where(t => t.GetObjectName() == "Outro_Intro_Object").FirstOrDefault();
+                if (renderer != null)
+                    renderer.Draw(d, entity, this, x, y, Transparency);
             }
             else
             {
-                switch (entity.Object.Name.Name)
-                {
-                    case "ItemBox":
-                        {
-                            itemBox.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Bridge":
-                        {
-                            bridge.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Newtron":
-                        {
-                            newtron.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Ring":
-                        {
-                            ring.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Chopper":
-                        {
-                            chopper.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "TippingPlatform":
-                        {
-                            tippingPlatform.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Spiny":
-                        {
-                            spiny.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "OneWayDoor":
-                        {
-                            oneWayDoor.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Syringe":
-                        {
-                            syringe.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "StickyPlatform":
-                        {
-                            stickyPlatform.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "TwistedTubes":
-                        {
-                            twistedTubes.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "ShopWindow":
-                        {
-                            shopWindow.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "DirectorChair":
-                        {
-                            directorChair.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "TVVan":
-                        {
-                            tvVan.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "FilmProjector":
-                        {
-                            filmProjector.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "RockemSockem":
-                        {
-                            rockemSockem.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Clapperboard":
-                        {
-                            clapperboard.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "PopcornMachine":
-                        {
-                            popcornMachine.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "LEDPanel":
-                        {
-                            ledPanel.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "SpinSign":
-                        {
-                            spinSign.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "EggTV":
-                        {
-                            eggTV.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "LottoMachine":
-                        {
-                            lottoMachine.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Funnel":
-                        {
-                            funnel.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "DNARiser":
-                        {
-                            dnaRiser.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "CaterkillerJr":
-                        {
-                            caterkillerJr.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Grabber":
-                        {
-                            grabber.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Letterboard":
-                        {
-                            letterboard.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Water":
-                        {
-                            water.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "TeeterTotter":
-                        {
-                            teeterTotter.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Spikes":
-                        {
-                            if (Editor.Instance.SelectedZone.Contains("FBZ\\"))
-                            {
-                                spikes.Draw(d, entity, this, x, y, Transparency, true);
-                            }
-                            else
-                            {
-                                spikes.Draw(d, entity, this, x, y, Transparency, false);
-                            }
-
-                            break;
-                        }
-                    case "Spring":
-                        {
-                            spring.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Player":
-                        {
-                            player.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "SignPost":
-                        {
-                            signPost.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "TimeAttackGate":
-                        {
-                            timeAttackGate.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "HUD":
-                        {
-                            hud.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Music":
-                        {
-                            music.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "BoundsMarker":
-                        {
-                            boundsMarker.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "TitleCard":
-                        {
-                            titleCard.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "CorkscrewPath":
-                        {
-                            corkscrewPath.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "BGSwitch":
-                        {
-                            bgSwitch.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "ForceSpin":
-                        {
-                            forceSpin.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "SpinBooster":
-                        {
-                            //spinBooster.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "UIControl":
-                        {
-                            uiControl.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "WaterGush":
-                        {
-                            waterGush.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "InvisibleBlock":
-                        {
-                            invisibleBlock.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "ForceUnstick":
-                        {
-                            forceUnstick.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "BreakableWall":
-                        {
-                            breakableWall.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "CollapsingPlatform":
-                        {
-                            collapsingPlatform.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "GenericTrigger":
-                        {
-                            genericTrigger.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "ChemicalPool":
-                        {
-                            chemicalPool.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Decoration":
-                        {
-                            decoration.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "BreakBar":
-                        {
-                            breakBar.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "UFO_Ring":
-                        {
-                            ufo_Ring.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "UFO_Springboard":
-                        {
-                            ufo_Springboard.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "UFO_Sphere":
-                        {
-                            ufo_Sphere.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "UFO_Player":
-                        {
-                            ufo_Player.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "UFO_ItemBox":
-                        {
-                            ufo_ItemBox.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Platform":
-                        {
-                            platform.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "PlaneSwitch":
-                        {
-                            planeSwitch.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "WarpDoor":
-                        {
-                            warpDoor.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "CableWarp":
-                        {
-                            cableWarp.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "PimPom":
-                        {
-                            pimPom.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "SpecialRing":
-                        {
-                            specialRing.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "CircleBumper":
-                        {
-                            circleBumper.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Tubinaut":
-                        {
-                            tubinaut.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "LottoBall":
-                        {
-                            lottoBall.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "WeatherMobile":
-                        {
-                            weatherMobile.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "TVPole":
-                        {
-                            tvPole.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Launcher":
-                        {
-                            launcher.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Technosqueek":
-                        {
-                            technosqueek.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "HangPoint":
-                        {
-                            hangPoint.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "FBZTrash":
-                        {
-                            fbzTrash.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "FBZSinkTrash":
-                        {
-                            fbzSinkTrash.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "SpikeLog":
-                        {
-                            spikeLog.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "EggPrison":
-                        {
-                            eggPrison.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "EncoreRoute":
-                        {
-                            encoreRoute.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "WaterfallSound":
-                        {
-                            waterfallSound.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "PlatformNode":
-                        {
-                            platformNode.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "PlatformControl":
-                        {
-                            platformControl.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "ParallaxSprite":
-                        {
-                            parallaxSprite.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Blank Object":
-                        {
-                            blankObject.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "ZipLine":
-                        {
-                            zipLine.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "DERobot":
-                        {
-                            dERobot.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "FXRuby":
-                        {
-                            rubyFX.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "Button":
-                        {
-                            button.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                    case "TwistingDoor":
-                        {
-                            twistingDoor.Draw(d, entity, this, x, y, Transparency);
-                            break;
-                        }
-                }
+                EntityRenderer renderer = EntityRenderers.Where(t => t.GetObjectName() == entity.Object.Name.Name).FirstOrDefault();
+                if (renderer != null)
+                    renderer.Draw(d, entity, this, x, y, Transparency);
             }
 
         }

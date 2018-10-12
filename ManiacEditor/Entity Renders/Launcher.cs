@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class Launcher
+    public class Launcher : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int direction = (int)entity.attributesMap["direction"].ValueUInt8;
             bool fliph = false;
@@ -36,5 +36,9 @@ namespace ManiacEditor.Entity_Renders
                 }
         }
 
+        public override string GetObjectName()
+        {
+            return "Launcher";
+        }
     }
 }

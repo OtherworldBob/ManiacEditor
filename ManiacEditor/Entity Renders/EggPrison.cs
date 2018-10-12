@@ -10,10 +10,10 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class EggPrison
+    public class EggPrison : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int type = (int)entity.attributesMap["type"].ValueVar;
             bool fliph = false;
@@ -41,6 +41,11 @@ namespace ManiacEditor.Entity_Renders
                         frame3.Frame.Width, frame3.Frame.Height, false, Transparency);
 
             }
+        }
+
+        public override string GetObjectName()
+        {
+            return "EggPrison";
         }
     }
 }
