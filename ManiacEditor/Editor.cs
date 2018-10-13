@@ -3909,6 +3909,20 @@ Error: {ex.Message}");
                     psi.WorkingDirectory = Path.GetDirectoryName(DataDirectory);
                 var p = Process.Start(psi);
                 GameRunning = true;
+
+                int CurrentScene_ptr = 0x00E48758;          // &CurrentScene
+                int GameState_ptr = 0x00E48776;             // &GameState
+                int IsGameRunning_ptr = 0x0065D1C8;
+                int Player1_ControllerID_ptr = 0x0085EB44;  // &Player1.ControllerID
+                int Player2_ControllerID_ptr = 0x0085EF9C;  // &Player2.ControllerID
+                if (mySettings.UsePrePlusOffsets)
+                {
+                    CurrentScene_ptr = 0x00CCF6F8;
+                    // TODO: Get Pre Plus GameState address
+                    IsGameRunning_ptr = 0x00628094;
+                    Player1_ControllerID_ptr = 0x00A4C860;
+                }
+
                 if (mySettings.UsePrePlusOffsets)
                 {
                     UpdateControls();
@@ -3930,6 +3944,14 @@ Error: {ex.Message}");
                             UseCheatCodes(p);
                             UpdateControls();
                             ready = true;
+                            
+                            // Wait until the Game is ready
+                            while (GameMemory.ReadByte(GameState_ptr) != 0x01)
+                                Thread.Sleep(1);
+                            // Swap the Scene
+                            GameMemory.WriteByte(CurrentScene_ptr, (byte)myEditorState.Level_ID);
+                            // Restart the Scene
+                            GameMemory.WriteByte(GameState_ptr, 0);
                         }));
                     }).Start();
                 }
@@ -3940,31 +3962,6 @@ Error: {ex.Message}");
                     while (!ready)
                         Thread.Sleep(10);
                     /* Level != Main Menu*/
-                    int CurrentScene_ptr = 0x00E48758;          // &CurrentScene
-                    int IsGameRunning_ptr = 0x0065D1C8;
-                    int Player1_ControllerID_ptr = 0x0085EB44;  // &Player1.ControllerID
-                    int Player2_ControllerID_ptr = 0x0085EF9C;  // &Player2.ControllerID
-                    if (mySettings.UsePrePlusOffsets)
-                    {
-                        CurrentScene_ptr = 0x00CCF6F8;
-                        IsGameRunning_ptr = 0x00628094;
-                        Player1_ControllerID_ptr = 0x00A4C860;
-                    }
-                    byte levelID = (byte)(myEditorState.Level_ID - 1);
-                    if (myEditorState.Level_ID == -1)
-                    {
-                        levelID = 0x00;
-                    }
-                    while (GameMemory.ReadByte(0x00E48777) != 255)
-                    {
-                        Debug.Print("Awaiting for Mania to Initlize!");
-                    }
-                    GameMemory.WriteByte(0x00E48776, 0x02); // Unknown
-                    GameMemory.WriteByte(0x00E48777, 0x00); // Unknown
-                    GameMemory.WriteByte(0x00E48775, 0x09); // Unknown
-                    GameMemory.WriteByte(0x00E48774, 0x00); // Unknown
-                    GameMemory.WriteByte(CurrentScene_ptr, levelID);
-
                     while (GameMemory.ReadByte(CurrentScene_ptr) != 0x02)
                     {
                         // Check if the user closed the game
