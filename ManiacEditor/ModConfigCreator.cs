@@ -54,8 +54,10 @@ namespace ManiacEditor
                     Properties.EditorState.Default.addConfigContents = this.richTextBox1.Text;
                     Properties.EditorState.Default.addConfigName = this.textBox1.Text;
                     Properties.EditorState.Default.addConfig = true;
-                    File.Create(Environment.CurrentDirectory + "\\Config\\" + Properties.EditorState.Default.addConfigName + ".ini").Close();
                     string file = Environment.CurrentDirectory + "\\Config\\" + Properties.EditorState.Default.addConfigName + ".ini";
+                    string directory = Environment.CurrentDirectory + "\\Config";
+                    DirectoryInfo di = Directory.CreateDirectory(directory);
+                    File.Create(file).Close();
                     File.WriteAllText(file, Properties.EditorState.Default.addConfigContents);
                     this.DialogResult = DialogResult.OK;
                 }

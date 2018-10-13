@@ -27,26 +27,34 @@ namespace ManiacEditor
 
         public void getPaths()
         {
-            if (Properties.Settings.Default.modConfigs != null && Properties.Settings.Default.modConfigsNames != null)
+            try
             {
-                Properties.Settings.Default.modConfigs.Clear();
-                Properties.Settings.Default.modConfigsNames.Clear();
-            }
-            string[] filePaths = Directory.GetFiles(Path.GetFullPath(Environment.CurrentDirectory + "\\Config\\"), "*.ini", SearchOption.TopDirectoryOnly);
-            if (filePaths != null)
-            {
-                foreach (string file in filePaths)
+                if (Properties.Settings.Default.modConfigs != null && Properties.Settings.Default.modConfigsNames != null)
                 {
-                    string config = File.ReadAllText(file);
-                    string fileName = file.Substring(file.LastIndexOf("\\") + 1);
-                    if (Properties.Settings.Default.modConfigs == null)
+                    Properties.Settings.Default.modConfigs.Clear();
+                    Properties.Settings.Default.modConfigsNames.Clear();
+                }
+                string[] filePaths = Directory.GetFiles(Path.GetFullPath(Environment.CurrentDirectory + "\\Config\\"), "*.ini", SearchOption.TopDirectoryOnly);
+                if (filePaths != null)
+                {
+                    foreach (string file in filePaths)
                     {
-                        Properties.Settings.Default.modConfigs = new StringCollection();
+                        string config = File.ReadAllText(file);
+                        string fileName = file.Substring(file.LastIndexOf("\\") + 1);
+                        if (Properties.Settings.Default.modConfigs == null)
+                        {
+                            Properties.Settings.Default.modConfigs = new StringCollection();
+                        }
+                        addModConfig(config);
+                        addModConfigName(fileName);
                     }
-                    addModConfig(config);
-                    addModConfigName(fileName);
                 }
             }
+            catch (System.IO.DirectoryNotFoundException)
+            {
+                return;
+            }
+
 
 
 
@@ -101,10 +109,18 @@ namespace ManiacEditor
 
         public void InitList()
         {
-            foreach(String s in Properties.Settings.Default.modConfigsNames)
+            try
             {
-                listView1.Items.Add(s);
+                foreach (String s in Properties.Settings.Default.modConfigsNames)
+                {
+                    listView1.Items.Add(s);
+                }
             }
+            catch (System.NullReferenceException)
+            {
+                return;
+            }
+
         }
 
         private void addButton_click(object sender, EventArgs e)

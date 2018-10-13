@@ -13,7 +13,7 @@ namespace ManiacEditor.Entity_Renders
     public class Technosqueek : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int type = (int)entity.attributesMap["type"].ValueUInt8;
             int direction = (int)entity.attributesMap["direction"].ValueUInt8;

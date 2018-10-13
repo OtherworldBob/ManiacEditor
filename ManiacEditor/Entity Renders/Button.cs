@@ -13,7 +13,7 @@ namespace ManiacEditor.Entity_Renders
     public class Button : EntityRenderer
     {
 
-        public void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int type = (int)entity.attributesMap["type"].ValueVar;
             bool fliph = false;

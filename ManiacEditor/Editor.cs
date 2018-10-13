@@ -3973,15 +3973,17 @@ Error: {ex.Message}");
 
         public void UseCheatCodes(System.Diagnostics.Process p)
         {
-            if (mySettings.UsePrePlusOffsets == true)
+            if (mySettings.UsePrePlusOffsets)
             {
                 // Patches
                 GameMemory.Attach(p);
-
             }
             else
             {
-
+                GameMemory.Attach(p);
+                GameMemory.WriteByte(0x005FDD00, 0xEB);
+                GameMemory.WriteByte(0x00E48768, 0x01);
+                GameMemory.WriteByte(0x006F1806, 0x01);
 
             }
         }
