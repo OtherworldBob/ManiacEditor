@@ -23,6 +23,7 @@ namespace ManiacEditor
         public GameConfig _GameConfig;
 
         public string Result = null;
+        public int LevelID = -1;
 
 
         public SceneSelect(GameConfig config = null)
@@ -42,6 +43,7 @@ namespace ManiacEditor
         {
             Categories.Clear();
             Directories.Clear();
+            RSDKv5.GameConfig.CurrentLevelID = 0;
             foreach (GameConfig.Category category in config.Categories)
             {
                 List<Tuple<string, string>> scenes = new List<Tuple<string, string>>();
@@ -124,7 +126,16 @@ namespace ManiacEditor
 
         private void selectButton_Click(object sender, EventArgs e)
         {
+            int _levelID = -1;
+            var cat = _GameConfig.Categories.Where(t => t.Name == scenesTree.SelectedNode.Parent.Text).FirstOrDefault();
+            if (cat != null)
+            {
+                var scene = cat.Scenes.Where(t => $"{t.Zone}\\Scene{t.SceneID}.bin" == scenesTree.SelectedNode.Tag as string).FirstOrDefault();
+                Properties.EditorState.Default.Level_ID = scene.LevelID;
+                _levelID = scene.LevelID;
+            }
             Result = scenesTree.SelectedNode.Tag as string;
+            LevelID = _levelID;
             Close();
         }
 
@@ -282,12 +293,13 @@ namespace ManiacEditor
             }
         }
 
+
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var cat = _GameConfig.Categories.Where(t => t.Name == scenesTree.SelectedNode.Parent.Text).FirstOrDefault();
             if (cat != null)
             {
-                var scene = cat.Scenes.Where(t => $"{t.Zone}/Scene{t.SceneID}.bin" == scenesTree.SelectedNode.Tag as string).FirstOrDefault();
+                var scene = cat.Scenes.Where(t => $"{t.Zone}\\Scene{t.SceneID}.bin" == scenesTree.SelectedNode.Tag as string).FirstOrDefault();
                 var form = new EditSceneSelectInfoForm(scene);
                 if (form.ShowDialog() == DialogResult.Yes)
                 {
@@ -303,7 +315,7 @@ namespace ManiacEditor
             var cat = _GameConfig.Categories.Where(t => t.Name == scenesTree.SelectedNode.Parent.Text).FirstOrDefault();
             if (cat != null)
             {
-                var scene = cat.Scenes.FindIndex(t => $"{t.Zone}/Scene{t.SceneID}.bin" == scenesTree.SelectedNode.Tag as string);
+                var scene = cat.Scenes.FindIndex(t => $"{t.Zone}\\Scene{t.SceneID}.bin" == scenesTree.SelectedNode.Tag as string);
                 if (scene + 1 < cat.Scenes.Count && !char.IsDigit(cat.Scenes[scene].Name[0]) && char.IsDigit(cat.Scenes[scene + 1].Name[0]))
                 {
                     if (MessageBox.Show("This Scene as other acts attached,\n" +

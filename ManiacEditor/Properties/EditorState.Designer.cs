@@ -156,5 +156,17 @@ namespace ManiacEditor.Properties {
                 this["deviceCrashedString"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int Level_ID {
+            get {
+                return ((int)(this["Level_ID"]));
+            }
+            set {
+                this["Level_ID"] = value;
+            }
+        }
     }
 }

@@ -35,6 +35,7 @@ namespace ManiacEditor
             textBox1.Text = Scene.Name;
             textBox2.Text = Scene.Zone;
             textBox3.Text = Scene.SceneID;
+            positionIDLabel.Text = "Stage ID:" + Scene.LevelID.ToString();
             checkBox1.Checked = (Scene.ModeFilter & 0b0001) != 0;
             checkBox2.Checked = (Scene.ModeFilter & 0b0010) != 0;
             checkBox3.Checked = (Scene.ModeFilter & 0b0100) != 0;

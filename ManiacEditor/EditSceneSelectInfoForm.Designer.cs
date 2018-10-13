@@ -41,6 +41,7 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.positionIDLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -162,16 +163,26 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(22, 110);
+            this.label4.Location = new System.Drawing.Point(12, 118);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 13;
+            // 
+            // positionIDLabel
+            // 
+            this.positionIDLabel.AutoSize = true;
+            this.positionIDLabel.Location = new System.Drawing.Point(22, 99);
+            this.positionIDLabel.Name = "positionIDLabel";
+            this.positionIDLabel.Size = new System.Drawing.Size(52, 13);
+            this.positionIDLabel.TabIndex = 14;
+            this.positionIDLabel.Text = "Stage ID:";
             // 
             // EditSceneSelectInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(467, 140);
+            this.Controls.Add(this.positionIDLabel);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBox3);
@@ -210,5 +221,6 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label positionIDLabel;
     }
 }

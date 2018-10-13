@@ -37,5 +37,8 @@
 If your using the x86 version of Maniac Editor, you should upgrade to the x64 version!
 Would you like to save your progress before Maniac Editor Closes?</Value>
     </Setting>
+    <Setting Name="Level_ID" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

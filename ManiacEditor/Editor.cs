@@ -1264,6 +1264,13 @@ namespace ManiacEditor
             // Tooltip Bar Info 
             //
             positionLabel.Text = "X: " + (int)(e.X / Zoom) + " Y: " + (int)(e.Y / Zoom);
+            _levelIDLabel.Text = "Level ID: " + myEditorState.Level_ID.ToString();
+            seperator1.Visible = true;
+            seperator2.Visible = true;
+            seperator3.Visible = true;
+            seperator4.Visible = true;
+            seperator5.Visible = true;
+            seperator6.Visible = true;
 
             if (mySettings.pixelCountMode == false)
             {
@@ -2171,6 +2178,8 @@ namespace ManiacEditor
             SceneFilename = null;
             StageConfig = null;
             StageConfigFileName = null;
+            _levelIDLabel.Text = "Level ID: NULL";
+            myEditorState.Level_ID = -1;
 
             SelectedScene = null;
             SelectedZone = null;
@@ -2366,7 +2375,7 @@ namespace ManiacEditor
                     StageTiles = new StageTiles(Path.Combine(DataDirectory, "Stages", SelectedZone));
                     SceneFilename = Path.Combine(DataDirectory, "Stages", SelectedZone, SelectedScene);
                 }
-
+                myEditorState.Level_ID = select.LevelID;
                 //These cause issues, but not clearing them means when new stages are loaded Collision Mask 0 will be index 1024... (I think)
                 CollisionLayerA.Clear();
                 CollisionLayerB.Clear();
@@ -3846,7 +3855,7 @@ Error: {ex.Message}");
             }
         }
 
-        // TODO: Add Scene Autobooting
+        // TODO: Perfect Scene Autobooting
         private void RunSequence(object sender, EventArgs e)
         {
             // Ask where Sonic Mania is located when not set
@@ -3887,8 +3896,6 @@ Error: {ex.Message}");
                 else
                 {
                     psi = new ProcessStartInfo(path);
-                    // TODO: Find workaround to get Mania to boot into a Scene Post Plus
-                    // Moved to main offset section
                 }
 
             }
@@ -3943,6 +3950,21 @@ Error: {ex.Message}");
                         IsGameRunning_ptr = 0x00628094;
                         Player1_ControllerID_ptr = 0x00A4C860;
                     }
+                    byte levelID = (byte)(myEditorState.Level_ID - 1);
+                    if (myEditorState.Level_ID == -1)
+                    {
+                        levelID = 0x00;
+                    }
+                    while (GameMemory.ReadByte(0x00E48777) != 255)
+                    {
+                        Debug.Print("Awaiting for Mania to Initlize!");
+                    }
+                    GameMemory.WriteByte(0x00E48776, 0x02); // Unknown
+                    GameMemory.WriteByte(0x00E48777, 0x00); // Unknown
+                    GameMemory.WriteByte(0x00E48775, 0x09); // Unknown
+                    GameMemory.WriteByte(0x00E48774, 0x00); // Unknown
+                    GameMemory.WriteByte(CurrentScene_ptr, levelID);
+
                     while (GameMemory.ReadByte(CurrentScene_ptr) != 0x02)
                     {
                         // Check if the user closed the game

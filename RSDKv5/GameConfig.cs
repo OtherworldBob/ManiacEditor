@@ -16,22 +16,25 @@ namespace RSDKv5
         public byte StartSceneCategoryIndex;
         public ushort StartSceneIndex;
 
+
         public class SceneInfo
         {
             public string Name;
             public string Zone;
             public string SceneID;
             public byte ModeFilter;
+            public int LevelID; //For GameConfig Position; Used for Auto Booting
 
             public SceneInfo()
             {
             }
 
-            internal SceneInfo(Reader reader, bool scenesHaveModeFilter)
+            internal SceneInfo(Reader reader, bool scenesHaveModeFilter, int currentConfigID = 0)
             {
                 Name = reader.ReadRSDKString();
                 Zone = reader.ReadRSDKString();
                 SceneID = reader.ReadRSDKString();
+                LevelID = currentConfigID; //For GameConfig Position; Used for Auto Booting
 
                 if (scenesHaveModeFilter) ModeFilter = reader.ReadByte();
             }
@@ -57,7 +60,11 @@ namespace RSDKv5
 
                 byte scenes_count = reader.ReadByte();
                 for (int i = 0; i < scenes_count; ++i)
-                    Scenes.Add(new SceneInfo(reader, scenesHaveModeFilter));
+                {
+                    Scenes.Add(new SceneInfo(reader, scenesHaveModeFilter, RSDKv5.GameConfig.CurrentLevelID));
+                    RSDKv5.GameConfig.CurrentLevelID++;
+                }
+
             }
 
             internal void Write(Writer writer, bool scenesHaveModeFilter = false)
@@ -125,10 +132,17 @@ namespace RSDKv5
             ReadCommonConfig(reader);
 
             ushort TotalScenes = reader.ReadUInt16();
+            if (CurrentLevelID >= TotalScenes)
+            {
+                CurrentLevelID = 0;
+            }
 
             byte categories_count = reader.ReadByte();
             for (int i = 0; i < categories_count; ++i)
+            {
                 Categories.Add(new Category(reader, _scenesHaveModeFilter));
+            }
+
 
             byte config_memory_count = reader.ReadByte();
             for (int i = 0; i < config_memory_count; ++i)
