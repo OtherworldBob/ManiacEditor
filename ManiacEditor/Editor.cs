@@ -3944,6 +3944,7 @@ Error: {ex.Message}");
                             UseCheatCodes(p);
                             UpdateControls();
                             ready = true;
+
                             
                             // Wait until the Game is ready
                             while (GameMemory.ReadByte(GameState_ptr) != 0x01)
@@ -3952,6 +3953,23 @@ Error: {ex.Message}");
                             GameMemory.WriteByte(CurrentScene_ptr, (byte)myEditorState.Level_ID);
                             // Restart the Scene
                             GameMemory.WriteByte(GameState_ptr, 0);
+                            
+                            /*
+                            byte levelID = (byte)(myEditorState.Level_ID - 1);
+                            if (myEditorState.Level_ID == -1)
+                            {
+                                levelID = 0x00;
+                            }
+                            while (GameMemory.ReadByte(0x00E48777) != 255)
+                            {
+                                Debug.Print("Awaiting for Mania to Initlize!");
+                            }
+                            GameMemory.WriteByte(0x00E48776, 0x02); // Unknown
+                            GameMemory.WriteByte(0x00E48777, 0x00); // Unknown
+                            GameMemory.WriteByte(0x00E48775, 0x09); // Unknown
+                            GameMemory.WriteByte(0x00E48774, 0x00); // Unknown
+                            GameMemory.WriteByte(CurrentScene_ptr, levelID);*/
+
                         }));
                     }).Start();
                 }
@@ -3978,6 +3996,7 @@ Error: {ex.Message}");
                         {
                             GameMemory.WriteByte(Player1_ControllerID_ptr, 0x00);
                             GameMemory.WriteByte(Player2_ControllerID_ptr, 0xFF);
+                            GameMemory.WriteByte(0x00E48768, 1);
                         }
                         Thread.Sleep(300);
                     }
@@ -4002,6 +4021,7 @@ Error: {ex.Message}");
                 GameMemory.Attach(p);
                 GameMemory.WriteByte(0x005FDD00, 0xEB);
                 GameMemory.WriteByte(0x00E48768, 0x01);
+                GameMemory.WriteByte(0x006F1806, 0x01);
                 GameMemory.WriteByte(0x006F1806, 0x01);
 
             }

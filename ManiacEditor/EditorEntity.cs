@@ -538,7 +538,10 @@ namespace ManiacEditor
             {
                 if (!Properties.Settings.Default.NeverLoadEntityTextures)
                 {
-                    DrawOthers(d);
+                    if (d.IsObjectOnScreen(entity.Position.X.High, entity.Position.Y.High, NAME_BOX_WIDTH, NAME_BOX_HEIGHT) || onScreenExlusionList.Contains(entity.Object.Name.Name))
+                    {
+                        DrawOthers(d);
+                    }
                 }
 
             }
@@ -575,11 +578,13 @@ namespace ManiacEditor
                     d.DrawRectangle(x, y, x + NAME_BOX_WIDTH, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Transparency, color));
                 }
                 // Draws the Special Objects
-                //DrawOthers(d);
             }
             else
             {
-                d.DrawRectangle(x, y, x + NAME_BOX_WIDTH, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Transparency, color));
+                if (d.IsObjectOnScreen(entity.Position.X.High, entity.Position.Y.High, NAME_BOX_WIDTH, NAME_BOX_HEIGHT))
+                {
+                    d.DrawRectangle(x, y, x + NAME_BOX_WIDTH, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Transparency, color));
+                }
             }
 
             if (d.IsObjectOnScreen(entity.Position.X.High, entity.Position.Y.High, NAME_BOX_WIDTH, NAME_BOX_HEIGHT))

@@ -380,6 +380,7 @@
       <DependentUpon>EntitiesToolbar.cs</DependentUpon>
     </Compile>
     <Compile Include="Entity Renders\BGSwitch.cs" />
+    <Compile Include="Entity Renders\BigSqueeze.cs" />
     <Compile Include="Entity Renders\BlankObject.cs" />
     <Compile Include="Entity Renders\BoundsMarker.cs" />
     <Compile Include="Entity Renders\BreakableWall.cs" />
@@ -392,8 +393,10 @@
     <Compile Include="Entity Renders\Chopper.cs" />
     <Compile Include="Entity Renders\CircleBumper.cs" />
     <Compile Include="Entity Renders\Clapperboard.cs" />
+    <Compile Include="Entity Renders\Clucker.cs" />
     <Compile Include="Entity Renders\CollapsingPlatform.cs" />
     <Compile Include="Entity Renders\CorkscrewPath.cs" />
+    <Compile Include="Entity Renders\Crane.cs" />
     <Compile Include="Entity Renders\CutsceneHBH.cs" />
     <Compile Include="Entity Renders\Decoration.cs" />
     <Compile Include="Entity Renders\DERobot.cs" />
@@ -401,25 +404,32 @@
     <Compile Include="Entity Renders\DNARiser.cs" />
     <Compile Include="Entity Renders\EggPrison.cs" />
     <Compile Include="Entity Renders\EggTV.cs" />
+    <Compile Include="Entity Renders\ElectroMagnet.cs" />
     <Compile Include="Entity Renders\EncoreRoute.cs" />
     <Compile Include="Entity Renders\EntityRenderer.cs" />
+    <Compile Include="Entity Renders\FBZFan.cs" />
+    <Compile Include="Entity Renders\FBZMissile.cs" />
     <Compile Include="Entity Renders\FBZSinkTrash.cs" />
     <Compile Include="Entity Renders\FBZTrash.cs" />
     <Compile Include="Entity Renders\FilmProjector.cs" />
+    <Compile Include="Entity Renders\FlameSpring.cs" />
     <Compile Include="Entity Renders\FoldingPlatform.cs" />
     <Compile Include="Entity Renders\ForceSpin.cs" />
     <Compile Include="Entity Renders\ForceUnstick.cs" />
     <Compile Include="Entity Renders\Funnel.cs" />
     <Compile Include="Entity Renders\GenericTrigger.cs" />
     <Compile Include="Entity Renders\Grabber.cs" />
+    <Compile Include="Entity Renders\HangGlider.cs" />
     <Compile Include="Entity Renders\HangPoint.cs" />
     <Compile Include="Entity Renders\HUD.cs" />
     <Compile Include="Entity Renders\InvisibleBlock.cs" />
     <Compile Include="Entity Renders\Launcher.cs" />
     <Compile Include="Entity Renders\LEDPanel.cs" />
     <Compile Include="Entity Renders\Letterboard.cs" />
+    <Compile Include="Entity Renders\LightBarrier.cs" />
     <Compile Include="Entity Renders\LottoBall.cs" />
     <Compile Include="Entity Renders\LottoMachine.cs" />
+    <Compile Include="Entity Renders\MagPlatform.cs" />
     <Compile Include="Entity Renders\Music.cs" />
     <Compile Include="Entity Renders\OneWayDoor.cs" />
     <Compile Include="Entity Renders\Outro_Intro_Object.cs" />
@@ -450,10 +460,12 @@
     <Compile Include="Entity Renders\Template.cs" />
     <Compile Include="Entity Renders\Newtron.cs" />
     <Compile Include="Entity Renders\ItemBox.cs" />
+    <Compile Include="Entity Renders\TetherBall.cs" />
     <Compile Include="Entity Renders\TimeAttackGate.cs" />
     <Compile Include="Entity Renders\TippingPlatform.cs" />
     <Compile Include="Entity Renders\TitleCard.cs" />
     <Compile Include="Entity Renders\Tubinaut.cs" />
+    <Compile Include="Entity Renders\Tuesday.cs" />
     <Compile Include="Entity Renders\TVPole.cs" />
     <Compile Include="Entity Renders\TVVan.cs" />
     <Compile Include="Entity Renders\TwistedTubes.cs" />

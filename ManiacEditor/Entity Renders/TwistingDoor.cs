@@ -41,7 +41,7 @@ namespace ManiacEditor.Entity_Renders
                 case 0:
                     break;
                 case 1:
-                    fliph = true;
+                    flipv = true;
                     break;
                 default:
                     break;
