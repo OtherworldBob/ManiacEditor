@@ -500,13 +500,20 @@ namespace ManiacEditor
                  * 1 or 5 = Both
                  * 2 = Mania
                  * 4 = Encore
+                 * 
+                 * 0b0000
+                 *   ||||
+                 *   |||- Common
+                 *   ||-- Mania
+                 *   |--- Encore
+                 *   ---- Unknown
                  */
 
                 filteredOut =
-                    ((filter == 1 || filter == 5) && !Properties.Settings.Default.showBothEntities) ||
-                    (filter == 2 && !Properties.Settings.Default.showManiaEntities) ||
-                    (filter == 4 && !Properties.Settings.Default.showEncoreEntities) ||
-                    ((filter < 1 || filter == 3 || filter > 5) && !Properties.Settings.Default.showOtherEntities);
+                    ((filter & 0b0001) != 0 && !Properties.Settings.Default.showBothEntities) ||
+                    ((filter & 0b0010) != 0 && !Properties.Settings.Default.showManiaEntities) ||
+                    ((filter & 0b0100) != 0 && !Properties.Settings.Default.showEncoreEntities) ||
+                    ((filter & 0b1000) != 0 && !Properties.Settings.Default.showOtherEntities);
 
             }
             else

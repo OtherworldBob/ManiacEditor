@@ -189,7 +189,7 @@
             this.otherFilterCheck.Name = "otherFilterCheck";
             this.otherFilterCheck.Size = new System.Drawing.Size(108, 18);
             this.otherFilterCheck.TabIndex = 33;
-            this.otherFilterCheck.Text = "Others";
+            this.otherFilterCheck.Text = "Others ( 0b1000 )";
             this.otherFilterCheck.UseVisualStyleBackColor = true;
             this.otherFilterCheck.CheckedChanged += new System.EventHandler(this.otherFilterCheck_CheckedChanged);
             // 
@@ -202,9 +202,9 @@
             this.bothFilterCheck.Location = new System.Drawing.Point(8, 45);
             this.bothFilterCheck.Margin = new System.Windows.Forms.Padding(5);
             this.bothFilterCheck.Name = "bothFilterCheck";
-            this.bothFilterCheck.Size = new System.Drawing.Size(108, 18);
+            this.bothFilterCheck.Size = new System.Drawing.Size(120, 18);
             this.bothFilterCheck.TabIndex = 32;
-            this.bothFilterCheck.Text = "Both (1 or 5)";
+            this.bothFilterCheck.Text = "Common ( 0b0001 )";
             this.bothFilterCheck.UseVisualStyleBackColor = true;
             this.bothFilterCheck.CheckedChanged += new System.EventHandler(this.bothFilterCheck_CheckedChanged);
             // 
@@ -217,9 +217,9 @@
             this.encoreFilterCheck.Location = new System.Drawing.Point(131, 21);
             this.encoreFilterCheck.Margin = new System.Windows.Forms.Padding(5);
             this.encoreFilterCheck.Name = "encoreFilterCheck";
-            this.encoreFilterCheck.Size = new System.Drawing.Size(108, 18);
+            this.encoreFilterCheck.Size = new System.Drawing.Size(114, 18);
             this.encoreFilterCheck.TabIndex = 31;
-            this.encoreFilterCheck.Text = "Encore (4)";
+            this.encoreFilterCheck.Text = "Encore ( 0b0100 )";
             this.encoreFilterCheck.UseVisualStyleBackColor = true;
             this.encoreFilterCheck.CheckedChanged += new System.EventHandler(this.encoreFilterCheck_CheckedChanged);
             // 
@@ -234,7 +234,7 @@
             this.maniaFilterCheck.Name = "maniaFilterCheck";
             this.maniaFilterCheck.Size = new System.Drawing.Size(108, 18);
             this.maniaFilterCheck.TabIndex = 30;
-            this.maniaFilterCheck.Text = "Mania (2)";
+            this.maniaFilterCheck.Text = "Mania ( 0b0010 )";
             this.maniaFilterCheck.UseVisualStyleBackColor = true;
             this.maniaFilterCheck.CheckedChanged += new System.EventHandler(this.maniaFilterCheck_CheckedChanged);
             // 
