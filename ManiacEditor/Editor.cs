@@ -3390,6 +3390,7 @@ Error: {ex.Message}");
         {
             try
             {
+                GameRunning = false;
                 var mySettings = Properties.Settings.Default;
                 mySettings.IsMaximized = WindowState == FormWindowState.Maximized;
                 mySettings.Save();
@@ -3590,10 +3591,13 @@ Error: {ex.Message}");
                     while (GameMemory.ReadByte(CurrentScene_ptr) != 0x02)
                     {
                         // Check if the user closed the game
-                        if (p.HasExited)
+                        if (p.HasExited || !GameRunning)
                         {
                             GameRunning = false;
-                            Invoke(new Action(() => UpdateControls()));
+                            if (Visible)
+                            {
+                                Invoke(new Action(() => UpdateControls()));
+                            }
                             return;
                         }
                         // Makes sure the process is attached and patches are applied
