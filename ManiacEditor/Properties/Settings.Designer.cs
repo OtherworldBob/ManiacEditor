@@ -923,5 +923,17 @@ namespace ManiacEditor.Properties {
                 this["modConfigsNames"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool useBitOperators {
+            get {
+                return ((bool)(this["useBitOperators"]));
+            }
+            set {
+                this["useBitOperators"] = value;
+            }
+        }
     }
 }

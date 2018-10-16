@@ -60,6 +60,28 @@ namespace ManiacEditor
             defaultFilter.Items.Add("Both (1)");
             defaultFilter.Items.Add("Pinball (255)");
             defaultFilter.Items.Add("Other (0)");
+
+            updateFilterNames();
+        }
+
+        public void updateFilterNames()
+        {
+            if (Properties.Settings.Default.useBitOperators)
+            {
+                maniaFilterCheck.Text = "Mania (0b0010)";
+                encoreFilterCheck.Text = "Encore (0b0100)";
+                otherFilterCheck.Text = "Both (0b0001)";
+                bothFilterCheck.Text = "Other (0b1000)";
+            }
+            else
+            {
+                maniaFilterCheck.Text = "Mania (2)";
+                encoreFilterCheck.Text = "Encore (4)";
+                otherFilterCheck.Text = "Both (1)";
+                bothFilterCheck.Text = "Other (0)";
+
+            }
+
         }
 
         /*public EntitiesToolbar(List<string> ConfigObjects) //An Attempt to load Object Lists from Gameconfig + Stageconfig, seems to work well!

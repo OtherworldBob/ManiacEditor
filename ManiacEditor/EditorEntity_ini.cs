@@ -1,5 +1,4 @@
-﻿using ManiacEditor.Entity_Renders;
-using ManiacEditor.Enums;
+﻿using ManiacEditor.Enums;
 using RSDKv5;
 using SharpDX.Direct3D9;
 using System;

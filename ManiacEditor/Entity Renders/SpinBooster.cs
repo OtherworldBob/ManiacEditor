@@ -17,7 +17,21 @@ namespace ManiacEditor.Entity_Renders
         {
 
             var size = (int)(entity.attributesMap["size"].ValueVar) - 1;
-            //var angle = entity.attributesMap["angle"].ValueInt32;
+            int angle = 0;
+            var direction = (int)entity.attributesMap["direction"].ValueUInt8;
+
+            switch (direction)
+            {
+                case 1:
+                    angle = 64;
+                    break;
+                case 2:
+                    angle = 128;
+                    break;
+                case 3:
+                    angle = 192;
+                    break;
+            }
 
             var editorAnim = e.LoadAnimation2("PlaneSwitch", d, 0, 4, true, false, false);
 
@@ -34,7 +48,7 @@ namespace ManiacEditor.Entity_Renders
                     int[] drawCoords = RotatePoints(
                         x - frame.Frame.Width / 2,
                         (y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-size / 2 + yy) * frame.Frame.Height),
-                        x + pivotOffsetX, y + pivotOffsetY, 0);
+                        x + pivotOffsetX, y + pivotOffsetY, angle);
 
                     d.DrawBitmap(frame.Texture, drawCoords[0] + drawOffsetX, drawCoords[1] + drawOffsetY, frame.Frame.Width, frame.Frame.Height, false, Transparency);
                 }

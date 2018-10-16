@@ -508,12 +508,23 @@ namespace ManiacEditor
                  *   |--- Encore
                  *   ---- Unknown
                  */
+                if (Properties.Settings.Default.useBitOperators)
+                {
+                    filteredOut =
+                        ((filter & 0b0001) != 0 && !Properties.Settings.Default.showBothEntities) ||
+                        ((filter & 0b0010) != 0 && !Properties.Settings.Default.showManiaEntities) ||
+                        ((filter & 0b0100) != 0 && !Properties.Settings.Default.showEncoreEntities) ||
+                        ((filter & 0b1000) != 0 && !Properties.Settings.Default.showOtherEntities);
+                }
+                else
+                {
+                    filteredOut =
+                        ((filter == 1 || filter == 5) && !Properties.Settings.Default.showBothEntities) ||
+                        (filter == 2 && !Properties.Settings.Default.showManiaEntities) ||
+                        (filter == 4 && !Properties.Settings.Default.showEncoreEntities) ||
+                        ((filter < 1 || filter == 3 || filter > 5) && !Properties.Settings.Default.showOtherEntities);
+                }
 
-                filteredOut =
-                    ((filter & 0b0001) != 0 && !Properties.Settings.Default.showBothEntities) ||
-                    ((filter & 0b0010) != 0 && !Properties.Settings.Default.showManiaEntities) ||
-                    ((filter & 0b0100) != 0 && !Properties.Settings.Default.showEncoreEntities) ||
-                    ((filter & 0b1000) != 0 && !Properties.Settings.Default.showOtherEntities);
 
             }
             else
@@ -538,6 +549,23 @@ namespace ManiacEditor
             }
             System.Drawing.Color color = Selected ? System.Drawing.Color.MediumPurple : System.Drawing.Color.MediumTurquoise;
             System.Drawing.Color color2 = System.Drawing.Color.DarkBlue;
+            if (HasFilter(1) || HasFilter(5))
+            {
+                 color2 = System.Drawing.Color.DarkBlue;
+            }
+            else if (HasFilter(2))
+            {
+                 color2 = System.Drawing.Color.DarkRed;
+            }
+            else if (HasFilter(4))
+            {
+                color2 = System.Drawing.Color.DarkGreen;
+            }
+            else if (HasFilterOther())
+            {
+                 color2 = System.Drawing.Color.Yellow;
+            }
+
             int Transparency = (Editor.Instance.EditLayer == null) ? 0xff : 0x32;
             if (!Properties.Settings.Default.NeverLoadEntityTextures)
             {
@@ -611,8 +639,18 @@ namespace ManiacEditor
                 d.DrawLine(x, y, x, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Transparency, color2));
                 d.DrawLine(x, y + NAME_BOX_HEIGHT, x + NAME_BOX_WIDTH, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Transparency, color2));
                 d.DrawLine(x + NAME_BOX_WIDTH, y, x + NAME_BOX_WIDTH, y + NAME_BOX_HEIGHT, System.Drawing.Color.FromArgb(Transparency, color2));
-                if (Properties.Settings.Default.UseObjectRenderingImprovements == false)
+                if (Properties.Settings.Default.UseObjectRenderingImprovements == false && entity.Object.Name.Name != "TransportTube")
+                {
                     if (Editor.Instance.GetZoom() >= 1) d.DrawTextSmall(String.Format("{0} (ID: {1})", entity.Object.Name, entity.SlotID), x + 2, y + 2, NAME_BOX_WIDTH - 4, System.Drawing.Color.FromArgb(Transparency, System.Drawing.Color.Black), true);
+                }
+                if (entity.Object.Name.Name == "TransportTube")
+                {
+                    if (Editor.Instance.GetZoom() >= 1)
+                    {
+                        d.DrawText(String.Format(entity.attributesMap["dirMask"].ValueUInt8.ToString()), x + 2, y + 2, NAME_BOX_WIDTH - 4, System.Drawing.Color.FromArgb(Transparency, System.Drawing.Color.Red), true);
+                    }
+                }
+
             }
 
 
@@ -882,6 +920,48 @@ namespace ManiacEditor
         public bool HasFilter()
         {
             return entity.attributesMap.ContainsKey("filter") && entity.attributesMap["filter"].Type == AttributeTypes.UINT8;
+        }
+
+        public bool HasFilter(uint input, bool checkHigher = false)
+        {
+            if (entity.attributesMap.ContainsKey("filter") && entity.attributesMap["filter"].Type == AttributeTypes.UINT8)
+            {
+                if (entity.attributesMap["filter"].ValueUInt8 == input && checkHigher == false)
+                {
+                    return true;
+                }
+                else if (entity.attributesMap["filter"].ValueUInt8 >= input && checkHigher)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool HasFilterOther()
+        {
+            if (entity.attributesMap.ContainsKey("filter") && entity.attributesMap["filter"].Type == AttributeTypes.UINT8)
+            {
+                int filter = entity.attributesMap["filter"].ValueUInt8;
+                if (filter < 1 || filter == 3 || filter > 5)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         internal void Flip(FlipDirection flipDirection)

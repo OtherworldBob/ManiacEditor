@@ -1098,6 +1098,7 @@ namespace ManiacEditor
             seperator5.Visible = true;
             seperator6.Visible = true;
             seperator7.Visible = true;
+            seperator8.Visible = true;
 
             if (mySettings.pixelCountMode == false)
             {
@@ -1120,7 +1121,7 @@ namespace ManiacEditor
                 selectionSizeLabel.ToolTipText = "The Length of all the Tiles (by Pixels) in the Selection";
             }
 
-            selectionBoxSizeLabel.Text = "Selection Box Size: X: " + (select_x2 - select_x1) + " Y: " + (select_y2 - select_y1);
+            selectionBoxSizeLabel.Text = "Selection Box Size: X: " + (select_x2 - select_x1) + ", Y: " + (select_y2 - select_y1);
 
             if (mySettings.ScrollLockDirection == true)
             {
@@ -1130,6 +1131,22 @@ namespace ManiacEditor
             {
                 scrollLockDirLabel.Text = "Scroll Lock Direction: Y";
             }
+            int ScreenMaxH;
+            int ScreenMaxV;
+            if (ZoomLevel == 0)
+            {
+                ScreenMaxH = hScrollBar1.Maximum - hScrollBar1.LargeChange;
+                ScreenMaxV = vScrollBar1.Maximum - vScrollBar1.LargeChange;
+            }
+            else
+            {
+                ScreenMaxH = hScrollBar1.Maximum - hScrollBar1.LargeChange;
+                ScreenMaxV = vScrollBar1.Maximum - vScrollBar1.LargeChange;
+            }
+
+
+
+            hVScrollBarXYLabel.Text = "Scroll Bar Position Values: X: " + (ScreenMaxH - hScrollBar1.Value) + ", Y: " + (ScreenMaxV - vScrollBar1.Value);
 
 
 
@@ -3600,14 +3617,13 @@ Error: {ex.Message}");
                             }
                             return;
                         }
-                        // Makes sure the process is attached and patches are applied
                         UseCheatCodes(p);
-                        // Set Player 1 Controller Set to AnyController
-                        if (GameMemory.ReadByte(Player1_ControllerID_ptr) == 0x01)
+                        // Makes sure the process is attached and patches are applied
+                        // Set Player 1 Controller Set to 1 (If we set it to AnyController (0x00) we can't use Debug Mode In-Game)
+                        if (GameMemory.ReadByte(Player1_ControllerID_ptr) != 0x01)
                         {
-                            GameMemory.WriteByte(Player1_ControllerID_ptr, 0x00);
+                            GameMemory.WriteByte(Player1_ControllerID_ptr, 0x01); //setting this to 0x00 causes the inability to use debug mode
                             GameMemory.WriteByte(Player2_ControllerID_ptr, 0xFF);
-                            GameMemory.WriteByte(0x00E48768, 1);
                         }
                         Thread.Sleep(300);
                     }
@@ -4430,6 +4446,11 @@ Error: {ex.Message}");
             
         }
 
+        private void goToToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            goToCoords();
+        }
+
         private void movingPlatformsObjectsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (movingPlatformsObjectsToolStripMenuItem.Checked == false)
@@ -4585,40 +4606,9 @@ Error: {ex.Message}");
            GraphicPanel.Render();
         }
 
-        public void UpdateRenderMouse(MouseEventArgs e)
+        private void goToCoords()
         {
-            //
-            // Tooltip Bar Info 
-            //
-            positionLabel.Text = "X: " + (int)(e.X / Zoom) + " Y: " + (int)(e.Y / Zoom);
 
-            if (mySettings.pixelCountMode == false)
-            {
-                selectedPositionLabel.Text = "Selected Tile Position: X: " + (int)SelectedTileX + ", Y: " + (int)SelectedTileY;
-                selectedPositionLabel.ToolTipText = "The Position of the Selected Tile";
-            }
-            else
-            {
-                selectedPositionLabel.Text = "Selected Tile Pixel Position: " + "X: " + (int)SelectedTileX * 16 + ", Y: " + (int)SelectedTileY * 16;
-                selectedPositionLabel.ToolTipText = "The Pixel Position of the Selected Tile";
-            }
-            if (mySettings.pixelCountMode == false)
-            {
-                selectionSizeLabel.Text = "Amount of Tiles in Selection: " + (SelectedTilesCount - DeselectTilesCount);
-                selectionSizeLabel.ToolTipText = "The Size of the Selection";
-            }
-            else
-            {
-                selectionSizeLabel.Text = "Length of Pixels in Selection: " + (SelectedTilesCount - DeselectTilesCount) * 16;
-                selectionSizeLabel.ToolTipText = "The Length of all the Tiles (by Pixels) in the Selection";
-            }
-
-
-            //
-            // End of Tooltip Bar Info Section
-            //
-
-            GraphicPanel.Render();
         }
     }
 }

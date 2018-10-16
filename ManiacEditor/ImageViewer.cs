@@ -22,6 +22,8 @@ namespace ManiacEditor
 
         public bool IsText;
 
+        public DevicePanel GraphicsPanel;
+
         public ImageViewer()
         {
             m_IsThumbnail = false;
@@ -112,6 +114,7 @@ namespace ManiacEditor
 
             g.Clear(Color.White);
             g.DrawImage(m_Image, 4, 4, m_Image.Width * mp, m_Image.Height * mp);
+
             if (m_IsActive)
             {
                 g.DrawRectangle(new Pen(Color.White, 1), 3, 3, m_Image.Width * mp + 2, m_Image.Height * mp + 2);

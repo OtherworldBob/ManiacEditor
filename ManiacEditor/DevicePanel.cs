@@ -34,6 +34,9 @@ namespace ManiacEditor
         public int DrawWidth;
         public int DrawHeight;
 
+        public int ScreenPosWidth;
+        public int ScreenPosHeight;
+
         Sprite sprite;
         Sprite sprite2;
         Texture tx;
@@ -59,7 +62,7 @@ namespace ManiacEditor
         private Font fontBold;
         //public VertexBuffer vb;
         // The Form to place the DevicePanel onto
-        private IDrawArea _parent = null;
+        public IDrawArea _parent = null;
         private PresentParameters presentParams;
         // On this event we can start to render our scene
         public event RenderEventHandler OnRender;

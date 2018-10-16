@@ -27,55 +27,71 @@ namespace ManiacEditor.Entity_Renders
             var uprightAnim = e.LoadAnimation2("TransportTubes", d, 0, 6, false, false, false);
             var downrightAnim = e.LoadAnimation2("TransportTubes", d, 0, 7, false, false, false);
             bool showUp = false, showDown = false, showLeft = false, showRight = false, showUpLeft = false, showDownLeft = false, showUpRight = false, showDownRight = false;
-            switch (dirMask)
+            if (type == 0)
             {
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    showLeft = true;
-                    showUp = true;
-                    break;
-                case 6:
-                    showLeft = true;
-                    showDown = true;
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    break;
-                case 9:
-                    showUp = true;
-                    showRight = true;
-                    break;
-                case 10:
-                    showDown = true;
-                    showRight = true;
-                    break;
-                case 20:
-                    showLeft = true;
-                    showUpRight = true;
-                    break;
-                case 40:
-                    showUpLeft = true;
-                    showRight = true;
-                    break;
-                case 68:
-                    showLeft = true;
-                    showDownRight = true;
-                    break;
-                case 136:
-                    showRight = true;
-                    showDownLeft = true;
-                    break;
+                switch (dirMask)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        showLeft = true;
+                        showUp = true;
+                        break;
+                    case 6:
+                        showLeft = true;
+                        showDown = true;
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        break;
+                    case 9:
+                        showUp = true;
+                        showRight = true;
+                        break;
+                    case 10:
+                        showDown = true;
+                        showRight = true;
+                        break;
+                    case 18:
+                        showDown = true;
+                        showUpRight = true;
+                        break;
+                    case 20:
+                        showLeft = true;
+                        showUpRight = true;
+                        break;
+                    case 40:
+                        showUpLeft = true;
+                        showRight = true;
+                        break;
+                    case 65:
+                        showUp = true;
+                        showDownRight = true;
+                        break;
+                    case 68:
+                        showLeft = true;
+                        showDownRight = true;
+                        break;
+                    case 129:
+                        showUp = true;
+                        showDownLeft = true;
+                        break;
+                    case 136:
+                        showRight = true;
+                        showDownLeft = true;
+                        break;
+                }
             }
+
 
             if (editorAnim != null && editorAnim.Frames.Count != 0 && upAnim != null && upAnim.Frames.Count != 0 && downAnim != null && downAnim.Frames.Count != 0 && rightAnim != null && rightAnim.Frames.Count != 0 && leftAnim != null && leftAnim.Frames.Count != 0 && uprightAnim != null && uprightAnim.Frames.Count != 0 && downrightAnim != null && downrightAnim.Frames.Count != 0 && upleftAnim != null && upleftAnim.Frames.Count != 0 && downleftAnim != null && downleftAnim.Frames.Count != 0)
             {
