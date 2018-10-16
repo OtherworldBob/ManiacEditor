@@ -3547,6 +3547,11 @@ Error: {ex.Message}");
                 }
                 else
                 {
+
+                    // For Mania Plus, The best way to boot the game is by using the steam command.
+                    // After Calling the Steam command, We need to wait until Steam responds and Starts the game.
+                    // Once the game process starts up, We quickly attach to it and apply all the needed patches
+
                     // Wait for Steam to complete startup
                     new Thread(() =>
                     {
@@ -3562,29 +3567,15 @@ Error: {ex.Message}");
                             ready = true;
 
                             
-                            // Wait until the Game is ready
+                            // Wait until there is a Running Scene.
                             while (GameMemory.ReadByte(GameState_ptr) != 0x01)
                                 Thread.Sleep(1);
+
                             // Swap the Scene
                             GameMemory.WriteByte(CurrentScene_ptr, (byte)myEditorState.Level_ID);
                             // Restart the Scene
                             GameMemory.WriteByte(GameState_ptr, 0);
-                            
-                            /*
-                            byte levelID = (byte)(myEditorState.Level_ID - 1);
-                            if (myEditorState.Level_ID == -1)
-                            {
-                                levelID = 0x00;
-                            }
-                            while (GameMemory.ReadByte(0x00E48777) != 255)
-                            {
-                                Debug.Print("Awaiting for Mania to Initlize!");
-                            }
-                            GameMemory.WriteByte(0x00E48776, 0x02); // Unknown
-                            GameMemory.WriteByte(0x00E48777, 0x00); // Unknown
-                            GameMemory.WriteByte(0x00E48775, 0x09); // Unknown
-                            GameMemory.WriteByte(0x00E48774, 0x00); // Unknown
-                            GameMemory.WriteByte(CurrentScene_ptr, levelID);*/
+
 
                         }));
                     }).Start();
@@ -3605,8 +3596,8 @@ Error: {ex.Message}");
                             Invoke(new Action(() => UpdateControls()));
                             return;
                         }
-                        // Makes sure the process is attached
-                        GameMemory.Attach(p);
+                        // Makes sure the process is attached and patches are applied
+                        UseCheatCodes(p);
                         // Set Player 1 Controller Set to AnyController
                         if (GameMemory.ReadByte(Player1_ControllerID_ptr) == 0x01)
                         {
@@ -3625,7 +3616,7 @@ Error: {ex.Message}");
             }
         }
 
-        public void UseCheatCodes(System.Diagnostics.Process p)
+        public void UseCheatCodes(Process p)
         {
             if (mySettings.UsePrePlusOffsets)
             {
@@ -3635,11 +3626,11 @@ Error: {ex.Message}");
             else
             {
                 GameMemory.Attach(p);
-                GameMemory.WriteByte(0x005FDD00, 0xEB);
-                GameMemory.WriteByte(0x00E48768, 0x01);
-                GameMemory.WriteByte(0x006F1806, 0x01);
-                GameMemory.WriteByte(0x006F1806, 0x01);
 
+                // Mania Plus Patches
+                GameMemory.WriteByte(0x00E48768, 0x01); // Enable Debug
+                GameMemory.WriteByte(0x006F1806, 0x01); // Allow DevMenu
+                GameMemory.WriteByte(0x005FDD00, 0xEB); // Disable Background Pausing
             }
         }
 
@@ -4242,12 +4233,10 @@ Error: {ex.Message}");
                         return;
                     }
                 }
-                ProcessStartInfo psi;
-                psi = new ProcessStartInfo(mySettings.RunModLoaderPath);
-                Process.Start(psi);
-            }
 
-            
+                if (File.Exists(mySettings.RunModLoaderPath))
+                    Process.Start(mySettings.RunModLoaderPath);
+            }
         }
 
         private void colorPaletteEditorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -4287,9 +4276,8 @@ Error: {ex.Message}");
                     }
                 }
 
-                ProcessStartInfo psi;
-                psi = new ProcessStartInfo(mySettings.RunPalleteEditorPath);
-                Process.Start(psi);
+                if (File.Exists(mySettings.RunPalleteEditorPath))
+                    Process.Start(mySettings.RunPalleteEditorPath);
             }
         }
 
@@ -4481,12 +4469,12 @@ Error: {ex.Message}");
             ConfigManager configManager = new ConfigManager();
             configManager.ShowDialog();
 
-                
-                selectConfigToolStripMenuItem.DropDownItems.Clear();
-                for (int i = 0; i < mySettings.modConfigs.Count; i++)
-                {
-                    selectConfigToolStripMenuItem.DropDownItems.Add(CreateModConfigMenuItem(i));
-                }
+            // TODO: Fix NullReferenceException on mySettings.modConfigs
+            selectConfigToolStripMenuItem.DropDownItems.Clear();
+            for (int i = 0; i < mySettings.modConfigs.Count; i++)
+            {
+                selectConfigToolStripMenuItem.DropDownItems.Add(CreateModConfigMenuItem(i));
+            }
             
         }
 
