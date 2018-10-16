@@ -296,7 +296,7 @@ namespace ManiacEditor
 
 
             string path, path2;
-            if (name == "EditorAssets" || name == "SuperSpecialRing" || name == "EditorIcons2")
+            if (name == "EditorAssets" || name == "SuperSpecialRing" || name == "EditorIcons2" || name == "TransportTubes")
             {
                 if (name == "EditorAssets")
                 {
@@ -307,6 +307,12 @@ namespace ManiacEditor
                 else if (name == "EditorIcons2")
                 {
                     path2 = Path.Combine(Environment.CurrentDirectory, "EditorIcons2.bin");
+                    if (!File.Exists(path2))
+                        return null;
+                }
+                else if (name == "TransportTubes")
+                {
+                    path2 = Path.Combine(Environment.CurrentDirectory, "Global\\", "TransportTubes.bin");
                     if (!File.Exists(path2))
                         return null;
                 }
@@ -405,7 +411,7 @@ namespace ManiacEditor
                 if (!Sheets.ContainsKey(rsdkAnim.SpriteSheets[frame.SpriteSheet]))
                 {
                     string targetFile;
-                    if (name == "EditorAssets" || name == "SuperSpecialRing" || name == "EditorIcons2")
+                    if (name == "EditorAssets" || name == "SuperSpecialRing" || name == "EditorIcons2" || name == "TransportTubes")
                     {
                         if (name == "EditorAssets")
                         {
@@ -414,6 +420,10 @@ namespace ManiacEditor
                         else if (name == "EditorIcons2")
                         {
                             targetFile = Path.Combine(Environment.CurrentDirectory, "EditorIcons2.gif");
+                        }
+                        else if (name == "TransportTubes")
+                        {
+                            targetFile = Path.Combine(Environment.CurrentDirectory, "Global\\", "TransportTubes.gif");
                         }
                         else
                         {

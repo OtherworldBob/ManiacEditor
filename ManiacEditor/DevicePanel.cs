@@ -14,7 +14,6 @@ using Font = SharpDX.Direct3D9.Font;
 using Rectangle = System.Drawing.Rectangle;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
-using System.Timers;
 
 /*
  * This file is a ported old rendering code
@@ -138,6 +137,7 @@ namespace ManiacEditor
                 }
 
 
+            //vb = new VertexBuffer(typeof(CustomVertex.PositionTextured),
             //vb = new VertexBuffer(typeof(CustomVertex.PositionTextured),
             //    4, _device, Usage.Dynamic | Usage.WriteOnly,
             //    CustomVertex.PositionTextured.Format, Pool.Default);

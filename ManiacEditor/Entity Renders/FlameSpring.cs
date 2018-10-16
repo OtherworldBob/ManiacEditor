@@ -18,7 +18,6 @@ namespace ManiacEditor.Entity_Renders
             int type = (int)entity.attributesMap["type"].ValueVar;
             bool fliph = false;
             bool flipv = false;
-            bool headless = false;
             int valveType;
             int animID;
             switch (type)
@@ -36,17 +35,14 @@ namespace ManiacEditor.Entity_Renders
                     valveType = 2;
                     break;
                 case 3:
-                    headless = true;
                     animID = 2;
                     valveType = 0;
                     break;
                 case 4:
-                    headless = true;
                     animID = 2;
                     valveType = 1;
                     break;
                 case 5:
-                    headless = true;
                     animID = 2;
                     valveType = 2;
                     break;

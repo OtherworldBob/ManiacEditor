@@ -35,7 +35,6 @@ namespace ManiacEditor
         public bool showGrid;
         public bool showCollisionA;
         public bool showCollisionB;
-        public bool multiLayerSelect = false;
         public int modConfig_CheckedItem;
         public int backupType = 0;
         public bool importingObjects = false;
@@ -100,18 +99,14 @@ namespace ManiacEditor
 
         internal Dictionary<Point, ushort> TilesClipboard;
 
-        //For Multi Layer Copying and Pasting
-        internal Dictionary<Point, ushort> TilesClipboardLower;
-        internal Dictionary<Point, ushort> TilesClipboardLow;
-        internal Dictionary<Point, ushort> TilesClipboardHigh;
-        internal Dictionary<Point, ushort> TilesClipboardHigher;
-
         private List<EditorEntity> entitiesClipboard;
         public int SelectedTilesCount;
         public int DeselectTilesCount;
         internal int SelectedTileX;
         internal int SelectedTileY;
         internal bool controlWindowOpen;
+
+        public int select_x1, select_x2, select_y1, select_y2;
 
         internal int SceneWidth => EditorScene.Layers.Max(sl => sl.Width) * 16;
         internal int SceneHeight => EditorScene.Layers.Max(sl => sl.Height) * 16;
@@ -534,15 +529,7 @@ namespace ManiacEditor
         {
             if (IsTilesEdit())
             {
-                if (!multiLayerSelect)
-                {
                     return EditLayer.SelectedTiles.Count > 0 || EditLayer.TempSelectionTiles.Count > 0;
-                }
-                else
-                {
-                    return (FGHigher?.SelectedTiles.Count > 0 || FGHigher?.TempSelectionTiles.Count > 0 || FGHigh?.SelectedTiles.Count > 0 || FGHigh?.TempSelectionTiles.Count > 0 || FGLow?.SelectedTiles.Count > 0 || FGLow?.TempSelectionTiles.Count > 0 || FGLower?.SelectedTiles.Count > 0 || FGLower?.TempSelectionTiles.Count > 0);
-                }
-
             }
             else if (IsEntitiesEdit())
             {
@@ -687,17 +674,7 @@ namespace ManiacEditor
                     });
                     TilesToolbar.TileOptionChanged = new Action<int, bool>((option, state) =>
                    {
-                       if (multiLayerSelect == false)
-                       {
-                           EditLayer.SetPropertySelected(option + 12, state);
-                       }
-                       else
-                       {
-                           FGHigh?.SetPropertySelected(option + 12, state);
-                           FGHigher?.SetPropertySelected(option + 12, state);
-                           FGLow?.SetPropertySelected(option + 12, state);
-                           FGLower?.SetPropertySelected(option + 12, state);
-                       }
+                       EditLayer.SetPropertySelected(option + 12, state);
 
                    });
                     splitContainer1.Panel2.Controls.Clear();
@@ -772,32 +749,8 @@ namespace ManiacEditor
         {
             if (IsTilesEdit())
             {
-                List<ushort> values;
-                List<ushort> values1;
-                List<ushort> values2;
-                List<ushort> values3;
-                List<ushort> values4;
-                List<ushort> valuesBlank = new List<ushort>();
-                if (multiLayerSelect == true)
-                {
-                    if (FGHigh?.GetSelectedValues() == null) values1 = valuesBlank;
-                    else values1 = FGHigh.GetSelectedValues();
-                    if (FGLow?.GetSelectedValues() == null) values2 = valuesBlank;
-                    else values2 = FGLow.GetSelectedValues();
-                    if (FGLower?.GetSelectedValues() == null) values3 = valuesBlank;
-                    else values3 = FGLower.GetSelectedValues();
-                    if (FGHigher?.GetSelectedValues() == null) values4 = valuesBlank;
-                    else values4 = FGHigher.GetSelectedValues();
-
-                    values = values1;
-                    values.AddRange(values2);
-                    values.AddRange(values3);
-                    values.AddRange(values4);
-                }
-                else
-                {
-                    values = EditLayer.GetSelectedValues();
-                }
+                List<ushort> values = EditLayer.GetSelectedValues();
+                    
                 if (values.Count > 0)
                 {
                     for (int i = 0; i < 4; ++i)
@@ -839,7 +792,7 @@ namespace ManiacEditor
         {
             Dictionary<Point, ushort> tiles = new Dictionary<Point, ushort>();
             tiles[new Point(0, 0)] = (ushort)tile;
-            EditLayer?.PasteFromClipboard(position, tiles);
+            EditLayer.PasteFromClipboard(position, tiles);
             UpdateEditLayerActions();
         }
 
@@ -851,114 +804,7 @@ namespace ManiacEditor
         {
             if (EditLayer != null)
             {
-                List<IAction> actions;
-                List<IAction> fgHighActions;
-                List<IAction> fgHigherActions;
-                List<IAction> fglowActions;
-                List<IAction> fglowerActions;
-                if (multiLayerSelect)
-                {
-                    if (FGLower != null)
-                    {
-                        fglowerActions = FGLower?.Actions;
-                        // FG Lower Section
-                        if (fglowerActions.Count > 0) redo.Clear();
-                        while (fglowerActions.Count > 0)
-                        {
-                            bool create_new = false;
-                            if (undo.Count == 0 || !(undo.Peek() is ActionsGroup))
-                            {
-                                create_new = true;
-                            }
-                            else
-                            {
-                                create_new = (undo.Peek() as ActionsGroup).IsClosed;
-                            }
-                            if (create_new)
-                            {
-                                undo.Push(new ActionsGroup());
-                            }
-                            (undo.Peek() as ActionsGroup).AddAction(fglowerActions[0]);
-                            fglowerActions.RemoveAt(0);
-                        }
-                    }
-                    if (FGLow != null)
-                    {
-                        fglowActions = FGLow?.Actions;
-                        // FG Low Section
-                        if (fglowActions.Count > 0) redo.Clear();
-                        while (fglowActions.Count > 0)
-                        {
-                            bool create_new = false;
-                            if (undo.Count == 0 || !(undo.Peek() is ActionsGroup))
-                            {
-                                create_new = true;
-                            }
-                            else
-                            {
-                                create_new = (undo.Peek() as ActionsGroup).IsClosed;
-                            }
-                            if (create_new)
-                            {
-                                undo.Push(new ActionsGroup());
-                            }
-                            (undo.Peek() as ActionsGroup).AddAction(fglowActions[0]);
-                            fglowActions.RemoveAt(0);
-                        }
-                    }
-                    if (FGHigh != null)
-                    {
-                        fgHighActions = FGHigh?.Actions;
-
-                        // FG High Section
-                        if (fgHighActions.Count > 0) redo.Clear();
-                        while (fgHighActions.Count > 0)
-                        {
-                            bool create_new = false;
-                            if (undo.Count == 0 || !(undo.Peek() is ActionsGroup))
-                            {
-                                create_new = true;
-                            }
-                            else
-                            {
-                                create_new = (undo.Peek() as ActionsGroup).IsClosed;
-                            }
-                            if (create_new)
-                            {
-                                undo.Push(new ActionsGroup());
-                            }
-                            (undo.Peek() as ActionsGroup).AddAction(fgHighActions[0]);
-                            fgHighActions.RemoveAt(0);
-                        }
-                    }
-                    if (FGHigher != null)
-                    {
-                        fgHigherActions = FGHigher?.Actions;
-                        // FG Higher Section
-                        if (fgHigherActions.Count > 0) redo.Clear();
-                        while (fgHigherActions.Count > 0)
-                        {
-                            bool create_new = false;
-                            if (undo.Count == 0 || !(undo.Peek() is ActionsGroup))
-                            {
-                                create_new = true;
-                            }
-                            else
-                            {
-                                create_new = (undo.Peek() as ActionsGroup).IsClosed;
-                            }
-                            if (create_new)
-                            {
-                                undo.Push(new ActionsGroup());
-                            }
-                            (undo.Peek() as ActionsGroup).AddAction(fgHigherActions[0]);
-                            fgHigherActions.RemoveAt(0);
-                        }
-                    }
-                }
-                else
-                {
-                    actions = EditLayer.Actions;
+                    List<IAction> actions = EditLayer.Actions;
                     if (actions.Count > 0) redo.Clear();
                     while (actions.Count > 0)
                     {
@@ -978,7 +824,6 @@ namespace ManiacEditor
                         (undo.Peek() as ActionsGroup).AddAction(actions[0]);
                         actions.RemoveAt(0);
                     }
-                }
 
                 UpdateControls();
             }
@@ -986,19 +831,7 @@ namespace ManiacEditor
 
         public void DeleteSelected()
         {
-            if (multiLayerSelect == false)
-            {
-                EditLayer?.DeleteSelected();
-            }
-            else
-            {
-                FGLow?.DeleteSelected();
-                FGLower?.DeleteSelected();
-                FGHigh?.DeleteSelected();
-                FGHigher?.DeleteSelected();
-            }
-
-
+            EditLayer?.DeleteSelected();
             UpdateEditLayerActions();
 
             if (IsEntitiesEdit())
@@ -1166,17 +999,7 @@ namespace ManiacEditor
                                 case Keys.Right: x = 1 + mySettings.FasterNudgeValue; break;
                             }
                         }
-                        if (!multiLayerSelect)
-                        {
-                            EditLayer?.MoveSelectedQuonta(new Point(x, y));
-                        }
-                        else
-                        {
-                            FGLow.MoveSelectedQuonta(new Point(x, y));
-                            FGLower.MoveSelectedQuonta(new Point(x, y));
-                            FGHigh.MoveSelectedQuonta(new Point(x, y));
-                            FGHigher.MoveSelectedQuonta(new Point(x, y));
-                        }
+                        EditLayer?.MoveSelectedQuonta(new Point(x, y));
 
                         UpdateEditLayerActions();
 
@@ -1263,7 +1086,10 @@ namespace ManiacEditor
             //
             // Tooltip Bar Info 
             //
-            positionLabel.Text = "X: " + (int)(e.X / Zoom) + " Y: " + (int)(e.Y / Zoom);
+            if (e != null)
+            {
+                positionLabel.Text = "X: " + (int)(e.X / Zoom) + " Y: " + (int)(e.Y / Zoom);
+            }
             _levelIDLabel.Text = "Level ID: " + myEditorState.Level_ID.ToString();
             seperator1.Visible = true;
             seperator2.Visible = true;
@@ -1271,6 +1097,7 @@ namespace ManiacEditor
             seperator4.Visible = true;
             seperator5.Visible = true;
             seperator6.Visible = true;
+            seperator7.Visible = true;
 
             if (mySettings.pixelCountMode == false)
             {
@@ -1292,6 +1119,8 @@ namespace ManiacEditor
                 selectionSizeLabel.Text = "Length of Pixels in Selection: " + (SelectedTilesCount - DeselectTilesCount) * 16;
                 selectionSizeLabel.ToolTipText = "The Length of all the Tiles (by Pixels) in the Selection";
             }
+
+            selectionBoxSizeLabel.Text = "Selection Box Size: X: " + (select_x2 - select_x1) + " Y: " + (select_y2 - select_y1);
 
             if (mySettings.ScrollLockDirection == true)
             {
@@ -1321,36 +1150,9 @@ namespace ManiacEditor
                 Point clicked_point = new Point((int)(ClickedX / Zoom), (int)(ClickedY / Zoom));
                 // There was just a click now we can determine that this click is dragging
 
-                //This is to allow scenes that don't have layers to use multi-layer
-                bool? pointSelect1 = FGHigh?.IsPointSelected(clicked_point);
-                bool? pointSelect2 = FGHigher?.IsPointSelected(clicked_point);
-                bool? pointSelect3 = FGLow?.IsPointSelected(clicked_point);
-                bool? pointSelect4 = FGLower?.IsPointSelected(clicked_point);
-                if (pointSelect1 == null) pointSelect1 = false;
-                if (pointSelect2 == null) pointSelect2 = false;
-                if (pointSelect3 == null) pointSelect3 = false;
-                if (pointSelect4 == null) pointSelect4 = false;
-                bool pointSelect1_c = pointSelect1.Value;
-                bool pointSelect2_c = pointSelect2.Value;
-                bool pointSelect3_c = pointSelect3.Value;
-                bool pointSelect4_c = pointSelect4.Value;
-                bool? hasTileAt1 = FGHigh?.HasTileAt(clicked_point);
-                bool? hasTileAt2 = FGHigher?.HasTileAt(clicked_point);
-                bool? hasTileAt3 = FGLow?.HasTileAt(clicked_point);
-                bool? hasTileAt4 = FGLower?.HasTileAt(clicked_point);
-                if (hasTileAt1 == null) hasTileAt1 = false;
-                if (hasTileAt2 == null) hasTileAt2 = false;
-                if (hasTileAt3 == null) hasTileAt3 = false;
-                if (hasTileAt4 == null) hasTileAt4 = false;
-                bool hasTileAt1_c = hasTileAt1.Value;
-                bool hasTileAt2_c = hasTileAt2.Value;
-                bool hasTileAt3_c = hasTileAt3.Value;
-                bool hasTileAt4_c = hasTileAt4.Value;
-                UpdateStatusPanel(sender, e);
-
                 if (IsTilesEdit())
                 {
-                    if (EditLayer.IsPointSelected(clicked_point) && !multiLayerSelect)
+                    if (EditLayer.IsPointSelected(clicked_point))
                     {
                         // Start dragging the tiles
                         dragged = true;
@@ -1359,19 +1161,7 @@ namespace ManiacEditor
                         UpdateStatusPanel(sender, e);
                     }
 
-                    else if ((pointSelect1_c || pointSelect2_c || pointSelect3_c || pointSelect4_c) && multiLayerSelect)
-                    {
-                        // Start dragging the tiles
-                        dragged = true;
-                        startDragged = true;
-                        FGHigh?.StartDrag();
-                        FGLow?.StartDrag();
-                        FGLower?.StartDrag();
-                        FGHigher?.StartDrag();
-                        UpdateStatusPanel(sender, e);
-                    }
-
-                    else if (!selectTool.Checked && !ShiftPressed() && !CtrlPressed() && EditLayer.HasTileAt(clicked_point) && !multiLayerSelect)
+                    else if (!selectTool.Checked && !ShiftPressed() && !CtrlPressed() && EditLayer.HasTileAt(clicked_point))
                     {
                         // Start dragging the single selected tile
                         EditLayer.Select(clicked_point);
@@ -1380,21 +1170,7 @@ namespace ManiacEditor
                         EditLayer.StartDrag();
                         UpdateStatusPanel(sender, e);
                     }
-                    else if (!selectTool.Checked && !ShiftPressed() && !CtrlPressed() && (hasTileAt1_c || hasTileAt2_c || hasTileAt3_c || hasTileAt4_c) && multiLayerSelect)
-                    {
-                        // Start dragging the single selected tile
-                        FGLow?.Select(clicked_point);
-                        FGLower?.Select(clicked_point);
-                        FGHigh?.Select(clicked_point);
-                        FGHigher?.Select(clicked_point);
-                        dragged = true;
-                        startDragged = true;
-                        FGHigh?.StartDrag();
-                        FGLow?.StartDrag();
-                        FGLower?.StartDrag();
-                        FGHigher?.StartDrag();
-                        UpdateStatusPanel(sender, e);
-                    }
+
                     else
                     {
                         // Start drag selection
@@ -1596,33 +1372,25 @@ namespace ManiacEditor
                 {
                     if (selectingX != e.X && selectingY != e.Y)
                     {
-                        int x1 = (int)(selectingX / Zoom), x2 = (int)(e.X / Zoom);
-                        int y1 = (int)(selectingY / Zoom), y2 = (int)(e.Y / Zoom);
-                        if (x1 > x2)
+                        select_x1 = (int)(selectingX / Zoom);
+                        select_x2 = (int)(e.X / Zoom);
+                        select_y1 = (int)(selectingY / Zoom);
+                        select_y2 = (int)(e.Y / Zoom);
+                        if (select_x1 > select_x2)
                         {
-                            x1 = (int)(e.X / Zoom);
-                            x2 = (int)(selectingX / Zoom);
+                            select_x1 = (int)(e.X / Zoom);
+                            select_x2 = (int)(selectingX / Zoom);
                         }
-                        if (y1 > y2)
+                        if (select_y1 > select_y2)
                         {
-                            y1 = (int)(e.Y / Zoom);
-                            y2 = (int)(selectingY / Zoom);
+                            select_y1 = (int)(e.Y / Zoom);
+                            select_y2 = (int)(selectingY / Zoom);
                         }
-                        if (!multiLayerSelect)
-                        {
-                            EditLayer?.TempSelection(new Rectangle(x1, y1, x2 - x1, y2 - y1), CtrlPressed());
-                        }
-                        else
-                        {
-                            FGLow?.TempSelection(new Rectangle(x1, y1, x2 - x1, y2 - y1), CtrlPressed());
-                            FGLower?.TempSelection(new Rectangle(x1, y1, x2 - x1, y2 - y1), CtrlPressed());
-                            FGHigh?.TempSelection(new Rectangle(x1, y1, x2 - x1, y2 - y1), CtrlPressed());
-                            FGHigher?.TempSelection(new Rectangle(x1, y1, x2 - x1, y2 - y1), CtrlPressed());
-                        }
-
+                        EditLayer?.TempSelection(new Rectangle(select_x1, select_y1, select_x2 - select_x1, select_y2 - select_y1), CtrlPressed());                       
                         UpdateTilesOptions();
 
-                        if (IsEntitiesEdit()) entities.TempSelection(new Rectangle(x1, y1, x2 - x1, y2 - y1), CtrlPressed());
+                        if (IsEntitiesEdit()) entities.TempSelection(new Rectangle(select_x1, select_y1, select_x2 - select_x1, select_y2 - select_y1), CtrlPressed());
+                        UpdateStatusPanel(null,null);
                     }
                 }
                 else if (dragged)
@@ -1630,17 +1398,7 @@ namespace ManiacEditor
                     Point oldPoint = new Point((int)(lastX / Zoom), (int)(lastY / Zoom));
                     Point newPoint = new Point((int)(e.X / Zoom), (int)(e.Y / Zoom));
 
-                    if (multiLayerSelect)
-                    {
-                        FGLow?.MoveSelected(oldPoint, newPoint, CtrlPressed());
-                        FGLower?.MoveSelected(oldPoint, newPoint, CtrlPressed());
-                        FGHigh?.MoveSelected(oldPoint, newPoint, CtrlPressed());
-                        FGHigher?.MoveSelected(oldPoint, newPoint, CtrlPressed());
-                    }
-                    else
-                    {
-                        EditLayer?.MoveSelected(oldPoint, newPoint, CtrlPressed());
-                    }
+                    EditLayer?.MoveSelected(oldPoint, newPoint, CtrlPressed());
 
                     UpdateEditLayerActions();
                     if (IsEntitiesEdit())
@@ -1750,16 +1508,9 @@ namespace ManiacEditor
                     bool point3 = pointSelect1.Value;
                     bool point4 = pointSelect1.Value;
 
-                    if (!EditLayer.IsPointSelected(p) && !multiLayerSelect)
+                    if (!EditLayer.IsPointSelected(p))
                     {
                         EditLayer.Select(p);
-                    }
-                    if ((!point1 || !point2 || !point3 || !point4) && multiLayerSelect)
-                    {
-                        FGLow?.Select(p);
-                        FGLower?.Select(p);
-                        FGHigher?.Select(p);
-                        FGHigh?.Select(p);
                     }
                     DeleteSelected();
                 }
@@ -1812,34 +1563,14 @@ namespace ManiacEditor
                                 y1 = (int)(e.Y / Zoom);
                                 y2 = (int)(selectingY / Zoom);
                             }
-                            if (!multiLayerSelect)
-                            {
-                                EditLayer?.Select(new Rectangle(x1, y1, x2 - x1, y2 - y1), ShiftPressed() || CtrlPressed(), CtrlPressed());
-                            }
-                            else
-                            {
-                                FGLow?.Select(new Rectangle(x1, y1, x2 - x1, y2 - y1), ShiftPressed() || CtrlPressed(), CtrlPressed());
-                                FGLower?.Select(new Rectangle(x1, y1, x2 - x1, y2 - y1), ShiftPressed() || CtrlPressed(), CtrlPressed());
-                                FGHigh?.Select(new Rectangle(x1, y1, x2 - x1, y2 - y1), ShiftPressed() || CtrlPressed(), CtrlPressed());
-                                FGHigher?.Select(new Rectangle(x1, y1, x2 - x1, y2 - y1), ShiftPressed() || CtrlPressed(), CtrlPressed());
-                            }
+                            EditLayer?.Select(new Rectangle(x1, y1, x2 - x1, y2 - y1), ShiftPressed() || CtrlPressed(), CtrlPressed());
 
                             if (IsEntitiesEdit()) entities.Select(new Rectangle(x1, y1, x2 - x1, y2 - y1), ShiftPressed() || CtrlPressed(), CtrlPressed());
                             SetSelectOnlyButtonsState();
                             UpdateEditLayerActions();
                         }
                         draggingSelection = false;
-                        if (!multiLayerSelect)
-                        {
-                            EditLayer?.EndTempSelection();
-                        }
-                        else
-                        {
-                            FGLow?.EndTempSelection();
-                            FGLower?.EndTempSelection();
-                            FGHigher?.EndTempSelection();
-                            FGHigh?.EndTempSelection();
-                        }
+                        EditLayer?.EndTempSelection();
                         if (IsEntitiesEdit()) entities.EndTempSelection();
                     }
                     else
@@ -1850,17 +1581,7 @@ namespace ManiacEditor
                             Point clicked_point = new Point((int)(ClickedX / Zoom), (int)(ClickedY / Zoom));
                             if (IsTilesEdit())
                             {
-                                if (!multiLayerSelect)
-                                {
-                                    EditLayer.Select(clicked_point, ShiftPressed() || CtrlPressed(), CtrlPressed());
-                                }
-                                else
-                                {
-                                    FGHigh?.Select(clicked_point, ShiftPressed() || CtrlPressed(), CtrlPressed());
-                                    FGHigher?.Select(clicked_point, ShiftPressed() || CtrlPressed(), CtrlPressed());
-                                    FGLow?.Select(clicked_point, ShiftPressed() || CtrlPressed(), CtrlPressed());
-                                    FGLower?.Select(clicked_point, ShiftPressed() || CtrlPressed(), CtrlPressed());
-                                }
+                                EditLayer.Select(clicked_point, ShiftPressed() || CtrlPressed(), CtrlPressed());
                                 UpdateEditLayerActions();
                             }
                             else if (IsEntitiesEdit())
@@ -2823,7 +2544,15 @@ a valid Data Directory.",
                     GraphicPanel.DrawLine(x1, y1, x1, y2, Color.Purple);
                     GraphicPanel.DrawLine(x2, y2, x2, y1, Color.Purple);
                     GraphicPanel.DrawLine(x2, y2, x1, y2, Color.Purple);
+                    UpdateStatusPanel(sender,null);
                 }
+            }
+            if (!draggingSelection)
+            {
+                select_x1 = 0;
+                select_x2 = 0;
+                select_y1 = 0;
+                select_y2 = 0;
             }
             if (scrolling)
             {
@@ -2900,17 +2629,7 @@ a valid Data Directory.",
         {
             if (IsEditing())
             {
-                if (multiLayerSelect == false)
-                {
-                    EditLayer?.Deselect();
-                }
-                else
-                {
-                    FGLow?.Deselect();
-                    FGHigh?.Deselect();
-                    FGLower?.Deselect();
-                    FGHigher?.Deselect();
-                }
+                EditLayer?.Deselect();
 
                 if (IsEntitiesEdit()) entities.Deselect();
                 SetSelectOnlyButtonsState(false);
@@ -3196,18 +2915,7 @@ Error: {ex.Message}");
 
         private void flipHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (multiLayerSelect == false)
-            {
-                EditLayer?.FlipPropertySelected(FlipDirection.Horizontal);
-            }
-            else
-            {
-                FGHigher?.FlipPropertySelected(FlipDirection.Horizontal);
-                FGHigh?.FlipPropertySelected(FlipDirection.Horizontal);
-                FGLower?.FlipPropertySelected(FlipDirection.Horizontal);
-                FGLow?.FlipPropertySelected(FlipDirection.Horizontal);
-            }
-
+            EditLayer?.FlipPropertySelected(FlipDirection.Horizontal);
             UpdateEditLayerActions();
         }
 
@@ -3355,31 +3063,6 @@ Error: {ex.Message}");
 
         private void CopyTilesToClipboard()
         {
-            if (multiLayerSelect == true)
-            {
-                Dictionary<Point, ushort> copyDataLower = FGLower?.CopyToClipboard();
-                Dictionary<Point, ushort> copyDataLow = FGLow?.CopyToClipboard();
-                Dictionary<Point, ushort> copyDataHigh = FGHigh?.CopyToClipboard();
-                Dictionary<Point, ushort> copyDataHigher = FGHigher?.CopyToClipboard();
-
-                // Make a DataObject for the copied data and send it to the Windows clipboard for cross-instance copying
-                if (mySettings.EnableWindowsClipboard)
-                {
-                    Clipboard.SetDataObject(new DataObject("ManiacTilesLower", copyDataLower), true);
-                    Clipboard.SetDataObject(new DataObject("ManiacTilesLow", copyDataLow), true);
-                    Clipboard.SetDataObject(new DataObject("ManiacTilesHigh", copyDataHigh), true);
-                    Clipboard.SetDataObject(new DataObject("ManiacTilesHigher", copyDataHigher), true);
-                }
-
-
-                // Also copy to Maniac's clipboard in case it gets overwritten elsewhere
-                TilesClipboardLower = copyDataLower;
-                TilesClipboardLow = copyDataLow;
-                TilesClipboardHigh = copyDataHigh;
-                TilesClipboardHigher = copyDataHigher;
-            }
-            else
-            {
                 Dictionary<Point, ushort> copyData = EditLayer.CopyToClipboard();
 
                 // Make a DataObject for the copied data and send it to the Windows clipboard for cross-instance copying
@@ -3388,7 +3071,6 @@ Error: {ex.Message}");
 
                 // Also copy to Maniac's clipboard in case it gets overwritten elsewhere
                 TilesClipboard = copyData;
-            }
 
         }
 
@@ -3415,8 +3097,6 @@ Error: {ex.Message}");
         {
             if (IsTilesEdit())
             {
-                if (multiLayerSelect == false)
-                {
                     // check if there are tiles on the Windows clipboard; if so, use those
                     if (mySettings.EnableWindowsClipboard && Clipboard.ContainsData("ManiacTiles"))
                     {
@@ -3430,29 +3110,6 @@ Error: {ex.Message}");
                         EditLayer.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), TilesClipboard);
                         UpdateEditLayerActions();
                     }
-                }
-                else
-                {
-                    // check if there are tiles on the Windows clipboard; if so, use those
-                    if (mySettings.EnableWindowsClipboard && Clipboard.ContainsData("ManiacTiles"))
-                    {
-                        FGLower?.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), (Dictionary<Point, ushort>)Clipboard.GetDataObject().GetData("ManiacTilesLower"));
-                        FGLow?.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), (Dictionary<Point, ushort>)Clipboard.GetDataObject().GetData("ManiacTilesLow"));
-                        FGHigh?.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), (Dictionary<Point, ushort>)Clipboard.GetDataObject().GetData("ManiacTilesHigh"));
-                        FGHigher?.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), (Dictionary<Point, ushort>)Clipboard.GetDataObject().GetData("ManiacTilesHigher"));
-                        UpdateEditLayerActions();
-                    }
-
-                    // if there's none, use the internal clipboard
-                    else if (TilesClipboard != null)
-                    {
-                        FGLower?.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), TilesClipboardLower);
-                        FGLow?.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), TilesClipboardLow);
-                        FGHigh?.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), TilesClipboardHigh);
-                        FGHigher?.PasteFromClipboard(new Point((int)(lastX / Zoom) + EditorLayer.TILE_SIZE - 1, (int)(lastY / Zoom) + EditorLayer.TILE_SIZE - 1), TilesClipboardHigher);
-                        UpdateEditLayerActions();
-                    }
-                }
 
             }
             else if (IsEntitiesEdit())
@@ -3498,18 +3155,7 @@ Error: {ex.Message}");
                 Point rel = GraphicPanel.PointToScreen(Point.Empty);
                 e.Effect = DragDropEffects.Move;
                 //(ushort)((Int32)e.Data.GetData(e.Data.GetFormats()[0])
-                if (multiLayerSelect == true)
-                {
-                    FGLower.StartDragOver(new Point((int)(((e.X - rel.X) + ShiftX) / Zoom), (int)(((e.Y - rel.Y) + ShiftY) / Zoom)), (ushort)TilesToolbar.SelectedTile);
-                    FGLow.StartDragOver(new Point((int)(((e.X - rel.X) + ShiftX) / Zoom), (int)(((e.Y - rel.Y) + ShiftY) / Zoom)), (ushort)TilesToolbar.SelectedTile);
-                    FGHigh.StartDragOver(new Point((int)(((e.X - rel.X) + ShiftX) / Zoom), (int)(((e.Y - rel.Y) + ShiftY) / Zoom)), (ushort)TilesToolbar.SelectedTile);
-                    FGHigher.StartDragOver(new Point((int)(((e.X - rel.X) + ShiftX) / Zoom), (int)(((e.Y - rel.Y) + ShiftY) / Zoom)), (ushort)TilesToolbar.SelectedTile);
-                }
-                else
-                {
-                    EditLayer.StartDragOver(new Point((int)(((e.X - rel.X) + ShiftX) / Zoom), (int)(((e.Y - rel.Y) + ShiftY) / Zoom)), (ushort)TilesToolbar.SelectedTile);
-                }
-
+                EditLayer.StartDragOver(new Point((int)(((e.X - rel.X) + ShiftX) / Zoom), (int)(((e.Y - rel.Y) + ShiftY) / Zoom)), (ushort)TilesToolbar.SelectedTile);
                 UpdateEditLayerActions();
             }
             else
@@ -3523,17 +3169,7 @@ Error: {ex.Message}");
             if (e.Data.GetDataPresent(typeof(Int32)) && IsTilesEdit())
             {
                 Point rel = GraphicPanel.PointToScreen(Point.Empty);
-                if (multiLayerSelect == true)
-                {
-                    FGLower?.DragOver(new Point((int)(((e.X - rel.X) + ShiftX) / Zoom), (int)(((e.Y - rel.Y) + ShiftY) / Zoom)), (ushort)TilesToolbar.SelectedTile);
-                    FGLow?.DragOver(new Point((int)(((e.X - rel.X) + ShiftX) / Zoom), (int)(((e.Y - rel.Y) + ShiftY) / Zoom)), (ushort)TilesToolbar.SelectedTile);
-                    FGHigh?.DragOver(new Point((int)(((e.X - rel.X) + ShiftX) / Zoom), (int)(((e.Y - rel.Y) + ShiftY) / Zoom)), (ushort)TilesToolbar.SelectedTile);
-                    FGHigher?.DragOver(new Point((int)(((e.X - rel.X) + ShiftX) / Zoom), (int)(((e.Y - rel.Y) + ShiftY) / Zoom)), (ushort)TilesToolbar.SelectedTile);
-                }
-                else
-                {
-                    EditLayer.DragOver(new Point((int)(((e.X - rel.X) + ShiftX) / Zoom), (int)(((e.Y - rel.Y) + ShiftY) / Zoom)), (ushort)TilesToolbar.SelectedTile);
-                }
+                EditLayer.DragOver(new Point((int)(((e.X - rel.X) + ShiftX) / Zoom), (int)(((e.Y - rel.Y) + ShiftY) / Zoom)), (ushort)TilesToolbar.SelectedTile);
 
                 UpdateRender();
 
@@ -3542,33 +3178,13 @@ Error: {ex.Message}");
 
         private void GraphicPanel_DragLeave(object sender, EventArgs e)
         {
-            if (multiLayerSelect == true) {
-                FGLower?.EndDragOver(true);
-                FGLow?.EndDragOver(true);
-                FGHigh?.EndDragOver(true);
-                FGHigher?.EndDragOver(true);
-            }
-            else
-            {
-                EditLayer?.EndDragOver(true);
-            }
-
+            EditLayer?.EndDragOver(true);
             UpdateRender();
         }
 
         private void GraphicPanel_DragDrop(object sender, DragEventArgs e)
         {
-            if (multiLayerSelect == true)
-            {
-                FGLower?.EndDragOver(false);
-                FGLow?.EndDragOver(false);
-                FGHigh?.EndDragOver(false);
-                FGHigher?.EndDragOver(false);
-            }
-            else
-            {
-                EditLayer?.EndDragOver(false);
-            }
+           EditLayer?.EndDragOver(false);
         }
 
         private void zoomInButton_Click(object sender, EventArgs e)
@@ -4079,17 +3695,7 @@ Error: {ex.Message}");
 
         private void flipVerticalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (multiLayerSelect == false)
-            {
-                EditLayer?.FlipPropertySelected(FlipDirection.Veritcal);
-            }
-            else
-            {
-                FGHigher?.FlipPropertySelected(FlipDirection.Veritcal);
-                FGHigh?.FlipPropertySelected(FlipDirection.Veritcal);
-                FGLower?.FlipPropertySelected(FlipDirection.Veritcal);
-                FGLow?.FlipPropertySelected(FlipDirection.Veritcal);
-            }
+            EditLayer?.FlipPropertySelected(FlipDirection.Veritcal);
             UpdateEditLayerActions();
         }
 
@@ -4689,16 +4295,7 @@ Error: {ex.Message}");
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            if (multiLayerSelect)
-            {
-                toolStripButton1.Checked = false;
-                multiLayerSelect = false;
-            }
-            else
-            {
-                toolStripButton1.Checked = true;
-                multiLayerSelect = true;
-            }
+
         }
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)

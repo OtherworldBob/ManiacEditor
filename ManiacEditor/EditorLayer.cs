@@ -747,7 +747,7 @@ namespace ManiacEditor
                 selected = false;
             }
             d.DrawBitmap(Editor.Instance.StageTiles.Image.GetTexture(d._device, new Rectangle(0, (tile & 0x3ff) * TILE_SIZE, TILE_SIZE, TILE_SIZE), flipX, flipY),
-x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, selected, Transperncy);
+            x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, selected, Transperncy);
 
             if (Editor.Instance.showTileID == true)
             {
@@ -1004,7 +1004,7 @@ x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, selected, Transperncy);
                     {
                         d.DrawBitmap(GetTilesChunkTexture(d, x, y), rect.X * TILE_SIZE, rect.Y * TILE_SIZE, rect.Width * TILE_SIZE, rect.Height * TILE_SIZE, false, Transperncy);
                     }
-                                        DrawSelectedTiles(d, x, y, Transperncy);
+                    DrawSelectedTiles(d, x, y, Transperncy);
                     
                 }
             }

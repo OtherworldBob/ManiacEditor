@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ManiacEditor</RootNamespace>
     <AssemblyName>ManiacEditor</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -26,6 +26,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -464,6 +465,7 @@
     <Compile Include="Entity Renders\TimeAttackGate.cs" />
     <Compile Include="Entity Renders\TippingPlatform.cs" />
     <Compile Include="Entity Renders\TitleCard.cs" />
+    <Compile Include="Entity Renders\TransportTube.cs" />
     <Compile Include="Entity Renders\Tubinaut.cs" />
     <Compile Include="Entity Renders\Tuesday.cs" />
     <Compile Include="Entity Renders\TVPole.cs" />
@@ -633,6 +635,12 @@
     <Content Include="EditorIcons2.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Global\TransportTubes.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global\TransportTubes.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\OhNo.wav" />
     <None Include="README.md" />
     <None Include="Resources\ScoreTotal.wav" />
@@ -642,6 +650,9 @@
     </None>
     <EmbeddedResource Include="ConfigManager.resx">
       <DependentUpon>ConfigManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DevicePanel.resx">
+      <DependentUpon>DevicePanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ModConfigCreator.resx">
       <DependentUpon>ModConfigCreator.cs</DependentUpon>
