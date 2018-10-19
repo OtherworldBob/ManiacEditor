@@ -202,11 +202,8 @@ namespace ManiacEditor
             //useDarkTheme();
             //InitDiscord();
 
-            /*using (var customMsgBox = new CustomMsgBox($"The specified Data Directory {1} is not valid. Please Try again with a Better Data Directory. It could be outdated, corrupted or worse something else", "Invalid Data Directory!", 2, 1))
-            {
-                customMsgBox.ShowDialog();
+            //GraphicPanel.DeviceExceptionDialog(0, null, null); //For Testing Purposes
 
-            }*/
 
             this.splitContainer1.Panel2MinSize = 254;
 
@@ -2571,11 +2568,12 @@ a valid Data Directory.",
                 select_y1 = 0;
                 select_y2 = 0;
             }
+            bool deviceLost = GraphicPanel.getDeviceLostState();
             if (scrolling)
             {
-                if (vScrollBar1.Visible && hScrollBar1.Visible) GraphicPanel.Draw2DCursor(scrollPosition.X, scrollPosition.Y);
-                else if (vScrollBar1.Visible) GraphicPanel.DrawVertCursor(scrollPosition.X, scrollPosition.Y);
-                else if (hScrollBar1.Visible) GraphicPanel.DrawHorizCursor(scrollPosition.X, scrollPosition.Y);
+                if (vScrollBar1.Visible && hScrollBar1.Visible && !deviceLost) GraphicPanel.Draw2DCursor(scrollPosition.X, scrollPosition.Y);
+                else if (vScrollBar1.Visible && !deviceLost) GraphicPanel.DrawVertCursor(scrollPosition.X, scrollPosition.Y);
+                else if (hScrollBar1.Visible && !deviceLost) GraphicPanel.DrawHorizCursor(scrollPosition.X, scrollPosition.Y);
             }
             if (showGrid)
                 Background.DrawGrid(GraphicPanel);
@@ -3712,7 +3710,7 @@ Error: {ex.Message}");
 
         private void resetDeviceButton_Click(object sender, EventArgs e)
         {
-            GraphicPanel.AttemptRecovery();
+            GraphicPanel.AttemptRecovery(null);
         }
 
         private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
@@ -4521,8 +4519,6 @@ Error: {ex.Message}");
             if (FGLow != null) FGLow.DisposeTextures();
             if (FGHigher != null) FGHigher.DisposeTextures();
             if (FGLower != null) FGLower.DisposeTextures();
-            //if (CollisionLayerA != null) CollisionLayerA.Clear();
-            //if (CollisionLayerB != null) CollisionLayerB.Clear();
 
             foreach (var el in EditorScene.OtherLayers)
             {

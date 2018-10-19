@@ -18,8 +18,8 @@ namespace ManiacEditor.Entity_Renders
             bool fliph = false;
             bool flipv = false;
             var editorAnim = e.LoadAnimation2("EditorIcons2", d, 0, 6, fliph, flipv, false);
-            var width = (int)(entity.attributesMap["size"].ValuePosition.X.High);
-            var height = (int)(entity.attributesMap["size"].ValuePosition.Y.High);
+            var width = (int)(entity.attributesMap["size"].ValuePosition.X.High*2 - 1);
+            var height = (int)(entity.attributesMap["size"].ValuePosition.Y.High*2 - 1);
             if (editorAnim != null && editorAnim.Frames.Count != 0)
             {
                 var frame = editorAnim.Frames[e.index];
@@ -42,7 +42,6 @@ namespace ManiacEditor.Entity_Renders
                     if (editorAnim != null && editorAnim.Frames.Count != 0)
                     {
                         var frame = editorAnim.Frames[e.index];
-                        e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
                         bool wEven = width % 2 == 0;
                         bool hEven = height % 2 == 0;
                         d.DrawBitmap(frame.Texture,
@@ -62,7 +61,6 @@ namespace ManiacEditor.Entity_Renders
                     if (editorAnim != null && editorAnim.Frames.Count != 0)
                     {
                         var frame = editorAnim.Frames[e.index];
-                        e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
                         bool wEven = width % 2 == 0;
                         bool hEven = height % 2 == 0;
                         for (int j = 1; j < width; j++)
@@ -82,7 +80,6 @@ namespace ManiacEditor.Entity_Renders
                     if (editorAnim != null && editorAnim.Frames.Count != 0)
                     {
                         var frame = editorAnim.Frames[e.index];
-                        e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
                         bool wEven = width % 2 == 0;
                         bool hEven = height % 2 == 0;
                         for (int j = 1; j < height; j++)

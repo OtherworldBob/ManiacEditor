@@ -935,5 +935,17 @@ namespace ManiacEditor.Properties {
                 this["useBitOperators"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DisableRenderExlusions {
+            get {
+                return ((bool)(this["DisableRenderExlusions"]));
+            }
+            set {
+                this["DisableRenderExlusions"] = value;
+            }
+        }
     }
 }

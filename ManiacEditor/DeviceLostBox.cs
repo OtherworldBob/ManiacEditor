@@ -12,8 +12,9 @@ namespace ManiacEditor
 {
     public partial class DeviceLostBox : Form
     {
-        public DeviceLostBox(int state = 0)
+        public DeviceLostBox(String ex, String ex2, String code, String code2, int state = 0)
         {
+            var newLine = Environment.NewLine;
             InitializeComponent();
 
             System.IO.Stream str = Properties.Resources.OhNo;
@@ -23,9 +24,11 @@ namespace ManiacEditor
             {
                 outOfMemory();
             }
+            textBox1.Text = "First Error (This is the one that matters)" + newLine + newLine + ex + newLine + newLine + "Second Error(This one really doesn't matter much)" + newLine + newLine + ex2;
+            errorLabel.Text = "Error Code: " + code + Environment.NewLine + "Secondary Error Code(Mostly Unimportant): " + code2; ;
         }
 
-        public void outOfMemory()
+        public void outOfMemory() 
         {
             button2.Enabled = false;
             button3.Enabled = false;
@@ -44,6 +47,21 @@ namespace ManiacEditor
 
         private void button3_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void showDetailsCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (showDetailsCheckbox.Checked == false)
+            {
+                textBox1.Visible = false;
+                this.Height = 210;
+            }
+            else
+            {
+                textBox1.Visible = true;
+                this.Height = 420;
+            }
 
         }
     }

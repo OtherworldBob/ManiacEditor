@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Linq;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -37,8 +38,8 @@ namespace ManiacEditor
         public int ScreenPosWidth;
         public int ScreenPosHeight;
 
-        Sprite sprite;
-        Sprite sprite2;
+        private Sprite sprite;
+        private Sprite sprite2;
         Texture tx;
         Bitmap txb;
         Texture tcircle;
@@ -174,7 +175,11 @@ namespace ManiacEditor
                     Cursors.NoMove2D.Draw(g, new Rectangle(0, 0, 32, 32));
                 MakeGray(hvcursorb);
 
-                InitDeviceResources();
+                if (parent != null)
+                {
+                    InitDeviceResources();
+                }
+
             }
             catch (SharpDXException ex)
             {
@@ -183,6 +188,18 @@ namespace ManiacEditor
             catch (DllNotFoundException)
             {
                 throw new Exception("Please install DirectX Redistributable June 2010");
+            }
+        }
+
+        public bool getDeviceLostState()
+        {
+            if (deviceLost)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -201,7 +218,7 @@ namespace ManiacEditor
             RenderLoop.Run(this, () =>
             {
                 // Another option is not use RenderLoop at all and call Render when needed, and call here every tick for animations
-                    if (bRender) Render();
+                    if (bRender && !deviceLost) Render();
                     if (mouseMoved)
                     {
                         OnMouseMove(lastEvent);
@@ -257,35 +274,68 @@ namespace ManiacEditor
         /// <summary>
         /// Attempt to recover the device if it is lost.
         /// </summary>
-        public void AttemptRecovery()
+        public void AttemptRecovery(SharpDXException ex)
         {
             if (_device == null) return;
 
             Result result = _device.TestCooperativeLevel();
             if (result == ResultCode.DeviceLost)
             {
-                try
-                {
+                //try
+                //{
+                    Debug.Print("Device Lost! Fixing....");
                     DisposeDeviceResources();
                     InitDeviceResources();
-                }
-                catch (SharpDXException ex)
+                    deviceLost = false;
+                //}
+                //catch (SharpDXException ex2)
+                //{
+                    DeviceExceptionDialog(0, ex, null);
+                //}
+            }
+            else if (result == ResultCode.DeviceRemoved)
+            {
+                //try
+                //{
+                    Debug.Print("Device Removed! Fixing....");
+                    ResetDevice();
+                    deviceLost = false;
+                //}
+                //catch (SharpDXException ex2)
+                //{
+                    DeviceExceptionDialog(0, ex, null);
+                //}
+            }
+            else if (result == ResultCode.OutOfVideoMemory)
+            {
+                Debug.Print("Out of Video Memory!");
+                DeviceExceptionDialog(1, ex, null);
+            }
+            else if (result == ResultCode.DeviceNotReset)
+            {
+                try
                 {
-                    // If it's still lost or lost again, just do nothing
-                    if (ex.ResultCode == ResultCode.DeviceLost)
-                    {
-                        DisposeDeviceResources();
-                        InitDeviceResources();
-                        if (ex.ResultCode == ResultCode.DeviceLost) return;
-                    }
-                    else return;
+                    deviceLost = true;
+                    Debug.Print("Device Not Reset! Fixing....");
+                    DisposeDeviceResources();
+                    InitDeviceResources();
+                    Init(Editor.Instance);
+                    Editor.Instance.DisposeTextures();
+                    deviceLost = false;
+                }
+                catch (SharpDXException ex2)
+                {
+                    DeviceExceptionDialog(0, ex, ex2);
                 }
             }
             else
             {
-                DeviceExceptionDialog();
+                DeviceExceptionDialog(0, ex, null);
             }
         }
+
+
+
 
         public void ResetDevice()
         {
@@ -331,18 +381,32 @@ namespace ManiacEditor
 
         #region Rendering
 
-        public void DeviceExceptionDialog(int state = 0)
+        public void DeviceExceptionDialog(int state, SharpDXException ex, SharpDXException ex2, AccessViolationException ex3 = null)
         {
+            String error = "No Error. OH-NO!";
+            String error2 = "";
+            String errorCode = "404 (No Error Code Given)";
+            String errorCode2 = "404 (No Secondary Error Code Given)";
+
+            if (ex != null)
+            {
+                 error = ex.ToString();
+                 errorCode = ex.ResultCode.ToString();
+            }
+            else if (ex3 != null)
+            {
+                error = ex3.ToString();
+                errorCode = ex3.HResult.ToString();
+            }
+            if (ex2 != null)
+            {
+                 error2 = ex2.ToString();
+                 errorCode2 = ex2.ResultCode.ToString();
+            }
+
             if (state == 0)
             {
-                try
-                {
-                    DisposeDeviceResources();
-                    Init(Editor.Instance);
-                }
-                catch (SharpDX.SharpDXException)
-                {
-                    using (var deviceLostBox = new DeviceLostBox())
+                    using (var deviceLostBox = new DeviceLostBox(error, error2, errorCode, errorCode2))
                     {
                         deviceLostBox.ShowDialog();
                         deviceExceptionResult = deviceLostBox.DialogResult;
@@ -369,12 +433,11 @@ namespace ManiacEditor
                     {
                         Environment.Exit(1);
                     }
-                }
             }
             else if (state == 1)
             {
 
-                using (var deviceLostBox = new DeviceLostBox(1))
+                using (var deviceLostBox = new DeviceLostBox(error, error2, errorCode, errorCode2, 1))
                 {
                     deviceLostBox.ShowDialog();
                     deviceExceptionResult = deviceLostBox.DialogResult;
@@ -410,16 +473,10 @@ namespace ManiacEditor
         /// </summary>
         public void Render()
         {
-            if (deviceLost) AttemptRecovery();
-            if (deviceLost)
-            {
-                DisposeDeviceResources();
-                Init(Editor.Instance);
-                return;
-            }
+            if (deviceLost) AttemptRecovery(null);
             if (_device == null)
             {
-                AttemptRecovery();
+                AttemptRecovery(null);
                 return;
             }
 
@@ -435,7 +492,7 @@ namespace ManiacEditor
                 _device.BeginScene();
 
                 sprite.Transform = Matrix.Scaling((float)zoom, (float)zoom, 1f);
-
+                
                 sprite2.Begin(SpriteFlags.AlphaBlend);
 
 
@@ -450,8 +507,11 @@ namespace ManiacEditor
 
 
             // Render of scene here
-            if (OnRender != null)
-            OnRender(this, new DeviceEventArgs(_device));
+            if (OnRender != null && !deviceLost)
+            {
+                OnRender(this, new DeviceEventArgs(_device));
+            }
+
 
 
                 sprite.Transform = Matrix.Scaling(1f, 1f, 1f);
@@ -463,32 +523,19 @@ namespace ManiacEditor
                 DrawTexture(tx, new Rectangle(0, 0, rect1.Width, rect1.Height), new Vector3(0, 0, 0), new Vector3(rect1.X, rect1.Y, 0), SystemColors.Control);
                 DrawTexture(tx, new Rectangle(0, 0, rect2.Width, rect2.Height), new Vector3(0, 0, 0), new Vector3(rect2.X, rect2.Y, 0), SystemColors.Control);
                 
-
                 sprite.End();
                 sprite2.End();
                 //End the scene
                 _device.EndScene();
                 _device.Present();
+
+
         }
-            catch (SharpDXException ex)
-            {
-                if (ex.ResultCode == ResultCode.DeviceLost)
-                    deviceLost = true;
-                else if (ex.HResult == unchecked((int)(0x8007000E)))
-                {
-                    DeviceExceptionDialog(1);
-                }
-                else if (ex.HResult == unchecked((int)(0x8876086C)))
-                {
-                    DeviceExceptionDialog(1);
-                }
-                else if (ex.HResult == unchecked((int)(0x8876017C)))
-                {
-                    DeviceExceptionDialog(1);
-                }   
-                else
-                    throw ex;
-}
+        catch (SharpDXException ex)
+        {
+                deviceLost = true;
+                AttemptRecovery(ex);
+        }
 
 
 
@@ -609,7 +656,11 @@ namespace ManiacEditor
 
         private void DrawTexture2(Texture image, Rectangle srcRect, Vector3 center, Vector3 position, Color color)
         {
-            sprite2.Draw(image, new SharpDX.Color(color.R, color.G, color.B, color.A), new SharpDX.Rectangle(srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height), center, position);
+            if (!deviceLost)
+            {
+                sprite2.Draw(image, new SharpDX.Color(color.R, color.G, color.B, color.A), new SharpDX.Rectangle(srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height), center, position);
+            }
+            
         }
 
         public void DrawBitmap(Texture image, int x, int y, int width, int height, bool selected, int transparency)
@@ -798,21 +849,29 @@ namespace ManiacEditor
         public void Draw2DCursor(int x, int y)
         {
             //hvcursor = new Texture(_device, hvcursorb, Usage.Dynamic, Pool.Default);
+            if (!deviceLost)
+            {
+                DrawTexture2(hvcursor, new Rectangle(Point.Empty, Cursors.NoMove2D.Size), new Vector3(0, 0, 0), new Vector3(x - 16, y - 15, 0), Color.White);
+            }
 
-            DrawTexture2(hvcursor, new Rectangle(Point.Empty, Cursors.NoMove2D.Size), new Vector3(0, 0, 0), new Vector3(x - 16, y - 15, 0), Color.White);
         }
         public void DrawHorizCursor(int x, int y)
         {
             //hcursor = new Texture(_device, hcursorb, Usage.Dynamic, Pool.Default);
-
-            DrawTexture2(hcursor, new Rectangle(Point.Empty, Cursors.NoMove2D.Size), new Vector3(0, 0, 0), new Vector3(x - 16, y - 15, 0), Color.White);
+            if (!deviceLost)
+            {
+                DrawTexture2(hcursor, new Rectangle(Point.Empty, Cursors.NoMove2D.Size), new Vector3(0, 0, 0), new Vector3(x - 16, y - 15, 0), Color.White);
+            }
         }
 
         public void DrawVertCursor(int x, int y)
         {
             //vcursor = new Texture(_device, vcursorb, Usage.Dynamic, Pool.Default);
-
-            DrawTexture2(vcursor, new Rectangle(Point.Empty, Cursors.NoMove2D.Size), new Vector3(0, 0, 0), new Vector3(x - 16, y - 15, 0), Color.White);
+            if (!deviceLost)
+            {
+                DrawTexture2(vcursor, new Rectangle(Point.Empty, Cursors.NoMove2D.Size), new Vector3(0, 0, 0), new Vector3(x - 16, y - 15, 0), Color.White);
+                DrawTexture2(hcursor, new Rectangle(Point.Empty, Cursors.NoMove2D.Size), new Vector3(0, 0, 0), new Vector3(x - 16, y - 15, 0), Color.White);
+            }
         }
 
         public void OnMouseMoveEventCreate()
@@ -820,7 +879,7 @@ namespace ManiacEditor
             Cursor.Position = new Point(Cursor.Position.X, Cursor.Position.Y);
         }
 
-        public void DisposeDeviceResources()
+        public void DisposeDeviceResources(int type = 0)
         {
             if (tx != null)
             {
@@ -864,27 +923,36 @@ namespace ManiacEditor
                 fontBold = null;
             }
 
-            if (sprite != null)
+            if (sprite != null || type == 1)
             {
                 sprite.Dispose();
                 sprite = null;
             }
-            if (sprite2 != null)
+            if (sprite2 != null || type == 1)
             {
                 sprite2.Dispose();
                 sprite2 = null;
             }
+            
+            if (_parent != null && type == 1)
+            {
+                _parent.DisposeTextures();
+                _parent = null;
+            }
+            if (_device != null && type == 1)
+            {
+                _device.Dispose();
+                _device = null;
+            }
+            if (direct3d != null && type == 1)
+            {
+                direct3d.Dispose();
+                direct3d = null;
+            }
+            
         }
         public void ForceDisposeDeviceSpriteResources()
         {
-            if (sprite != null)
-            {
-                sprite.End();
-            }
-            if (sprite2 != null)
-            {
-                sprite2.End();
-            }
 
         }
 

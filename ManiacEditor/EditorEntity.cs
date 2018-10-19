@@ -537,6 +537,10 @@ namespace ManiacEditor
         {
             List<string> entityRenderList = entityRenderingObjects;
             List<string> onScreenExlusionList = renderOnScreenExlusions;
+            if (Properties.Settings.Default.DisableRenderExlusions)
+            {
+                onScreenExlusionList = new List<string>();
+            }
 
 
             if (filteredOut) return;

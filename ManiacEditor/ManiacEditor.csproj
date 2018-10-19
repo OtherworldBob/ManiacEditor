@@ -542,6 +542,7 @@
     <Compile Include="Entity Renders\Outro_Intro_Object.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\PaperRoller.cs" />
     <Compile Include="Entity Renders\ParallaxSprite.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>

@@ -51,6 +51,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button10 = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.checkBox9 = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.x16checkbox = new System.Windows.Forms.RadioButton();
             this.x256checkbox = new System.Windows.Forms.RadioButton();
@@ -242,7 +243,9 @@
             this.label31 = new System.Windows.Forms.Label();
             this.checkBox34 = new System.Windows.Forms.CheckBox();
             this.checkBox35 = new System.Windows.Forms.CheckBox();
-            this.checkBox9 = new System.Windows.Forms.CheckBox();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.label55 = new System.Windows.Forms.Label();
+            this.checkBox12 = new System.Windows.Forms.CheckBox();
             this.tabPage4.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel10.SuspendLayout();
@@ -269,6 +272,7 @@
             this.tabPage5.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel14.SuspendLayout();
+            this.panel13.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPage4
@@ -569,6 +573,18 @@
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(168, 532);
             this.panel7.TabIndex = 0;
+            // 
+            // checkBox9
+            // 
+            this.checkBox9.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox9.Checked = global::ManiacEditor.Properties.Settings.Default.useBitOperators;
+            this.checkBox9.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "useBitOperators", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox9.Location = new System.Drawing.Point(86, 32);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Size = new System.Drawing.Size(75, 33);
+            this.checkBox9.TabIndex = 119;
+            this.checkBox9.Text = "Use Bit Operators";
+            this.checkBox9.UseVisualStyleBackColor = false;
             // 
             // groupBox1
             // 
@@ -2532,6 +2548,7 @@
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.tabPage5.Controls.Add(this.panel13);
             this.tabPage5.Controls.Add(this.button8);
             this.tabPage5.Controls.Add(this.panel12);
             this.tabPage5.Controls.Add(this.button6);
@@ -2621,16 +2638,13 @@
             this.panel14.Controls.Add(this.checkBox25);
             this.panel14.Controls.Add(this.checkBox24);
             this.panel14.Controls.Add(this.checkBox21);
-            this.panel14.Controls.Add(this.checkBox1);
             this.panel14.Controls.Add(this.checkBox23);
             this.panel14.Controls.Add(this.checkBox22);
-            this.panel14.Controls.Add(this.checkBox30);
             this.panel14.Controls.Add(this.label31);
             this.panel14.Controls.Add(this.checkBox34);
-            this.panel14.Controls.Add(this.checkBox35);
             this.panel14.Location = new System.Drawing.Point(8, 6);
             this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(184, 522);
+            this.panel14.Size = new System.Drawing.Size(191, 522);
             this.panel14.TabIndex = 102;
             // 
             // checkBox11
@@ -2639,7 +2653,7 @@
             this.checkBox11.Checked = global::ManiacEditor.Properties.Settings.Default.AlwaysRenderRectangles;
             this.checkBox11.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "AlwaysRenderRectangles", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox11.Location = new System.Drawing.Point(5, 476);
+            this.checkBox11.Location = new System.Drawing.Point(5, 366);
             this.checkBox11.Margin = new System.Windows.Forms.Padding(5);
             this.checkBox11.Name = "checkBox11";
             this.checkBox11.Size = new System.Drawing.Size(171, 32);
@@ -2654,7 +2668,7 @@
             this.checkBox10.Checked = global::ManiacEditor.Properties.Settings.Default.allowForSmoothSelection;
             this.checkBox10.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "allowForSmoothSelection", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox10.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox10.Location = new System.Drawing.Point(5, 356);
+            this.checkBox10.Location = new System.Drawing.Point(5, 229);
             this.checkBox10.Margin = new System.Windows.Forms.Padding(5);
             this.checkBox10.Name = "checkBox10";
             this.checkBox10.Size = new System.Drawing.Size(178, 43);
@@ -2669,7 +2683,7 @@
             this.checkBox25.Checked = global::ManiacEditor.Properties.Settings.Default.AlwaysRenderTextures;
             this.checkBox25.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "AlwaysRenderTextures", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox25.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox25.Location = new System.Drawing.Point(5, 441);
+            this.checkBox25.Location = new System.Drawing.Point(5, 324);
             this.checkBox25.Margin = new System.Windows.Forms.Padding(5);
             this.checkBox25.Name = "checkBox25";
             this.checkBox25.Size = new System.Drawing.Size(171, 32);
@@ -2684,7 +2698,7 @@
             this.checkBox24.Checked = global::ManiacEditor.Properties.Settings.Default.AlwaysRenderLines;
             this.checkBox24.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "AlwaysRenderLines", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox24.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox24.Location = new System.Drawing.Point(5, 409);
+            this.checkBox24.Location = new System.Drawing.Point(5, 282);
             this.checkBox24.Margin = new System.Windows.Forms.Padding(5);
             this.checkBox24.Name = "checkBox24";
             this.checkBox24.Size = new System.Drawing.Size(171, 32);
@@ -2699,7 +2713,7 @@
             this.checkBox21.Checked = global::ManiacEditor.Properties.Settings.Default.AllowMoreRenderUpdates;
             this.checkBox21.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "AllowMoreRenderUpdates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox21.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox21.Location = new System.Drawing.Point(5, 303);
+            this.checkBox21.Location = new System.Drawing.Point(5, 176);
             this.checkBox21.Margin = new System.Windows.Forms.Padding(5);
             this.checkBox21.Name = "checkBox21";
             this.checkBox21.Size = new System.Drawing.Size(178, 43);
@@ -2714,7 +2728,7 @@
             this.checkBox1.Checked = global::ManiacEditor.Properties.Settings.Default.AlwaysRenderObjects;
             this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "AlwaysRenderObjects", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox1.Location = new System.Drawing.Point(6, 261);
+            this.checkBox1.Location = new System.Drawing.Point(5, 111);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(5);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(171, 32);
@@ -2729,7 +2743,7 @@
             this.checkBox23.Checked = global::ManiacEditor.Properties.Settings.Default.ShowEditLayerBackground;
             this.checkBox23.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "ShowEditLayerBackground", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox23.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox23.Location = new System.Drawing.Point(5, 219);
+            this.checkBox23.Location = new System.Drawing.Point(5, 134);
             this.checkBox23.Margin = new System.Windows.Forms.Padding(5);
             this.checkBox23.Name = "checkBox23";
             this.checkBox23.Size = new System.Drawing.Size(171, 32);
@@ -2744,7 +2758,7 @@
             this.checkBox22.Checked = global::ManiacEditor.Properties.Settings.Default.UseFasterSelectionRendering;
             this.checkBox22.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "UseFasterSelectionRendering", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox22.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox22.Location = new System.Drawing.Point(5, 177);
+            this.checkBox22.Location = new System.Drawing.Point(5, 92);
             this.checkBox22.Margin = new System.Windows.Forms.Padding(5);
             this.checkBox22.Name = "checkBox22";
             this.checkBox22.Size = new System.Drawing.Size(171, 32);
@@ -2759,7 +2773,7 @@
             this.checkBox30.Checked = global::ManiacEditor.Properties.Settings.Default.UseObjectRenderingImprovements;
             this.checkBox30.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "UseObjectRenderingImprovements", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox30.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox30.Location = new System.Drawing.Point(5, 135);
+            this.checkBox30.Location = new System.Drawing.Point(5, 69);
             this.checkBox30.Margin = new System.Windows.Forms.Padding(5);
             this.checkBox30.Name = "checkBox30";
             this.checkBox30.Size = new System.Drawing.Size(171, 32);
@@ -2786,7 +2800,7 @@
             this.checkBox34.Checked = global::ManiacEditor.Properties.Settings.Default.ReduceZoom;
             this.checkBox34.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "ReduceZoom", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBox34.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox34.Location = new System.Drawing.Point(5, 69);
+            this.checkBox34.Location = new System.Drawing.Point(5, 26);
             this.checkBox34.Margin = new System.Windows.Forms.Padding(5);
             this.checkBox34.Name = "checkBox34";
             this.checkBox34.Size = new System.Drawing.Size(172, 56);
@@ -2810,17 +2824,45 @@
             this.checkBox35.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBox35.UseVisualStyleBackColor = false;
             // 
-            // checkBox9
+            // panel13
             // 
-            this.checkBox9.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox9.Checked = global::ManiacEditor.Properties.Settings.Default.useBitOperators;
-            this.checkBox9.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "useBitOperators", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox9.Location = new System.Drawing.Point(86, 32);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Size = new System.Drawing.Size(75, 33);
-            this.checkBox9.TabIndex = 119;
-            this.checkBox9.Text = "Use Bit Operators";
-            this.checkBox9.UseVisualStyleBackColor = false;
+            this.panel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel13.Controls.Add(this.checkBox12);
+            this.panel13.Controls.Add(this.label55);
+            this.panel13.Controls.Add(this.checkBox35);
+            this.panel13.Controls.Add(this.checkBox30);
+            this.panel13.Controls.Add(this.checkBox1);
+            this.panel13.Location = new System.Drawing.Point(208, 6);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(184, 220);
+            this.panel13.TabIndex = 108;
+            // 
+            // label55
+            // 
+            this.label55.BackColor = System.Drawing.Color.Transparent;
+            this.label55.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label55.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label55.Location = new System.Drawing.Point(16, 8);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(160, 13);
+            this.label55.TabIndex = 55;
+            this.label55.Text = "Entity Settings:";
+            this.label55.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // checkBox12
+            // 
+            this.checkBox12.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox12.Checked = global::ManiacEditor.Properties.Settings.Default.DisableRenderExlusions;
+            this.checkBox12.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::ManiacEditor.Properties.Settings.Default, "DisableRenderExlusions", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox12.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox12.Location = new System.Drawing.Point(5, 153);
+            this.checkBox12.Margin = new System.Windows.Forms.Padding(5);
+            this.checkBox12.Name = "checkBox12";
+            this.checkBox12.Size = new System.Drawing.Size(171, 32);
+            this.checkBox12.TabIndex = 102;
+            this.checkBox12.Text = "Disable Always Render Entities";
+            this.checkBox12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox12.UseVisualStyleBackColor = false;
             // 
             // OptionBox
             // 
@@ -2870,6 +2912,7 @@
             this.tabPage5.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.panel14.ResumeLayout(false);
+            this.panel13.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -3090,5 +3133,8 @@
         private System.Windows.Forms.RadioButton preRenderAlways;
         private System.Windows.Forms.RadioButton caseBasedPreRender;
         private System.Windows.Forms.CheckBox checkBox9;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.CheckBox checkBox12;
+        private System.Windows.Forms.Label label55;
     }
 }
