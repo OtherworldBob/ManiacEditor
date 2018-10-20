@@ -511,6 +511,7 @@
     <Compile Include="Entity Renders\HUD.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\Ice.cs" />
     <Compile Include="Entity Renders\InvisibleBlock.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -585,7 +586,7 @@
     <Compile Include="Entity Renders\RubyFX.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Entity Renders\ShiverSaw.cs" />
+    <Compile Include="Entity Renders\Shiversaw.cs" />
     <Compile Include="Entity Renders\ShopWindow.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -611,6 +612,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Entity Renders\Splats.cs" />
+    <Compile Include="Entity Renders\IceSpring.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Entity Renders\Spring.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>

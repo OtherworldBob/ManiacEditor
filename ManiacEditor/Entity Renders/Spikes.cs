@@ -131,6 +131,22 @@ namespace ManiacEditor.Entity_Renders
             }
         }
 
+
+        public void IceDraw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
+        {
+            var editorAnim = e.LoadAnimation2("Spikes", d, 0, 0, false, false, false);
+            if (editorAnim != null && editorAnim.Frames.Count != 0)
+            {
+                var frame = editorAnim.Frames[e.index];
+                d.DrawBitmap(frame.Texture,
+                    x + frame.Frame.CenterX,
+                    y + frame.Frame.CenterY,
+                    frame.Frame.Width, frame.Frame.Height, false, Transparency);
+            }
+
+            
+        }
+
         public override string GetObjectName()
         {
            return "Spikes";

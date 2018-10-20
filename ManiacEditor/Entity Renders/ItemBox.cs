@@ -43,6 +43,28 @@ namespace ManiacEditor.Entity_Renders
                 }
         }
 
+        public void IceDraw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency, int forceType = 0)
+        {
+            var value = (forceType == -1 ? 0 : forceType);
+            bool fliph = false;
+            bool flipv = false;
+            var editorAnimBox = e.LoadAnimation2("ItemBox", d, 0, 0, fliph, flipv, false);
+            var editorAnimEffect = e.LoadAnimation2("ItemBox", d, 2, (int)value, fliph, flipv, false);
+            if (editorAnimBox != null)
+            {
+                var frameBox = editorAnimBox.Frames[0];
+
+                d.DrawBitmap(frameBox.Texture, x + frameBox.Frame.CenterX, y + frameBox.Frame.CenterY,
+                    frameBox.Frame.Width, frameBox.Frame.Height, false, Transparency);
+
+            }
+            if (editorAnimEffect != null && editorAnimEffect.Frames.Count != 0 && forceType != -1)
+            {
+                var frameEffect = editorAnimEffect.Frames[0];
+                d.DrawBitmap(frameEffect.Texture, x + frameEffect.Frame.CenterX, y + frameEffect.Frame.CenterY - (flipv ? (-3) : 3), frameEffect.Frame.Width, frameEffect.Frame.Height, false, Transparency);
+            }
+        }
+
         public override string GetObjectName()
         {
             return "ItemBox";
