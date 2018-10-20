@@ -449,6 +449,8 @@
     <Compile Include="Entity Renders\DNARiser.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\DoorTrigger.cs" />
+    <Compile Include="Entity Renders\Dragonfly.cs" />
     <Compile Include="Entity Renders\EggPrison.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -512,6 +514,7 @@
     <Compile Include="Entity Renders\InvisibleBlock.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\JuggleSaw.cs" />
     <Compile Include="Entity Renders\Launcher.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -536,6 +539,7 @@
     <Compile Include="Entity Renders\Music.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\Newspaper.cs" />
     <Compile Include="Entity Renders\OneWayDoor.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -546,6 +550,7 @@
     <Compile Include="Entity Renders\ParallaxSprite.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\PetalPile.cs" />
     <Compile Include="Entity Renders\PimPom.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -567,6 +572,10 @@
     <Compile Include="Entity Renders\PopcornMachine.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\Press.cs" />
+    <Compile Include="Entity Renders\PrintBlock.cs" />
+    <Compile Include="Entity Renders\PSZDoor.cs" />
+    <Compile Include="Entity Renders\PSZLauncher.cs" />
     <Compile Include="Entity Renders\Ring.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -576,6 +585,7 @@
     <Compile Include="Entity Renders\RubyFX.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\ShiverSaw.cs" />
     <Compile Include="Entity Renders\ShopWindow.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -600,6 +610,7 @@
     <Compile Include="Entity Renders\Spiny.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\Splats.cs" />
     <Compile Include="Entity Renders\Spring.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -645,6 +656,7 @@
     <Compile Include="Entity Renders\Tuesday.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\Turntable.cs" />
     <Compile Include="Entity Renders\TVPole.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>

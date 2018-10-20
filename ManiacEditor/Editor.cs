@@ -3603,7 +3603,7 @@ Error: {ex.Message}");
                     while (!ready)
                         Thread.Sleep(10);
                     /* Level != Main Menu*/
-                    while (GameMemory.ReadByte(CurrentScene_ptr) != 0x02)
+                    while (GameMemory.ReadByte(CurrentScene_ptr) != 0x02 || Properties.Settings.Default.DisableRunSceneMenuQuit == true)
                     {
                         // Check if the user closed the game
                         if (p.HasExited || !GameRunning)
@@ -3618,9 +3618,9 @@ Error: {ex.Message}");
                         UseCheatCodes(p);
                         // Makes sure the process is attached and patches are applied
                         // Set Player 1 Controller Set to 1 (If we set it to AnyController (0x00) we can't use Debug Mode In-Game)
-                        if (GameMemory.ReadByte(Player1_ControllerID_ptr) != 0x01)
+                        if (GameMemory.ReadByte(Player1_ControllerID_ptr) != 0x00 && Properties.Settings.Default.DisableRunSceneAutoInput == false)
                         {
-                            GameMemory.WriteByte(Player1_ControllerID_ptr, 0x01); //setting this to 0x00 causes the inability to use debug mode
+                            GameMemory.WriteByte(Player1_ControllerID_ptr, 0x00); //setting this to 0x00 causes the inability to use debug mode
                             GameMemory.WriteByte(Player2_ControllerID_ptr, 0xFF);
                         }
                         Thread.Sleep(300);

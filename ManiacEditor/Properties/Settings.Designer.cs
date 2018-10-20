@@ -947,5 +947,29 @@ namespace ManiacEditor.Properties {
                 this["DisableRenderExlusions"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DisableRunSceneMenuQuit {
+            get {
+                return ((bool)(this["DisableRunSceneMenuQuit"]));
+            }
+            set {
+                this["DisableRunSceneMenuQuit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DisableRunSceneAutoInput {
+            get {
+                return ((bool)(this["DisableRunSceneAutoInput"]));
+            }
+            set {
+                this["DisableRunSceneAutoInput"] = value;
+            }
+        }
     }
 }
