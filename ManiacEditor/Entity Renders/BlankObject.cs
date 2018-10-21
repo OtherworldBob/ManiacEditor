@@ -31,7 +31,7 @@ namespace ManiacEditor.Entity_Renders
 
         public override string GetObjectName()
         {
-            return "BlankObject";
+            return "Blank Object";
         }
     }
 }

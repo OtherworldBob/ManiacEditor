@@ -380,6 +380,9 @@
     <Compile Include="EntitiesToolbar.Designer.cs">
       <DependentUpon>EntitiesToolbar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entity Renders\AIZEggRobo.cs" />
+    <Compile Include="Entity Renders\AIZRockPile.cs" />
+    <Compile Include="Entity Renders\Animals.cs" />
     <Compile Include="Entity Renders\BGSwitch.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -484,6 +487,7 @@
     <Compile Include="Entity Renders\FlameSpring.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\FlingRamp.cs" />
     <Compile Include="Entity Renders\FoldingPlatform.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -537,6 +541,7 @@
     <Compile Include="Entity Renders\MagPlatform.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\MonkeyDude.cs" />
     <Compile Include="Entity Renders\Music.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -586,6 +591,8 @@
     <Compile Include="Entity Renders\RubyFX.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\RubyPortal.cs" />
+    <Compile Include="Entity Renders\SchrodingersCapsule.cs" />
     <Compile Include="Entity Renders\Shiversaw.cs" />
     <Compile Include="Entity Renders\ShopWindow.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
