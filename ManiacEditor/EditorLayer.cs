@@ -919,7 +919,7 @@ namespace ManiacEditor
                         }
                     }
                 }
-                this.TileChunksTextures[y][x] = TextureCreator.FromBitmapSlow(d._device, bmp);
+                this.TileChunksTextures[y][x] = TextureCreator.FromBitmap(d._device, bmp);
             }
 
             return this.TileChunksTextures[y][x];
