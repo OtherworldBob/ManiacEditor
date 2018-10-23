@@ -4,9 +4,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using IronPython.Compiler.Ast;
 using ManiacEditor;
 using Microsoft.Xna.Framework;
 using RSDKv5;
+using SystemColors = System.Drawing.Color;
 
 namespace ManiacEditor.Entity_Renders
 {
@@ -23,6 +25,20 @@ namespace ManiacEditor.Entity_Renders
 
             if (width != -1 && height != -1)
             {
+                bool wEven = width % 2 == 0;
+                bool hEven = height % 2 == 0;
+
+                int x1 = (x + (wEven ? -8 : -16) + (-width / 2 + width) * 16) + 15;
+                int x2 = (x + (wEven ? -8 : -16) + (-width / 2) * 16);
+                int y1 = (y + (hEven ? -8 : -16) + (-height / 2 + height) * 16) + 15;
+                int y2 = (y + (hEven ? -8 : -16) + (-height / 2) * 16);
+
+
+                d.DrawLine(x1, y1, x1, y2, SystemColors.White);
+                d.DrawLine(x1, y1, x2, y1, SystemColors.White);
+                d.DrawLine(x2, y2, x1, y2, SystemColors.White);
+                d.DrawLine(x2, y2, x2, y1, SystemColors.White);
+
                 // draw corners
                 for (int i = 0; i < 4; i++)
                 {
@@ -34,53 +50,11 @@ namespace ManiacEditor.Entity_Renders
                     {
                         var frame = editorAnim.Frames[e.index];
                         e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
-                        bool wEven = width % 2 == 0;
-                        bool hEven = height % 2 == 0;
                         d.DrawBitmap(frame.Texture,
                             (x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-width / 2 + (right ? width : 0)) * frame.Frame.Width),
                             (y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-height / 2 + (bottom ? height : 0)) * frame.Frame.Height),
                             frame.Frame.Width, frame.Frame.Height, false, Transparency);
 
-                    }
-                }
-
-                // draw top and bottom
-                for (int i = 0; i < 2; i++)
-                {
-                    bool bottom = (i & 1) > 0;
-
-                    editorAnim = e.LoadAnimation2("EditorAssets", d, 0, 1, false, bottom, false);
-                    if (editorAnim != null && editorAnim.Frames.Count != 0)
-                    {
-                        var frame = editorAnim.Frames[e.index];
-                        e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
-                        bool wEven = width % 2 == 0;
-                        bool hEven = height % 2 == 0;
-                        for (int j = 1; j < width; j++)
-                            d.DrawBitmap(frame.Texture,
-                                (x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-width / 2 + j) * frame.Frame.Width),
-                                (y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-height / 2 + (bottom ? height : 0)) * frame.Frame.Height),
-                                frame.Frame.Width, frame.Frame.Height, false, Transparency);
-                    }
-                }
-
-                // draw sides
-                for (int i = 0; i < 2; i++)
-                {
-                    bool right = (i & 1) > 0;
-
-                    editorAnim = e.LoadAnimation2("EditorAssets", d, 0, 2, right, false, false);
-                    if (editorAnim != null && editorAnim.Frames.Count != 0)
-                    {
-                        var frame = editorAnim.Frames[e.index];
-                        e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
-                        bool wEven = width % 2 == 0;
-                        bool hEven = height % 2 == 0;
-                        for (int j = 1; j < height; j++)
-                            d.DrawBitmap(frame.Texture,
-                                (x + (wEven ? frame.Frame.CenterX : -frame.Frame.Width) + (-width / 2 + (right ? width : 0)) * frame.Frame.Width),
-                                (y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-height / 2 + j) * frame.Frame.Height),
-                                frame.Frame.Width, frame.Frame.Height, false, Transparency);
                     }
                 }
             }

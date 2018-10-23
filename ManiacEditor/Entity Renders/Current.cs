@@ -11,7 +11,7 @@ using SystemColors = System.Drawing.Color;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class CollapsingPlatform : EntityRenderer
+    public class Current : EntityRenderer
     {
 
         public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
@@ -59,7 +59,7 @@ namespace ManiacEditor.Entity_Renders
 
         public override string GetObjectName()
         {
-            return "CollapsingPlatform";
+            return "Current";
         }
     }
 }

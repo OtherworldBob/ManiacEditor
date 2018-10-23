@@ -3339,7 +3339,7 @@ Error: {ex.Message}");
         public Scene GetSceneSelection()
         {
             string selectedScene;
-            using (SceneSelect select = new SceneSelect(GameConfig))
+            using (SceneSelect select = new SceneSelect(GameConfig))       
             {
                 select.ShowDialog();
 
@@ -3348,10 +3348,10 @@ Error: {ex.Message}");
 
                 selectedScene = select.Result;
             }
-
+            Debug.Print(selectedScene);
             if (!File.Exists(selectedScene))
             {
-                string[] splitted = selectedScene.Split('/');
+                string[] splitted = selectedScene.Split('\\');
 
                 string part1 = splitted[0];
                 string part2 = splitted[1];

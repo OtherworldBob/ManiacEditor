@@ -437,6 +437,7 @@
     <Compile Include="Entity Renders\Crane.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\Current.cs" />
     <Compile Include="Entity Renders\CutsceneHBH.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -516,6 +517,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Entity Renders\Ice.cs" />
+    <Compile Include="Entity Renders\IceBomba.cs" />
     <Compile Include="Entity Renders\InvisibleBlock.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -592,6 +594,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Entity Renders\RubyPortal.cs" />
+    <Compile Include="Entity Renders\SchrodingersCapsulePart2.cs" />
+    <Compile Include="Entity Renders\SchrodingersCapsulePart1.cs" />
     <Compile Include="Entity Renders\SchrodingersCapsule.cs" />
     <Compile Include="Entity Renders\Shiversaw.cs" />
     <Compile Include="Entity Renders\ShopWindow.cs">
@@ -646,6 +650,7 @@
     <Compile Include="Entity Renders\ItemBox.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\ControlPanel.cs" />
     <Compile Include="Entity Renders\TetherBall.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -713,6 +718,9 @@
     <Compile Include="Entity Renders\WeatherMobile.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Entity Renders\Whirlpool.cs" />
+    <Compile Include="Entity Renders\WoodChipper.cs" />
+    <Compile Include="Entity Renders\Woodrow.cs" />
     <Compile Include="Entity Renders\ZipLine.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>

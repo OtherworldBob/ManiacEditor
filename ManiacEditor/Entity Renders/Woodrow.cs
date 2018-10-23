@@ -10,15 +10,15 @@ using RSDKv5;
 
 namespace ManiacEditor.Entity_Renders
 {
-    public class Newtron : EntityRenderer
+    public class Woodrow : EntityRenderer
     {
 
         public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
-            int type = (int)entity.attributesMap["type"].ValueUInt8;
-            int direction = (int)entity.attributesMap["direction"].ValueUInt8;
             bool fliph = false;
             bool flipv = false;
+            int type = (int)entity.attributesMap["type"].ValueUInt8;
+            int direction = (int)entity.attributesMap["direction"].ValueUInt8;
             int animID;
             if (type == 1)
             {
@@ -32,8 +32,8 @@ namespace ManiacEditor.Entity_Renders
             {
                 fliph = true;
             }
-            var editorAnim = e.LoadAnimation2("Newtron", d, animID, -1, fliph, flipv, false);
-            if (editorAnim != null && editorAnim.Frames.Count != 0 && animID >= 0)
+            var editorAnim = e.LoadAnimation2("Woodrow", d, animID, -1, fliph, flipv, false);
+            if (editorAnim != null && editorAnim.Frames.Count != 0)
             {
                 var frame = editorAnim.Frames[e.index];
 
@@ -48,7 +48,7 @@ namespace ManiacEditor.Entity_Renders
 
         public override string GetObjectName()
         {
-            return "Newtron";
+            return "Woodrow";
         }
     }
 }

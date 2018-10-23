@@ -36,14 +36,36 @@ namespace ManiacEditor.Entity_Renders
                 flipv = true;
             }
             var editorAnim = e.LoadAnimation2("Button", d, animID, -1, fliph, flipv, false);
-            if (editorAnim != null && editorAnim.Frames.Count != 0 && animID >= 0)
+            var editorAnim2 = e.LoadAnimation2("Button", d, animID, 1, fliph, flipv, false);
+            var editorAnim3 = e.LoadAnimation2("Button", d, animID, 2, fliph, flipv, false);
+            if (editorAnim2 != null && editorAnim2.Frames.Count != 0)
+            {
+                var frame2 = editorAnim2.Frames[e.index];
+
+                    d.DrawBitmap(frame2.Texture,
+                        x + frame2.Frame.CenterX - (fliph ? (frame2.Frame.Width - editorAnim2.Frames[0].Frame.Width - 7) : 0),
+                        y + frame2.Frame.CenterY + (flipv ? (frame2.Frame.Height - editorAnim2.Frames[0].Frame.Height - 7) : 0),
+                        frame2.Frame.Width, frame2.Frame.Height, false, Transparency);
+            }
+            if (editorAnim3 != null && editorAnim3.Frames.Count != 0)
+            {
+                var frame3 = editorAnim3.Frames[e.index];
+
+                d.DrawBitmap(frame3.Texture,
+                    x + frame3.Frame.CenterX - (fliph ? (frame3.Frame.Width - editorAnim3.Frames[0].Frame.Width - 7) : 0),
+                    y + frame3.Frame.CenterY + (flipv ? (frame3.Frame.Height - editorAnim3.Frames[0].Frame.Height - 7) : 0),
+                    frame3.Frame.Width, frame3.Frame.Height, false, Transparency);
+            }
+            if (editorAnim != null && editorAnim.Frames.Count != 0)
             {
                 var frame = editorAnim.Frames[e.index];
-
                 d.DrawBitmap(frame.Texture,
-                    x + frame.Frame.CenterX - (fliph ? (frame.Frame.Width - editorAnim.Frames[0].Frame.Width + 10) : 0),
-                    y + frame.Frame.CenterY + (flipv ? (frame.Frame.Height - editorAnim.Frames[0].Frame.Height + 10) : 0),
+                    x + frame.Frame.CenterX - (fliph ? (frame.Frame.Width - editorAnim.Frames[0].Frame.Width + 9) : 0),
+                    y + frame.Frame.CenterY + (flipv ? (frame.Frame.Height - editorAnim.Frames[0].Frame.Height + 9) : 0),
                     frame.Frame.Width, frame.Frame.Height, false, Transparency);
+
+
+
             }
         }
 
