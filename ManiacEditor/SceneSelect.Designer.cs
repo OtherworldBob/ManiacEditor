@@ -65,7 +65,6 @@ namespace ManiacEditor
             this.dataDirEditContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeDataDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preRenderCheckbox = new System.Windows.Forms.CheckBox();
-            this.sceneIDLabel = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.contextMenuStrip3.SuspendLayout();
@@ -375,16 +374,6 @@ namespace ManiacEditor
             this.preRenderCheckbox.UseVisualStyleBackColor = true;
             this.preRenderCheckbox.CheckedChanged += new System.EventHandler(this.preRenderCheckbox_CheckedChanged);
             // 
-            // sceneIDLabel
-            // 
-            this.sceneIDLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.sceneIDLabel.AutoSize = true;
-            this.sceneIDLabel.Location = new System.Drawing.Point(492, 415);
-            this.sceneIDLabel.Name = "sceneIDLabel";
-            this.sceneIDLabel.Size = new System.Drawing.Size(123, 13);
-            this.sceneIDLabel.TabIndex = 22;
-            this.sceneIDLabel.Text = "Current Scene ID: NULL";
-            // 
             // SceneSelect
             // 
             this.AcceptButton = this.selectButton;
@@ -392,7 +381,6 @@ namespace ManiacEditor
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(1010, 456);
-            this.Controls.Add(this.sceneIDLabel);
             this.Controls.Add(this.preRenderCheckbox);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.button3);
@@ -464,6 +452,5 @@ namespace ManiacEditor
         private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
         private System.Windows.Forms.ToolStripContentPanel ContentPanel;
         private System.Windows.Forms.ToolStripTextBox dataLabelToolStripItem;
-        private System.Windows.Forms.Label sceneIDLabel;
     }
 }

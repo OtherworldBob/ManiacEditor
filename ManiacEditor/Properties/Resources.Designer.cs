@@ -73,6 +73,16 @@ namespace ManiacEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ColorPalette_16x {
+            get {
+                object obj = ResourceManager.GetObject("ColorPalette_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ErrorMonitor {
             get {
                 object obj = ResourceManager.GetObject("ErrorMonitor", resourceCulture);

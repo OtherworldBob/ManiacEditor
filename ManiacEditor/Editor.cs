@@ -33,6 +33,7 @@ namespace ManiacEditor
         int ShiftX = 0, ShiftY = 0, ScreenWidth, ScreenHeight;
         public bool showTileID;
         public bool showGrid;
+        public bool useEncoreColors = false;
         public bool showCollisionA;
         public bool showCollisionB;
         public int modConfig_CheckedItem;
@@ -63,6 +64,7 @@ namespace ManiacEditor
         public String ToolbarSelectedTile;
         bool SceneLoaded = false;
         bool AllowSceneChange = false;
+        bool encorePaletteExists = false;
 
         public static string DataDirectory;
 
@@ -70,6 +72,7 @@ namespace ManiacEditor
 
         public string SelectedZone;
         string SelectedScene;
+        public static string EncorePallete;
 
         public StageTiles StageTiles;
         public EditorScene EditorScene;
@@ -496,11 +499,15 @@ namespace ManiacEditor
                 UseDefaultPrefrences();
                 DataDirectory = newDataDirectory;
                 AddRecentDataFolder(newDataDirectory);
-                SetGameConfig();
-                if (mySettings.forceBrowse == true)
-                    OpenSceneManual();
-                else
-                    OpenScene();
+                bool goodGameConfig = SetGameConfig();
+                if (goodGameConfig == true)
+                {
+                    if (mySettings.forceBrowse == true)
+                        OpenScene(true);
+                    else
+                        OpenScene();
+                }
+
             }
 
 
@@ -647,6 +654,8 @@ namespace ManiacEditor
             showCollisionBButton.Enabled = enabled && StageConfig != null;
             showTileIDButton.Enabled = enabled && StageConfig != null;
             gridSizeButton.Enabled = enabled && StageConfig != null;
+            enableEncorePalette.Enabled = enabled && encorePaletteExists;
+
 
 
             //Doing this too often seems to cause a lot of grief for the app, should be relocated and stored as a bool
@@ -1805,6 +1814,7 @@ namespace ManiacEditor
         {
             if (DataDirectory == null)
             {
+                // Old Code to be Removed Soon
                 /*do
                 {
                     MessageBox.Show("Please select the \"Data\" folder", "Message");
@@ -1854,9 +1864,30 @@ namespace ManiacEditor
         /// <summary>
         /// Sets the GameConfig property in relation to the DataDirectory property.
         /// </summary>
-        public void SetGameConfig()
+        public bool SetGameConfig()
         {
-            GameConfig = new GameConfig(Path.Combine(DataDirectory, "Game", "GameConfig.bin"));
+            try
+            {
+                GameConfig = new GameConfig(Path.Combine(DataDirectory, "Game", "GameConfig.bin"));
+                return true;
+            }
+            catch
+            {
+                // Allow the User to be able to have a Maniac Editor Dedicated GameConfig, see if the user has made one
+                try
+                {
+                    GameConfig = new GameConfig(Path.Combine(DataDirectory, "Game", "GameConfig_ME.bin"));
+                    return true;
+                }
+                catch
+                {
+                    MessageBox.Show("Something is wrong with this GameConfig that we can't support! If for some reason it does work you in Sonic Mania can create another GameConfig.bin called GameConfig_ME.bin and the editor should load that instead allowing you to still be able to use the data folder, however, this is experimental so be careful when doing that.", "GameConfig Error!");
+                    return false;
+                }
+
+
+            }
+
         }
 
         /// <summary>
@@ -1905,8 +1936,7 @@ namespace ManiacEditor
         }
 
         void UnloadScene()
-        {
-
+        { 
             SceneLoaded = false;
             EditorScene?.Dispose();
             EditorScene = null;
@@ -1915,6 +1945,8 @@ namespace ManiacEditor
             StageConfigFileName = null;
             _levelIDLabel.Text = "Level ID: NULL";
             myEditorState.Level_ID = -1;
+            encorePaletteExists = false;
+            EncorePallete = null;
 
             SelectedScene = null;
             SelectedZone = null;
@@ -2055,7 +2087,7 @@ namespace ManiacEditor
             {
                 AllowSceneChange = false;
                 if (mySettings.forceBrowse == true)
-                    OpenSceneManual();
+                    OpenScene(true);
                 else
                     OpenScene();
 
@@ -2067,50 +2099,171 @@ namespace ManiacEditor
 
         }
 
-        private void OpenScene()
+        private void OpenScene(bool manual = false)
         {
             SceneSelect select;
-            if (!load())
+            string Result = null;
+            int LevelID = -1;
+            bool isEncore = false;
+            if (manual == false)
             {
-                select = new SceneSelect();
-            }
-            else
-            {
-                select = new SceneSelect(GameConfig);
-            }
-            select.ShowDialog();
 
-
-            if (select.Result == null)
-                return;
-
-            UnloadScene();
-            UseDefaultPrefrences();
-            SetGameConfig();
-
-            try
-            {
-                if (File.Exists(select.Result))
+                if (!load())
                 {
-                    // Selected file
-                    // Don't forget to populate these Members
-                    string directoryPath = Path.GetDirectoryName(select.Result);
-                    SelectedZone = new DirectoryInfo(directoryPath).Name;
-                    SelectedScene = Path.GetFileName(select.Result);
-
-                    StageTiles = new StageTiles(directoryPath);
-
-                    SceneFilename = select.Result;
+                    select = new SceneSelect();
                 }
                 else
                 {
-                    SelectedZone = select.Result.Replace(Path.GetFileName(select.Result), "");
-                    SelectedScene = Path.GetFileName(select.Result);
+                    select = new SceneSelect(GameConfig);
+                }
+                select.ShowDialog();
+                Result = select.Result;
+                LevelID = select.LevelID;
+                isEncore = select.isEncore;
 
-                    StageTiles = new StageTiles(Path.Combine(DataDirectory, "Stages", SelectedZone));
+            }
+            else
+            {
+                OpenFileDialog open = new OpenFileDialog();
+                open.Filter = "Scene File|*.bin";
+                if (open.ShowDialog() != DialogResult.Cancel)
+                {
+                    Result = open.FileName;
+                }
+
+
+            }
+
+            if (Result == null)
+            {
+                return;
+            }
+
+
+            UnloadScene();
+            UseDefaultPrefrences();
+            bool goodGameConfig = SetGameConfig();
+            if (goodGameConfig == false)
+            {
+                return;
+            }
+
+            if (isEncore)
+            {
+                enableEncorePalette.Checked = true;
+                useEncoreColors = true;
+            }
+
+            try
+            {
+                if (File.Exists(Result))
+                {
+                    // Selected file
+                    // Don't forget to populate these Members
+                    string directoryPath = Path.GetDirectoryName(Result);
+
+                    SelectedZone = new DirectoryInfo(directoryPath).Name;
+                    SelectedScene = Path.GetFileName(Result);
+
+                    //Encore Palette File Loading
+                    string ZoneName = SelectedZone.Replace("\\", "");
+                    string actFile = "Encore" + ZoneName + ".act";
+                    EncorePallete = Path.Combine(DataDirectory, "Palettes", "Encore" + actFile);
+                    Debug.Print(EncorePallete);
+
+                    // Check if Encore Pallete Exists
+                    if (File.Exists(Path.Combine(DataDirectory, "Palettes", actFile)))
+                    {
+                        encorePaletteExists = true;
+                        EncorePallete = Path.Combine(DataDirectory, "Palettes", actFile);
+                        if (useEncoreColors)
+                        {
+                            StageTiles = new StageTiles(directoryPath, EncorePallete);
+                        }
+                        else
+                        {
+                            StageTiles = new StageTiles(directoryPath);
+                        }
+
+                    }
+                    else //Further Search
+                    {
+                        string search = locateEncorePalettes(ZoneName, SelectedScene, Path.GetFullPath(Result));
+                        if (search == "") // If the search fails, just stop trying to get an encore palette
+                        {
+                            StageTiles = new StageTiles(Path.Combine(DataDirectory, "Stages", SelectedZone));
+                        }
+                        else
+                        {
+                            Debug.Print("Found a Work Around");
+                            encorePaletteExists = true;
+                            EncorePallete = search;
+                            if (useEncoreColors)
+                            {
+                                StageTiles = new StageTiles(directoryPath, EncorePallete);
+                            }
+                            else
+                            {
+                                StageTiles = new StageTiles(directoryPath);
+                            }
+                        }
+                    }
+
+
+                    SceneFilename = Result;
+                }
+                else
+                {
+                    SelectedZone = Result.Replace(Path.GetFileName(Result), "");
+                    SelectedScene = Path.GetFileName(Result);
+
+                    //Encore Palette File Loading
+                    string ZoneName = SelectedZone.Replace("\\", "");
+                    string actFile = "Encore" + ZoneName + ".act";
+                    EncorePallete = Path.Combine(DataDirectory, "Palettes", actFile);
+                    Debug.Print(EncorePallete);
+
+                    // Check if Encore Pallete Exists
+                    if (File.Exists(Path.Combine(DataDirectory, "Palettes", actFile)))
+                    {
+                        encorePaletteExists = true;
+                        EncorePallete = Path.Combine(DataDirectory, "Palettes", actFile);
+                        if (useEncoreColors)
+                        {
+                            StageTiles = new StageTiles(Path.Combine(DataDirectory, "Stages", SelectedZone), EncorePallete);
+                        }
+                        else
+                        {
+                            StageTiles = new StageTiles(Path.Combine(DataDirectory, "Stages", SelectedZone));
+                        }
+                    }
+                    else // Further Search
+                    {
+                        string search = locateEncorePalettes(ZoneName, SelectedScene, Path.Combine(DataDirectory, "Stages", SelectedZone, SelectedScene));
+                        if (search == "") // If the search fails, just stop trying to get an encore palette
+                        {
+                            StageTiles = new StageTiles(Path.Combine(DataDirectory, "Stages", SelectedZone));
+                        }
+                        else
+                        {
+                            encorePaletteExists = true;
+                            EncorePallete = search;
+                            if (useEncoreColors)
+                            {
+                                StageTiles = new StageTiles(Path.Combine(DataDirectory, "Stages", SelectedZone), EncorePallete);
+                            }
+                            else
+                            {
+                                StageTiles = new StageTiles(Path.Combine(DataDirectory, "Stages", SelectedZone));
+                            }
+                        }
+                    }
+
+
                     SceneFilename = Path.Combine(DataDirectory, "Stages", SelectedZone, SelectedScene);
                 }
-                myEditorState.Level_ID = select.LevelID;
+                myEditorState.Level_ID = LevelID;
+
                 //These cause issues, but not clearing them means when new stages are loaded Collision Mask 0 will be index 1024... (I think)
                 CollisionLayerA.Clear();
                 CollisionLayerB.Clear();
@@ -2120,10 +2273,17 @@ namespace ManiacEditor
                     CollisionLayerA.Add(StageTiles.Config.CollisionPath1[i].DrawCMask(Color.FromArgb(0, 0, 0, 0), Color.FromArgb(255, 255, 255, 255)));
                     CollisionLayerB.Add(StageTiles.Config.CollisionPath2[i].DrawCMask(Color.FromArgb(0, 0, 0, 0), Color.FromArgb(255, 255, 255, 255)));
                 }
+
+                // Object Rescue Mode
                 if (mySettings.DisableEntityReading == true)
                 {
-                    EditorScene.readTilesOnly = true;
+                    RSDKv5.Scene.readTilesOnly = true;
                 }
+                else
+                {
+                    RSDKv5.Scene.readTilesOnly = false;
+                }
+
                 EditorScene = new EditorScene(SceneFilename);
 
                 StageConfigFileName = Path.Combine(Path.GetDirectoryName(SceneFilename), "StageConfig.bin");
@@ -2141,14 +2301,14 @@ namespace ManiacEditor
                 {
                     ObjectList.Add(StageConfig.ObjectsNames[i]);
                 }
-                ScenePath = select.Result;
-                UpdateDiscord("Editing " + select.Result);
+                ScenePath = Result;
+                UpdateDiscord("Editing " + Result);
                 SceneLoaded = true;
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Load failed. Error: " + ex.ToString() + " " + select.Result);
+                MessageBox.Show("Load failed. Error: " + ex.ToString() + " " + Result);
                 return;
             }
 
@@ -2164,6 +2324,74 @@ namespace ManiacEditor
             UpdateControls(true);
 
             SceneLoaded = true;
+
+
+        }
+
+        private string locateEncorePalettes(string Zone, string Scene, string FullPath)
+        {
+            string palettesFolder = Path.Combine(DataDirectory, "Palettes");
+
+            string modifiedZone;
+            string modifiedScene;
+            string actFile;
+            string newPal;
+            
+            //First Check (intended for MSZ1e && MSZ1k)
+            modifiedZone = Zone.Replace("e", "");
+            modifiedZone = modifiedZone.Replace("k", "");
+            modifiedScene = Scene.Replace("Scene", "");
+            modifiedScene = modifiedScene.Replace(".bin", "");
+            modifiedScene = modifiedScene.Replace("1e", "1");
+            modifiedScene = modifiedScene.Replace("1k", "1");
+            actFile = "Encore" + modifiedZone + modifiedScene + ".act";
+            newPal = Path.Combine(DataDirectory, "Palettes", actFile);
+
+            Debug.Print(newPal);
+            if (File.Exists(newPal))
+            {
+                Debug.Print("First Check Passed");
+                return newPal;
+            }
+            else
+            {
+                //Second Check (intended for external data folders)
+                string ModDataDir = FullPath.Replace('/', '\\');
+                ModDataDir = ModDataDir.Replace(Path.Combine("Stages", SelectedZone, SelectedScene), "");
+                Debug.Print(ModDataDir);
+                actFile = "Encore" + Zone + ".act";
+                newPal = Path.Combine(ModDataDir, "Palettes", actFile);
+                Debug.Print(newPal);
+                if (File.Exists(newPal))
+                {
+                    Debug.Print("Second Check Passed");
+                    return newPal;
+                }
+                else
+                {
+                    //Third Check (intended for MSZ1e && MSZ1k (in mods))
+                    modifiedZone = Zone.Replace("e", "");
+                    modifiedZone = modifiedZone.Replace("k", "");
+                    modifiedScene = Scene.Replace("Scene", "");
+                    modifiedScene = modifiedScene.Replace(".bin", "");
+                    modifiedScene = modifiedScene.Replace("1e", "1");
+                    modifiedScene = modifiedScene.Replace("1k", "1");
+                    actFile = "Encore" + modifiedZone + modifiedScene + ".act";
+                    newPal = Path.Combine(ModDataDir, "Palettes", actFile);
+
+                    Debug.Print(newPal);
+                    if (File.Exists(newPal))
+                    {
+                        Debug.Print("Third Check Passed");
+                        return newPal;
+                    }
+
+                    Debug.Print("Did not find a Work Around");
+                    return "";
+                }
+
+
+            }
 
 
         }
@@ -2189,104 +2417,6 @@ namespace ManiacEditor
             healer.startHealing(open.FileName);
             Application.DoEvents();
             HideConsoleWindow();
-
-        }
-
-        private void OpenSceneManual()
-        {
-            string Result = null;
-            OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "Scene File|*.bin";
-            if (open.ShowDialog() != DialogResult.Cancel)
-            {
-                Result = open.FileName;
-            }
-
-            if (Result == null)
-                return;
-
-            UnloadScene();
-            UseDefaultPrefrences();
-
-            try
-            {
-                if (File.Exists(Result))
-                {
-                    // Selected file
-                    // Don't forget to populate these Members
-                    string directoryPath = Path.GetDirectoryName(Result);
-                    SelectedZone = new DirectoryInfo(directoryPath).Name;
-                    SelectedScene = Path.GetFileName(Result);
-
-                    StageTiles = new StageTiles(directoryPath);
-
-                    SceneFilename = Result;
-                }
-                else
-                {
-                    SelectedZone = Result.Replace(Path.GetFileName(Result), "");
-                    SelectedScene = Path.GetFileName(Result);
-
-                    StageTiles = new StageTiles(Path.Combine(DataDirectory, "Stages", SelectedZone));
-                    SceneFilename = Path.Combine(DataDirectory, "Stages", SelectedZone, SelectedScene);
-                }
-
-                //These cause issues, but not clearing them means when new stages are loaded Collision Mask 0 will be index 1024... (I think)
-                CollisionLayerA.Clear();
-                CollisionLayerB.Clear();
-
-                for (int i = 0; i < 1024; i++)
-                {
-                    CollisionLayerA.Add(StageTiles.Config.CollisionPath1[i].DrawCMask(Color.FromArgb(0, 0, 0, 0), Color.FromArgb(255, 255, 255, 255)));
-                    CollisionLayerB.Add(StageTiles.Config.CollisionPath2[i].DrawCMask(Color.FromArgb(0, 0, 0, 0), Color.FromArgb(255, 255, 255, 255)));
-                }
-                if (mySettings.DisableEntityReading == true)
-                {
-                    RSDKv5.Scene.readTilesOnly = true;
-                }
-                else
-                {
-                    RSDKv5.Scene.readTilesOnly = false;
-                }
-                EditorScene = new EditorScene(SceneFilename);
-                StageConfigFileName = Path.Combine(Path.GetDirectoryName(SceneFilename), "StageConfig.bin");
-                if (File.Exists(StageConfigFileName))
-                {
-                    StageConfig = new StageConfig(StageConfigFileName);
-                }
-
-                ObjectList.Clear();
-                for (int i = 0; i < GameConfig.ObjectsNames.Count; i++)
-                {
-                    ObjectList.Add(GameConfig.ObjectsNames[i]);
-                }
-                for (int i = 0; i < StageConfig.ObjectsNames.Count; i++)
-                {
-                    ObjectList.Add(StageConfig.ObjectsNames[i]);
-                }
-                ScenePath = Result;
-                UpdateDiscord("Editing " + Result);
-                SceneLoaded = true;
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Load failed. Error: " + ex.ToString());
-                return;
-            }
-
-
-            SetupLayerButtons();
-
-            Background = new EditorBackground();
-
-            entities = new EditorEntities(EditorScene);
-
-            SetViewSize(SceneWidth, SceneHeight);
-
-            UpdateControls(true);
-
-            SceneLoaded = true;
 
         }
 
@@ -3425,7 +3555,16 @@ Error: {ex.Message}");
                 DisposeTextures();
                 EditorEntity.ReleaseResources();
 
-                StageTiles?.Image.Reload();
+                //Reload for Encore Palletes, otherwise reload the image normally
+                if (useEncoreColors == true)
+                {
+                    StageTiles?.Image.Reload(EncorePallete);
+                }
+                else
+                {
+                    StageTiles?.Image.Reload();
+                }
+
                 TilesToolbar?.Reload();
             }
             catch (Exception ex)
@@ -4447,6 +4586,23 @@ Error: {ex.Message}");
         private void goToToolStripMenuItem_Click(object sender, EventArgs e)
         {
             goToCoords();
+        }
+
+        private void enableEncorePalette_Click(object sender, EventArgs e)
+        {
+            DisposeTextures();
+            if (useEncoreColors == true)
+            {
+                enableEncorePalette.Checked = false;
+                useEncoreColors = false;
+                StageTiles?.Image.Reload();
+            }
+            else
+            {
+                enableEncorePalette.Checked = true;
+                useEncoreColors = true;
+                StageTiles?.Image.Reload(EncorePallete);
+            }
         }
 
         private void movingPlatformsObjectsToolStripMenuItem_Click(object sender, EventArgs e)

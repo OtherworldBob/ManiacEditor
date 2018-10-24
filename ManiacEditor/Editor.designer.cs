@@ -89,6 +89,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.GraphicPanel = new ManiacEditor.DevicePanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.seperator1 = new System.Windows.Forms.ToolStripSeparator();
             this._levelIDLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -108,6 +109,8 @@
             this.seperator6 = new System.Windows.Forms.ToolStripSeparator();
             this.selectionBoxSizeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.seperator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.hVScrollBarXYLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.seperator8 = new System.Windows.Forms.ToolStripSeparator();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.spacingLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator20 = new System.Windows.Forms.ToolStripSeparator();
@@ -164,6 +167,7 @@
             this.EditEntities = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.enableEncorePalette = new System.Windows.Forms.ToolStripButton();
             this.showGridButton = new System.Windows.Forms.ToolStripButton();
             this.gridSizeButton = new System.Windows.Forms.ToolStripSplitButton();
             this.x16ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -174,9 +178,6 @@
             this.animationsSplitButton = new System.Windows.Forms.ToolStripSplitButton();
             this.movingPlatformsObjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteFramesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hVScrollBarXYLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.seperator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.GraphicPanel = new ManiacEditor.DevicePanel();
             this.menuStrip1.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -586,14 +587,14 @@
             // developerTerminalToolStripMenuItem
             // 
             this.developerTerminalToolStripMenuItem.Name = "developerTerminalToolStripMenuItem";
-            this.developerTerminalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.developerTerminalToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.developerTerminalToolStripMenuItem.Text = "Developer Terminal";
             this.developerTerminalToolStripMenuItem.Click += new System.EventHandler(this.developerTerminalToolStripMenuItem_Click);
             // 
             // goToToolStripMenuItem
             // 
             this.goToToolStripMenuItem.Name = "goToToolStripMenuItem";
-            this.goToToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.goToToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.goToToolStripMenuItem.Text = "Go To...";
             this.goToToolStripMenuItem.Click += new System.EventHandler(this.goToToolStripMenuItem_Click);
             // 
@@ -681,6 +682,30 @@
             this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
             this.vScrollBar1.ValueChanged += new System.EventHandler(this.vScrollBar1_ValueChanged);
             this.vScrollBar1.MouseEnter += new System.EventHandler(this.vScrollBar1_Entered);
+            // 
+            // GraphicPanel
+            // 
+            this.GraphicPanel.AllowDrop = true;
+            this.GraphicPanel.AutoSize = true;
+            this.GraphicPanel.DeviceBackColor = System.Drawing.Color.White;
+            this.GraphicPanel.Location = new System.Drawing.Point(0, 0);
+            this.GraphicPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.GraphicPanel.Name = "GraphicPanel";
+            this.GraphicPanel.Size = new System.Drawing.Size(882, 482);
+            this.GraphicPanel.TabIndex = 10;
+            this.GraphicPanel.OnRender += new ManiacEditor.RenderEventHandler(this.GraphicPanel_OnRender);
+            this.GraphicPanel.OnCreateDevice += new ManiacEditor.CreateDeviceEventHandler(this.OnResetDevice);
+            this.GraphicPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.GraphicPanel_DragDrop);
+            this.GraphicPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.GraphicPanel_DragEnter);
+            this.GraphicPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.GraphicPanel_DragOver);
+            this.GraphicPanel.DragLeave += new System.EventHandler(this.GraphicPanel_DragLeave);
+            this.GraphicPanel.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GraphicPanel_OnKeyDown);
+            this.GraphicPanel.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GraphicPanel_OnKeyUp);
+            this.GraphicPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseDown);
+            this.GraphicPanel.MouseEnter += new System.EventHandler(this.GraphicPanel_MouseEnter);
+            this.GraphicPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseMove);
+            this.GraphicPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseUp);
+            this.GraphicPanel.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_MouseWheel);
             // 
             // statusStrip1
             // 
@@ -845,6 +870,18 @@
             this.seperator7.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.seperator7.Size = new System.Drawing.Size(6, 23);
             this.seperator7.Visible = false;
+            // 
+            // hVScrollBarXYLabel
+            // 
+            this.hVScrollBarXYLabel.Name = "hVScrollBarXYLabel";
+            this.hVScrollBarXYLabel.Size = new System.Drawing.Size(0, 18);
+            // 
+            // seperator8
+            // 
+            this.seperator8.Name = "seperator8";
+            this.seperator8.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.seperator8.Size = new System.Drawing.Size(6, 23);
+            this.seperator8.Visible = false;
             // 
             // statusLabel
             // 
@@ -1392,7 +1429,7 @@
             this.EditEntities.Image = ((System.Drawing.Image)(resources.GetObject("EditEntities.Image")));
             this.EditEntities.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.EditEntities.Name = "EditEntities";
-            this.EditEntities.Size = new System.Drawing.Size(49, 22);
+            this.EditEntities.Size = new System.Drawing.Size(49, 19);
             this.EditEntities.Text = "Entities";
             this.EditEntities.ToolTipText = "Edit Entities";
             this.EditEntities.Click += new System.EventHandler(this.EditEntities_Click);
@@ -1427,6 +1464,7 @@
             this.placeTilesButton,
             this.MagnetMode,
             this.toolStripSeparator14,
+            this.enableEncorePalette,
             this.showTileIDButton,
             this.showGridButton,
             this.gridSizeButton,
@@ -1453,6 +1491,17 @@
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "Open Most Recent Data Directory";
             this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
+            // 
+            // enableEncorePalette
+            // 
+            this.enableEncorePalette.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.enableEncorePalette.Image = global::ManiacEditor.Properties.Resources.ColorPalette_16x;
+            this.enableEncorePalette.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.enableEncorePalette.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.enableEncorePalette.Name = "enableEncorePalette";
+            this.enableEncorePalette.Size = new System.Drawing.Size(23, 22);
+            this.enableEncorePalette.Text = "Toggle Encore Palette";
+            this.enableEncorePalette.Click += new System.EventHandler(this.enableEncorePalette_Click);
             // 
             // showGridButton
             // 
@@ -1548,42 +1597,6 @@
             this.spriteFramesToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.spriteFramesToolStripMenuItem.Text = "Sprite Frames";
             this.spriteFramesToolStripMenuItem.Click += new System.EventHandler(this.spriteFramesToolStripMenuItem_Click);
-            // 
-            // hVScrollBarXYLabel
-            // 
-            this.hVScrollBarXYLabel.Name = "hVScrollBarXYLabel";
-            this.hVScrollBarXYLabel.Size = new System.Drawing.Size(0, 18);
-            // 
-            // seperator8
-            // 
-            this.seperator8.Name = "seperator8";
-            this.seperator8.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.seperator8.Size = new System.Drawing.Size(6, 23);
-            this.seperator8.Visible = false;
-            // 
-            // GraphicPanel
-            // 
-            this.GraphicPanel.AllowDrop = true;
-            this.GraphicPanel.AutoSize = true;
-            this.GraphicPanel.DeviceBackColor = System.Drawing.Color.White;
-            this.GraphicPanel.Location = new System.Drawing.Point(0, 0);
-            this.GraphicPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.GraphicPanel.Name = "GraphicPanel";
-            this.GraphicPanel.Size = new System.Drawing.Size(882, 482);
-            this.GraphicPanel.TabIndex = 10;
-            this.GraphicPanel.OnRender += new ManiacEditor.RenderEventHandler(this.GraphicPanel_OnRender);
-            this.GraphicPanel.OnCreateDevice += new ManiacEditor.CreateDeviceEventHandler(this.OnResetDevice);
-            this.GraphicPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.GraphicPanel_DragDrop);
-            this.GraphicPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.GraphicPanel_DragEnter);
-            this.GraphicPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.GraphicPanel_DragOver);
-            this.GraphicPanel.DragLeave += new System.EventHandler(this.GraphicPanel_DragLeave);
-            this.GraphicPanel.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GraphicPanel_OnKeyDown);
-            this.GraphicPanel.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GraphicPanel_OnKeyUp);
-            this.GraphicPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseDown);
-            this.GraphicPanel.MouseEnter += new System.EventHandler(this.GraphicPanel_MouseEnter);
-            this.GraphicPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseMove);
-            this.GraphicPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_OnMouseUp);
-            this.GraphicPanel.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.GraphicPanel_MouseWheel);
             // 
             // Editor
             // 
@@ -1779,6 +1792,7 @@
         private System.Windows.Forms.ToolStripMenuItem goToToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel hVScrollBarXYLabel;
         private System.Windows.Forms.ToolStripSeparator seperator8;
+        private System.Windows.Forms.ToolStripButton enableEncorePalette;
     }
 }
 

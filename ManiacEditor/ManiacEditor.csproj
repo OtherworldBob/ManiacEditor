@@ -883,6 +883,7 @@
     <Content Include="Global\TransportTubes.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\ColorPalette_16x.png" />
     <None Include="Resources\OhNo.wav" />
     <None Include="README.md" />
     <None Include="Resources\ScoreTotal.wav" />

@@ -22,8 +22,12 @@ namespace ManiacEditor
         public Dictionary<string, List<string>> Directories = new Dictionary<string, List<string>>();
         public GameConfig _GameConfig;
 
+        //In the case we have a bad gameconfig
+        public string prevDataDir;
+
         public string Result = null;
         public int LevelID = -1;
+        public bool isEncore = false;
 
 
         public SceneSelect(GameConfig config = null)
@@ -127,15 +131,21 @@ namespace ManiacEditor
         private void selectButton_Click(object sender, EventArgs e)
         {
             int _levelID = -1;
+            int _isEncore = 0;
             var cat = _GameConfig.Categories.Where(t => t.Name == scenesTree.SelectedNode.Parent.Text).FirstOrDefault();
             if (cat != null)
             {
                 var scene = cat.Scenes.Where(t => $"{t.Zone}\\Scene{t.SceneID}.bin" == scenesTree.SelectedNode.Tag as string).FirstOrDefault();
                 Properties.EditorState.Default.Level_ID = scene.LevelID;
+                _isEncore = scene.ModeFilter;
                 _levelID = scene.LevelID;
             }
             Result = scenesTree.SelectedNode.Tag as string;
             LevelID = _levelID;
+            if (_isEncore == 5)
+            {
+                isEncore = true;
+            }
             Close();
         }
 
@@ -374,13 +384,43 @@ namespace ManiacEditor
 
             if (NodeType == 0)
             {
-                GameConfig GameConfig;
+                GameConfig GameConfig = null;
                 String SelectedDataDirectory = recentDataDirList.SelectedNode.Tag.ToString();
                 {
-                    GameConfig = new GameConfig(Path.Combine(SelectedDataDirectory, "Game", "GameConfig.bin"));
+                    try
+                    {
+                        GameConfig = new GameConfig(Path.Combine(SelectedDataDirectory, "Game", "GameConfig.bin"));
+                    }
+                    catch
+                    {
+                        // Allow the User to be able to have a Maniac Editor Dedicated GameConfig, see if the user has made one
+                        try
+                        {
+                            GameConfig = new GameConfig(Path.Combine(SelectedDataDirectory, "Game", "GameConfig_ME.bin"));
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Something is wrong with this GameConfig that we can't support! If for some reason it does work you in Sonic Mania can create another GameConfig.bin called GameConfig_ME.bin and the editor should load that instead allowing you to still be able to use the data folder, however, this is experimental so be careful when doing that.", "GameConfig Error!");
+                            Editor.DataDirectory = prevDataDir;
+                            prevDataDir = null;
+
+                            if (Editor.DataDirectory != null)
+                            {
+                                dataLabelToolStripItem.Text = "Data Directory: " + Editor.DataDirectory;
+                            }
+                            else
+                            {
+                                dataLabelToolStripItem.Text = "Data Directory: NULL";
+                            }
+
+                        }
+                    }
                 }
-                LoadFromGameConfig(GameConfig);
-                _GameConfig = GameConfig;
+                if (GameConfig != null)
+                {
+                    LoadFromGameConfig(GameConfig);
+                    _GameConfig = GameConfig;
+                }
             }
             if (NodeType == 1)
             {
@@ -422,10 +462,13 @@ namespace ManiacEditor
                 {
                     Editor.DataDirectory = newDataDirectory;
                     returnDataDirectory = newDataDirectory;
-                    Editor.Instance.SetGameConfig();
-                    Editor.Instance.AddRecentDataFolder(Editor.DataDirectory);
-                    Editor.Instance.RefreshDataDirectories(Properties.Settings.Default.DataDirectories);
-                    ReloadQuickPanel();
+                    bool goodDataDir = Editor.Instance.SetGameConfig();
+                    if (goodDataDir == true)
+                    {
+                        Editor.Instance.AddRecentDataFolder(Editor.DataDirectory);
+                        Editor.Instance.RefreshDataDirectories(Properties.Settings.Default.DataDirectories);
+                        ReloadQuickPanel();
+                    }
 
                 }
                 else
@@ -553,6 +596,7 @@ namespace ManiacEditor
                 {
                     if (recentDataDirList.Nodes[0].Nodes[i].IsSelected)
                     {
+                        prevDataDir = Editor.DataDirectory;
                         Editor.DataDirectory = recentDataDirList.Nodes[0].Nodes[i].Tag.ToString();
                         load_Click(sender, e);
                     }
