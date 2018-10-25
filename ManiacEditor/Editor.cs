@@ -90,6 +90,7 @@ namespace ManiacEditor
         internal EditorLayer FGHigh => EditorScene?.ForegroundHigh;
         internal EditorLayer FGLow => EditorScene?.ForegroundLow;
         internal EditorLayer FGLower => EditorScene?.LowDetails;
+        internal EditorLayer ScratchLayer => EditorScene?.Scratch;
         private IList<ToolStripButton> _extraLayerButtons;
 
         internal EditorBackground Background;

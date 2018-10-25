@@ -19,6 +19,13 @@ namespace ManiacEditor
         {
             get => _editorLayers.LastOrDefault(el => el.Name.Equals("FG Low") || el.Name.Equals("Playfield"));
         }
+
+        public EditorLayer Scratch
+        {
+            get => _editorLayers.LastOrDefault(el => el.Name.Equals("Scratch") || el.Name.Equals("Move"));
+        }
+
+
         public EditorLayer HighDetails
         {
             get => _editorLayers.LastOrDefault(el => el.Name.Equals(Properties.Settings.Default.CustomLayerHigh) || el.Name.Equals("FG Higher") || el.Name.Equals("FG Overlay") || el.Name.Equals("FG Supa High"));

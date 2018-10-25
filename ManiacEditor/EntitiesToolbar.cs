@@ -77,7 +77,7 @@ namespace ManiacEditor
             {
                 maniaFilterCheck.Text = "Mania (2)";
                 encoreFilterCheck.Text = "Encore (4)";
-                otherFilterCheck.Text = "Both (1)";
+                otherFilterCheck.Text = "Both (1 and 5)";
                 bothFilterCheck.Text = "Other (0)";
 
             }

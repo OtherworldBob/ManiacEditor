@@ -8,6 +8,8 @@ using RSDKv5;
 using SharpDX.Direct3D9;
 using ManiacEditor.Actions;
 using ManiacEditor.Enums;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace ManiacEditor
 {
@@ -738,6 +740,18 @@ namespace ManiacEditor
             return new Rectangle(x_start, y_start, x_end - x_start, y_end - y_start);
         }
 
+        private Rectangle GetTileArea(int x, int y, int width, int height)
+        {
+            int y_start = y * height;
+            int y_end = Math.Min((y + 1) * height, _layer.Height);
+
+            int x_start = x * width;
+            int x_end = Math.Min((x + 1) * width, _layer.Width);
+
+            //return new Rectangle(x, y, x + width, y + height);
+            return new Rectangle(x_start, y_start, x_end, y_end);
+        }
+
         public void DrawTile(DevicePanel d, ushort tile, int x, int y, bool selected, int Transperncy)
         {
             bool flipX = ((tile >> 10) & 1) == 1;
@@ -897,6 +911,20 @@ namespace ManiacEditor
             }
         }
 
+        public void DrawAtPosition(Graphics g, int x, int y, int width, int height)
+        {
+            for (int yy = y; yy < _layer.Height; ++y)
+            {
+                for (int xx = x; xx < _layer.Width; ++x)
+                {
+                    if (this._layer.Tiles[y][x] != 0xffff)
+                    {
+                        DrawTile(g, _layer.Tiles[y][x], x, y);
+                    }
+                }
+            }
+        }
+
         private Texture GetTilesChunkTexture(DevicePanel d, int x, int y)
         {
             if (this.TileChunksTextures[y][x] != null) return this.TileChunksTextures[y][x];
@@ -945,6 +973,59 @@ namespace ManiacEditor
                     }
                 }
             }
+        }
+
+        public void DrawAtPosition(DevicePanel d, int x, int y, int width, int height, int x2, int y2)
+        {
+            DrawTileGroup(d, x, y, 0xFF, x2, y2, width, height);
+        }
+        private void DrawTileGroup(DevicePanel d, int x, int y, int Transperncy, int x2, int y2, int width, int height)
+        {
+            //d.DrawRectangle(x - width/ 2, y - height / 2, x + width, y + height, System.Drawing.Color.Red);
+            Texture toDraw = GetTileGroupTexture(d, x, y, x2, y2, width, height);
+            d.DrawBitmap(toDraw, x - width/2, y - height/2, x + width, y + height, false, Transperncy);
+        }
+
+        private Texture GetTileGroupTexture(DevicePanel d, int x, int y, int x2, int y2, int width, int height)
+        {
+            Texture GroupTexture;
+            Rectangle rect = GetTileArea(0, 0, _layer.Width, _layer.Height);
+
+            Debug.Print(x2.ToString());
+            Debug.Print(y2.ToString());
+            Debug.Print(width.ToString());
+            Debug.Print(height.ToString());
+            Debug.Print("Rec X: " + (rect.Width));
+            Debug.Print("Rec Y: " + (rect.Height));
+            Debug.Print("Rec X: " + (_layer.Width));
+            Debug.Print("Rec Y: " + (_layer.Height));
+
+            using (Bitmap bmp = new Bitmap(rect.Width * 16, rect.Height * 16, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+                {
+                    using (Graphics g = Graphics.FromImage(bmp))
+                    {
+
+                        for (int ty = rect.Y; ty < rect.Y + rect.Height; ++ty)
+                        {
+                            for (int tx = rect.X; tx < rect.X + rect.Width; ++tx)
+                            {
+                                Point p = new Point(tx, ty);
+                                if (this._layer.Tiles[ty][tx] != 0xffff)
+                                {
+                                    DrawTile(g, this._layer.Tiles[ty][tx], tx, ty);
+                                }
+                            }
+                        }
+                    }
+                Bitmap source = bmp;
+                //Bitmap CroppedImage = source.Clone(new System.Drawing.Rectangle(0, 0, bmp.Width, bmp.Height), source.PixelFormat);
+                GroupTexture = TextureCreator.FromBitmap(d._device, bmp);
+                }
+
+            return GroupTexture;
+            
+
+
         }
 
         private void DrawSelectedTiles(DevicePanel d, int x, int y, int Transperncy)
