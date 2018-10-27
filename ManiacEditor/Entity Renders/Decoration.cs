@@ -23,6 +23,7 @@ namespace ManiacEditor.Entity_Renders
                     e.index = 0;
                 var frame = editorAnim.Frames[e.index];
                 e.ProcessAnimation(frame.Entry.FrameSpeed, frame.Entry.Frames.Count, frame.Frame.Duration);
+
                 d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX, y + frame.Frame.CenterY,
                     frame.Frame.Width, frame.Frame.Height, false, Transparency);
             }

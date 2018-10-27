@@ -94,6 +94,7 @@ namespace ManiacEditor.Entity_Renders
         }
         public void DrawTileGroup(DevicePanel d, int x, int y, int x2, int y2, int height, int width, int Transperncy, SceneEntity entity)
         {
+
             Rectangle rect = GetTileArea(x2, y2, width, height);
 
             try

@@ -365,6 +365,7 @@
     </Compile>
     <Compile Include="Discord.cs" />
     <Compile Include="DuplicateAction.cs" />
+    <Compile Include="EditorAnimations.cs" />
     <Compile Include="EditorBackground.cs" />
     <Compile Include="EditorEntity_ini.cs" />
     <Compile Include="EditorScene.cs" />

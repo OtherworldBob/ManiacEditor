@@ -9,12 +9,16 @@ using Microsoft.Xna.Framework;
 using RSDKv5;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Diagnostics;
+using SharpDX;
+using System.Runtime.InteropServices;
 
 namespace ManiacEditor.Entity_Renders
 {
     public class Platform : EntityRenderer
     {
-        
+        //EditorAnimations platformMove = new EditorAnimations();
+
         public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
             int frameID = 0;
@@ -25,8 +29,10 @@ namespace ManiacEditor.Entity_Renders
             int type = (int)entity.attributesMap["type"].ValueVar;
             int amplitudeX = (int)entity.attributesMap["amplitude"].ValuePosition.X.High;
             int amplitudeY = (int)entity.attributesMap["amplitude"].ValuePosition.Y.High;
+            bool hasTension = entity.attributesMap["hasTension"].ValueBool;
             int angleStateX = 0;
             int angleStateY = 0;
+            
             switch (attribute.Type)
             {
                 case AttributeTypes.UINT8:
@@ -40,35 +46,51 @@ namespace ManiacEditor.Entity_Renders
                     break;
             }
 
+            var tensionBall = e.LoadAnimation("Platform", d, -2, 1, false, false, false);
+            var tensionBallCenter = e.LoadAnimation("Platform", d, -2, 2, false, false, false);
+
             int aminID = 0;
             EditorEntity.EditorAnimation editorAnim = null;
+            bool doNotShow = false;
             while (true)
             {
 
                 try
                 {
-                    editorAnim = e.LoadAnimation("Platform", d, aminID, -1, false, false, false);
-
-                    if (editorAnim == null) return; // no animation, bail out
-
-                    frameID += editorAnim.Frames.Count;
-                    if (targetFrameID < frameID)
+                    if (targetFrameID == -1)
                     {
-                        int aminStart = (frameID - editorAnim.Frames.Count);
-                        frameID = targetFrameID - aminStart;
-                        break;
+                        doNotShow = true;
                     }
-                    aminID++;
+                        editorAnim = e.LoadAnimation("Platform", d, aminID, -1, false, false, false);
+
+                        if (type == 4)
+                        {
+                            editorAnim = e.LoadAnimation("Platform", d, -2, 0, false, false, false);
+                        }
+
+                        if (editorAnim == null) return; // no animation, bail out
+
+                        frameID += editorAnim.Frames.Count;
+                        if (targetFrameID < frameID)
+                        {
+                            int aminStart = (frameID - editorAnim.Frames.Count);
+                            frameID = targetFrameID - aminStart;
+                            break;
+                        }
+                        aminID++;
+
                 }
                 catch (Exception i)
                 {
                     throw new ApplicationException($"Pop Loading Platforms! {aminID}", i);
                 }
             }
-            if (editorAnim.Frames.Count != 0)
+            if (editorAnim.Frames.Count != 0 && tensionBall.Frames.Count != 0 && tensionBallCenter.Frames.Count != 0 && doNotShow == false)
             {
                 EditorEntity.EditorAnimation.EditorFrame frame = null;
                 EditorEntity.EditorAnimation.EditorFrame frame2 = null;
+                EditorEntity.EditorAnimation.EditorFrame frame3 = tensionBall.Frames[0];
+                EditorEntity.EditorAnimation.EditorFrame frame4 = tensionBallCenter.Frames[0];
                 if (editorAnim.Frames[0].Entry.FrameSpeed > 0)
                 {
                     frame = editorAnim.Frames[e.index];
@@ -91,12 +113,27 @@ namespace ManiacEditor.Entity_Renders
                     d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX, y + frame.Frame.CenterY,
                         frame.Frame.Width, frame.Frame.Height, false, Transparency);
                 }
-                /*if ((amplitudeX != 0 || amplitudeY != 0) && type == 2)
+                /*
+                if (type == 2)
                 {
-                    e.ProcessMovingPlatform2(amplitudeX,amplitudeY);
-                    d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX + e.positionX, y + frame.Frame.CenterY - e.positionY,
+                    int[] position = new int[2] { 0, 0 };
+                    if (amplitudeX != 0 && amplitudeY == 0)
+                    {
+                        position = platformMove.ProcessMovingPlatform2(amplitudeX, 0);
+                    }
+                    if (amplitudeX == 0 && amplitudeY != 0)
+                    {
+                        position = platformMove.ProcessMovingPlatform2(0, amplitudeY);
+                    }
+                    if (amplitudeX != 0 && amplitudeY != 0)
+                    {
+                        position = platformMove.ProcessMovingPlatform2(amplitudeX, amplitudeY);
+                    }
+
+                    d.DrawBitmap(frame.Texture, x + frame.Frame.CenterX + position[0], y + frame.Frame.CenterY - position[1],
                         frame.Frame.Width, frame.Frame.Height, false, Transparency);
-                }*/
+                }
+                */
                 else if ((amplitudeX != 0 || amplitudeY != 0) && type == 3)
                 {
                     e.ProcessMovingPlatform(angle);
@@ -109,8 +146,70 @@ namespace ManiacEditor.Entity_Renders
                     int radiusInt = (int)Math.Sqrt(radius);
                     int newX = (int)(radiusInt * Math.Cos(Math.PI * angle / 128));
                     int newY = (int)(radiusInt * Math.Sin(Math.PI * angle / 128));
+                    int tensionCount = radiusInt / 16;
+                    if (hasTension == true)
+                    {
+                        for (int i = 0; i < tensionCount; i++)
+                        {
+                            int[] linePoints = RotatePoints(x + (16) * i, y, x, y, angle);
+                            if (i == 0)
+                            {
+                                d.DrawBitmap(frame4.Texture,
+                                    linePoints[0] + frame4.Frame.CenterX,
+                                    linePoints[1] + frame4.Frame.CenterY,
+                                    frame4.Frame.Width, frame4.Frame.Height, false, Transparency);
+                            }
+                            else
+                            {
+                                d.DrawBitmap(frame3.Texture,
+                                    linePoints[0] + frame3.Frame.CenterX,
+                                    linePoints[1] + frame3.Frame.CenterY,
+                                    frame3.Frame.Width, frame3.Frame.Height, false, Transparency);
+                            }
+
+                        }
+                    }
                     d.DrawBitmap(frame.Texture, (x + newX) + frame.Frame.CenterX, (y - newY) + frame.Frame.CenterY,
-                       frame.Frame.Width, frame.Frame.Height, false, Transparency);
+                    frame.Frame.Width, frame.Frame.Height, false, Transparency);
+
+                }
+                else if ((amplitudeX != 0 || amplitudeY != 0) && type == 4)
+                {
+                    //Must improve upon, this isn't the right way of implementing this platform type.
+                    amplitudeX *= 4;
+                    amplitudeY *= 4;
+                    double xd = x;
+                    double yd = y;
+                    double x2 = x + amplitudeX - amplitudeX / 3.7;
+                    double y2 = y + amplitudeY - amplitudeY / 3.7;
+                    double radius = Math.Pow(x2 - xd, 2) + Math.Pow(y2 - yd, 2);
+                    int radiusInt = (int)Math.Sqrt(radius);
+                    int newX = (int)(radiusInt * Math.Cos(Math.PI * angle / 128));
+                    int newY = (int)(radiusInt * Math.Sin(Math.PI * angle / 128));
+                    int tensionCount = radiusInt / 16;
+
+                        for (int i = 0; i < tensionCount; i++)
+                        {
+                            int[] linePoints = RotatePoints(x + (16) * i, y, x, y, angle);
+                            if (i == 0)
+                            {
+                                d.DrawBitmap(frame4.Texture,
+                                    linePoints[0] + frame4.Frame.CenterX,
+                                    linePoints[1] + frame4.Frame.CenterY,
+                                    frame4.Frame.Width, frame4.Frame.Height, false, Transparency);
+                            }
+                            else
+                            {
+                                d.DrawBitmap(frame3.Texture,
+                                    linePoints[0] + frame3.Frame.CenterX,
+                                    linePoints[1] + frame3.Frame.CenterY,
+                                    frame3.Frame.Width, frame3.Frame.Height, false, Transparency);
+                            }
+
+                        }
+                    d.DrawBitmap(frame.Texture, (x + newX) + frame.Frame.CenterX, (y + newY) + frame.Frame.CenterY,
+                    frame.Frame.Width, frame.Frame.Height, false, Transparency);
+
                 }
                 else
                 {
@@ -123,6 +222,30 @@ namespace ManiacEditor.Entity_Renders
 
 
         }
+        private static int[] RotatePoints(double initX, double initY, double centerX, double centerY, double angle)
+        {
+            initX -= centerX;
+            initY -= centerY;
+
+            if (initX == 0 && initY == 0)
+            {
+                int[] results2 = { (int)centerX, (int)centerY };
+                return results2;
+            }
+
+            const double FACTOR = 40.743665431525205956834243423364;
+
+            double hypo = Math.Sqrt(Math.Pow(initX, 2) + Math.Pow(initY, 2));
+            double initAngle = Math.Acos(initX / hypo);
+            if (initY < 0) initAngle = 2 * Math.PI - initAngle;
+            double newAngle = initAngle - angle / FACTOR;
+            double finalX = hypo * Math.Cos(newAngle) + centerX;
+            double finalY = hypo * Math.Sin(newAngle) + centerY;
+
+            int[] results = { (int)Math.Round(finalX), (int)Math.Round(finalY) };
+            return results;
+        }
+
 
         public override string GetObjectName()
         {

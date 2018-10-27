@@ -12,6 +12,8 @@ namespace ManiacEditor.Entity_Renders
 {
     public class FilmProjector : EntityRenderer
     {
+        public DateTime lastFrametime;
+        public int index = 0;
 
         public override void Draw(DevicePanel d, SceneEntity entity, EditorEntity e, int x, int y, int Transparency)
         {
@@ -33,7 +35,7 @@ namespace ManiacEditor.Entity_Renders
                 var frame5 = editorAnim5.Frames[0];
                 var frame6 = editorAnim4.Frames[0];
                 var frame7 = editorAnim5.Frames[0];
-                var frame3 = editorAnim3.Frames[e.index];
+                var frame3 = editorAnim3.Frames[index];
 
                 d.DrawBitmap(frame5.Texture,
                     x + 42 + frame5.Frame.CenterX - (fliph ? (frame5.Frame.Width - editorAnim5.Frames[0].Frame.Width) : 0),
@@ -64,7 +66,7 @@ namespace ManiacEditor.Entity_Renders
                     y + frame2.Frame.CenterY + (flipv ? (frame2.Frame.Height - editorAnim2.Frames[0].Frame.Height) : 0),
                     frame2.Frame.Width, frame2.Frame.Height, false, Transparency);
 
-                //e.ProcessAnimation(frame3.Entry.FrameSpeed, frame3.Entry.Frames.Count, frame3.Frame.Duration);
+                ProcessAnimation(frame3.Entry.FrameSpeed, frame3.Entry.Frames.Count, frame3.Frame.Duration);
 
                 d.DrawBitmap(frame3.Texture,
                     x + 185 + frame3.Frame.CenterX - (fliph ? (frame3.Frame.Width - editorAnim3.Frames[0].Frame.Width) : 0),
@@ -72,6 +74,29 @@ namespace ManiacEditor.Entity_Renders
                     frame3.Frame.Width, frame3.Frame.Height, false, Transparency);
 
             }
+        }
+
+        public void ProcessAnimation(int speed, int frameCount, int duration, int startFrame = 0)
+        {
+            // Playback
+            if (Editor.Instance.ShowAnimations.Checked && Properties.EditorState.Default.annimationsChecked)
+            {
+                if (speed > 0)
+                {
+                    int speed1 = speed * 64 / (duration == 0 ? 256 : duration);
+                    if (speed1 == 0)
+                        speed1 = 1;
+                    if ((DateTime.Now - lastFrametime).TotalMilliseconds > 1024 / speed1)
+                    {
+                        index++;
+                        lastFrametime = DateTime.Now;
+                    }
+                }
+            }
+            else index = 0 + startFrame;
+            if (index >= frameCount / 2)
+                index = 0;
+
         }
 
         public override string GetObjectName()

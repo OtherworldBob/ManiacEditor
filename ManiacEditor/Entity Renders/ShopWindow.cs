@@ -8,6 +8,8 @@ using ManiacEditor;
 using Microsoft.Xna.Framework;
 using ManiacEditor.Enums;
 using RSDKv5;
+using SystemColors = System.Drawing.Color;
+
 
 namespace ManiacEditor.Entity_Renders
 {
@@ -25,6 +27,17 @@ namespace ManiacEditor.Entity_Renders
 
             if (width != 0 && height != 0)
             {
+                int x1 = x + widthPixels / -2;
+                int x2 = x + widthPixels / 2 - 1;
+                int y1 = y + heightPixels / -2;
+                int y2 = y + heightPixels / 2 - 1;
+
+
+                d.DrawLine(x1, y1, x1, y2, SystemColors.White);
+                d.DrawLine(x1, y1, x2, y1, SystemColors.White);
+                d.DrawLine(x2, y2, x1, y2, SystemColors.White);
+                d.DrawLine(x2, y2, x2, y1, SystemColors.White);
+
                 // draw corners
                 for (int i = 0; i < 4; i++)
                 {
@@ -43,7 +56,7 @@ namespace ManiacEditor.Entity_Renders
 
                     }
                 }
-
+                /*
                 // draw top and bottom
                 for (int i = 0; i < 2; i++)
                 {
@@ -80,7 +93,7 @@ namespace ManiacEditor.Entity_Renders
                                 (y + (hEven ? frame.Frame.CenterY : -frame.Frame.Height) + (-height / 2 + j) * frame.Frame.Height),
                                 frame.Frame.Width, frame.Frame.Height, false, Transparency);
                     }
-                }
+                }*/
             }
         }
 

@@ -79,7 +79,8 @@ namespace ManiacEditor.Entity_Renders
                 
                 for (int i = 0; i < chainCount; i++)
                 {
-                    int[] linePoints = RotatePoints(x + (frame2.Frame.Width)*i, y, x, y, angleStartInt);
+                    int x_alt = x + 6;
+                    int[] linePoints = RotatePoints(x_alt + (frame2.Frame.Width) * i, y, x, y, angleStartInt);
                     
                     d.DrawBitmap(frame2.Texture,
                         linePoints[0] + frame2.Frame.CenterX,
@@ -90,8 +91,7 @@ namespace ManiacEditor.Entity_Renders
 
 
                 //TetherBall Ball
-                bool hEven = chainCount % 2 == 0;
-                int length = (frame2.Frame.Width * chainCount);
+                int length = (16 * chainCount) + 16;
                 int[] processPoints;
                 processPoints = RotatePoints(x + length, y, x, y, angleStartInt);
 

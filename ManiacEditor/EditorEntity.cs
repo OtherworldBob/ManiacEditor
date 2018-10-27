@@ -395,6 +395,12 @@ namespace ManiacEditor
                 if (rotate && rsdkAnim.Animations.Any(t => t.AnimName.EndsWith(" V")))
                     AnimId = rsdkAnim.Animations.FindIndex(t => t.AnimName.EndsWith(" V"));
             }
+            if (AnimId == -2)
+            {
+                if (rsdkAnim.Animations.Any(t => t.AnimName.Contains("Swing")))
+                    AnimId = rsdkAnim.Animations.FindIndex(t => t.AnimName.Contains("Swing"));
+                else AnimId = 0;
+            }
             if (AnimId >= rsdkAnim.Animations.Count)
                 AnimId = rsdkAnim.Animations.Count - 1;
             for (int i = 0; i < rsdkAnim.Animations[AnimId].Frames.Count; ++i)

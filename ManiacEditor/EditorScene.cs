@@ -22,7 +22,12 @@ namespace ManiacEditor
 
         public EditorLayer Scratch
         {
-            get => _editorLayers.LastOrDefault(el => el.Name.Equals("Scratch") || el.Name.Equals("Move"));
+            get => _editorLayers.LastOrDefault(el => el.Name.Equals("Scratch"));
+        }
+
+        public EditorLayer Move
+        {
+            get => _editorLayers.LastOrDefault(el => el.Name.Equals("Move"));
         }
 
 
