@@ -1,5 +1,7 @@
 # Maniac Editor - Sonic Mania Scene Editor
 
+This fork should be considered inactive, please consider looking at this further [fork](https://github.com/CarJem/ManiacEditor-GenerationsEdition) for a more feature rich version.
+
 Find my latest version [here](https://github.com/OtherworldBob/ManiacEditor/releases/latest), yes, it's still a Beta!
 
 Find the original by **koolkdev** over [there](https://github.com/koolkdev/ManiacEditor/releases/latest), from which this version derives. None of this would be possible without the work done in the original!
